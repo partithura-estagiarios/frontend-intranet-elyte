@@ -1,13 +1,8 @@
 <template>
   <div class="title">
     <h1>{{ $t("about") }}</h1>
-    <q-input v-model="name" type="text" filled class="bg-grey" />
-    <q-btn :to="`/${name}/`">Submit</q-btn>
   </div>
 </template>
-<script setup lang="ts">
-const name = ref("");
-</script>
 
 <style scoped>
 .title {

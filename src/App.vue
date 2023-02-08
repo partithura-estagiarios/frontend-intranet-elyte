@@ -12,19 +12,8 @@ useHead({
 </script>
 
 <template>
+  <TabHeader />
   <RouterView />
-  <!-- <PaymentButton />
-  <DeleteButton />
-  <LoaderButton />
-  <FabButton />
-  <OptionLocales />
-  <SendButton />
-  <DropDown /> -->
-  <!-- <ThemeButton />
-  <Switches /> -->
-  <!-- <LoginForm />
-  < -->
-  <!-- <LiquidLoader /> -->
 </template>
 
 <style scoped>

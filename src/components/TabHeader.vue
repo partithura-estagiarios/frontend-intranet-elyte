@@ -5,61 +5,28 @@
     </q-toolbar-section>
     <q-toolbar class="justify-center text-white">
       <q-toobar-section class="row">
-        <q-tabs no-caps v-for="button in menuButtons" :key="button.id">
-          <q-route-tab :label="button.label" :to="button.to" />
-        </q-tabs>
+        <span class="titleStyle q-mr-md row text-weight-bolder">{{
+          title
+        }}</span>
+        <q-icon size="2rem" class="border" name="house" />
       </q-toobar-section>
     </q-toolbar>
+    <q-toobar-section>
+      <q-icon size="3rem" class="border q-mt-md" name="login" />
+    </q-toobar-section>
   </q-item>
 </template>
 
 <script setup lang="ts">
-const menuButtons = [
-  {
-    id: 1,
-    to: "home",
-    label: "HOME",
-  },
-  {
-    id: 2,
-    to: "documentacao",
-    label: "DOCUMENTAÇÃO SIG",
-  },
-  {
-    id: 3,
-    to: "rh",
-    label: "RH DIVULGA",
-  },
-  {
-    id: 4,
-    to: "ramais",
-    label: "RAMAIS",
-  },
-  {
-    id: 4,
-    to: "contato",
-    label: "CONTATO",
-  },
-  {
-    id: 5,
-    to: "reuniao",
-    label: "AGENDAR REUNIÃO",
-  },
-  {
-    id: 6,
-    to: "restaurante",
-    label: "RESTAURANTE",
-  },
-  {
-    id: 7,
-    to: "certificacoes",
-    label: "CERTIFICAÇÕES",
-  },
-];
+const title = ref("INTRANET ELYTE");
 </script>
 
 <style scoped>
 .backgroundHeader {
   background-color: #ff0321;
+}
+.titleStyle {
+  font-size: 1.5rem;
+  font-family: "Open Sans", sans-serif;
 }
 </style>

@@ -1,33 +1,13 @@
 <template>
-  <HomeBanner class="q-mb-xl" />
-  <q-splitter
-    v-model="initialWidth"
-    :limits="[50, 50]"
-    before-class="overflow-hidden"
-    after-class="overflow-hidden"
-  >
-    <template v-slot:before>
-      <span class="text-black font text-bold q-my-lg"
-        >{{ gestao }}
-        <q-separator inset size="0.5rem" color="primary" class="bar-style" />
-      </span>
-      <SistemaGestao class="q-mt-xl" />
-    </template>
-
-    <template v-slot:after>
-      <span class="text-black font text-bold q-my-lg"
-        >{{ rh }}
-        <q-separator inset size="0.5rem" color="primary" class="bar-style" />
-      </span>
-      <SistemaGestao class="q-mt-xl" />
-    </template>
-  </q-splitter>
+  <div class="row">
+    <SistemaGestao class="col-6" />
+    <SistemaRh class="col-6" />
+    <Outros class="q-mt-xl" />
+  </div>
 </template>
 
 <script setup lang="ts">
 const initialWidth = ref(50);
-const gestao = ref("Sistema de Gestão");
-const rh = ref("Sistema de RH");
 </script>
 
 <style scoped>

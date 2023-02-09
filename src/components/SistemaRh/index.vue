@@ -3,12 +3,12 @@
     <q-card class="q-mx-lg row justify-center shadow-7">
       <q-card-section class="q-my-md">
         <span class="text-black row font text-bold">
-          {{ gestao }}
+          {{ rh }}
           <q-icon
             color="primary"
             class="q-ml-sm"
-            name="engineering"
             size="2rem"
+            name="supervisor_account"
           />
         </span>
         <q-separator size="0.5rem" color="primary" class="bar-style" />
@@ -17,16 +17,16 @@
         <q-item
           v-for="icon in gestaoList"
           :key="icon.id"
-          class="row col-3 q-mx-lg"
+          class="col-3 q-mx-lg"
           clickable
         >
           <q-item-section avatar>
-            <q-avatar size="7rem">
+            <q-avatar class="row" size="7rem">
               <q-icon class="border" :name="icon.img" />
             </q-avatar>
           </q-item-section>
 
-          <q-item-section>
+          <q-item-section class="row">
             <q-item-label class="text-black">
               {{ icon.label }}
             </q-item-label>
@@ -38,49 +38,44 @@
 </template>
 
 <script setup lang="ts">
-const gestao = ref("SISTEMA DE GESTÃO");
+const rh = ref("SISTEMA DE RH");
 const gestaoList = [
   {
     id: "1",
-    img: "/public/icon/datasulIcon.png",
-    label: "DataSul",
+    img: "speaker_notes",
+    label: "RH Divulga",
     link: "http:/totvs-login/loginForm",
   },
   {
     id: "2",
-    img: "/public/icon/partithuraIcon.png",
-    label: "Partithura",
+    img: "cake",
+    label: "Aniversariantes",
     link: "elyte.partithura.app/dashboard/",
   },
   {
     id: "3",
-    img: "/public/icon/datasulIcon.png",
-    label: "Consulta de Estoque",
+    img: "campaign",
+    label: "Pauta Fixa",
   },
   {
     id: "4",
-    img: "/public/icon/codiIncon.png",
-    label: "CODI",
+    img: "email",
+    label: "Contato com Diretor",
   },
   {
     id: "5",
-    img: "/public/icon/datasulIcon.png",
-    label: "Boa Idéia",
+    img: "menu_book",
+    label: "Cardápio",
   },
   {
     id: "6",
-    img: "/public/icon/datasulIcon.png",
-    label: "Relatórios",
+    img: "phone",
+    label: "Ramais",
   },
   {
     id: "7",
-    img: "rate_review",
-    label: "Mapeamento de Processos",
-  },
-  {
-    id: "8",
-    img: "settings",
-    label: "FT Web",
+    img: "calendar_month",
+    label: "Agenda",
   },
 ];
 </script>

@@ -1,5 +1,5 @@
 <template>
-  <q-img height="40rem" src="../../../public/images/background-home-3.png">
+  <q-img height="25rem" src="../../../public/images/background-home-3.png">
     <div class="fit column justify-center">
       <div class="row content-center justify-center">
         <span

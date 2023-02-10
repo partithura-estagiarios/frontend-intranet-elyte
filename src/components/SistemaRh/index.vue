@@ -3,7 +3,7 @@
     <q-card class="q-mx-lg row justify-center shadow-7">
       <q-card-section class="q-my-md">
         <span class="text-black row font text-bold">
-          {{ rh }}
+          {{ $t("titles.HrSystem") }}
           <q-icon
             color="primary"
             class="q-ml-sm"
@@ -17,7 +17,7 @@
         <q-item
           v-for="icon in gestaoList"
           :key="icon.id"
-          class="col-3 q-mx-lg"
+          class="col-3 column q-my-md items-center"
           clickable
         >
           <q-item-section avatar>
@@ -28,7 +28,7 @@
 
           <q-item-section class="row">
             <q-item-label class="text-black">
-              {{ icon.label }}
+              {{ $t(icon.label) }}
             </q-item-label>
           </q-item-section>
         </q-item>
@@ -38,44 +38,43 @@
 </template>
 
 <script setup lang="ts">
-const rh = ref("SISTEMA DE RH");
 const gestaoList = [
   {
     id: "1",
     img: "speaker_notes",
-    label: "RH Divulga",
+    label: "titles.SubTitlesHr.HRDiscloses",
     link: "http:/totvs-login/loginForm",
   },
   {
     id: "2",
     img: "cake",
-    label: "Aniversariantes",
+    label: "titles.SubTitlesHr.Birthdays",
     link: "elyte.partithura.app/dashboard/",
   },
   {
     id: "3",
     img: "campaign",
-    label: "Pauta Fixa",
+    label: "titles.SubTitlesHr.FixedSchedule",
   },
   {
     id: "4",
     img: "email",
-    label: "Contato com Diretor",
+    label: "titles.SubTitlesHr.ContactWithDirector",
   },
   {
     id: "5",
     img: "menu_book",
-    label: "Cardápio",
+    label: "titles.SubTitlesHr.Menu",
   },
   {
     id: "6",
     img: "phone",
-    label: "Ramais",
+    label: "titles.SubTitlesHr.Fones",
   },
   {
     id: "7",
     img: "calendar_month",
-    label: "Agenda",
+    label: "titles.SubTitlesHr.Agenda",
   },
 ];
 </script>

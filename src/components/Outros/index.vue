@@ -3,7 +3,7 @@
     <q-card class="q-mx-lg row justify-center shadow-7">
       <q-card-section class="q-my-md">
         <span class="text-black row font text-bold">
-          {{ outros }}
+          {{ $t("titles.Others") }}
           <q-icon color="primary" class="q-ml-sm" size="2rem" name="info" />
         </span>
         <q-separator size="0.5rem" color="primary" class="bar-style" />
@@ -33,7 +33,6 @@
 </template>
 
 <script setup lang="ts">
-const outros = ref("OUTRAS INFORMAÇÕES");
 const gestaoList = [
   {
     id: "1",

@@ -1,5 +1,5 @@
 <template>
-  <q-item class="row backgroundHeader">
+  <q-item class="row items-center backgroundHeader">
     <q-toolbar-section class="q-ma-md row" clickable>
       <q-img src="../../public/images/logo.png" width="10rem" />
     </q-toolbar-section>
@@ -12,7 +12,7 @@
       </q-toobar-section>
     </q-toolbar>
     <q-toobar-section>
-      <q-icon size="3rem" class="border q-mt-md" name="login" />
+      <q-icon size="3rem" name="settings_applications" />
     </q-toobar-section>
   </q-item>
 </template>

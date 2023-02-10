@@ -1,6 +1,5 @@
-import caderno from "./caderno";
 import markdown from "./markdown";
-import tag from "./tag";
+import titles from "./titles";
 import login from "./login";
 import action from "./action";
 import text from "./text";
@@ -10,9 +9,8 @@ export default {
   action,
   home: "Casa",
   tags: "Entiquetas",
-  caderno,
   markdown,
-  tag,
+  titles,
   login,
   text,
 };

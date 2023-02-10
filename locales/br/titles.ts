@@ -1,0 +1,33 @@
+export default {
+  ManagementSystem: "SISTEMA DE GESTÃO",
+  HrSystem: "SISTEMA DE RH",
+  Others: "OUTROS",
+  SubTitlesManagement: {
+    DataSul: "DataSul",
+    DataSulPrototype: "DataSul Protótipo",
+    Partithura: "Partithura",
+    StockQuery: "Consulta de Estoque",
+    CODI: "CODI",
+    GoodIdea: "Boa Idéia",
+    Reports: "Relatórios",
+    ProcessMapping: "Mapeamento de Processos",
+    FtWeb: "FT Web",
+  },
+  SubTitlesHr: {
+    HRDiscloses: "RH Divulga",
+    Birthdays: "Aniversariantes",
+    FixedSchedule: "Pauta Fixa",
+    ContactWithDirector: "Contato com Diretor",
+    Menu: "Cardápio",
+    Fones: "Ramais",
+    Agenda: "Agenda",
+  },
+  DescriptionManagement: {
+    ErpSystem: "Sistema ERP",
+    StrategicManagement: "Gestão Estratégica",
+    ProductionManagement: "Gestão de Produção",
+    Mapping: "Mapeamento",
+    FT: "Ficha Técnica Web",
+    DataSulPrototype: "Exclusivo para Testes",
+  },
+};

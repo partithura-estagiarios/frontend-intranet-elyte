@@ -1,9 +1,9 @@
 <template>
-  <div class="side borderRad">
+  <div>
     <q-card class="q-mx-lg row justify-center shadow-7">
       <q-card-section class="q-my-md">
         <span class="text-black row font text-bold">
-          {{ gestao }}
+          {{ $t("titles.ManagementSystem") }}
           <q-icon
             color="primary"
             class="q-ml-sm"
@@ -17,7 +17,7 @@
         <q-item
           v-for="icon in gestaoList"
           :key="icon.id"
-          class="row col-3 q-mx-lg"
+          class="column col-3 q-my-md items-center"
           clickable
         >
           <q-item-section avatar>
@@ -28,7 +28,7 @@
 
           <q-item-section>
             <q-item-label class="text-black">
-              {{ icon.label }}
+              {{ $t(icon.label) }}
             </q-item-label>
           </q-item-section>
         </q-item>
@@ -38,49 +38,53 @@
 </template>
 
 <script setup lang="ts">
-const gestao = ref("SISTEMA DE GESTÃO");
 const gestaoList = [
   {
     id: "1",
     img: "/public/icon/datasulIcon.png",
-    label: "DataSul",
+    label: "titles.SubTitlesManagement.DataSul",
     link: "http:/totvs-login/loginForm",
   },
   {
     id: "2",
     img: "/public/icon/partithuraIcon.png",
-    label: "Partithura",
+    label: "titles.SubTitlesManagement.Partithura",
     link: "elyte.partithura.app/dashboard/",
   },
   {
     id: "3",
     img: "/public/icon/datasulIcon.png",
-    label: "Consulta de Estoque",
+    label: "titles.SubTitlesManagement.DataSulPrototype",
   },
   {
     id: "4",
     img: "/public/icon/codiIncon.png",
-    label: "CODI",
+    label: "titles.SubTitlesManagement.StockQuery",
   },
   {
     id: "5",
     img: "/public/icon/datasulIcon.png",
-    label: "Boa Idéia",
+    label: "titles.SubTitlesManagement.CODI",
   },
   {
     id: "6",
     img: "/public/icon/datasulIcon.png",
-    label: "Relatórios",
+    label: "titles.SubTitlesManagement.GoodIdea",
   },
   {
     id: "7",
     img: "rate_review",
-    label: "Mapeamento de Processos",
+    label: "titles.SubTitlesManagement.Reports",
   },
   {
     id: "8",
     img: "settings",
-    label: "FT Web",
+    label: "titles.SubTitlesManagement.ProcessMapping",
+  },
+  {
+    id: "9",
+    img: "settings",
+    label: "titles.SubTitlesManagement.FtWeb",
   },
 ];
 </script>

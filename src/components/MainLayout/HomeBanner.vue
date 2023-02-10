@@ -5,7 +5,7 @@
         <span
           class="col-10 text-center text-shadow text-white text-bold text-h4"
         >
-          SEJAM BEM-VINDOS A
+          {{ $t("text.welcomeElyte") }}
         </span>
         <div class="col-3 row justify-center">
           <q-img src="../../../public/images/logo-red.png" alt="nossa logo" />

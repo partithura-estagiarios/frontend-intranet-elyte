@@ -12,19 +12,8 @@ useHead({
 </script>
 
 <template>
+  <TabHeader class="margin" />
   <RouterView />
-  <!-- <PaymentButton />
-  <DeleteButton />
-  <LoaderButton />
-  <FabButton />
-  <OptionLocales />
-  <SendButton />
-  <DropDown /> -->
-  <!-- <ThemeButton />
-  <Switches /> -->
-  <!-- <LoginForm />
-  < -->
-  <!-- <LiquidLoader /> -->
 </template>
 
 <style scoped>
@@ -38,5 +27,8 @@ useHead({
 }
 .logo.vue:hover {
   filter: drop-shadow(0 0 2em #42b883aa);
+}
+.margin {
+  margin-bottom: 7rem;
 }
 </style>

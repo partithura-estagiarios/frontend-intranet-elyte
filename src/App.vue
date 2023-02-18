@@ -12,7 +12,7 @@ useHead({
 </script>
 
 <template>
-  <TabHeader class="margin" />
+  <!-- <TabHeader class="margin" /> -->
   <RouterView />
 </template>
 

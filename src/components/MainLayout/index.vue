@@ -6,9 +6,7 @@
   </div>
 </template>
 
-<script setup lang="ts">
-const initialWidth = ref(50);
-</script>
+<script setup lang="ts"></script>
 
 <style scoped>
 .font {

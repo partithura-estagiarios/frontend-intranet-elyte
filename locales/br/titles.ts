@@ -1,8 +1,8 @@
 export default {
-  ManagementSystem: "SISTEMA DE GESTÃO",
-  HrSystem: "SISTEMA DE RH",
-  Others: "OUTROS",
-  SubTitlesManagement: {
+  ManagementSystem: "Sistema de gestão",
+  HrSystem: "sistema de RH",
+  OtherSystems: "Outros",
+  Management: {
     DataSul: "DataSul",
     DataSulPrototype: "DataSul Protótipo",
     Partithura: "Partithura",
@@ -13,7 +13,7 @@ export default {
     ProcessMapping: "Mapeamento de Processos",
     FtWeb: "FT Web",
   },
-  SubTitlesHr: {
+  Hr: {
     HRDiscloses: "RH Divulga",
     Birthdays: "Aniversariantes",
     FixedSchedule: "Pauta Fixa",

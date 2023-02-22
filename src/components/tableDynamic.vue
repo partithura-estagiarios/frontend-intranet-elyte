@@ -10,7 +10,12 @@
       row-key="name"
     >
       <template #top-right>
-        <q-input v-model="search" placeholder="Pesquisar" debounce="300" dense>
+        <q-input
+          v-model="search"
+          :placeholder="$t('action.search.index')"
+          debounce="300"
+          dense
+        >
           <template #append>
             <q-icon :name="icon" @click="search = null" />
           </template>

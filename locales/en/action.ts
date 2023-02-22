@@ -34,4 +34,7 @@ export default {
     ing: "Buying",
     ed: "Bought",
   },
+  search: {
+    index: "Pesquisar",
+  },
 };

@@ -4,6 +4,9 @@ export default {
     ing: "Sending",
     ed: "Sent",
   },
+  confirm: {
+    index: "Confirm",
+  },
   cancel: {
     index: "Cancel",
     ing: "Canceling",
@@ -35,6 +38,9 @@ export default {
     ed: "Bought",
   },
   search: {
-    index: "Pesquisar",
+    index: "Search",
+  },
+  addRamal: {
+    index: "Add ramal",
   },
 };

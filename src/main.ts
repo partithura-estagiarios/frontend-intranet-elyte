@@ -15,7 +15,7 @@ import "./style.css";
 
 createApp(App)
   .use(Quasar, {
-    plugins: {}, // import Quasar plugins and add here
+    plugins: { Notify }, // import Quasar plugins and add here
   })
   .use(villus)
   .use(router)

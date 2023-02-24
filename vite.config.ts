@@ -34,6 +34,7 @@ export default defineConfig({
     }),
     AutoImport({
       imports: [
+        "quasar",
         "vue",
         "vue-router",
         "vue-i18n",

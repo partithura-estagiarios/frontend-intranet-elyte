@@ -11,7 +11,7 @@
     </div>
     <table-dynamic
       :columns="columns"
-      :rows="data?.getRamais"
+      :rows="ramalList"
       v-bind="$attrs"
       @add="ramalForm = true"
     />
@@ -28,35 +28,29 @@
 <script setup lang="ts">
 import GetRamais from "../../graphql/ramais/getRamais.gql";
 import AddRamal from "../../graphql/ramais/createRamal.gql";
-import { Ramal } from "../../entities/Ramal";
-import { useQuery } from "villus";
-
-const translate = useI18n();
 
 async function getRamais() {
   const { getRamais } = await runQuery(GetRamais);
-  ramaisStorage.setRamais(getRamais as unknown as [Ramal]);
+  ramalList.value = getRamais;
+}
+
+const ramalList = ref();
+const ramalForm = ref(false);
+
+async function addRamal(ramal: Record<string, string | number>) {
+  try {
+    const { createRamal } = await runMutation(AddRamal, { data: { ...ramal } });
+    positiveNotify(t("notifications.success.createRamal"));
+  } catch {
+    negativeNotify(t("notifications.fail.createRamal"));
+  } finally {
+    ramalForm.value = false;
+  }
 }
 
 onMounted(() => {
   getRamais();
 });
-
-const { data } = useQuery({ query: GetRamais });
-
-const ramalForm = ref(false);
-
-async function addRamal(ramal: Record<string, string | number>) {
-  console.log(ramal);
-  try {
-    const data = await runMutation(AddRamal, { data: { ...ramal } });
-    positiveNotify(t("notifications.sucessCreateRamal"));
-  } catch {
-    negativeNotify(t("notifications.failCreateRamal"));
-  } finally {
-    ramalForm.value = false;
-  }
-}
 
 const columns = [
   {
@@ -83,7 +77,6 @@ const columns = [
   },
 ];
 
-const showRamal = ref(false);
 const ramal = reactive({});
 </script>
 

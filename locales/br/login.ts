@@ -6,4 +6,5 @@ export default {
   hintPassword: "6 primeiros números do seu cpf",
   submitButton: "Enviar",
   warning: "Por favor digite algo!",
+  textLogin: "Faça seu login!",
 };

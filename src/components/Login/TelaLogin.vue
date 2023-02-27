@@ -6,8 +6,8 @@
       style="height: 100%; max-width: 100%"
     >
       <div class="full-width column items-center bg-transparent q-mt-xl">
-        <q-img src="../../assets/loginImages/logoElyte.png" width="5rem" />
-        <span class="text-weight-bold q-mb-xl q-mt-sm" font-size="70px"
+        <q-img src="../../assets/loginImages/logoElyte.png" width="10rem" />
+        <span class="text-weight-bold q-mb-xl q-mt-sm titulo"
           >Intranet Elyte</span
         >
         <Formulario />
@@ -16,8 +16,10 @@
   </q-template>
 </template>
 
-<script lang="ts" setup>
-const route = useRoute();
+<script lang="ts" setup></script>
 
-const path = route.path;
-</script>
+<style scoped>
+.titulo {
+  font-size: 2rem;
+}
+</style>

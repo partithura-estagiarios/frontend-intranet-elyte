@@ -7,4 +7,5 @@ export default {
   submitButton: "Enviar",
   warning: "Por favor digite algo!",
   textLogin: "Faça seu login!",
+  labelForgetPassword: "Esqueci a senha",
 };

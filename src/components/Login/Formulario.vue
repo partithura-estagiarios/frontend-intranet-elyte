@@ -1,5 +1,5 @@
 <template>
-  <h4>{{ $t("login.textLogin") }}</h4>
+  <span class="titulo q-mb-xl">{{ $t("login.textLogin") }}</span>
 
   <q-form>
     <div>
@@ -10,7 +10,7 @@
         label-color="white"
         input-class="text-white"
         v-model="form.nomeUsuario"
-        label="Nome de usuário"
+        :label="$t('login.labelInputName')"
       />
       <q-input
         rounded
@@ -22,21 +22,23 @@
         label-color="white"
         class="q-pt-md"
         v-model="form.senha"
-        label="Senha"
+        :label="$t('login.labelInputPassword')"
       />
 
       <q-btn
-        label="Esqueci a senha!"
-        class="float-left text=capitalize"
-        size="12px"
+        :label="$t('login.labelForgetPassword')"
+        class="float-left"
+        no-caps
+        size="1rem"
       />
     </div>
 
     <q-btn
-      label="Entrar"
+      :label="$t('login.submitButton')"
       rounded
       style="background: #fff; color: black; width: 25rem"
       class="q-mt-xl btn-enviar"
+      size="lg"
     />
   </q-form>
 </template>
@@ -52,5 +54,9 @@ const form = ref({
 .btn-enviar:hover {
   box-shadow: 0 8px 8px -4px red;
   color: red !important;
+}
+
+.titulo {
+  font-size: 1.5rem;
 }
 </style>

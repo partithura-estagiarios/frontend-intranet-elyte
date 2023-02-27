@@ -11,6 +11,7 @@ function buildUser({ username, id, email, token }: UserStorage): UserStorage {
     username,
     id,
     email,
+    token,
   };
 }
 const NULL_USER = {

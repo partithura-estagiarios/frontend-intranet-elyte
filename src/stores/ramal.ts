@@ -1,20 +1,9 @@
 import { defineStore } from "pinia";
+import { Ramal } from "../entities";
 
-interface RamalStore {
-  id: string;
-  ramal_user: string;
-  sector_user: string;
-  ramal_number: string;
-}
-function buildRamal(ramal: RamalStore): RamalStore {
+function buildRamal(ramal: Ramal): Ramal {
   if (ramal != null) {
-    const { ramal_user, id, sector_user, ramal_number } = ramal;
-    return {
-      ramal_user,
-      id,
-      sector_user,
-      ramal_number,
-    };
+    return ramal;
   }
   return null;
 }
@@ -41,7 +30,7 @@ const Ramal = defineStore("Ramal", {
     },
   },
   actions: {
-    setRamal(value: RamalStore) {
+    setRamal(value: Ramal) {
       this.ramal = buildRamal(value);
     },
   },

@@ -15,6 +15,4 @@ async function getRamais() {
 onMounted(() => {
   getRamais();
 });
-
-const { data } = useQuery({ query: GetRamais });
 </script>

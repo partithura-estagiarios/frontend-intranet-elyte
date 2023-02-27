@@ -39,13 +39,8 @@ import { useQuery } from "villus";
 const emit = defineEmits(["add"]);
 
 const icon = computed(() => {
-  if (search.value) {
-    return "close";
-  }
-  return "search";
+  search.value ? "close" : "search";
 });
-
-const { data } = useQuery({ query: GetRamais });
 
 const search = ref();
 const props = defineProps({

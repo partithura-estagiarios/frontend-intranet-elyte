@@ -4,7 +4,5 @@ query GetRamal($getRamalId: String!) {
     ramal_user
     sector_user
     ramal_number
-    created_at
-    updated_at
   }
 }

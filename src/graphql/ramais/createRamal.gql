@@ -4,7 +4,5 @@ mutation AddRamal($data: RamalInput!) {
     ramal_user
     sector_user
     ramal_number
-    created_at
-    updated_at
   }
 }

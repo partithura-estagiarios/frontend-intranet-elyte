@@ -33,9 +33,6 @@
 </template>
 
 <script setup lang="ts">
-import GetRamais from "../../graphql/ramais/getRamais.gql";
-import { useQuery } from "villus";
-
 const emit = defineEmits(["add"]);
 
 const icon = computed(() => {

@@ -29,11 +29,6 @@
 import GetRamais from "../../graphql/ramais/getRamais.gql";
 import AddRamal from "../../graphql/ramais/createRamal.gql";
 
-async function getRamais() {
-  const { getRamais } = await runQuery(GetRamais);
-  ramalList.value = getRamais;
-}
-
 const ramalList = ref();
 const ramalForm = ref(false);
 
@@ -48,8 +43,9 @@ async function addRamal(ramal: Record<string, string | number>) {
   }
 }
 
-onMounted(() => {
-  getRamais();
+onMounted(async () => {
+  const { getRamais } = await runQuery(GetRamais);
+  ramalList.value = getRamais;
 });
 
 const columns = [

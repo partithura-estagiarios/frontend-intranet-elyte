@@ -8,4 +8,9 @@ export default {
   warning: "Por favor digite algo!",
   textLogin: "Faça seu login!",
   labelForgetPassword: "Esqueci a senha",
+  textPassword: "Recupere sua senha!",
+  labelInputEmail: "Digite sue e-mail",
+  backButton: "Voltar",
+  linkHasSent: "Um link foi enviado para seu e-mail.",
+  spamBox: "Verifique também sua caixa de spam.",
 };

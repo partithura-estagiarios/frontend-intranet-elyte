@@ -4,22 +4,27 @@
       class="background-image"
       src="../../assets/loginImages/fundoLogin.png"
       style="height: 100%; max-width: 100%"
+      no-transition
+      no-spinner
     >
       <div class="full-width column items-center bg-transparent q-mt-xl">
-        <q-img src="../../assets/loginImages/logoElyte.png" width="10rem" />
+        <q-img
+          src="../../assets/loginImages/logoElyte.png"
+          width="10rem"
+          no-transition
+          no-spinner
+        />
         <span class="text-weight-bold q-mb-xl q-mt-sm titulo"
           >Intranet Elyte</span
         >
-        <Formulario />
+        <slot></slot>
       </div>
     </q-img>
   </q-template>
 </template>
 
-<script lang="ts" setup></script>
-
-<style scoped>
+<style>
 .titulo {
-  font-size: 2rem;
+  font-size: 1.5rem;
 }
 </style>

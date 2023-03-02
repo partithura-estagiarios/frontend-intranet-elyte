@@ -12,7 +12,7 @@ useHead({
 </script>
 
 <template>
-  <HeaderBar class="margin" />
+  <HeaderBar class="margin" v-if="$route.fullPath != '/login'" />
   <RouterView />
 </template>
 

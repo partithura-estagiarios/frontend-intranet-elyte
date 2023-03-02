@@ -13,7 +13,7 @@ declare module "@vue/runtime-core" {
     FabButton: typeof import("./components/buttons/FabButton.vue")["default"];
     Gestao: typeof import("./components/gestao/index.vue")["default"];
     GestaoList: typeof import("./components/SistemaGestao/GestaoList.vue")["default"];
-    HeaderBar: typeof import("./components/HeaderBar.vue")["default"];
+    HeaderBar: typeof import("./components/NavBar/HeaderBar.vue")["default"];
     HomeBanner: typeof import("./components/MainLayout/HomeBanner.vue")["default"];
     HomeCard: typeof import("./components/HomeCard.vue")["default"];
     LoaderButton: typeof import("./components/buttons/LoaderButton.vue")["default"];
@@ -32,6 +32,7 @@ declare module "@vue/runtime-core" {
     Switches: typeof import("./components/switches/index.vue")["default"];
     SwitchRouded: typeof import("./components/switches/SwitchRouded.vue")["default"];
     TabHeader: typeof import("./components/TabHeader.vue")["default"];
+    TableDynamic: typeof import("./components/tableDynamic.vue")["default"];
     ThemeButton: typeof import("./components/buttons/ThemeButton.vue")["default"];
     ToggleTheme: typeof import("./components/ToggleTheme.vue")["default"];
     TranslationComponent: typeof import("./components/TranslationComponent.vue")["default"];

@@ -1,0 +1,8 @@
+mutation AddRamal($data: RamalInput!) {
+  createRamal(data: $data) {
+    id
+    ramal_user
+    sector_user
+    ramal_number
+  }
+}

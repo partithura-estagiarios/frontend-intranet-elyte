@@ -8,7 +8,7 @@
         standout="bg-info"
         bg-color="primary"
         input-class="text-white"
-        v-model="form.nomeUsuario"
+        v-model="dados.email"
         :placeholder="$t('login.labelInputName')"
         color="white"
       />
@@ -21,7 +21,7 @@
         input-class="text-white"
         label-color="white"
         class="q-pt-md"
-        v-model="form.senha"
+        v-model="dados.password"
         :placeholder="$t('login.labelInputPassword')"
       />
 
@@ -40,16 +40,29 @@
       style="background: #fff; color: black; width: 20rem"
       class="q-mt-xl btn-enviar"
       size="lg"
-      to="/home"
+      @click="auth()"
     />
   </q-form>
 </template>
 
 <script lang="ts" setup>
-const form = ref({
-  nomeUsuario: "",
-  senha: "",
+import Auth from "../../graphql/auth/index.gql";
+
+const dados = reactive({
+  email: "",
+  password: "",
 });
+
+async function auth() {
+  try {
+    const { auth } = await runMutation(Auth, { data: { ...dados } });
+    router.push("/home");
+    positiveNotify("deu certo");
+    console.log(auth);
+  } catch ({ message }) {
+    negativeNotify("deu errado");
+  }
+}
 </script>
 
 <style scoped>

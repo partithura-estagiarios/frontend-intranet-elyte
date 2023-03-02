@@ -1,0 +1,8 @@
+mutation Auth($data: AuthInput!) {
+  auth(data: $data) {
+    token
+    user {
+      email
+    }
+  }
+}

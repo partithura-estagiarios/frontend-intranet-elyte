@@ -1,0 +1,32 @@
+export default {
+  ManagementSystem: "Management System",
+  HrSystem: "Hr System",
+  OtherSystems: "OTHERS",
+  Management: {
+    DataSul: "DataSul",
+    Partithura: "Partithura",
+    StockQuery: "Stock Query",
+    CODI: "CODI",
+    GoodIdea: "Good Idea",
+    Reports: "Reports",
+    ProcessMapping: "Process Mapping",
+    FtWeb: "FT Web",
+  },
+  Hr: {
+    HRDiscloses: "HR Discloses",
+    Birthdays: "Birthdays",
+    FixedSchedule: "Fixed Schedule",
+    ContactWithDirector: "Contact with Director",
+    Menu: "Menu",
+    Fones: "Fones",
+    Agenda: "Agenda",
+  },
+  DescriptionManagement: {
+    ErpSystem: "ERP System",
+    StrategicManagement: "Strategic Management",
+    ProductionManagement: "Production Management",
+    Mapping: "Mapping",
+    FT: "Web Technical Sheet",
+    DataSulPrototype: "Exclusive for Test",
+  },
+};

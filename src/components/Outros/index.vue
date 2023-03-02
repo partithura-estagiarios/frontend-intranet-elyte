@@ -2,15 +2,15 @@
   <div class="side borderRad">
     <q-card class="q-mx-lg row justify-center shadow-7">
       <q-card-section class="q-my-md">
-        <span class="text-black row font text-bold">
-          {{ $t("titles.Others") }}
+        <span class="text-black text-uppercase row font text-bold">
+          {{ $t("titles.OtherSystems") }}
           <q-icon color="primary" class="q-ml-sm" size="2rem" name="info" />
         </span>
         <q-separator size="0.5rem" color="primary" class="bar-style" />
       </q-card-section>
       <q-card-section class="row justify-center">
         <q-item
-          v-for="icon in gestaoList"
+          v-for="icon in outrosList"
           :key="icon.id"
           class="row col-3 q-mx-lg"
           clickable
@@ -33,40 +33,7 @@
 </template>
 
 <script setup lang="ts">
-const gestaoList = [
-  {
-    id: "1",
-    img: "",
-    label: "DataSul",
-    link: "http:/totvs-login/loginForm",
-  },
-  {
-    id: "2",
-    img: "",
-    label: "Partithura",
-    link: "elyte.partithura.app/dashboard/",
-  },
-  {
-    id: "3",
-    img: "",
-    label: "Consulta de Estoque",
-  },
-  {
-    id: "4",
-    img: "",
-    label: "CODI",
-  },
-  {
-    id: "5",
-    img: "/public/icon/datasulIcon.png",
-    label: "Boa Idéia",
-  },
-  {
-    id: "6",
-    img: "/public/icon/datasulIcon.png",
-    label: "Relatórios",
-  },
-];
+import { outrosList } from "../lib";
 </script>
 
 <style scoped>

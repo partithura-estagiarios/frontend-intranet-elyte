@@ -13,4 +13,6 @@ export default {
   backButton: "Voltar",
   linkHasSent: "Um link foi enviado para seu e-mail.",
   spamBox: "Verifique também sua caixa de spam.",
+  incorrectLogin: "Informações de login incorretas, tente novamente!",
+  correctLogin: "Seja bem-vindo!",
 };

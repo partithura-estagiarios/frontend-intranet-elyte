@@ -57,10 +57,10 @@ async function auth() {
   try {
     const { auth } = await runMutation(Auth, { data: { ...dados } });
     router.push("/home");
-    positiveNotify("deu certo");
+    positiveNotify(t("login.correctLogin"));
     console.log(auth);
   } catch ({ message }) {
-    negativeNotify("deu errado");
+    negativeNotify(t("login.incorrectLogin"));
   }
 }
 </script>

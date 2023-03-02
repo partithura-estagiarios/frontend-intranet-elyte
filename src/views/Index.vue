@@ -4,6 +4,12 @@
   </div>
 </template>
 
+<script setup lang="ts">
+onMounted(() => {
+  router.push("/home");
+});
+</script>
+
 <style scoped>
 .title {
   will-change: filter;

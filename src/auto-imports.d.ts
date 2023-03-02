@@ -12,6 +12,7 @@ declare global {
   const asyncComputed: typeof import("@vueuse/core")["asyncComputed"];
   const autoResetRef: typeof import("@vueuse/core")["autoResetRef"];
   const backgroundColor: typeof import("./composables/theme")["backgroundColor"];
+  const clearStorage: typeof import("./helpers/storage")["clearStorage"];
   const color: typeof import("./composables/theme")["color"];
   const computed: typeof import("vue")["computed"];
   const computedAsync: typeof import("@vueuse/core")["computedAsync"];
@@ -39,6 +40,8 @@ declare global {
   const getCurrentInstance: typeof import("vue")["getCurrentInstance"];
   const getCurrentScope: typeof import("vue")["getCurrentScope"];
   const getEnvironmentVariable: typeof import("./helpers/host")["getEnvironmentVariable"];
+  const getItemStorage: typeof import("./helpers/storage")["getItemStorage"];
+  const getTokenStorage: typeof import("./helpers/storage")["getTokenStorage"];
   const h: typeof import("vue")["h"];
   const ignorableWatch: typeof import("@vueuse/core")["ignorableWatch"];
   const increment: typeof import("./helpers/index")["increment"];
@@ -52,6 +55,7 @@ declare global {
   const loga: typeof import("./helpers/index")["loga"];
   const makeDestructurable: typeof import("@vueuse/core")["makeDestructurable"];
   const markRaw: typeof import("vue")["markRaw"];
+  const negativeNotify: typeof import("./helpers/notify")["negativeNotify"];
   const nextTick: typeof import("vue")["nextTick"];
   const onActivated: typeof import("vue")["onActivated"];
   const onBeforeMount: typeof import("vue")["onBeforeMount"];
@@ -73,8 +77,11 @@ declare global {
   const onUnmounted: typeof import("vue")["onUnmounted"];
   const onUpdated: typeof import("vue")["onUpdated"];
   const pausableWatch: typeof import("@vueuse/core")["pausableWatch"];
+  const positiveNotify: typeof import("./helpers/notify")["positiveNotify"];
   const preferredDark: typeof import("./composables/dark")["preferredDark"];
   const provide: typeof import("vue")["provide"];
+  const ramaisStorage: typeof import("./stores/ramais")["ramaisStorage"];
+  const ramalStorage: typeof import("./stores/ramal")["ramalStorage"];
   const reactify: typeof import("@vueuse/core")["reactify"];
   const reactifyObject: typeof import("@vueuse/core")["reactifyObject"];
   const reactive: typeof import("vue")["reactive"];
@@ -88,17 +95,21 @@ declare global {
   const refDefault: typeof import("@vueuse/core")["refDefault"];
   const refThrottled: typeof import("@vueuse/core")["refThrottled"];
   const refWithControl: typeof import("@vueuse/core")["refWithControl"];
+  const removeToken: typeof import("./helpers/storage")["removeToken"];
   const resolveComponent: typeof import("vue")["resolveComponent"];
   const resolveDirective: typeof import("vue")["resolveDirective"];
   const resolveRef: typeof import("@vueuse/core")["resolveRef"];
   const resolveUnref: typeof import("@vueuse/core")["resolveUnref"];
   const router: typeof import("./composables/index")["router"];
+  const runMutation: typeof import("./helpers/query")["runMutation"];
   const runQuery: typeof import("./helpers/query")["runQuery"];
+  const setTokenStorage: typeof import("./helpers/storage")["setTokenStorage"];
   const shallowReactive: typeof import("vue")["shallowReactive"];
   const shallowReadonly: typeof import("vue")["shallowReadonly"];
   const shallowRef: typeof import("vue")["shallowRef"];
   const syncRef: typeof import("@vueuse/core")["syncRef"];
   const syncRefs: typeof import("@vueuse/core")["syncRefs"];
+  const t: typeof import("./composables/index")["t"];
   const templateRef: typeof import("@vueuse/core")["templateRef"];
   const textColor: typeof import("./composables/theme")["textColor"];
   const themeIcon: typeof import("./composables/theme")["themeIcon"];
@@ -156,6 +167,7 @@ declare global {
   const useDeviceOrientation: typeof import("@vueuse/core")["useDeviceOrientation"];
   const useDevicePixelRatio: typeof import("@vueuse/core")["useDevicePixelRatio"];
   const useDevicesList: typeof import("@vueuse/core")["useDevicesList"];
+  const useDialogPluginComponent: typeof import("quasar")["useDialogPluginComponent"];
   const useDisplayMedia: typeof import("@vueuse/core")["useDisplayMedia"];
   const useDocumentVisibility: typeof import("@vueuse/core")["useDocumentVisibility"];
   const useDraggable: typeof import("@vueuse/core")["useDraggable"];
@@ -175,6 +187,7 @@ declare global {
   const useFileSystemAccess: typeof import("@vueuse/core")["useFileSystemAccess"];
   const useFocus: typeof import("@vueuse/core")["useFocus"];
   const useFocusWithin: typeof import("@vueuse/core")["useFocusWithin"];
+  const useFormChild: typeof import("quasar")["useFormChild"];
   const useFps: typeof import("@vueuse/core")["useFps"];
   const useFullscreen: typeof import("@vueuse/core")["useFullscreen"];
   const useGamepad: typeof import("@vueuse/core")["useGamepad"];
@@ -197,6 +210,7 @@ declare global {
   const useMediaQuery: typeof import("@vueuse/core")["useMediaQuery"];
   const useMemoize: typeof import("@vueuse/core")["useMemoize"];
   const useMemory: typeof import("@vueuse/core")["useMemory"];
+  const useMeta: typeof import("quasar")["useMeta"];
   const useMounted: typeof import("@vueuse/core")["useMounted"];
   const useMouse: typeof import("@vueuse/core")["useMouse"];
   const useMouseInElement: typeof import("@vueuse/core")["useMouseInElement"];
@@ -218,6 +232,7 @@ declare global {
   const usePreferredDark: typeof import("@vueuse/core")["usePreferredDark"];
   const usePreferredLanguages: typeof import("@vueuse/core")["usePreferredLanguages"];
   const usePreferredReducedMotion: typeof import("@vueuse/core")["usePreferredReducedMotion"];
+  const useQuasar: typeof import("quasar")["useQuasar"];
   const useRafFn: typeof import("@vueuse/core")["useRafFn"];
   const useRefHistory: typeof import("@vueuse/core")["useRefHistory"];
   const useResizeObserver: typeof import("@vueuse/core")["useResizeObserver"];
@@ -272,6 +287,7 @@ declare global {
   const useWindowFocus: typeof import("@vueuse/core")["useWindowFocus"];
   const useWindowScroll: typeof import("@vueuse/core")["useWindowScroll"];
   const useWindowSize: typeof import("@vueuse/core")["useWindowSize"];
+  const userStorage: typeof import("./stores/user")["userStorage"];
   const watch: typeof import("vue")["watch"];
   const watchArray: typeof import("@vueuse/core")["watchArray"];
   const watchAtMost: typeof import("@vueuse/core")["watchAtMost"];
@@ -307,6 +323,9 @@ declare module "vue" {
     >;
     readonly backgroundColor: UnwrapRef<
       typeof import("./composables/theme")["backgroundColor"]
+    >;
+    readonly clearStorage: UnwrapRef<
+      typeof import("./helpers/storage")["clearStorage"]
     >;
     readonly color: UnwrapRef<typeof import("./composables/theme")["color"]>;
     readonly computed: UnwrapRef<typeof import("vue")["computed"]>;
@@ -377,6 +396,12 @@ declare module "vue" {
     readonly getEnvironmentVariable: UnwrapRef<
       typeof import("./helpers/host")["getEnvironmentVariable"]
     >;
+    readonly getItemStorage: UnwrapRef<
+      typeof import("./helpers/storage")["getItemStorage"]
+    >;
+    readonly getTokenStorage: UnwrapRef<
+      typeof import("./helpers/storage")["getTokenStorage"]
+    >;
     readonly h: UnwrapRef<typeof import("vue")["h"]>;
     readonly ignorableWatch: UnwrapRef<
       typeof import("@vueuse/core")["ignorableWatch"]
@@ -396,6 +421,9 @@ declare module "vue" {
       typeof import("@vueuse/core")["makeDestructurable"]
     >;
     readonly markRaw: UnwrapRef<typeof import("vue")["markRaw"]>;
+    readonly negativeNotify: UnwrapRef<
+      typeof import("./helpers/notify")["negativeNotify"]
+    >;
     readonly nextTick: UnwrapRef<typeof import("vue")["nextTick"]>;
     readonly onActivated: UnwrapRef<typeof import("vue")["onActivated"]>;
     readonly onBeforeMount: UnwrapRef<typeof import("vue")["onBeforeMount"]>;
@@ -441,10 +469,19 @@ declare module "vue" {
     readonly pausableWatch: UnwrapRef<
       typeof import("@vueuse/core")["pausableWatch"]
     >;
+    readonly positiveNotify: UnwrapRef<
+      typeof import("./helpers/notify")["positiveNotify"]
+    >;
     readonly preferredDark: UnwrapRef<
       typeof import("./composables/dark")["preferredDark"]
     >;
     readonly provide: UnwrapRef<typeof import("vue")["provide"]>;
+    readonly ramaisStorage: UnwrapRef<
+      typeof import("./stores/ramais")["ramaisStorage"]
+    >;
+    readonly ramalStorage: UnwrapRef<
+      typeof import("./stores/ramal")["ramalStorage"]
+    >;
     readonly reactify: UnwrapRef<typeof import("@vueuse/core")["reactify"]>;
     readonly reactifyObject: UnwrapRef<
       typeof import("@vueuse/core")["reactifyObject"]
@@ -474,6 +511,9 @@ declare module "vue" {
     readonly refWithControl: UnwrapRef<
       typeof import("@vueuse/core")["refWithControl"]
     >;
+    readonly removeToken: UnwrapRef<
+      typeof import("./helpers/storage")["removeToken"]
+    >;
     readonly resolveComponent: UnwrapRef<
       typeof import("vue")["resolveComponent"]
     >;
@@ -485,7 +525,13 @@ declare module "vue" {
       typeof import("@vueuse/core")["resolveUnref"]
     >;
     readonly router: UnwrapRef<typeof import("./composables/index")["router"]>;
+    readonly runMutation: UnwrapRef<
+      typeof import("./helpers/query")["runMutation"]
+    >;
     readonly runQuery: UnwrapRef<typeof import("./helpers/query")["runQuery"]>;
+    readonly setTokenStorage: UnwrapRef<
+      typeof import("./helpers/storage")["setTokenStorage"]
+    >;
     readonly shallowReactive: UnwrapRef<
       typeof import("vue")["shallowReactive"]
     >;
@@ -495,6 +541,7 @@ declare module "vue" {
     readonly shallowRef: UnwrapRef<typeof import("vue")["shallowRef"]>;
     readonly syncRef: UnwrapRef<typeof import("@vueuse/core")["syncRef"]>;
     readonly syncRefs: UnwrapRef<typeof import("@vueuse/core")["syncRefs"]>;
+    readonly t: UnwrapRef<typeof import("./composables/index")["t"]>;
     readonly templateRef: UnwrapRef<
       typeof import("@vueuse/core")["templateRef"]
     >;
@@ -632,6 +679,9 @@ declare module "vue" {
     readonly useDevicesList: UnwrapRef<
       typeof import("@vueuse/core")["useDevicesList"]
     >;
+    readonly useDialogPluginComponent: UnwrapRef<
+      typeof import("quasar")["useDialogPluginComponent"]
+    >;
     readonly useDisplayMedia: UnwrapRef<
       typeof import("@vueuse/core")["useDisplayMedia"]
     >;
@@ -683,6 +733,7 @@ declare module "vue" {
     readonly useFocusWithin: UnwrapRef<
       typeof import("@vueuse/core")["useFocusWithin"]
     >;
+    readonly useFormChild: UnwrapRef<typeof import("quasar")["useFormChild"]>;
     readonly useFps: UnwrapRef<typeof import("@vueuse/core")["useFps"]>;
     readonly useFullscreen: UnwrapRef<
       typeof import("@vueuse/core")["useFullscreen"]
@@ -731,6 +782,7 @@ declare module "vue" {
     >;
     readonly useMemoize: UnwrapRef<typeof import("@vueuse/core")["useMemoize"]>;
     readonly useMemory: UnwrapRef<typeof import("@vueuse/core")["useMemory"]>;
+    readonly useMeta: UnwrapRef<typeof import("quasar")["useMeta"]>;
     readonly useMounted: UnwrapRef<typeof import("@vueuse/core")["useMounted"]>;
     readonly useMouse: UnwrapRef<typeof import("@vueuse/core")["useMouse"]>;
     readonly useMouseInElement: UnwrapRef<
@@ -782,6 +834,7 @@ declare module "vue" {
     readonly usePreferredReducedMotion: UnwrapRef<
       typeof import("@vueuse/core")["usePreferredReducedMotion"]
     >;
+    readonly useQuasar: UnwrapRef<typeof import("quasar")["useQuasar"]>;
     readonly useRafFn: UnwrapRef<typeof import("@vueuse/core")["useRafFn"]>;
     readonly useRefHistory: UnwrapRef<
       typeof import("@vueuse/core")["useRefHistory"]
@@ -909,6 +962,9 @@ declare module "vue" {
     >;
     readonly useWindowSize: UnwrapRef<
       typeof import("@vueuse/core")["useWindowSize"]
+    >;
+    readonly userStorage: UnwrapRef<
+      typeof import("./stores/user")["userStorage"]
     >;
     readonly watch: UnwrapRef<typeof import("vue")["watch"]>;
     readonly watchArray: UnwrapRef<typeof import("@vueuse/core")["watchArray"]>;

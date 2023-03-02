@@ -1,5 +1,5 @@
 import { createApp } from "vue";
-import { Quasar } from "quasar";
+import { Quasar, Notify } from "quasar";
 
 import "uno.css";
 
@@ -15,7 +15,7 @@ import "./style.css";
 
 createApp(App)
   .use(Quasar, {
-    plugins: {}, // import Quasar plugins and add here
+    plugins: { Notify }, // import Quasar plugins and add here
   })
   .use(villus)
   .use(router)

@@ -62,7 +62,6 @@ async function auth() {
     const token = auth.token;
     const user = auth.user;
     if (token) {
-      loga(token);
       userStorage.setUser({
         username: user.username,
         id: user.id,
@@ -70,9 +69,9 @@ async function auth() {
         token,
       });
     }
-    // positiveNotify(t("notifications.success.login"));
-
-    // router.push("/home");
+    setTokenStorage(token);
+    positiveNotify(t("notifications.success.login"));
+    router.push("/home");
   } catch ({ message }) {
     negativeNotify(t("notifications.fail.login"));
   }

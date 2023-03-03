@@ -46,6 +46,7 @@
 </template>
 
 <script lang="ts" setup>
+import { AuthQuery } from "../../entities";
 import Auth from "../../graphql/auth/index.gql";
 
 const dados = reactive({
@@ -55,7 +56,9 @@ const dados = reactive({
 
 async function auth() {
   try {
-    const { auth } = await runMutation(Auth, { data: { ...dados } });
+    const { auth } = (await runMutation(Auth, {
+      data: { ...dados },
+    })) as unknown as AuthQuery;
     const token = auth.token;
     const user = auth.user;
     if (token) {

@@ -1,7 +1,7 @@
 import { defineStore, acceptHMRUpdate } from "pinia";
 import { getTokenStorage } from "../helpers/storage";
 
-import { UserStorage } from "../entities/User";
+import { UserStorage, UserStorageConstructor } from "../entities/User";
 
 function buildUser({ username, id, email, token }: UserStorage): UserStorage {
   return {
@@ -54,5 +54,5 @@ export const useUserStore = defineStore("useUserStore", {
     },
   },
   persist: true,
-});
+}) as UserStorageConstructor;
 export const userStorage = useUserStore();

@@ -3,6 +3,8 @@ mutation Auth($data: AuthInput!) {
     token
     user {
       email
+      id
+      username
     }
   }
 }

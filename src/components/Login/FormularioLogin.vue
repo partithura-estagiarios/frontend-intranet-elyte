@@ -56,11 +56,22 @@ const dados = reactive({
 async function auth() {
   try {
     const { auth } = await runMutation(Auth, { data: { ...dados } });
-    router.push("/home");
-    positiveNotify(t("login.correctLogin"));
-    console.log(auth);
+    const token = auth.token;
+    const user = auth.user;
+    if (token) {
+      loga(token);
+      userStorage.setUser({
+        username: user.username,
+        id: user.id,
+        email: user.email,
+        token,
+      });
+    }
+    // positiveNotify(t("notifications.success.login"));
+
+    // router.push("/home");
   } catch ({ message }) {
-    negativeNotify(t("login.incorrectLogin"));
+    negativeNotify(t("notifications.fail.login"));
   }
 }
 </script>

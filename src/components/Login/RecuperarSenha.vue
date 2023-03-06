@@ -44,8 +44,10 @@ const form = ref({
 </script>
 
 <style scoped>
+.btn-enviar {
+  box-shadow: 0px 10px 40px -12px #fff;
+}
 .btn-enviar:hover {
-  box-shadow: 0 8px 8px -4px red;
-  color: red !important;
+  box-shadow: 0px 10px 40px -12px #ff0000;
 }
 </style>

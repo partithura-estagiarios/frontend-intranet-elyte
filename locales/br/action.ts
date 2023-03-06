@@ -43,4 +43,14 @@ export default {
   addRamal: {
     index: "Adicionar ramal",
   },
+  back: {
+    index: "Voltar",
+  },
+  login: {
+    index: "Faça seu login!",
+    labelForgetPassword: "Esqueci a senha",
+    textPassword: "Recupere sua senha!",
+    labelInputEmail: "Digite sue e-mail",
+    backButton: "Voltar",
+  },
 };

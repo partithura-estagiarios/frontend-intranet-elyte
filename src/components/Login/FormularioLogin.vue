@@ -1,5 +1,5 @@
 <template>
-  <span class="titulo q-mb-lg">{{ $t("login.textLogin") }}</span>
+  <span class="titulo q-mb-lg">{{ $t("action.login.index") }}</span>
 
   <q-form>
     <div>
@@ -26,7 +26,7 @@
       />
 
       <q-btn
-        :label="$t('login.labelForgetPassword')"
+        :label="$t('action.login.labelForgetPassword')"
         class="float-left"
         no-caps
         size="1rem"
@@ -35,7 +35,7 @@
     </div>
 
     <q-btn
-      :label="$t('login.submitButton')"
+      :label="$t('action.submit.index')"
       rounded
       style="background: #fff; color: black; width: 20rem"
       :class="marginBtn"

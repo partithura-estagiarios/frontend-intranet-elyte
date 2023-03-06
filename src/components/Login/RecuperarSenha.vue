@@ -15,7 +15,7 @@
     </div>
 
     <q-btn
-      :label="$t('login.submitButton')"
+      :label="$t('action.submit.index')"
       rounded
       style="background: #fff; color: black; width: 20rem"
       class="q-mt-md btn-enviar"

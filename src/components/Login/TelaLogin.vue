@@ -13,9 +13,9 @@
         no-transition
         no-spinner
       />
-      <span class="text-weight-bold q-mb-xl q-mt-sm titulo"
-        >Intranet Elyte</span
-      >
+      <span class="text-weight-bold q-mb-xl q-mt-sm titulo">{{
+        $t("titles.textIntranet")
+      }}</span>
       <slot></slot>
     </div>
   </q-img>

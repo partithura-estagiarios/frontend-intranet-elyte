@@ -1,11 +1,11 @@
 <template>
   <div :class="textSize" class="q-mt-lg q-mb-lg">
-    <p class="text-weight-bold">{{ $t("login.linkHasSent") }}</p>
-    <p>{{ $t("login.spamBox") }}</p>
+    <p class="text-weight-bold">{{ $t("titles.Login.linkHasSent") }}</p>
+    <p>{{ $t("titles.Login.verifySpam") }}</p>
   </div>
 
   <q-btn
-    :label="$t('login.textLogin')"
+    :label="$t('titles.Login.textLoginForm')"
     rounded
     style="background: #fff; color: black; width: 20rem"
     class="q-mt-md btn-enviar q-mb-xs"

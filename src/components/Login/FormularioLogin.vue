@@ -1,5 +1,5 @@
 <template>
-  <span class="titulo q-mb-lg">{{ $t("action.login.index") }}</span>
+  <span class="titulo q-mb-lg">{{ $t("titles.Login.textLoginForm") }}</span>
 
   <q-form>
     <div>
@@ -9,7 +9,7 @@
         bg-color="primary"
         input-class="text-white"
         v-model="dados.email"
-        :placeholder="$t('login.labelInputName')"
+        :placeholder="$t('label.inputName')"
         color="white"
       />
       <q-input
@@ -22,11 +22,11 @@
         label-color="white"
         class="q-pt-md"
         v-model="dados.password"
-        :placeholder="$t('login.labelInputPassword')"
+        :placeholder="$t('label.inputPassword')"
       />
 
       <q-btn
-        :label="$t('action.login.labelForgetPassword')"
+        :label="$t('label.forgetPassword')"
         class="float-left"
         no-caps
         size="1rem"

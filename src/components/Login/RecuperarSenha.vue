@@ -1,19 +1,15 @@
 <template>
-  <span class="titulo q-mb-lg">{{ $t("login.textPassword") }}</span>
-
+  <span class="titulo q-mb-lg">{{ $t("titles.Login.textPasswordForm") }}</span>
   <q-form>
-    <div>
-      <q-input
-        rounded
-        standout="bg-info"
-        bg-color="primary"
-        input-class="text-white"
-        v-model="form.emailRecover"
-        :placeholder="$t('login.labelInputEmail')"
-        type="email"
-      />
-    </div>
-
+    <q-input
+      rounded
+      standout="bg-info"
+      bg-color="primary"
+      input-class="text-white"
+      v-model="form.emailRecover"
+      :placeholder="$t('login.labelInputEmail')"
+      type="email"
+    />
     <q-btn
       :label="$t('action.submit.index')"
       rounded
@@ -32,7 +28,7 @@
     to="/login"
   >
     <span class="text-white">
-      {{ $t("login.backButton") }}
+      {{ $t("action.back.index") }}
     </span>
   </q-btn>
 </template>

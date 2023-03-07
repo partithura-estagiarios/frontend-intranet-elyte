@@ -1,17 +1,3 @@
 export default {
-  title: "Login",
-  labelInputName: "Seu nome de usuário",
-  labelInputPassword: "Sua senha",
-  hintName: "Sua matrícula",
-  hintPassword: "6 primeiros números do seu cpf",
-  warning: "Por favor digite algo!",
-  textLogin: "Faça seu acesso!",
-  labelForgetPassword: "Esqueci a senha",
-  textPassword: "Recupere sua senha!",
-  labelInputEmail: "Digite sue e-mail",
-  backButton: "Voltar",
-  linkHasSent: "Um link foi enviado para seu e-mail.",
-  spamBox: "Verifique também sua caixa de spam.",
-  incorrectLogin: "Informações de login incorretas, tente novamente!",
-  correctLogin: "Seja bem-vindo!",
+  textLogin: "",
 };

@@ -13,8 +13,7 @@
     <q-btn
       :label="$t('action.submit.index')"
       rounded
-      style="background: #fff; color: black; width: 20rem"
-      class="q-mt-md btn-enviar"
+      class="q-mt-md btn-enviar tamanho"
       size="lg"
       to="/login/emailEnviado"
     />
@@ -42,8 +41,13 @@ const form = ref({
 <style scoped>
 .btn-enviar {
   box-shadow: 0px 10px 40px -12px #fff;
+  background: #fff;
+  color: black;
 }
 .btn-enviar:hover {
   box-shadow: 0px 10px 40px -12px #ff0000;
+}
+.tamanho {
+  width: 20rem;
 }
 </style>

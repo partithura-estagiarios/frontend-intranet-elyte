@@ -1,5 +1,5 @@
 <template>
-  <div :class="textSize" class="q-mt-lg q-mb-lg">
+  <div :class="size.text" class="q-mt-lg q-mb-lg">
     <p class="text-weight-bold">{{ $t("titles.Login.linkHasSent") }}</p>
     <p>{{ $t("titles.Login.verifySpam") }}</p>
   </div>
@@ -9,28 +9,23 @@
     rounded
     style="background: #fff; color: black; width: 20rem"
     class="q-mt-md btn-enviar q-mb-xs"
-    :size="sizeBtn"
+    :size="size.btn"
     to="/login"
   />
 </template>
 
 <script setup lang="ts">
-import { useQuasar } from "quasar";
-
-const $q = useQuasar();
-
-const textSize = computed(() => {
-  if ($q.screen.gt.md) {
-    return "text-h5";
+const size = computed(() => {
+  if (useQuasar().screen.gt.md) {
+    return {
+      text: "text-h5",
+      btn: "lg",
+    };
   }
-  return "text-h7";
-});
-
-const sizeBtn = computed(() => {
-  if ($q.screen.gt.md) {
-    return "lg";
-  }
-  return "md";
+  return {
+    text: "text-h7",
+    btn: "md",
+  };
 });
 </script>
 

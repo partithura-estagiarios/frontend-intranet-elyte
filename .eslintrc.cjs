@@ -22,5 +22,5 @@ export default {
     quotes: ["error", "single"],
     semi: ["error", "always"],
   },
-  ignorePatterns: ["dist/", "*.d.ts", "./auto-imports.d.ts"],
+  ignorePatterns: ["dist/", "*.d.ts"],
 };

@@ -9,7 +9,7 @@
         bg-color="primary"
         input-class="text-white"
         class="tamanho"
-        v-model="dados.email"
+        v-model="data.email"
         :placeholder="$t('label.inputName')"
         color="white"
       />
@@ -22,7 +22,7 @@
         input-class="text-white"
         label-color="white"
         class="q-pt-md tamanho"
-        v-model="dados.password"
+        v-model="data.password"
         :placeholder="$t('label.inputPassword')"
       />
 
@@ -56,7 +56,7 @@ const $q = useQuasar();
 
 const marginBtn = computed(() => ($q.screen.gt.md ? "q-mt-xl" : "q-mt-sm"));
 
-const dados = reactive({
+const data = reactive({
   email: "",
   password: "",
 });
@@ -64,10 +64,9 @@ const dados = reactive({
 async function auth() {
   try {
     const { auth } = (await runMutation(Auth, {
-      data: { ...dados },
+      data,
     })) as unknown as AuthQuery;
-    const token = auth.token;
-    const user = auth.user;
+    const { token, user } = auth;
     if (token) {
       userStorage.setUser({
         username: user.username,

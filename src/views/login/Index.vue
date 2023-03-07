@@ -1,5 +1,5 @@
 <template>
-  <BaseLogin>
+  <BackgroundLogin>
     <FormularioLogin />
-  </BaseLogin>
+  </BackgroundLogin>
 </template>

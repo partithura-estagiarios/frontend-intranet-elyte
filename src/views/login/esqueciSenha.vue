@@ -1,5 +1,5 @@
 <template>
-  <BaseLogin>
+  <BackgroundLogin>
     <RecuperarSenha />
-  </BaseLogin>
+  </BackgroundLogin>
 </template>

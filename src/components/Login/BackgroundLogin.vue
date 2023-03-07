@@ -9,7 +9,7 @@
     <div class="full-width column items-center bg-transparent q-mt-xl">
       <q-img
         src="../../assets/loginImages/logoElyte.png"
-        :width="sizeLogo"
+        :width="size"
         no-transition
         no-spinner
       />
@@ -22,16 +22,7 @@
 </template>
 
 <script setup lang="ts">
-import { useQuasar } from "quasar";
-
-const $q = useQuasar();
-
-const sizeLogo = computed(() => {
-  if ($q.screen.gt.md) {
-    return "6rem";
-  }
-  return "5rem";
-});
+const size = computed(() => (useQuasar().screen.gt.md ? "6rem" : "5rem"));
 </script>
 
 <style>

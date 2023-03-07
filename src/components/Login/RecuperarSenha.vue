@@ -1,23 +1,22 @@
 <template>
   <span class="titulo q-mb-lg">{{ $t("titles.Login.textPasswordForm") }}</span>
-  <q-form>
-    <q-input
-      rounded
-      standout="bg-info"
-      bg-color="primary"
-      input-class="text-white"
-      v-model="form.emailRecover"
-      :placeholder="$t('label.inputEmail')"
-      type="email"
-    />
-    <q-btn
-      :label="$t('action.submit.index')"
-      rounded
-      class="q-mt-md btn-enviar tamanho"
-      size="lg"
-      to="/login/emailEnviado"
-    />
-  </q-form>
+  <q-input
+    rounded
+    standout="bg-info"
+    bg-color="primary"
+    input-class="text-white"
+    v-model="form.emailRecover"
+    :placeholder="$t('label.inputEmail')"
+    type="email"
+    class="tamanho"
+  />
+  <q-btn
+    :label="$t('action.submit.index')"
+    rounded
+    class="q-mt-md btn-enviar tamanho"
+    size="lg"
+    to="/login/emailEnviado"
+  />
 
   <q-btn
     class="q-mt-md"

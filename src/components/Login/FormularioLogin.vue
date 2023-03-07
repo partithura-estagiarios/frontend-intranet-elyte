@@ -1,38 +1,35 @@
 <template>
   <span class="titulo q-mb-lg">{{ $t("titles.Login.textLoginForm") }}</span>
-  <div>
-    <q-input
-      rounded
-      standout="bg-info"
-      bg-color="primary"
-      input-class="text-white"
-      class="tamanho"
-      v-model="data.email"
-      :placeholder="$t('label.inputName')"
-      color="white"
-    />
-    <q-input
-      rounded
-      standout="bg-info"
-      type="password"
-      bg-color="primary"
-      color="red-1"
-      input-class="text-white"
-      label-color="white"
-      class="q-pt-md tamanho"
-      v-model="data.password"
-      :placeholder="$t('label.inputPassword')"
-    />
-
-    <q-btn
-      :label="$t('label.forgetPassword')"
-      class="row items-start"
-      no-caps
-      size="1rem"
-      to="login/esqueciSenha"
-    />
-  </div>
-
+  <q-input
+    rounded
+    standout="bg-info"
+    bg-color="primary"
+    input-class="text-white"
+    class="tamanho"
+    v-model="data.email"
+    :placeholder="$t('label.inputName')"
+    color="white"
+  />
+  <q-input
+    rounded
+    standout="bg-info"
+    type="password"
+    bg-color="primary"
+    color="red-1"
+    input-class="text-white"
+    label-color="white"
+    class="q-pt-md tamanho"
+    v-model="data.password"
+    :placeholder="$t('label.inputPassword')"
+  />
+  <q-btn
+    :label="$t('label.forgetPassword')"
+    align="left"
+    class="tamanho"
+    no-caps
+    size="1rem"
+    to="login/esqueciSenha"
+  />
   <q-btn
     :label="$t('action.submit.index')"
     rounded
@@ -47,11 +44,9 @@
 import { AuthQuery } from "../../entities";
 import Auth from "../../graphql/auth/index.gql";
 
-import { useQuasar } from "quasar";
-
-const $q = useQuasar();
-
-const marginBtn = computed(() => ($q.screen.gt.md ? "q-mt-xl" : "q-mt-sm"));
+const marginBtn = computed(() =>
+  useQuasar().screen.gt.md ? "q-mt-xl" : "q-mt-sm"
+);
 
 const data = reactive({
   email: "",

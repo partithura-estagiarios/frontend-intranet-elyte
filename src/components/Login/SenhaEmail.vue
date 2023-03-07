@@ -23,7 +23,7 @@ const size = computed(() => {
     };
   }
   return {
-    text: "text-h7",
+    text: "text-h6",
     btn: "md",
   };
 });

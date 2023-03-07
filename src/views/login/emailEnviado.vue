@@ -1,5 +1,5 @@
 <template>
-  <TelaLogin>
+  <BaseLogin>
     <SenhaEmail />
-  </TelaLogin>
+  </BaseLogin>
 </template>

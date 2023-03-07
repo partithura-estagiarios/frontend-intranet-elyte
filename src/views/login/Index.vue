@@ -1,5 +1,5 @@
 <template>
-  <TelaLogin>
+  <BaseLogin>
     <FormularioLogin />
-  </TelaLogin>
+  </BaseLogin>
 </template>

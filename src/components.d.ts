@@ -8,6 +8,7 @@ export {}
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
     AntDesignTextBox: typeof import('./components/controls/AntDesignTextBox.vue')['default']
+    BaseLogin: typeof import('./components/Login/BaseLogin.vue')['default']
     CardFooter: typeof import('./components/DynamicDialog/CardFooter.vue')['default']
     CardHeader: typeof import('./components/DynamicDialog/CardHeader.vue')['default']
     CreateRamal: typeof import('./components/CreateRamal/index.vue')['default']
@@ -43,7 +44,7 @@ declare module '@vue/runtime-core' {
     SwitchRouded: typeof import('./components/switches/SwitchRouded.vue')['default']
     TabHeader: typeof import("./components/TabHeader.vue")["default"]
     TableDynamic: typeof import('./components/Ramais/tableDynamic.vue')['default']
-    TelaLogin: typeof import('./components/Login/TelaLogin.vue')['default']
+    TelaLogin: typeof import("./components/Login/TelaLogin.vue")["default"]
     ThemeButton: typeof import('./components/buttons/ThemeButton.vue')['default']
     ToggleTheme: typeof import('./components/ToggleTheme.vue')['default']
     TranslationComponent: typeof import('./components/TranslationComponent.vue')['default']

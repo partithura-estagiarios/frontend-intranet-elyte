@@ -1,49 +1,46 @@
 <template>
   <span class="titulo q-mb-lg">{{ $t("titles.Login.textLoginForm") }}</span>
-
-  <q-form>
-    <div>
-      <q-input
-        rounded
-        standout="bg-info"
-        bg-color="primary"
-        input-class="text-white"
-        class="tamanho"
-        v-model="data.email"
-        :placeholder="$t('label.inputName')"
-        color="white"
-      />
-      <q-input
-        rounded
-        standout="bg-info"
-        type="password"
-        bg-color="primary"
-        color="red-1"
-        input-class="text-white"
-        label-color="white"
-        class="q-pt-md tamanho"
-        v-model="data.password"
-        :placeholder="$t('label.inputPassword')"
-      />
-
-      <q-btn
-        :label="$t('label.forgetPassword')"
-        class="float-left"
-        no-caps
-        size="1rem"
-        to="login/esqueciSenha"
-      />
-    </div>
+  <div>
+    <q-input
+      rounded
+      standout="bg-info"
+      bg-color="primary"
+      input-class="text-white"
+      class="tamanho"
+      v-model="data.email"
+      :placeholder="$t('label.inputName')"
+      color="white"
+    />
+    <q-input
+      rounded
+      standout="bg-info"
+      type="password"
+      bg-color="primary"
+      color="red-1"
+      input-class="text-white"
+      label-color="white"
+      class="q-pt-md tamanho"
+      v-model="data.password"
+      :placeholder="$t('label.inputPassword')"
+    />
 
     <q-btn
-      :label="$t('action.submit.index')"
-      rounded
-      :class="marginBtn"
-      class="btn-enviar tamanho"
-      size="lg"
-      @click="auth()"
+      :label="$t('label.forgetPassword')"
+      class="row items-start"
+      no-caps
+      size="1rem"
+      to="login/esqueciSenha"
     />
-  </q-form>
+  </div>
+
+  <q-btn
+    :label="$t('action.submit.index')"
+    rounded
+    :class="marginBtn"
+    class="btn-enviar tamanho"
+    size="lg"
+    @click="auth()"
+  />
 </template>
 
 <script lang="ts" setup>

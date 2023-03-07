@@ -1,5 +1,5 @@
 <template>
-  <TelaLogin>
+  <BaseLogin>
     <RecuperarSenha />
-  </TelaLogin>
+  </BaseLogin>
 </template>

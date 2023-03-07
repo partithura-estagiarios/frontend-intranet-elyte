@@ -7,7 +7,7 @@
       bg-color="primary"
       input-class="text-white"
       v-model="form.emailRecover"
-      :placeholder="$t('login.labelInputEmail')"
+      :placeholder="$t('label.inputEmail')"
       type="email"
     />
     <q-btn

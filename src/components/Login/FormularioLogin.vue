@@ -8,6 +8,7 @@
         standout="bg-info"
         bg-color="primary"
         input-class="text-white"
+        class="tamanho"
         v-model="dados.email"
         :placeholder="$t('label.inputName')"
         color="white"
@@ -20,7 +21,7 @@
         color="red-1"
         input-class="text-white"
         label-color="white"
-        class="q-pt-md"
+        class="q-pt-md tamanho"
         v-model="dados.password"
         :placeholder="$t('label.inputPassword')"
       />
@@ -37,9 +38,8 @@
     <q-btn
       :label="$t('action.submit.index')"
       rounded
-      style="background: #fff; color: black; width: 20rem"
       :class="marginBtn"
-      class="btn-enviar"
+      class="btn-enviar tamanho"
       size="lg"
       @click="auth()"
     />
@@ -54,12 +54,7 @@ import { useQuasar } from "quasar";
 
 const $q = useQuasar();
 
-const marginBtn = computed(() => {
-  if ($q.screen.gt.md) {
-    return "q-mt-xl";
-  }
-  return "q-mt-sm";
-});
+const marginBtn = computed(() => ($q.screen.gt.md ? "q-mt-xl" : "q-mt-sm"));
 
 const dados = reactive({
   email: "",
@@ -93,8 +88,13 @@ async function auth() {
 <style scoped>
 .btn-enviar {
   box-shadow: 0px 10px 40px -12px #fff;
+  background: #fff;
+  color: black;
 }
 .btn-enviar:hover {
   box-shadow: 0px 10px 40px -12px #ff0000;
+}
+.tamanho {
+  width: 20rem;
 }
 </style>

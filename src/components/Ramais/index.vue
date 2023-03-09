@@ -3,18 +3,26 @@
     <div class="row justify-center">
       <q-card-section class="q-my-md">
         <span class="text-black row font text-bold">
-          {{ $t("titles.SubTitlesHr.Fones") }}
+          {{ $t("titles.Hr.Fones") }}
           <q-icon color="primary" class="q-ml-sm" name="call" size="2rem" />
         </span>
         <q-separator size="0.5rem" color="primary" class="bar-style" />
       </q-card-section>
     </div>
-    <table-dynamic
-      :columns="columns"
-      :rows="ramalList"
-      v-bind="$attrs"
-      @add="ramalForm = true"
-    />
+    <table-dynamic :columns="columns" :rows="ramalList" v-bind="$attrs">
+      <template #top-left>
+        <q-btn
+          outline
+          color="primary"
+          class="border"
+          @click="ramalForm = true"
+          @add="ramalForm = true"
+        >
+          <q-icon class="q-mr-sm" name="add" color="red" />
+          <span>{{ $t("action.addRamal.index") }}</span>
+        </q-btn>
+      </template>
+    </table-dynamic>
 
     <CreateRamal
       :open="ramalForm"
@@ -28,13 +36,22 @@
 <script setup lang="ts">
 import GetRamais from "../../graphql/ramais/getRamais.gql";
 import AddRamal from "../../graphql/ramais/createRamal.gql";
+import { Ramal } from "../../entities";
 
-const ramalList = ref();
+const ramalList = ref(ramaisStorage.getRamais);
 const ramalForm = ref(false);
+
+const event = defineEmits(["add"]);
+
+watchEffect(() => {
+  ramalList.value = ramaisStorage.getRamais;
+});
 
 async function addRamal(ramal: Record<string, string | number>) {
   try {
-    const { createRamal } = await runMutation(AddRamal, { data: { ...ramal } });
+    const data = await runMutation(AddRamal, { data: { ...ramal } });
+    const { getRamais } = await runMutation(GetRamais, {});
+    ramaisStorage.setRamais(getRamais as unknown as [Ramal]);
     positiveNotify(t("notifications.success.createRamal"));
   } catch {
     negativeNotify(t("notifications.fail.createRamal"));
@@ -44,7 +61,7 @@ async function addRamal(ramal: Record<string, string | number>) {
 }
 
 onMounted(async () => {
-  const { getRamais } = await runQuery(GetRamais);
+  const { getRamais } = await runMutation(GetRamais, {});
   ramalList.value = getRamais;
 });
 

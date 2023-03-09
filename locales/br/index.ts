@@ -1,6 +1,5 @@
 import markdown from "./markdown";
 import titles from "./titles";
-import login from "./login";
 import action from "./action";
 import text from "./text";
 import warning from "./warning";
@@ -14,7 +13,6 @@ export default {
   tags: "Entiquetas",
   markdown,
   titles,
-  login,
   text,
   warning,
   notifications,

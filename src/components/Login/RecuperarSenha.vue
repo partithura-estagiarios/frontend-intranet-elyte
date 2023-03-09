@@ -32,7 +32,7 @@
 </template>
 
 <script lang="ts" setup>
-const form = ref({
+const form = reactive({
   emailRecover: "",
 });
 </script>

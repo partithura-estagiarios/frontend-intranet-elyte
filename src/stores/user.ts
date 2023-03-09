@@ -55,4 +55,5 @@ export const useUserStore = defineStore("useUserStore", {
   },
   persist: true,
 }) as UserStorageConstructor;
+
 export const userStorage = useUserStore();

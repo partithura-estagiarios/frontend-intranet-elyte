@@ -43,4 +43,7 @@ export default {
   addRamal: {
     index: "Adicionar ramal",
   },
+  addMenu: {
+    index: "Adicionar cardápio",
+  },
 };

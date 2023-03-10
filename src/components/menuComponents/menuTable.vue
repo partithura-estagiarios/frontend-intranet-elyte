@@ -8,6 +8,7 @@
         :rows-per-page-options="[7]"
         hide-bottom
         class="q-pt-xl"
+        table-header-style="font-weight: bold"
       />
     </div>
   </div>

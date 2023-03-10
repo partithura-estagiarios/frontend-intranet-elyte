@@ -11,13 +11,7 @@
     </div>
     <table-dynamic :columns="columns" :rows="ramalList" v-bind="$attrs">
       <template #top-left>
-        <q-btn
-          outline
-          color="primary"
-          class="border"
-          @click="ramalForm = true"
-          @add="ramalForm = true"
-        >
+        <q-btn outline color="primary" class="border" @click="ramalForm = true">
           <q-icon class="q-mr-sm" name="add" color="red" />
           <span>{{ $t("action.addRamal.index") }}</span>
         </q-btn>
@@ -51,6 +45,7 @@ async function addRamal(ramal: Record<string, string | number>) {
   try {
     const data = await runMutation(AddRamal, { data: { ...ramal } });
     const { getRamais } = await runMutation(GetRamais, {});
+    console.log(getRamais);
     ramaisStorage.setRamais(getRamais as unknown as [Ramal]);
     positiveNotify(t("notifications.success.createRamal"));
   } catch {

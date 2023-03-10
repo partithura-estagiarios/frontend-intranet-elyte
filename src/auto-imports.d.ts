@@ -55,6 +55,7 @@ declare global {
   const loga: typeof import("./helpers/index")["loga"];
   const makeDestructurable: typeof import("@vueuse/core")["makeDestructurable"];
   const markRaw: typeof import("vue")["markRaw"];
+  const negativeNotify: typeof import("./helpers/notify")["negativeNotify"];
   const nextTick: typeof import("vue")["nextTick"];
   const onActivated: typeof import("vue")["onActivated"];
   const onBeforeMount: typeof import("vue")["onBeforeMount"];
@@ -76,6 +77,7 @@ declare global {
   const onUnmounted: typeof import("vue")["onUnmounted"];
   const onUpdated: typeof import("vue")["onUpdated"];
   const pausableWatch: typeof import("@vueuse/core")["pausableWatch"];
+  const positiveNotify: typeof import("./helpers/notify")["positiveNotify"];
   const preferredDark: typeof import("./composables/dark")["preferredDark"];
   const provide: typeof import("vue")["provide"];
   const ramaisStorage: typeof import("./stores/ramais")["ramaisStorage"];
@@ -107,6 +109,7 @@ declare global {
   const shallowRef: typeof import("vue")["shallowRef"];
   const syncRef: typeof import("@vueuse/core")["syncRef"];
   const syncRefs: typeof import("@vueuse/core")["syncRefs"];
+  const t: typeof import("./composables/index")["t"];
   const templateRef: typeof import("@vueuse/core")["templateRef"];
   const textColor: typeof import("./composables/theme")["textColor"];
   const themeIcon: typeof import("./composables/theme")["themeIcon"];
@@ -164,6 +167,7 @@ declare global {
   const useDeviceOrientation: typeof import("@vueuse/core")["useDeviceOrientation"];
   const useDevicePixelRatio: typeof import("@vueuse/core")["useDevicePixelRatio"];
   const useDevicesList: typeof import("@vueuse/core")["useDevicesList"];
+  const useDialogPluginComponent: typeof import("quasar")["useDialogPluginComponent"];
   const useDisplayMedia: typeof import("@vueuse/core")["useDisplayMedia"];
   const useDocumentVisibility: typeof import("@vueuse/core")["useDocumentVisibility"];
   const useDraggable: typeof import("@vueuse/core")["useDraggable"];
@@ -183,6 +187,7 @@ declare global {
   const useFileSystemAccess: typeof import("@vueuse/core")["useFileSystemAccess"];
   const useFocus: typeof import("@vueuse/core")["useFocus"];
   const useFocusWithin: typeof import("@vueuse/core")["useFocusWithin"];
+  const useFormChild: typeof import("quasar")["useFormChild"];
   const useFps: typeof import("@vueuse/core")["useFps"];
   const useFullscreen: typeof import("@vueuse/core")["useFullscreen"];
   const useGamepad: typeof import("@vueuse/core")["useGamepad"];
@@ -205,6 +210,7 @@ declare global {
   const useMediaQuery: typeof import("@vueuse/core")["useMediaQuery"];
   const useMemoize: typeof import("@vueuse/core")["useMemoize"];
   const useMemory: typeof import("@vueuse/core")["useMemory"];
+  const useMeta: typeof import("quasar")["useMeta"];
   const useMounted: typeof import("@vueuse/core")["useMounted"];
   const useMouse: typeof import("@vueuse/core")["useMouse"];
   const useMouseInElement: typeof import("@vueuse/core")["useMouseInElement"];
@@ -226,6 +232,7 @@ declare global {
   const usePreferredDark: typeof import("@vueuse/core")["usePreferredDark"];
   const usePreferredLanguages: typeof import("@vueuse/core")["usePreferredLanguages"];
   const usePreferredReducedMotion: typeof import("@vueuse/core")["usePreferredReducedMotion"];
+  const useQuasar: typeof import("quasar")["useQuasar"];
   const useRafFn: typeof import("@vueuse/core")["useRafFn"];
   const useRefHistory: typeof import("@vueuse/core")["useRefHistory"];
   const useResizeObserver: typeof import("@vueuse/core")["useResizeObserver"];
@@ -414,6 +421,9 @@ declare module "vue" {
       typeof import("@vueuse/core")["makeDestructurable"]
     >;
     readonly markRaw: UnwrapRef<typeof import("vue")["markRaw"]>;
+    readonly negativeNotify: UnwrapRef<
+      typeof import("./helpers/notify")["negativeNotify"]
+    >;
     readonly nextTick: UnwrapRef<typeof import("vue")["nextTick"]>;
     readonly onActivated: UnwrapRef<typeof import("vue")["onActivated"]>;
     readonly onBeforeMount: UnwrapRef<typeof import("vue")["onBeforeMount"]>;
@@ -458,6 +468,9 @@ declare module "vue" {
     readonly onUpdated: UnwrapRef<typeof import("vue")["onUpdated"]>;
     readonly pausableWatch: UnwrapRef<
       typeof import("@vueuse/core")["pausableWatch"]
+    >;
+    readonly positiveNotify: UnwrapRef<
+      typeof import("./helpers/notify")["positiveNotify"]
     >;
     readonly preferredDark: UnwrapRef<
       typeof import("./composables/dark")["preferredDark"]
@@ -528,6 +541,7 @@ declare module "vue" {
     readonly shallowRef: UnwrapRef<typeof import("vue")["shallowRef"]>;
     readonly syncRef: UnwrapRef<typeof import("@vueuse/core")["syncRef"]>;
     readonly syncRefs: UnwrapRef<typeof import("@vueuse/core")["syncRefs"]>;
+    readonly t: UnwrapRef<typeof import("./composables/index")["t"]>;
     readonly templateRef: UnwrapRef<
       typeof import("@vueuse/core")["templateRef"]
     >;
@@ -665,6 +679,9 @@ declare module "vue" {
     readonly useDevicesList: UnwrapRef<
       typeof import("@vueuse/core")["useDevicesList"]
     >;
+    readonly useDialogPluginComponent: UnwrapRef<
+      typeof import("quasar")["useDialogPluginComponent"]
+    >;
     readonly useDisplayMedia: UnwrapRef<
       typeof import("@vueuse/core")["useDisplayMedia"]
     >;
@@ -716,6 +733,7 @@ declare module "vue" {
     readonly useFocusWithin: UnwrapRef<
       typeof import("@vueuse/core")["useFocusWithin"]
     >;
+    readonly useFormChild: UnwrapRef<typeof import("quasar")["useFormChild"]>;
     readonly useFps: UnwrapRef<typeof import("@vueuse/core")["useFps"]>;
     readonly useFullscreen: UnwrapRef<
       typeof import("@vueuse/core")["useFullscreen"]
@@ -764,6 +782,7 @@ declare module "vue" {
     >;
     readonly useMemoize: UnwrapRef<typeof import("@vueuse/core")["useMemoize"]>;
     readonly useMemory: UnwrapRef<typeof import("@vueuse/core")["useMemory"]>;
+    readonly useMeta: UnwrapRef<typeof import("quasar")["useMeta"]>;
     readonly useMounted: UnwrapRef<typeof import("@vueuse/core")["useMounted"]>;
     readonly useMouse: UnwrapRef<typeof import("@vueuse/core")["useMouse"]>;
     readonly useMouseInElement: UnwrapRef<
@@ -815,6 +834,7 @@ declare module "vue" {
     readonly usePreferredReducedMotion: UnwrapRef<
       typeof import("@vueuse/core")["usePreferredReducedMotion"]
     >;
+    readonly useQuasar: UnwrapRef<typeof import("quasar")["useQuasar"]>;
     readonly useRafFn: UnwrapRef<typeof import("@vueuse/core")["useRafFn"]>;
     readonly useRefHistory: UnwrapRef<
       typeof import("@vueuse/core")["useRefHistory"]

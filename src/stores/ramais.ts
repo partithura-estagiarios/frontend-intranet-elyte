@@ -2,7 +2,6 @@ import { defineStore } from "pinia";
 import { Ramal } from "../entities";
 
 function buildRamais(ramais: Ramal[]): { ramais: Ramal[] } {
-  loga(ramais);
   return {
     ramais,
   };
@@ -19,7 +18,6 @@ const Ramais = defineStore("Ramais", {
       if (value !== null) {
         this.ramais = buildRamais(value).ramais;
       }
-      // loga(value)
     },
   },
   persist: true,

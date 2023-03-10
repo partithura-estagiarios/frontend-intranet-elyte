@@ -4,7 +4,7 @@
     class="text-black text"
     :title="$t('action.addMenu.index')"
   >
-    <RamalForm v-bind="$attrs" />
+    <menuForm v-bind="$attrs" />
   </DynamicDialog>
 </template>
 

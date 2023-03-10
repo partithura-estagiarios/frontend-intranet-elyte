@@ -5,11 +5,12 @@ export default {
   name: "Nome",
   sector: "Setor",
   number: "Número",
+  day: "Dia",
+  week: "Semana",
   menu: {
     dessert: "Sobremesa",
     rice: "Arroz",
     complement: "Complemento",
-    day: "Dia",
     protein: "Proteína",
     salad: "Salada",
     soup: "Sopa",

@@ -12,7 +12,6 @@
 
   <CreateMenu
     :open="menuForm"
-    v-bind="$attrs"
     @confirm="createMenu"
     @cancel="menuForm = false"
   />
@@ -25,6 +24,10 @@ import createMenu from "../../graphql/menu/createMenu.gql";
 const menuList = ref();
 const menuForm = ref(false);
 
+watchEffect(() => {
+  menuList.value = ramaisStorage.getRamais;
+});
+
 onMounted(async () => {
   const { getMenu } = await runQuery(GetMenu);
   menuList.value = getMenu;
@@ -34,7 +37,7 @@ const columns = [
   {
     field: "day",
     align: "left",
-    label: t("text.menu.day"),
+    label: t("text.day"),
   },
   {
     field: "salad",

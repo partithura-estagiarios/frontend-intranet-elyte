@@ -12,7 +12,6 @@ const menuList = ref();
 onMounted(async () => {
   const { getMenu } = await runQuery(GetMenu);
   menuList.value = getMenu;
-  loga(menuList);
 });
 
 const columns = [

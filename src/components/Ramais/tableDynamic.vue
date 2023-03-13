@@ -30,6 +30,7 @@
 </template>
 
 <script setup lang="ts">
+import { Column } from "../../entities";
 const icon = computed(() => {
   search.value ? "close" : "search";
 });
@@ -37,7 +38,7 @@ const icon = computed(() => {
 const search = ref();
 const props = defineProps({
   columns: {
-    type: Array,
+    type: Column,
     default: () => [],
   },
   rows: {

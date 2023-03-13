@@ -45,7 +45,6 @@ async function addRamal(ramal: Record<string, string | number>) {
   try {
     const data = await runMutation(AddRamal, { data: { ...ramal } });
     const { getRamais } = await runMutation(GetRamais, {});
-    console.log(getRamais);
     ramaisStorage.setRamais(getRamais as unknown as [Ramal]);
     positiveNotify(t("notifications.success.createRamal"));
   } catch {

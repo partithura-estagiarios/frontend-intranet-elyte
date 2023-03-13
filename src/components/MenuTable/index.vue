@@ -19,14 +19,24 @@
 
 <script setup lang="ts">
 import GetMenu from "../../graphql/menu/getMenu.gql";
-import createMenu from "../../graphql/menu/createMenu.gql";
+import CreateMenu from "../../graphql/menu/CreateMenu.gql";
 
-const menuList = ref();
+const menuList = ref(menusStorage.getMenus);
 const menuForm = ref(false);
 
 watchEffect(() => {
-  menuList.value = ramaisStorage.getRamais;
+  menuList.value = menusStorage.getMenus;
 });
+
+async function createMenu(menu: Record<string, string | number>) {
+  try {
+    positiveNotify(t("notifications.success.createMenu"));
+  } catch {
+    negativeNotify(t("notifications.fail.createMenu"));
+  } finally {
+    menuForm.value = false;
+  }
+}
 
 onMounted(async () => {
   const { getMenu } = await runQuery(GetMenu);

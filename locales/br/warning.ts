@@ -10,5 +10,6 @@ export default {
     soup: "Por favor digite uma sopa",
     day: "Por favor digite um dia",
     week: "Por favor digite uma semana",
+    dessert: "Por favor digite uma sobremesa",
   },
 };

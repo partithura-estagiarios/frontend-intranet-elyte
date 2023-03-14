@@ -1,9 +1,9 @@
 <template>
-  <div class="items-center column q-mt-xl" style="max-width: 1800px">
+  <q-form class="items-center column" ref="myForm">
     <q-input
       v-model="menu.salad"
       :label="$t('text.menu.salad')"
-      class="tamanho q-mx-xl"
+      class="q-mx-xl tamanho"
       filled
       stack-label
       lazy-rules
@@ -14,7 +14,7 @@
     <q-input
       v-model="menu.rice"
       :label="$t('text.menu.rice')"
-      class="tamanho q-mx-xl"
+      class="q-mx-xl tamanho"
       filled
       stack-label
       lazy-rules
@@ -25,7 +25,7 @@
     <q-input
       v-model="menu.complement"
       :label="$t('text.menu.complement')"
-      class="tamanho q-mx-xl"
+      class="q-mx-xl tamanho"
       filled
       stack-label
       lazy-rules
@@ -37,7 +37,7 @@
     <q-input
       v-model="menu.soup"
       :label="$t('text.menu.soup')"
-      class="tamanho q-mx-xl"
+      class="q-mx-xl tamanho"
       filled
       stack-label
       lazy-rules
@@ -48,7 +48,7 @@
     <q-input
       v-model="menu.protein"
       :label="$t('text.menu.protein')"
-      class="tamanho q-mx-xl"
+      class="q-mx-xl tamanho"
       filled
       stack-label
       lazy-rules
@@ -59,7 +59,7 @@
     <q-input
       v-model="menu.dessert"
       :label="$t('text.menu.dessert')"
-      class="tamanho q-mx-xl"
+      class="q-mx-xl tamanho"
       filled
       stack-label
       lazy-rules
@@ -70,7 +70,7 @@
     <q-input
       v-model="menu.day"
       :label="$t('text.day')"
-      class="tamanho q-mx-xl"
+      class="q-mx-xl tamanho"
       type="date"
       filled
       stack-label
@@ -82,7 +82,7 @@
     <q-input
       v-model="menu.week"
       :label="$t('text.week')"
-      class="tamanho q-mx-xl"
+      class="q-mx-xl tamanho"
       filled
       stack-label
       lazy-rules
@@ -90,7 +90,15 @@
         (val) => (val && val.length > 0) || $t('warning.menuWarning.week'),
       ]"
     />
-  </div>
+    <q-card-actions>
+      <q-btn
+        flat
+        :label="$t('action.confirm.index')"
+        color="primary"
+        @click="emit('confirm', menu)"
+      />
+    </q-card-actions>
+  </q-form>
 </template>
 
 <script setup lang="ts">

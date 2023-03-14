@@ -1,7 +1,7 @@
 <template>
   <span class="text-black text-h4">{{ $t("titles.menu") }}</span>
 
-  <MenuForm class="q-mt-xl" />
+  <MenuForm class="q-mt-xl" v-bind="$attrs" @confirm="addMenu" />
 </template>
 
 <script setup lang="ts">

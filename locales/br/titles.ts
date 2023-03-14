@@ -2,7 +2,7 @@ export default {
   ManagementSystem: "Sistema de gestão",
   HrSystem: "sistema de RH",
   OtherSystems: "Outros",
-  menu: "Cardápio da semana...",
+  menu: "Cardápio da semana",
   Management: {
     DataSul: "DataSul",
     DataSulPrototype: "DataSul Protótipo",

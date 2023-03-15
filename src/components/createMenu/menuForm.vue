@@ -1,9 +1,9 @@
 <template>
-  <q-form class="items-center column" ref="myForm">
+  <q-form class="items-center column">
     <q-input
       v-model="menu.salad"
       :label="$t('text.menu.salad')"
-      class="q-mx-xl tamanho"
+      class="tamanho"
       filled
       stack-label
       lazy-rules
@@ -14,7 +14,7 @@
     <q-input
       v-model="menu.rice"
       :label="$t('text.menu.rice')"
-      class="q-mx-xl tamanho"
+      class="tamanho"
       filled
       stack-label
       lazy-rules
@@ -25,7 +25,7 @@
     <q-input
       v-model="menu.complement"
       :label="$t('text.menu.complement')"
-      class="q-mx-xl tamanho"
+      class="tamanho"
       filled
       stack-label
       lazy-rules
@@ -37,7 +37,7 @@
     <q-input
       v-model="menu.soup"
       :label="$t('text.menu.soup')"
-      class="q-mx-xl tamanho"
+      class="tamanho"
       filled
       stack-label
       lazy-rules
@@ -48,7 +48,7 @@
     <q-input
       v-model="menu.protein"
       :label="$t('text.menu.protein')"
-      class="q-mx-xl tamanho"
+      class="tamanho"
       filled
       stack-label
       lazy-rules
@@ -59,7 +59,7 @@
     <q-input
       v-model="menu.dessert"
       :label="$t('text.menu.dessert')"
-      class="q-mx-xl tamanho"
+      class="tamanho"
       filled
       stack-label
       lazy-rules
@@ -67,22 +67,17 @@
         (val) => (val && val.length > 0) || $t('warning.menuWarning.dessert'),
       ]"
     />
-    <q-input
+    <q-select
       v-model="menu.day"
-      :label="$t('text.day')"
-      class="q-mx-xl tamanho"
-      type="date"
+      :options="options"
       filled
-      stack-label
-      lazy-rules
-      :rules="[
-        (val) => (val && val.length > 0) || $t('warning.menuWarning.day'),
-      ]"
+      label="Dia da semana"
+      options-dark
     />
     <q-input
       v-model="menu.week"
       :label="$t('text.week')"
-      class="q-mx-xl tamanho"
+      class="tamanho"
       filled
       stack-label
       lazy-rules
@@ -112,6 +107,16 @@ const menu = reactive({
   week: "",
   day: "",
 });
+
+const options = [
+  "Domingo",
+  "Segunda-feira",
+  "Terça-feira",
+  "Quarta-feira",
+  "Quinta-feira",
+  "Sexta-feira",
+  "Sábado",
+];
 
 const emit = defineEmits(["confirm"]);
 </script>

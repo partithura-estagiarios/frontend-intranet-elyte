@@ -18,7 +18,7 @@
 </template>
 
 <script setup lang="ts">
-import GetMenu from "../../graphql/menu/getMenu.gql";
+import GetMenu from "../../graphql/menu/GetMenu.gql";
 import CreateMenu from "../../graphql/menu/CreateMenu.gql";
 
 const menuList = ref(menusStorage.getMenus);

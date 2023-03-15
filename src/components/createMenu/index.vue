@@ -9,6 +9,17 @@ import GetMenu from "../../graphql/menu/GetMenu.gql";
 import CreateMenu from "../../graphql/menu/CreateMenu.gql";
 import { Menu } from "../../entities";
 
+function clearForm(formValue: Record<string, string | number>): void {
+  formValue.salad = " ";
+  formValue.rice = " ";
+  formValue.complement = " ";
+  formValue.soup = " ";
+  formValue.protein = " ";
+  formValue.dessert = " ";
+  formValue.day = " ";
+  formValue.week = " ";
+}
+
 async function addMenu(menu: Record<string, string | number>) {
   try {
     await runMutation(CreateMenu, { data: { ...menu } });
@@ -17,6 +28,8 @@ async function addMenu(menu: Record<string, string | number>) {
     positiveNotify(t("notifications.success.createMenu"));
   } catch {
     negativeNotify(t("notifications.fail.createMenu"));
+  } finally {
+    clearForm(menu);
   }
 }
 </script>

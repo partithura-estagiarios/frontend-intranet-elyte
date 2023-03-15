@@ -3,6 +3,7 @@
     <q-form class="col-6">
       <q-input
         v-model="menu.salad"
+        :ref="refs.salad"
         :label="$t('text.menu.salad')"
         filled
         stack-label
@@ -13,6 +14,7 @@
       />
       <q-input
         v-model="menu.rice"
+        :ref="refs.rice"
         :label="$t('text.menu.rice')"
         filled
         stack-label
@@ -23,6 +25,7 @@
       />
       <q-input
         v-model="menu.complement"
+        :ref="refs.complement"
         :label="$t('text.menu.complement')"
         filled
         stack-label
@@ -34,6 +37,7 @@
       />
       <q-input
         v-model="menu.soup"
+        :ref="refs.soup"
         :label="$t('text.menu.soup')"
         filled
         stack-label
@@ -44,6 +48,7 @@
       />
       <q-input
         v-model="menu.protein"
+        :refs="refs.protein"
         :label="$t('text.menu.protein')"
         filled
         stack-label
@@ -54,6 +59,7 @@
       />
       <q-input
         v-model="menu.dessert"
+        :refs="refs.dessert"
         :label="$t('text.menu.dessert')"
         filled
         stack-label
@@ -64,6 +70,7 @@
       />
       <q-select
         v-model="menu.day"
+        :refs="refs.day"
         :options="options"
         filled
         label="Dia da semana"
@@ -72,6 +79,7 @@
       />
       <q-input
         v-model="menu.week"
+        :refs="refs.week"
         :label="$t('text.week')"
         filled
         stack-label
@@ -103,6 +111,17 @@ const menu = reactive({
   week: "",
   day: "",
 });
+
+const refs = {
+  complement: ref(""),
+  dessert: ref(""),
+  protein: ref(""),
+  salad: ref(""),
+  rice: ref(""),
+  soup: ref(""),
+  week: ref(""),
+  day: ref(""),
+};
 
 const options = [
   "Domingo",

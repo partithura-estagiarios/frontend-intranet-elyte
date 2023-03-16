@@ -2,7 +2,7 @@
   <span class="text-black text-h4">{{ $t("titles.menu") }}</span>
 
   <div class="row justify-center">
-    <Form @submit="onSubmit" :validation-schema="schema" class="col-6">
+    <Form @submit="addMenu" :validation-schema="schema" class="col-6">
       <Field name="day" v-slot="{ errorMessage, value, field }">
         <q-select
           :model-value="value"
@@ -132,21 +132,15 @@ const schema = yup.object({
   week: yup.string().required().label("Semana"),
 });
 
-async function addMenu(menu: Record<string, string | number>) {
+async function addMenu(menu: Record<string, string | number>, actions: any) {
   try {
     await runMutation(CreateMenu, { data: { ...menu } });
     const { getMenu } = await runMutation(GetMenu, {});
     menusStorage.setMenus(getMenu as unknown as [Menu]);
     positiveNotify(t("notifications.success.createMenu"));
+    actions.resetForm();
   } catch {
     negativeNotify(t("notifications.fail.createMenu"));
   }
-}
-
-function onSubmit(values: Record<string, string | number>, actions: any) {
-  loga(actions);
-  loga(values);
-  actions.resetForm();
-  addMenu(values, actions);
 }
 </script>

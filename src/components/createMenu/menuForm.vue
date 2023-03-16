@@ -1,127 +1,110 @@
 <template>
   <div class="row justify-center">
-    <q-form class="col-6">
-      <q-input
-        v-model="menu.salad"
-        :ref="refs.salad"
-        :label="$t('text.menu.salad')"
-        filled
-        stack-label
-        lazy-rules
-        :rules="[
-          (val) => (val && val.length > 0) || $t('warning.menuWarning.salad'),
-        ]"
-      />
-      <q-input
-        v-model="menu.rice"
-        :ref="refs.rice"
-        :label="$t('text.menu.rice')"
-        filled
-        stack-label
-        lazy-rules
-        :rules="[
-          (val) => (val && val.length > 0) || $t('warning.menuWarning.rice'),
-        ]"
-      />
-      <q-input
-        v-model="menu.complement"
-        :ref="refs.complement"
-        :label="$t('text.menu.complement')"
-        filled
-        stack-label
-        lazy-rules
-        :rules="[
-          (val) =>
-            (val && val.length > 0) || $t('warning.menuWarning.complement'),
-        ]"
-      />
-      <q-input
-        v-model="menu.soup"
-        :ref="refs.soup"
-        :label="$t('text.menu.soup')"
-        filled
-        stack-label
-        lazy-rules
-        :rules="[
-          (val) => (val && val.length > 0) || $t('warning.menuWarning.soup'),
-        ]"
-      />
-      <q-input
-        v-model="menu.protein"
-        :refs="refs.protein"
-        :label="$t('text.menu.protein')"
-        filled
-        stack-label
-        lazy-rules
-        :rules="[
-          (val) => (val && val.length > 0) || $t('warning.menuWarning.protein'),
-        ]"
-      />
-      <q-input
-        v-model="menu.dessert"
-        :refs="refs.dessert"
-        :label="$t('text.menu.dessert')"
-        filled
-        stack-label
-        lazy-rules
-        :rules="[
-          (val) => (val && val.length > 0) || $t('warning.menuWarning.dessert'),
-        ]"
-      />
-      <q-select
-        v-model="menu.day"
-        :refs="refs.day"
-        :options="options"
-        filled
-        label="Dia da semana"
-        class="q-mb-md"
-        :popup-content-style="{ color: 'black' }"
-      />
-      <q-input
-        v-model="menu.week"
-        :refs="refs.week"
-        :label="$t('text.week')"
-        filled
-        stack-label
-        lazy-rules
-        :rules="[
-          (val) => (val && val.length > 0) || $t('warning.menuWarning.week'),
-        ]"
-      />
+    <Form @submit="onSubmit" :validation-schema="schema" class="col-6">
+      <Field name="day" v-slot="{ errorMessage, value, field }">
+        <q-select
+          :model-value="value"
+          v-bind="field"
+          :label="$t('text.day')"
+          bg-color="grey-3"
+          :options="options"
+          :popup-content-style="{ color: 'black' }"
+          :error-message="errorMessage"
+          :error="!!errorMessage"
+        />
+      </Field>
+
+      <Field name="week" v-slot="{ errorMessage, value, field }">
+        <q-input
+          :model-value="value"
+          v-bind="field"
+          :label="$t('text.week')"
+          filled
+          :error-message="errorMessage"
+          :error="!!errorMessage"
+        />
+      </Field>
+
+      <Field name="salad" v-slot="{ errorMessage, value, field }">
+        <q-input
+          :model-value="value"
+          v-bind="field"
+          :label="$t('text.menu.salad')"
+          filled
+          :error-message="errorMessage"
+          :error="!!errorMessage"
+        />
+      </Field>
+
+      <Field name="rice" v-slot="{ errorMessage, value, field }">
+        <q-input
+          :model-value="value"
+          v-bind="field"
+          :label="$t('text.menu.rice')"
+          filled
+          :error-message="errorMessage"
+          :error="!!errorMessage"
+        />
+      </Field>
+
+      <Field name="protein" v-slot="{ errorMessage, value, field }">
+        <q-input
+          :model-value="value"
+          v-bind="field"
+          :label="$t('text.menu.protein')"
+          filled
+          :error-message="errorMessage"
+          :error="!!errorMessage"
+        />
+      </Field>
+
+      <Field name="complement" v-slot="{ errorMessage, value, field }">
+        <q-input
+          :model-value="value"
+          v-bind="field"
+          :label="$t('text.menu.complement')"
+          filled
+          :error-message="errorMessage"
+          :error="!!errorMessage"
+        />
+      </Field>
+
+      <Field name="soup" v-slot="{ errorMessage, value, field }">
+        <q-input
+          :model-value="value"
+          v-bind="field"
+          :label="$t('text.menu.soup')"
+          filled
+          :error-message="errorMessage"
+          :error="!!errorMessage"
+        />
+      </Field>
+
+      <Field name="dessert" v-slot="{ errorMessage, value, field }">
+        <q-input
+          :model-value="value"
+          v-bind="field"
+          :label="$t('text.menu.dessert')"
+          filled
+          :error-message="errorMessage"
+          :error="!!errorMessage"
+        />
+      </Field>
       <q-card-actions>
         <q-btn
           flat
           :label="$t('action.confirm.index')"
           color="primary"
-          @click="emit('confirm', menu)"
+          type="submit"
         />
       </q-card-actions>
-    </q-form>
+    </Form>
   </div>
 </template>
 
 <script setup lang="ts">
-const menu = reactive({
-  complement: "",
-  dessert: "",
-  protein: "",
-  salad: "",
-  rice: "",
-  soup: "",
-  week: "",
-  day: "",
-});
-
-const refs = {
-  complement: ref(""),
-  dessert: ref(""),
-  protein: ref(""),
-  salad: ref(""),
-  rice: ref(""),
-  soup: ref(""),
-  week: ref(""),
-  day: ref(""),
-};
+import { Field, Form } from "vee-validate";
+import * as yup from "yup";
 
 const options = [
   "Domingo",
@@ -133,11 +116,21 @@ const options = [
   "Sábado",
 ];
 
+const schema = yup.object({
+  salad: yup.string().required().label("Salada"),
+  rice: yup.string().required().label("Arroz"),
+  complement: yup.string().required().label("Complemento"),
+  soup: yup.string().required().label("Sopa"),
+  protein: yup.string().required().label("Proteína"),
+  dessert: yup.string().required().label("Sobremesa"),
+  day: yup.string().required().label("Dia"),
+  week: yup.string().required().label("Semana"),
+});
+
+function onSubmit(values: Object, actions: any) {
+  loga(JSON.stringify(values, null, 2));
+  actions.resetForm();
+}
+
 const emit = defineEmits(["confirm"]);
 </script>
-
-<style scoped>
-.extra {
-  color: blue !important;
-}
-</style>

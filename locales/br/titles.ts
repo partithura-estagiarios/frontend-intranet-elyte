@@ -33,8 +33,6 @@ export default {
   },
   Login: {
     textLoginForm: "Digite suas credenciais",
-    textPasswordForm: "Recupere sua senha!",
-    linkHasSent: "Um link foi enviado para seu e-mail.",
-    verifySpam: "Verifique também sua caixa de lixo eletrônico.",
+    recoverPassword: "Entre em contato com o setor de TI",
   },
 };

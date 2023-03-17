@@ -23,6 +23,14 @@
     :placeholder="$t('label.inputPassword')"
   />
   <q-btn
+    :label="$t('label.forgetPassword')"
+    align="left"
+    class="tamanho"
+    no-caps
+    size="1rem"
+    @click="contato()"
+  />
+  <q-btn
     :label="$t('action.submit.index')"
     rounded
     :class="marginBtn"
@@ -44,6 +52,10 @@ const data = reactive({
   email: "",
   password: "",
 });
+
+function contato() {
+  infoNotify(t("titles.Login.recoverPassword"));
+}
 
 async function auth() {
   try {

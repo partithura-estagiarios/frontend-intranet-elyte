@@ -1,96 +1,108 @@
 <template>
   <span class="text-black text-h4">{{ $t("titles.menu") }}</span>
 
-  <div class="row justify-center">
-    <Form @submit="addMenu" :validation-schema="schema" class="col-6">
-      <Field name="day" v-slot="{ errorMessage, value, field }">
+  <div class="row justify-center q-mt-md">
+    <Form
+      @submit="addMenu"
+      :validation-schema="schema"
+      class="col-6 q-gutter-md"
+    >
+      <Field name="day" v-slot="item" :rules="validate">
         <q-select
-          :model-value="value"
-          v-bind="field"
+          :model-value="item.value"
+          v-bind="item.field"
           :label="$t('text.day')"
           bg-color="grey-3"
           :options="options"
           :popup-content-style="{ color: 'black' }"
-          :error-message="errorMessage"
-          :error="!!errorMessage"
         />
+        <span v-if="item.errorMessage" class="text-red q-mb-xl">
+          {{ parseErrorMessage(item.errorMessage) }}
+        </span>
       </Field>
 
-      <Field name="week" v-slot="{ errorMessage, value, field }">
+      <Field name="week" v-slot="item" :rules="validate">
         <q-input
-          :model-value="value"
-          v-bind="field"
+          :model-value="item.value"
+          v-bind="item.field"
           :label="$t('text.week')"
           filled
-          :error-message="errorMessage"
-          :error="!!errorMessage"
         />
+        <span v-if="item.errorMessage" class="text-red q-mb-xl">
+          {{ parseErrorMessage(item.errorMessage) }}
+        </span>
       </Field>
 
-      <Field name="salad" v-slot="{ errorMessage, value, field }">
+      <Field name="salad" v-slot="item" :rules="validate">
         <q-input
-          :model-value="value"
-          v-bind="field"
+          :model-value="item.value"
+          v-bind="item.field"
           :label="$t('text.menu.salad')"
           filled
-          :error-message="errorMessage"
-          :error="!!errorMessage"
         />
+        <span v-if="item.errorMessage" class="text-red q-mb-xl">
+          {{ parseErrorMessage(item.errorMessage) }}
+        </span>
       </Field>
 
-      <Field name="rice" v-slot="{ errorMessage, value, field }">
+      <Field name="rice" v-slot="item" :rules="validate">
         <q-input
-          :model-value="value"
-          v-bind="field"
+          :model-value="item.value"
+          v-bind="item.field"
           :label="$t('text.menu.rice')"
           filled
-          :error-message="errorMessage"
-          :error="!!errorMessage"
         />
+        <span v-if="item.errorMessage" class="text-red q-mb-xl">
+          {{ parseErrorMessage(item.errorMessage) }}
+        </span>
       </Field>
 
-      <Field name="protein" v-slot="{ errorMessage, value, field }">
+      <Field name="protein" v-slot="item" :rules="validate">
         <q-input
-          :model-value="value"
-          v-bind="field"
+          :model-value="item.value"
+          v-bind="item.field"
           :label="$t('text.menu.protein')"
           filled
-          :error-message="errorMessage"
-          :error="!!errorMessage"
         />
+        <span v-if="item.errorMessage" class="text-red q-mb-xl">
+          {{ parseErrorMessage(item.errorMessage) }}
+        </span>
       </Field>
 
-      <Field name="complement" v-slot="{ errorMessage, value, field }">
+      <Field name="complement" v-slot="item" :rules="validate">
         <q-input
-          :model-value="value"
-          v-bind="field"
+          :model-value="item.value"
+          v-bind="item.field"
           :label="$t('text.menu.complement')"
           filled
-          :error-message="errorMessage"
-          :error="!!errorMessage"
         />
+        <span v-if="item.errorMessage" class="text-red q-mb-xl">
+          {{ parseErrorMessage(item.errorMessage) }}
+        </span>
       </Field>
 
-      <Field name="soup" v-slot="{ errorMessage, value, field }">
+      <Field name="soup" v-slot="item" :rules="validate">
         <q-input
-          :model-value="value"
-          v-bind="field"
+          :model-value="item.value"
+          v-bind="item.field"
           :label="$t('text.menu.soup')"
           filled
-          :error-message="errorMessage"
-          :error="!!errorMessage"
         />
+        <span v-if="item.errorMessage" class="text-red q-mb-xl">
+          {{ parseErrorMessage(item.errorMessage) }}
+        </span>
       </Field>
 
-      <Field name="dessert" v-slot="{ errorMessage, value, field }">
+      <Field name="dessert" v-slot="item" :rules="validate">
         <q-input
-          :model-value="value"
-          v-bind="field"
+          :model-value="item.value"
+          v-bind="item.field"
           :label="$t('text.menu.dessert')"
           filled
-          :error-message="errorMessage"
-          :error="!!errorMessage"
         />
+        <span v-if="item.errorMessage" class="text-red q-mb-xl">
+          {{ parseErrorMessage(item.errorMessage) }}
+        </span>
       </Field>
       <q-card-actions>
         <q-btn
@@ -122,14 +134,14 @@ const options = [
 ];
 
 const schema = yup.object({
-  salad: yup.string().required().label("Salada"),
-  rice: yup.string().required().label("Arroz"),
-  complement: yup.string().required().label("Complemento"),
-  soup: yup.string().required().label("Sopa"),
-  protein: yup.string().required().label("Proteína"),
-  dessert: yup.string().required().label("Sobremesa"),
-  day: yup.string().required().label("Dia"),
-  week: yup.string().required().label("Semana"),
+  salad: yup.string().required().label(t("warning.requiredField")),
+  rice: yup.string().required().label(t("warning.requiredField")),
+  complement: yup.string().required().label(t("warning.requiredField")),
+  soup: yup.string().required().label(t("warning.requiredField")),
+  protein: yup.string().required().label(t("warning.requiredField")),
+  dessert: yup.string().required().label(t("warning.requiredField")),
+  day: yup.string().required().label(t("warning.requiredField")),
+  week: yup.string().required().label(t("warning.requiredField")),
 });
 
 async function addMenu(menu: Record<string, string | number>, actions: any) {

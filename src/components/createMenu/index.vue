@@ -7,7 +7,7 @@
       :validation-schema="schema"
       class="col-6 q-gutter-md"
     >
-      <Field name="day" v-slot="item" :rules="validate">
+      <Field name="day" v-slot="item">
         <q-select
           :model-value="item.value"
           v-bind="item.field"
@@ -21,7 +21,7 @@
         </span>
       </Field>
 
-      <Field name="week" v-slot="item" :rules="validate">
+      <Field name="week" v-slot="item">
         <q-input
           :model-value="item.value"
           v-bind="item.field"
@@ -33,7 +33,7 @@
         </span>
       </Field>
 
-      <Field name="salad" v-slot="item" :rules="validate">
+      <Field name="salad" v-slot="item">
         <q-input
           :model-value="item.value"
           v-bind="item.field"
@@ -45,7 +45,7 @@
         </span>
       </Field>
 
-      <Field name="rice" v-slot="item" :rules="validate">
+      <Field name="rice" v-slot="item">
         <q-input
           :model-value="item.value"
           v-bind="item.field"
@@ -57,7 +57,7 @@
         </span>
       </Field>
 
-      <Field name="protein" v-slot="item" :rules="validate">
+      <Field name="protein" v-slot="item">
         <q-input
           :model-value="item.value"
           v-bind="item.field"
@@ -69,7 +69,7 @@
         </span>
       </Field>
 
-      <Field name="complement" v-slot="item" :rules="validate">
+      <Field name="complement" v-slot="item">
         <q-input
           :model-value="item.value"
           v-bind="item.field"
@@ -81,7 +81,7 @@
         </span>
       </Field>
 
-      <Field name="soup" v-slot="item" :rules="validate">
+      <Field name="soup" v-slot="item">
         <q-input
           :model-value="item.value"
           v-bind="item.field"
@@ -93,7 +93,7 @@
         </span>
       </Field>
 
-      <Field name="dessert" v-slot="item" :rules="validate">
+      <Field name="dessert" v-slot="item">
         <q-input
           :model-value="item.value"
           v-bind="item.field"

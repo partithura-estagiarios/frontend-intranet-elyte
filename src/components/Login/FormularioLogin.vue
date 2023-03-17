@@ -23,14 +23,6 @@
     :placeholder="$t('label.inputPassword')"
   />
   <q-btn
-    :label="$t('label.forgetPassword')"
-    align="left"
-    class="tamanho"
-    no-caps
-    size="1rem"
-    to="login/esqueciSenha"
-  />
-  <q-btn
     :label="$t('action.submit.index')"
     rounded
     :class="marginBtn"

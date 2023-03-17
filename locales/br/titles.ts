@@ -1,4 +1,5 @@
 export default {
+  textIntranet: "Intranet Elyte",
   ManagementSystem: "Sistema de gestão",
   HrSystem: "sistema de RH",
   OtherSystems: "Outros",
@@ -30,5 +31,11 @@ export default {
     Mapping: "Mapeamento",
     FT: "Ficha Técnica Web",
     DataSulPrototype: "Exclusivo para Testes",
+  },
+  Login: {
+    textLoginForm: "Digite suas credenciais",
+    textPasswordForm: "Recupere sua senha!",
+    linkHasSent: "Um link foi enviado para seu e-mail.",
+    verifySpam: "Verifique também sua caixa de lixo eletrônico.",
   },
 };

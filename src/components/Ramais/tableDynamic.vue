@@ -38,10 +38,11 @@ const search = ref();
 const props = defineProps({
   columns: {
     default: () => [],
+    type: Array,
   },
   rows: {
-    type: Array,
     default: () => [],
+    type: Array,
   },
 });
 </script>

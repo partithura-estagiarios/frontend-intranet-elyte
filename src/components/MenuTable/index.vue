@@ -1,42 +1,20 @@
 <template>
   <p class="text-h3 text-black">{{ $t("titles.menu") }}</p>
 
-  <TableDynamic :columns="columns" :rows="menuList">
-    <template #top-left>
-      <q-btn outline color="primary" class="border" @click="menuForm = true">
-        <q-icon class="q-mr-sm" name="add" color="red" />
-        <span>{{ $t("action.addMenu.index") }}</span>
-      </q-btn>
-    </template>
-  </TableDynamic>
-
-  <CreateMenu
-    :open="menuForm"
-    @confirm="createMenu"
-    @cancel="menuForm = false"
-  />
+  <TableDynamic :columns="columns" :rows="menuList" />
 </template>
 
 <script setup lang="ts">
+import { Ref } from "vue";
 import GetMenu from "../../graphql/menu/GetMenu.gql";
-import CreateMenu from "../../graphql/menu/CreateMenu.gql";
 
-const menuList = ref(menusStorage.getMenus);
-const menuForm = ref(false);
+const menuList: Ref<Array<Record<string, string | number>>> = ref(
+  menusStorage.getMenus
+);
 
 watchEffect(() => {
   menuList.value = menusStorage.getMenus;
 });
-
-async function createMenu(menu: Record<string, string | number>) {
-  try {
-    positiveNotify(t("notifications.success.createMenu"));
-  } catch {
-    negativeNotify(t("notifications.fail.createMenu"));
-  } finally {
-    menuForm.value = false;
-  }
-}
 
 onMounted(async () => {
   const { getMenu } = await runQuery(GetMenu);

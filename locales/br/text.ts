@@ -15,4 +15,13 @@ export default {
     salad: "Salada",
     soup: "Sopa",
   },
+  days: {
+    monday: "Segunda-feira",
+    tuesday: "Terça-feira",
+    wednesday: "Quarta-feira",
+    thursday: "Quinta-feira",
+    friday: "Sexta-feira",
+    Saturday: "Sábado",
+    Sunday: "Domingo",
+  },
 };

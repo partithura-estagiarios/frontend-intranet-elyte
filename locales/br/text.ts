@@ -21,7 +21,7 @@ export default {
     wednesday: "Quarta-feira",
     thursday: "Quinta-feira",
     friday: "Sexta-feira",
-    Saturday: "Sábado",
-    Sunday: "Domingo",
+    saturday: "Sábado",
+    sunday: "Domingo",
   },
 };

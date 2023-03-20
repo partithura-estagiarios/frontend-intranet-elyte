@@ -8,6 +8,6 @@ export interface Menu {
   soup: string;
   week: string;
   day: string;
-  created_at: string;
-  updated_at: string;
+  createdAt: string;
+  updatedAt: string;
 }

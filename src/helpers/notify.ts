@@ -30,3 +30,12 @@ export function negativeNotify(
 ): void {
   notify(message, color, icon, timeout);
 }
+
+export function infoNotify(
+  message: string,
+  color = "blue",
+  icon = "info",
+  timeout = 10000
+): void {
+  notify(message, color, icon, timeout);
+}

@@ -28,7 +28,7 @@
     class="tamanho"
     no-caps
     size="1rem"
-    to="login/esqueciSenha"
+    @click="contato()"
   />
   <q-btn
     :label="$t('action.submit.index')"
@@ -52,6 +52,10 @@ const data = reactive({
   email: "",
   password: "",
 });
+
+function contato() {
+  infoNotify(t("titles.Login.recoverPassword"));
+}
 
 async function auth() {
   try {

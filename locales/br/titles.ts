@@ -3,6 +3,7 @@ export default {
   ManagementSystem: "Sistema de gestão",
   HrSystem: "sistema de RH",
   OtherSystems: "Outros",
+  menu: "Cardápio",
   Management: {
     DataSul: "DataSul",
     DataSulPrototype: "DataSul Protótipo",

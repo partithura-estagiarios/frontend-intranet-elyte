@@ -5,6 +5,7 @@ export default {
     changePwd: "Sua senha foi alterada com sucesso",
     register: "Seu cadastro foi criado com sucesso",
     createRamal: "Ramal criado com sucesso",
+    createMenu: "Cardápio criado com sucesso",
   },
 
   fail: {
@@ -13,5 +14,6 @@ export default {
     changePwd: "Houve um erro ao tentar mudar sua senha",
     register: "Houve um erro ao criar seu cadastro",
     createRamal: "Houve um erro ao criar o ramal",
+    createMenu: "Houve um erro ao criar o cardápio",
   },
 };

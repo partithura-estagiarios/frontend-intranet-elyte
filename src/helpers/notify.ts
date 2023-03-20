@@ -1,4 +1,5 @@
 import { Notify } from "quasar";
+
 function notify(
   message: string,
   color: string,

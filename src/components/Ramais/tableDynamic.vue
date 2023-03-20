@@ -23,18 +23,13 @@
       </template>
 
       <template #top-left>
-        <q-btn outline color="primary" class="border" @click="emit('add')">
-          <q-icon class="q-mr-sm" name="add" color="red" />
-          <span>{{ $t("action.addRamal.index") }}</span>
-        </q-btn>
+        <slot name="top-left"></slot>
       </template>
     </q-table>
   </div>
 </template>
 
 <script setup lang="ts">
-const emit = defineEmits(["add"]);
-
 const icon = computed(() => {
   search.value ? "close" : "search";
 });
@@ -42,12 +37,12 @@ const icon = computed(() => {
 const search = ref();
 const props = defineProps({
   columns: {
-    type: Array,
     default: () => [],
+    type: Array,
   },
   rows: {
-    type: Array,
     default: () => [],
+    type: Array,
   },
 });
 </script>

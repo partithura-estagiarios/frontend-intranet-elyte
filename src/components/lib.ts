@@ -1,28 +1,28 @@
 // lib local temporária para não poluir o código
 
 export const rhList = [
-  {
-    id: "1",
-    img: "speaker_notes",
-    label: "titles.Hr.HRDiscloses",
-    link: "http:/totvs-login/loginForm",
-  },
-  {
-    id: "2",
-    img: "cake",
-    label: "titles.Hr.Birthdays",
-    link: "elyte.partithura.app/dashboard/",
-  },
-  {
-    id: "3",
-    img: "campaign",
-    label: "titles.Hr.FixedSchedule",
-  },
-  {
-    id: "4",
-    img: "email",
-    label: "titles.Hr.ContactWithDirector",
-  },
+  // {
+  //   id: "1",
+  //   img: "speaker_notes",
+  //   label: "titles.Hr.HRDiscloses",
+  //   link: "http:/totvs-login/loginForm",
+  // },
+  // {
+  //   id: "2",
+  //   img: "cake",
+  //   label: "titles.Hr.Birthdays",
+  //   link: "elyte.partithura.app/dashboard/",
+  // },
+  // {
+  //   id: "3",
+  //   img: "campaign",
+  //   label: "titles.Hr.FixedSchedule",
+  // },
+  // {
+  //   id: "4",
+  //   img: "email",
+  //   label: "titles.Hr.ContactWithDirector",
+  // },
   {
     id: "5",
     img: "menu_book",
@@ -33,11 +33,11 @@ export const rhList = [
     img: "phone",
     label: "titles.Hr.Fones",
   },
-  {
-    id: "7",
-    img: "calendar_month",
-    label: "titles.Hr.Agenda",
-  },
+  // {
+  //   id: "7",
+  //   img: "calendar_month",
+  //   label: "titles.Hr.Agenda",
+  // },
 ];
 
 export const gestaoList = [

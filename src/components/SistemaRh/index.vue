@@ -12,6 +12,7 @@
           />
         </span>
         <q-separator size="0.5rem" color="primary" />
+        <q-badge color="primary">Em desenvolvimento</q-badge>
       </q-card-section>
       <q-card-section class="row">
         <q-item

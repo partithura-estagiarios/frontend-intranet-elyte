@@ -1,5 +1,5 @@
 <template>
-  <div class="side borderRad">
+  <div class="side">
     <q-card class="q-mx-lg row justify-center shadow-7">
       <q-card-section class="q-my-md">
         <span class="text-black text-uppercase row font text-bold">
@@ -11,7 +11,7 @@
             name="supervisor_account"
           />
         </span>
-        <q-separator size="0.5rem" color="primary" class="bar-style" />
+        <q-separator size="0.5rem" color="primary" />
       </q-card-section>
       <q-card-section class="row">
         <q-item
@@ -22,12 +22,12 @@
         >
           <q-item-section avatar>
             <q-avatar class="row" size="7rem">
-              <q-icon class="border" :name="icon.img" />
+              <q-icon class="border icon" :name="icon.img" />
             </q-avatar>
           </q-item-section>
 
           <q-item-section class="row">
-            <q-item-label class="text-black">
+            <q-item-label class="text-red text-weight-bolder">
               {{ $t(icon.label) }}
             </q-item-label>
           </q-item-section>
@@ -46,22 +46,24 @@ import { rhList } from "../lib";
   border: 8px solid;
   border-radius: 50%;
   padding: 0.3rem;
-  color: rgb(255, 0, 0);
+  border-color: rgb(164, 164, 164);
   width: 4.5rem;
   height: 4.5rem;
 }
 
-.border:hover {
-  color: rgb(121, 184, 71);
+.icon {
+  color: grey;
 }
-.bar-style {
-  border-radius: 10px;
+
+.icon:hover {
+  color: rgb(229, 57, 53);
+}
+
+.border:hover {
+  border-color: rgb(229, 57, 53);
 }
 
 .font {
   font-size: 1.6rem;
-}
-.borderRad {
-  border-radius: 60px;
 }
 </style>

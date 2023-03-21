@@ -60,31 +60,26 @@ export const gestaoList = [
   },
   {
     id: "4",
-    img: "/public/icon/codiIncon.png",
-    label: "titles.Management.StockQuery",
-  },
-  {
-    id: "5",
     img: "/public/icon/datasulIcon.png",
     label: "titles.Management.CODI",
   },
   {
-    id: "6",
+    id: "5",
     img: "/public/icon/datasulIcon.png",
     label: "titles.Management.GoodIdea",
   },
   {
-    id: "7",
+    id: "6",
     img: "rate_review",
     label: "titles.Management.Reports",
   },
   {
-    id: "8",
+    id: "7",
     img: "settings",
     label: "titles.Management.ProcessMapping",
   },
   {
-    id: "9",
+    id: "8",
     img: "settings",
     label: "titles.Management.FtWeb",
   },

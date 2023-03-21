@@ -23,7 +23,7 @@
         >
           <q-item-section avatar>
             <q-avatar size="7rem">
-              <q-icon class="border" :name="icon.img" />
+              <q-icon class="border" color="red-7" :name="icon.img" />
             </q-avatar>
           </q-item-section>
 
@@ -47,13 +47,13 @@ import { gestaoList } from "../lib";
   border: 8px solid;
   border-radius: 50%;
   padding: 0.3rem;
-  color: rgb(255, 0, 0);
+  border-color: rgb(164, 164, 164);
   width: 4.5rem;
   height: 4.5rem;
 }
 
 .border:hover {
-  color: rgb(121, 184, 71);
+  border-color: rgb(229, 57, 53);
 }
 .bar-style {
   border-radius: 10px;

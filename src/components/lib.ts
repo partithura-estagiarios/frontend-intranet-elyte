@@ -45,7 +45,7 @@ export const gestaoList = [
     id: "1",
     img: "/public/icon/datasulIcon.png",
     label: "titles.Management.DataSul",
-    link: "https://http://10.0.0.11:31080/totvs-login/loginForm",
+    link: "http://10.0.0.11:31080/totvs-login/loginForm",
   },
   {
     id: "2",
@@ -63,26 +63,31 @@ export const gestaoList = [
     id: "4",
     img: "/public/icon/codiIncon.png",
     label: "titles.Management.StockQuery",
+    link: "http://10.10.0.3:8080/inventory",
   },
   {
     id: "5",
     img: "/public/icon/datasulIcon.png",
     label: "titles.Management.GoodIdea",
+    link: "http://10.10.0.9/boaideia",
   },
   {
     id: "6",
     img: "rate_review",
     label: "titles.Management.Reports",
+    link: "",
   },
   {
     id: "7",
     img: "settings",
     label: "titles.Management.ProcessMapping",
+    link: "http://10.10.0.6:3022/mapeamento/index/Index_arquivos/frame.html",
   },
   {
     id: "8",
     img: "settings",
     label: "titles.Management.FtWeb",
+    link: "http://10.10.0.29:8180/ftweb/pages/login.jsp",
   },
 ];
 

@@ -45,13 +45,13 @@ export const gestaoList = [
     id: "1",
     img: "/public/icon/datasulIcon.png",
     label: "titles.Management.DataSul",
-    link: "http:/totvs-login/loginForm",
+    link: "https://totvs-login/loginForm",
   },
   {
     id: "2",
     img: "/public/icon/partithuraIcon.png",
     label: "titles.Management.Partithura",
-    link: "elyte.partithura.app/dashboard/",
+    link: "https://elyte.partithura.app/dashboard/",
   },
   {
     id: "3",

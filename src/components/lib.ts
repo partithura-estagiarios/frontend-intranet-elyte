@@ -45,7 +45,7 @@ export const gestaoList = [
     id: "1",
     img: "/public/icon/datasulIcon.png",
     label: "titles.Management.DataSul",
-    link: "http://10.0.0.11:31080/totvs-login/loginForm",
+    link: "https://http://10.0.0.11:31080/totvs-login/loginForm",
   },
   {
     id: "2",
@@ -57,11 +57,12 @@ export const gestaoList = [
     id: "3",
     img: "/public/icon/datasulIcon.png",
     label: "titles.Management.DataSulPrototype",
+    link: "http://10.0.0.11:34080/totvs-login/loginForm",
   },
   {
     id: "4",
-    img: "/public/icon/datasulIcon.png",
-    label: "titles.Management.CODI",
+    img: "/public/icon/codiIncon.png",
+    label: "titles.Management.StockQuery",
   },
   {
     id: "5",

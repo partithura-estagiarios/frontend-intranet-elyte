@@ -9,7 +9,7 @@ export default {
     Partithura: "Partithura",
     StockQuery: "Consulta de Estoque",
     CODI: "CODI",
-    GoodIdea: "Boa Idéia",
+    BoaIdeia: "Boa Idéia",
     Reports: "Relatórios",
     ProcessMapping: "Mapeamento de Processos",
     FtWeb: "FT Web",
@@ -30,6 +30,9 @@ export default {
     Mapping: "Mapeamento",
     FT: "Ficha Técnica Web",
     DataSulPrototype: "Exclusivo para Testes",
+    Stock: "Gerenciamento de estoque",
+    BoaIdeia: "Preencha Formulário",
+    Reports: "ERP",
   },
   Login: {
     textLoginForm: "Digite suas credenciais",

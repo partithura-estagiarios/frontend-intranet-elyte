@@ -17,19 +17,22 @@
         <q-item
           v-for="icon in gestaoList"
           :key="icon.id"
-          class="column col-3 q-my-md items-center"
+          class="column col-4 q-my-md items-center"
           clickable
           :href="icon.link"
         >
-          <q-item-section avatar>
+          <q-item-section wrap>
             <q-avatar size="7rem">
               <q-icon class="border icon" :name="icon.img" />
             </q-avatar>
           </q-item-section>
 
           <q-item-section>
-            <q-item-label class="text-red text-weight-bolder flex">
+            <q-item-label class="text-red text-weight-bolder text-no-wrap">
               {{ $t(icon.label) }}
+            </q-item-label>
+            <q-item-label class="text-grey text-weight-bolder text-no-wrap">
+              {{ $t(icon.subLabel) }}
             </q-item-label>
           </q-item-section>
         </q-item>
@@ -48,8 +51,8 @@ import { gestaoList } from "../lib";
   border-radius: 50%;
   padding: 0.3rem;
   border-color: rgb(164, 164, 164);
-  width: 4.5rem;
-  height: 4.5rem;
+  width: 70%;
+  height: 70%;
 }
 
 .icon {
@@ -69,8 +72,5 @@ import { gestaoList } from "../lib";
 
 .font {
   font-size: 1.6rem;
-}
-.borderRad {
-  border-radius: 60px;
 }
 </style>

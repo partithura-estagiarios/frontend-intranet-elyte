@@ -2,7 +2,7 @@
   <div>
     <q-card class="q-mx-lg row justify-center shadow-7">
       <q-card-section class="q-my-md">
-        <span class="text-black text-uppercase row font text-bold">
+        <span class="text-uppercase row font text-bold text-black">
           {{ $t("titles.ManagementSystem") }}
           <q-icon
             color="primary"
@@ -23,12 +23,12 @@
         >
           <q-item-section avatar>
             <q-avatar size="7rem">
-              <q-icon class="border" color="red-7" :name="icon.img" />
+              <q-icon class="border icon" :name="icon.img" />
             </q-avatar>
           </q-item-section>
 
           <q-item-section>
-            <q-item-label class="text-black">
+            <q-item-label class="text-red text-weight-bolder flex">
               {{ $t(icon.label) }}
             </q-item-label>
           </q-item-section>
@@ -50,6 +50,14 @@ import { gestaoList } from "../lib";
   border-color: rgb(164, 164, 164);
   width: 4.5rem;
   height: 4.5rem;
+}
+
+.icon {
+  color: grey;
+}
+
+.icon:hover {
+  color: rgb(229, 57, 53);
 }
 
 .border:hover {

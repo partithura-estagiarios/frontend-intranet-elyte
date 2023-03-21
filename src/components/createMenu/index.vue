@@ -124,25 +124,29 @@ import { Field, Form } from "vee-validate";
 import * as yup from "yup";
 
 const options = [
-  "Domingo",
-  "Segunda-feira",
-  "Terça-feira",
-  "Quarta-feira",
-  "Quinta-feira",
-  "Sexta-feira",
-  "Sábado",
+  t("text.days.sunday"),
+  t("text.days.monday"),
+  t("text.days.tuesday"),
+  t("text.days.wednesday"),
+  t("text.days.thursday"),
+  t("text.days.friday"),
+  t("text.days.saturday"),
 ];
 
 const schema = yup.object({
-  salad: yup.string().required().label(t("warning.requiredField")),
-  rice: yup.string().required().label(t("warning.requiredField")),
-  complement: yup.string().required().label(t("warning.requiredField")),
-  soup: yup.string().required().label(t("warning.requiredField")),
-  protein: yup.string().required().label(t("warning.requiredField")),
-  dessert: yup.string().required().label(t("warning.requiredField")),
-  day: yup.string().required().label(t("warning.requiredField")),
-  week: yup.string().required().label(t("warning.requiredField")),
+  salad: makeRuleOfString(),
+  rice: makeRuleOfString(),
+  complement: makeRuleOfString(),
+  soup: makeRuleOfString(),
+  protein: makeRuleOfString(),
+  dessert: makeRuleOfString(),
+  day: makeRuleOfString(),
+  week: makeRuleOfString(),
 });
+
+function makeRuleOfString(message: string = "warning.requiredField") {
+  return yup.string().required().label(t(message));
+}
 
 async function addMenu(menu: Record<string, string | number>, actions: any) {
   try {

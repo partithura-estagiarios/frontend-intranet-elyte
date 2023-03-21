@@ -23,7 +23,7 @@
       </template>
 
       <template #top-left>
-        <slot name="top-left"></slot>
+        <slot name="top-left" />
       </template>
     </q-table>
   </div>

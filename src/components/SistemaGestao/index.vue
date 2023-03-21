@@ -19,6 +19,7 @@
           :key="icon.id"
           class="column col-3 q-my-md items-center"
           clickable
+          :href="icon.link"
         >
           <q-item-section avatar>
             <q-avatar size="7rem">

@@ -45,7 +45,7 @@ export const gestaoList = [
     id: "1",
     img: "/public/icon/datasulIcon.png",
     label: "titles.Management.DataSul",
-    link: "https://totvs-login/loginForm",
+    link: "http://10.0.0.11:31080/totvs-login/loginForm",
   },
   {
     id: "2",

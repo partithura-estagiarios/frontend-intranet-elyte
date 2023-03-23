@@ -17,21 +17,27 @@ export const rhList = [
   //   id: "3",
   //   img: "campaign",
   //   label: "titles.Hr.FixedSchedule",
+  //   subLabel: "Agenda"
   // },
   // {
   //   id: "4",
   //   img: "email",
   //   label: "titles.Hr.ContactWithDirector",
+  //   subLabel: "Digite uma mensagem",
   // },
   {
     id: "5",
     img: "menu_book",
     label: "titles.Hr.Menu",
+    subLabel: "Restaurante",
+    link: "/menu",
   },
   {
     id: "6",
     img: "phone",
     label: "titles.Hr.Fones",
+    subLabel: "Listagem",
+    link: "/ramais",
   },
   // {
   //   id: "7",

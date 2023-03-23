@@ -104,38 +104,3 @@ export const gestaoList = [
     link: "http://10.10.0.29:8180/ftweb/pages/login.jsp",
   },
 ];
-
-export const outrosList = [
-  {
-    id: "1",
-    img: "",
-    label: "DataSul",
-    link: "http:/totvs-login/loginForm",
-  },
-  {
-    id: "2",
-    img: "",
-    label: "Partithura",
-    link: "elyte.partithura.app/dashboard/",
-  },
-  {
-    id: "3",
-    img: "",
-    label: "Consulta de Estoque",
-  },
-  {
-    id: "4",
-    img: "",
-    label: "CODI",
-  },
-  {
-    id: "5",
-    img: "/public/icon/datasulIcon.png",
-    label: "Boa Idéia",
-  },
-  {
-    id: "6",
-    img: "/public/icon/datasulIcon.png",
-    label: "Relatórios",
-  },
-];

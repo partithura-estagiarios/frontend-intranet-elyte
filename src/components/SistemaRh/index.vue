@@ -1,35 +1,38 @@
 <template>
-  <div class="side">
+  <div>
     <q-card class="q-mx-lg row justify-center shadow-7">
       <q-card-section class="q-my-md">
-        <span class="text-black text-uppercase row font text-bold">
+        <span class="text-uppercase row font text-bold text-black">
           {{ $t("titles.HrSystem") }}
           <q-icon
             color="primary"
             class="q-ml-sm"
+            name="engineering"
             size="2rem"
-            name="supervisor_account"
           />
         </span>
-        <q-separator size="0.5rem" color="primary" />
-        <q-badge color="primary">Em desenvolvimento</q-badge>
+        <q-separator size="0.5rem" color="primary" class="bar-style" />
       </q-card-section>
-      <q-card-section class="row">
+      <q-card-section class="row col-12 justify-around">
         <q-item
           v-for="icon in rhList"
           :key="icon.id"
-          class="col-3 column q-my-md items-center"
+          class="column col-4 q-my-md items-center"
           clickable
+          :href="icon.link"
         >
-          <q-item-section avatar>
-            <q-avatar class="row" size="7rem">
+          <q-item-section wrap>
+            <q-avatar size="7rem">
               <q-icon class="border icon" :name="icon.img" />
             </q-avatar>
           </q-item-section>
 
-          <q-item-section class="row">
-            <q-item-label class="text-red text-weight-bolder">
+          <q-item-section>
+            <q-item-label class="text-red text-weight-bolder text-no-wrap">
               {{ $t(icon.label) }}
+            </q-item-label>
+            <q-item-label class="text-grey text-weight-bolder text-no-wrap">
+              {{ $t(icon.subLabel) }}
             </q-item-label>
           </q-item-section>
         </q-item>
@@ -48,8 +51,8 @@ import { rhList } from "../lib";
   border-radius: 50%;
   padding: 0.3rem;
   border-color: rgb(164, 164, 164);
-  width: 4.5rem;
-  height: 4.5rem;
+  width: 70%;
+  height: 70%;
 }
 
 .icon {
@@ -62,6 +65,9 @@ import { rhList } from "../lib";
 
 .border:hover {
   border-color: rgb(229, 57, 53);
+}
+.bar-style {
+  border-radius: 10px;
 }
 
 .font {

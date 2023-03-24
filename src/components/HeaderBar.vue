@@ -5,20 +5,21 @@
     </q-toolbar-section>
     <q-toolbar class="justify-center text-white">
       <q-toobar-section class="row">
-        <span class="titleStyle q-mr-md row text-weight-bolder">{{
-          title
-        }}</span>
+        <span
+          class="titleStyle q-mr-md row text-weight-bolder text-capitalize"
+          >{{ title }}</span
+        >
         <q-icon size="2rem" class="border" name="house" />
       </q-toobar-section>
     </q-toolbar>
-    <q-toobar-section>
+    <q-toobar-section class="hide">
       <q-icon size="3rem" name="settings_applications" />
     </q-toobar-section>
   </q-item>
 </template>
 
 <script setup lang="ts">
-const title = ref("INTRANET ELYTE");
+const title = ref(t("titles.textIntranet"));
 </script>
 
 <style scoped>
@@ -28,5 +29,9 @@ const title = ref("INTRANET ELYTE");
 .titleStyle {
   font-size: 1.5rem;
   font-family: "Open Sans", sans-serif;
+}
+
+.hide {
+  visibility: hidden;
 }
 </style>

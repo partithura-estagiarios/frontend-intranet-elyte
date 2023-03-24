@@ -1,5 +1,5 @@
 export default {
-  textIntranet: "Intranet Elyte",
+  textIntranet: "INTRANET ELYTE",
   ManagementSystem: "Sistema de gestão",
   HrSystem: "sistema de RH",
   OtherSystems: "Outros",

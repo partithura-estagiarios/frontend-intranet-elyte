@@ -13,7 +13,7 @@
         </span>
         <q-separator size="0.5rem" color="primary" class="bar-style" />
       </q-card-section>
-      <q-card-section class="row">
+      <q-card-section class="row col-12 justify-around">
         <q-item
           v-for="icon in gestaoList"
           :key="icon.id"

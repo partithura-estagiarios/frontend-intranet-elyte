@@ -2,7 +2,6 @@
   <div class="row">
     <SistemaGestao class="col-6" />
     <SistemaRh class="col-6" />
-    <Outros class="q-mt-xl" />
   </div>
 </template>
 

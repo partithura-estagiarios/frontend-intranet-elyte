@@ -28,6 +28,7 @@
 <script setup lang="ts">
 import GetRamais from "../../graphql/ramais/getRamais.gql";
 import AddRamal from "../../graphql/ramais/createRamal.gql";
+import { Ramal } from "../../entities";
 
 const ramalList = ref();
 const ramalForm = ref(false);
@@ -50,7 +51,7 @@ onMounted(async () => {
 
 const columns = [
   {
-    field: (getRamais) => getRamais.ramal_user,
+    field: (getRamais: Ramal) => getRamais.ramal_user,
     required: true,
     sortable: true,
     label: t("text.name"),

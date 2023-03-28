@@ -8,5 +8,6 @@ query GetMenu {
     rice
     salad
     soup
+    week
   }
 }

@@ -7,6 +7,18 @@
       :validation-schema="schema"
       class="col-6 q-gutter-md"
     >
+      <Field name="week" v-slot="item">
+        <q-input
+          :model-value="item.value"
+          v-bind="item.field"
+          :label="$t('text.week')"
+          filled
+        />
+        <span v-if="item.errorMessage" class="text-red q-mb-xl">
+          {{ parseErrorMessage(item.errorMessage) }}
+        </span>
+      </Field>
+
       <Field name="day" v-slot="item">
         <q-select
           :model-value="item.value"
@@ -15,18 +27,7 @@
           bg-color="grey-3"
           :options="options"
           :popup-content-style="{ color: 'black' }"
-        />
-        <span v-if="item.errorMessage" class="text-red q-mb-xl">
-          {{ parseErrorMessage(item.errorMessage) }}
-        </span>
-      </Field>
-
-      <Field name="week" v-slot="item">
-        <q-input
-          :model-value="item.value"
-          v-bind="item.field"
-          :label="$t('text.week')"
-          filled
+          disable
         />
         <span v-if="item.errorMessage" class="text-red q-mb-xl">
           {{ parseErrorMessage(item.errorMessage) }}
@@ -148,8 +149,14 @@ function makeRuleOfString(message: string = "warning.requiredField") {
   return yup.string().required().label(t(message));
 }
 
+async function validateMenu() {
+  const menus = await runMutation(GetMenu, {});
+  loga(menus.week);
+}
+
 async function addMenu(menu: Record<string, string | number>, actions: any) {
   try {
+    validateMenu();
     await runMutation(CreateMenu, { data: { ...menu } });
     const { getMenu } = await runMutation(GetMenu, {});
     menusStorage.setMenus(getMenu as unknown as [Menu]);

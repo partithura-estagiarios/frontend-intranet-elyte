@@ -7,8 +7,7 @@ mutation CreateMenu($data: MenuInput!) {
     salad
     rice
     soup
-    week
-    day
+    date
     created_at
     updated_at
   }

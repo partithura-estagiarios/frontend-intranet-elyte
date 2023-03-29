@@ -2,12 +2,10 @@ query GetMenu {
   getMenu {
     complement
     id
-    day
     dessert
     protein
     rice
     salad
-    soup
-    week
+    date
   }
 }

@@ -23,7 +23,7 @@
         >
           <q-item-section wrap>
             <q-avatar size="7rem">
-              <q-icon class="border icon" :name="icon.img" />
+              <q-icon class="border icon" :name="icon.icon" />
             </q-avatar>
           </q-item-section>
 

@@ -128,12 +128,15 @@ function makeRuleOfString(message: string = "warning.requiredField") {
 
 async function addMenu(menu: Record<string, string | number>, actions: any) {
   try {
-    await runMutation(CreateMenu, { data: { ...menu } });
+    const notRepeatDate = await runMutation(CreateMenu, { data: { ...menu } });
+    if (notRepeatDate == null) {
+      throw new Error("Data já existe");
+    }
     const { getMenu } = await runMutation(GetMenu, {});
     menusStorage.setMenus(getMenu as unknown as [Menu]);
     positiveNotify(t("notifications.success.createMenu"));
     actions.resetForm();
-  } catch {
+  } catch (e) {
     negativeNotify(t("notifications.fail.createMenu"));
   }
 }

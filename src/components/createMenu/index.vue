@@ -7,26 +7,15 @@
       :validation-schema="schema"
       class="col-6 q-gutter-md"
     >
-      <Field name="day" v-slot="item">
-        <q-select
-          :model-value="item.value"
-          v-bind="item.field"
-          :label="$t('text.day')"
-          bg-color="grey-3"
-          :options="options"
-          :popup-content-style="{ color: 'black' }"
-        />
-        <span v-if="item.errorMessage" class="text-red q-mb-xl">
-          {{ parseErrorMessage(item.errorMessage) }}
-        </span>
-      </Field>
-
-      <Field name="week" v-slot="item">
+      <Field name="date" v-slot="item">
         <q-input
           :model-value="item.value"
           v-bind="item.field"
-          :label="$t('text.week')"
           filled
+          type="date"
+          autofocus
+          format="DD/MM/YYYY"
+          formatModel="string"
         />
         <span v-if="item.errorMessage" class="text-red q-mb-xl">
           {{ parseErrorMessage(item.errorMessage) }}
@@ -123,16 +112,6 @@ import { Menu } from "../../entities";
 import { Field, Form } from "vee-validate";
 import * as yup from "yup";
 
-const options = [
-  t("text.days.sunday"),
-  t("text.days.monday"),
-  t("text.days.tuesday"),
-  t("text.days.wednesday"),
-  t("text.days.thursday"),
-  t("text.days.friday"),
-  t("text.days.saturday"),
-];
-
 const schema = yup.object({
   salad: makeRuleOfString(),
   rice: makeRuleOfString(),
@@ -140,8 +119,7 @@ const schema = yup.object({
   soup: makeRuleOfString(),
   protein: makeRuleOfString(),
   dessert: makeRuleOfString(),
-  day: makeRuleOfString(),
-  week: makeRuleOfString(),
+  date: makeRuleOfString(),
 });
 
 function makeRuleOfString(message: string = "warning.requiredField") {
@@ -150,12 +128,15 @@ function makeRuleOfString(message: string = "warning.requiredField") {
 
 async function addMenu(menu: Record<string, string | number>, actions: any) {
   try {
-    await runMutation(CreateMenu, { data: { ...menu } });
+    const notRepeatDate = await runMutation(CreateMenu, { data: { ...menu } });
+    if (notRepeatDate == null) {
+      throw new Error("Data já existe");
+    }
     const { getMenu } = await runMutation(GetMenu, {});
     menusStorage.setMenus(getMenu as unknown as [Menu]);
     positiveNotify(t("notifications.success.createMenu"));
     actions.resetForm();
-  } catch {
+  } catch (e) {
     negativeNotify(t("notifications.fail.createMenu"));
   }
 }

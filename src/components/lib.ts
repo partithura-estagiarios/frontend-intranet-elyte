@@ -51,21 +51,21 @@ export const rhList = [
 export const gestaoList = [
   {
     id: "1",
-    img: "/public/icon/datasulIcon.png",
+    img: "img:/icon/datasulIcon.png",
     label: "titles.Management.DataSul",
     subLabel: "titles.DescriptionManagement.ErpSystem",
     link: "http://10.0.0.11:31080/totvs-login/loginForm",
   },
   {
     id: "2",
-    img: "/public/icon/partithuraIcon.png",
+    img: "img:/icon/partithuraIcon.png",
     label: "titles.Management.Partithura",
     subLabel: "titles.DescriptionManagement.StrategicManagement",
     link: "https://elyte.partithura.app/dashboard/",
   },
   {
     id: "3",
-    img: "/public/icon/datasulIcon.png",
+    img: "img:/icon/datasulIcon.png",
     label: "titles.Management.DataSulPrototype",
     subLabel: "titles.DescriptionManagement.DataSulPrototype",
     link: "http://10.0.0.11:34080/totvs-login/loginForm",

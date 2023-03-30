@@ -35,7 +35,7 @@ export const rhList = [
   // },
   {
     id: "6",
-    img: "phone",
+    icon: "phone",
     label: "titles.Hr.Fones",
     subLabel: "Listagem",
     link: "/ramais",

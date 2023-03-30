@@ -4,12 +4,7 @@
       <q-card-section class="q-my-md">
         <span class="text-uppercase row font text-bold text-black">
           {{ $t("titles.HrSystem") }}
-          <q-icon
-            color="primary"
-            class="q-ml-sm"
-            name="engineering"
-            size="2rem"
-          />
+          <q-icon color="primary" class="q-ml-sm" name="engineering" size="2rem" />
         </span>
         <q-separator size="0.5rem" color="primary" class="bar-style" />
       </q-card-section>

@@ -1,7 +1,7 @@
 import { defineStore } from "pinia";
 import { Ramal } from "../entities";
 
-function buildRamal(ramal: Ramal): Ramal {
+function buildRamal(ramal: Ramal | null): Ramal | null {
   if (ramal != null) {
     return ramal;
   }

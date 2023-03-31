@@ -54,6 +54,6 @@ export const useUserStore = defineStore("useUserStore", {
     },
   },
   persist: true,
-}) as UserStorageConstructor;
+}) as unknown as UserStorageConstructor;
 
-export const userStorage = useUserStore();
+export const userStorage = useUserStore;

@@ -29,7 +29,6 @@
             <q-avatar size="7rem">
               <q-icon
                 class="border icon border-radius-inherit q-pa-md"
-                color="grey"
                 size="4rem"
                 :name="icon.icon"
               />
@@ -58,6 +57,9 @@ import { rhList } from "../lib";
 .border {
   border: 8px solid;
   border-color: rgb(164, 164, 164);
+}
+.icon {
+  color: gray;
 }
 .icon:hover {
   color: rgb(229, 57, 53);

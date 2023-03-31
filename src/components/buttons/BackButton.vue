@@ -1,0 +1,11 @@
+<template>
+  <div>
+    <q-btn
+      round
+      color="primary"
+      icon="arrow_back"
+      @click="router.go(-1)"
+      size="1.2rem"
+    />
+  </div>
+</template>

@@ -5,7 +5,7 @@
       :rows-per-page-options="[rows.length]"
       :grid="$q.screen.xs"
       :rows="props.rows"
-      :columns="columns"
+      :columns="columns as any"
       :filter="search"
       row-key="name"
     >
@@ -35,7 +35,7 @@
 <script setup lang="ts">
 const emit = defineEmits(["add"]);
 
-const icon = computed(() => {
+const icon = computed((): any => {
   search.value ? "close" : "search";
 });
 

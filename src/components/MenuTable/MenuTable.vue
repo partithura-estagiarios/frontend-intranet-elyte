@@ -23,7 +23,7 @@ onMounted(async () => {
 
 const columns = [
   {
-    field: "day",
+    field: "date",
     align: "left",
     label: t("text.day"),
   },

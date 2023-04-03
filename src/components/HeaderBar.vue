@@ -12,14 +12,18 @@
         <q-icon size="2rem" class="border" name="house" />
       </q-toobar-section>
     </q-toolbar>
-    <q-toobar-section class="hide">
-      <q-icon size="3rem" name="settings_applications" />
+    <q-toobar-section>
+      <q-button>
+        <q-icon size="3rem" name="cancel" v-if="isLoggedUser" />
+        <q-icon size="3rem" name="login" v-else />
+      </q-button>
     </q-toobar-section>
   </q-item>
 </template>
 
 <script setup lang="ts">
 const title = ref(t("titles.textIntranet"));
+const isLoggedUser = userStorage.isLoggedIn;
 </script>
 
 <style scoped>

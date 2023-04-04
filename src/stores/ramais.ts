@@ -2,10 +2,7 @@ import { defineStore } from "pinia";
 import { Ramal } from "../entities";
 
 function buildRamais(ramal: Ramal | null): Ramal | null {
-  if (ramal != null) {
-    return ramal;
-  }
-  return null;
+  return ramal;
 }
 
 const Ramais = defineStore("Ramais", {

@@ -58,6 +58,4 @@ const columns = [
     label: t("text.menu.dessert"),
   },
 ];
-
-loga(columns);
 </script>

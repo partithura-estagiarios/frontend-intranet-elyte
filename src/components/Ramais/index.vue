@@ -1,6 +1,8 @@
 <template>
-  <div class="row">
-    <BackButton class="col-5 justify-start row q-ml-md" />
+  <q-item class="row">
+    <div class="col-5">
+      <BackButton class="justify-start row q-ml-md" />
+    </div>
     <div class="col-6 row justify-start">
       <span class="text-black font text-bold q-ml-xl">
         {{ $t("titles.Hr.Fones") }}
@@ -8,7 +10,7 @@
         <q-separator size="0.5rem" color="primary" class="bar-style" />
       </span>
     </div>
-  </div>
+  </q-item>
   <table-dynamic
     :columns="columns"
     :rows="ramalList"

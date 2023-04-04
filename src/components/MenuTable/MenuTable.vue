@@ -20,7 +20,6 @@ onMounted(async () => {
   const { getMenu } = await runQuery(GetMenu);
   menuList.value = getMenu;
 });
-
 const columns = [
   {
     field: "date",
@@ -59,4 +58,6 @@ const columns = [
     label: t("text.menu.dessert"),
   },
 ];
+
+loga(columns);
 </script>

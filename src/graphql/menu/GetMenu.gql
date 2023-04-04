@@ -8,5 +8,6 @@ query GetMenu {
     salad
     date
     soup
+    created_at
   }
 }

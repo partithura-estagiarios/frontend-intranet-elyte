@@ -13,13 +13,8 @@ type Actions = {
 };
 
 export interface UserStorageConstructor {
-  setUser(arg0: {
-    username: string;
-    id: string;
-    email: string;
-    token: string;
-  }): unknown;
   state: UserStorage;
   getters: Getters;
   actions: Actions;
+  setUser(value: UserStorage): void;
 }

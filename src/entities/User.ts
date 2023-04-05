@@ -1,5 +1,5 @@
 export interface UserStorage {
-  username: string;
+  name: string;
   id: string;
   email: string;
   token: string;

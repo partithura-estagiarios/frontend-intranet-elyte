@@ -1,59 +1,45 @@
-import { defineStore, acceptHMRUpdate } from "pinia";
-import { getTokenStorage } from "../helpers/storage";
+import { UserStorage } from "./../entities/User";
+import { defineStore } from "pinia";
 
-import { UserStorage, UserStorageConstructor } from "../entities/User";
-
-function buildUser({ username, id, email, token }: UserStorage): UserStorage {
-  return {
-    username,
-    id,
-    email,
-    token,
-  };
-}
-const NULL_USER = {
-  username: "",
-  id: "",
-  email: "",
-  token: "",
-};
-export const useUserStore = defineStore("useUserStore", {
+export const useUserStore = defineStore({
+  id: "user",
   state: () => ({
-    user: buildUser(NULL_USER),
+    name: "",
+    email: "",
+    token: "",
+    id: "",
   }),
   getters: {
-    getToken: (state) => {
-      return state.user.token;
+    getToken(state): string {
+      return state.token;
     },
-    getUser: (state) => {
-      return state.user;
+    getId(state): string {
+      return state.id;
     },
-    getId: (state) => {
-      return state.user.id;
+    getEmail(state): string {
+      return state.email;
     },
-    getEmail: (state) => {
-      return state.user.email;
+    getName(state): string {
+      return state.name;
     },
-    getUsername: (state) => {
-      return state.user.username;
+    getUser(state): UserStorage {
+      return state;
     },
-    isLoggedIn: (state) => {
-      return state.user.token === getTokenStorage();
+    isLoggedIn(state): boolean {
+      return state.token === getTokenStorage();
     },
   },
   actions: {
-    setToken(value: string) {
-      Object.assign(this.user.token, value !== null || getItemStorage());
+    setToken(token: string) {
+      Object.assign(this.token, token !== null || getTokenStorage());
     },
     setUser(value: UserStorage) {
-      Object.assign(this.user, value);
+      Object.assign(this, value);
     },
     logout() {
-      this.user = buildUser(NULL_USER);
       clearStorage();
     },
   },
-  persist: true,
-}) as UserStorageConstructor;
+});
 
-export const userStorage = useUserStore();
+export const userStorage = useUserStore;

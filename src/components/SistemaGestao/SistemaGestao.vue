@@ -2,7 +2,7 @@
   <div>
     <q-card class="q-mx-lg row justify-center shadow-7">
       <q-card-section class="q-my-md">
-        <span class="text-uppercase row font text-bold text-black">
+        <span class="text-uppercase row text-h5 text-bold text-black">
           {{ $t("titles.ManagementSystem") }}
           <q-icon
             color="primary"
@@ -11,7 +11,11 @@
             size="2rem"
           />
         </span>
-        <q-separator size="0.5rem" color="primary" class="bar-style" />
+        <q-separator
+          size="0.5rem"
+          color="primary"
+          class="border-radius-inherit"
+        />
       </q-card-section>
       <q-card-section class="row col-12 justify-around">
         <q-item
@@ -23,11 +27,15 @@
         >
           <q-item-section wrap>
             <q-avatar size="7rem">
-              <q-icon class="border icon" :name="icon.img" />
+              <q-icon
+                class="border icon border-radius-inherit q-pa-md"
+                size="4rem"
+                :name="icon.img"
+              />
             </q-avatar>
           </q-item-section>
 
-          <q-item-section>
+          <q-item-section class="q-mt-md">
             <q-item-label class="text-red text-weight-bolder text-no-wrap">
               {{ $t(icon.label) }}
             </q-item-label>
@@ -48,15 +56,7 @@ import { gestaoList } from "../lib";
 <style scoped>
 .border {
   border: 8px solid;
-  border-radius: 50%;
-  padding: 0.3rem;
   border-color: rgb(164, 164, 164);
-  width: 70%;
-  height: 70%;
-}
-
-.icon {
-  color: grey;
 }
 
 .icon:hover {
@@ -65,12 +65,5 @@ import { gestaoList } from "../lib";
 
 .border:hover {
   border-color: rgb(229, 57, 53);
-}
-.bar-style {
-  border-radius: 10px;
-}
-
-.font {
-  font-size: 1.6rem;
 }
 </style>

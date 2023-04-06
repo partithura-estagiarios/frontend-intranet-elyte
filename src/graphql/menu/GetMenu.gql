@@ -7,5 +7,7 @@ query GetMenu {
     rice
     salad
     date
+    soup
+    created_at
   }
 }

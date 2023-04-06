@@ -16,9 +16,7 @@ const Ramais = defineStore("Ramais", {
   },
   actions: {
     setRamais(value: Ramal | null) {
-      if (value != null) {
-        this.ramais = buildRamais(value);
-      }
+      this.ramais = value;
     },
   },
   persist: true,

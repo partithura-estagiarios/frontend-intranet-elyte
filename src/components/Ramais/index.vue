@@ -1,30 +1,36 @@
 <template>
-  <div class="margin">
-    <div class="row justify-center">
-      <q-card-section class="q-my-md">
-        <span class="text-black row font text-bold">
-          {{ $t("titles.Hr.Fones") }}
-          <q-icon color="primary" class="q-ml-sm" name="call" size="2rem" />
-        </span>
-        <q-separator size="0.5rem" color="primary" class="bar-style" />
-      </q-card-section>
+  <q-item class="row">
+    <div class="col-5">
+      <BackButton class="justify-start row q-ml-md" />
     </div>
-    <table-dynamic :columns="columns" :rows="ramalList" v-bind="$attrs">
-      <template #top-left>
-        <q-btn outline color="primary" class="border" @click="ramalForm = true">
-          <q-icon class="q-mr-sm" name="add" color="red" />
-          <span>{{ $t("action.addRamal.index") }}</span>
-        </q-btn>
-      </template>
-    </table-dynamic>
+    <div class="col-6 row justify-start">
+      <span class="text-black font text-bold q-ml-xl">
+        {{ $t("titles.Hr.Fones") }}
+        <q-icon color="primary" class="q-ml-sm" name="call" size="2rem" />
+        <q-separator size="0.5rem" color="primary" class="bar-style" />
+      </span>
+    </div>
+  </q-item>
+  <table-dynamic
+    :columns="columns"
+    :rows="ramalList"
+    v-bind="$attrs"
+    class="q-mt-lg"
+  >
+    <template #top-left>
+      <q-btn outline color="primary" class="border" @click="ramalForm = true">
+        <q-icon class="q-mr-sm" name="add" color="red" />
+        <span>{{ $t("action.addRamal.index") }}</span>
+      </q-btn>
+    </template>
+  </table-dynamic>
 
-    <CreateRamal
-      :open="ramalForm"
-      v-bind="$attrs"
-      @confirm="addRamal"
-      @cancel="ramalForm = false"
-    />
-  </div>
+  <CreateRamal
+    :open="ramalForm"
+    v-bind="$attrs"
+    @confirm="addRamal"
+    @cancel="ramalForm = false"
+  />
 </template>
 
 <script setup lang="ts">
@@ -93,10 +99,5 @@ const ramal = reactive({});
 }
 .bar-style {
   border-radius: 10px;
-}
-.margin {
-  margin-top: -4rem;
-  padding-right: 6rem;
-  padding-left: 6rem;
 }
 </style>

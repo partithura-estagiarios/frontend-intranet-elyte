@@ -41,8 +41,9 @@
 </template>
 
 <script lang="ts" setup>
-import { AuthQuery } from "../../entities";
+import { AuthQuery, UserStorage } from "../../entities";
 import Auth from "../../graphql/auth/index.gql";
+import { userStorage } from "../../stores/index";
 
 const marginBtn = computed(() =>
   useQuasar().screen.gt.md ? "q-mt-xl" : "q-mt-sm"
@@ -64,14 +65,20 @@ async function auth() {
     })) as unknown as AuthQuery;
     const { token, user } = auth;
     if (token) {
-      userStorage.setUser({
-        username: user.username,
+      const usuario: UserStorage = {
+        name: user.username,
         id: user.id,
         email: user.email,
         token,
-      });
+      };
+      userStorage.setUser(usuario);
+      const teste = getTokenStorage();
+      if (teste) {
+        loga(teste);
+      }
+      loga(userStorage.getToken);
     }
-    setTokenStorage(token);
+    // setTokenStorage(token);
     positiveNotify(t("notifications.success.login"));
     router.push("/home");
   } catch ({ message }) {

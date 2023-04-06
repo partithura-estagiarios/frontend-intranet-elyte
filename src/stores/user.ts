@@ -2,44 +2,37 @@ import { UserStorage } from "./../entities/User";
 import { defineStore } from "pinia";
 
 export const useUserStore = defineStore({
-  id: "user",
-  state: () => ({
-    name: "",
-    email: "",
-    token: "",
-    id: "",
-  }),
+  id: "User",
+  state: () => {
+    return {
+      user: {
+        name: "",
+        email: "",
+        token: "",
+        id: "",
+      },
+    };
+  },
   getters: {
-    getToken(state): string {
-      return state.token;
+    getToken(): string {
+      return this.user.token;
     },
-    getId(state): string {
-      return state.id;
+    getUser(): UserStorage {
+      return this.user;
     },
-    getEmail(state): string {
-      return state.email;
-    },
-    getName(state): string {
-      return state.name;
-    },
-    getUser(state): UserStorage {
-      return state;
-    },
-    isLoggedIn(state): boolean {
-      return state.token === getTokenStorage();
+    isLoggedIn(): boolean {
+      return this.user.token === getTokenStorage();
     },
   },
   actions: {
-    setToken(token: string) {
-      Object.assign(this.token, token !== null || getTokenStorage());
-    },
     setUser(value: UserStorage) {
-      Object.assign(this, value);
+      Object.assign(this.$state.user, value);
     },
     logout() {
       clearStorage();
     },
   },
+  persist: true,
 });
 
-export const userStorage = useUserStore;
+export const userStorage = useUserStore();

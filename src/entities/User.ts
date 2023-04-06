@@ -9,7 +9,7 @@ type Getters = {
   getToken(): string;
 };
 type Actions = {
-  setUser(): void;
+  setUser(value: UserStorage): void;
 };
 
 export interface UserStorageConstructor {

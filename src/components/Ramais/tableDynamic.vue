@@ -23,10 +23,7 @@
       </template>
 
       <template #top-left>
-        <q-btn outline color="primary" class="border" @click="emit('add')">
-          <q-icon class="q-mr-sm" name="add" color="red" />
-          <span>{{ $t("action.addRamal.index") }}</span>
-        </q-btn>
+        <slot name="top-left" />
       </template>
     </q-table>
   </div>
@@ -42,12 +39,12 @@ const icon = computed((): any => {
 const search = ref();
 const props = defineProps({
   columns: {
-    type: Array,
     default: () => [],
+    type: Array,
   },
   rows: {
-    type: Array,
     default: () => [],
+    type: Array,
   },
 });
 </script>

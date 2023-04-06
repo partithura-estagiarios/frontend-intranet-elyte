@@ -5,4 +5,23 @@ export default {
   name: "Nome",
   sector: "Setor",
   number: "Número",
+  day: "Dia",
+  week: "Semana",
+  menu: {
+    dessert: "Sobremesa",
+    rice: "Arroz",
+    complement: "Complemento",
+    protein: "Proteína",
+    salad: "Salada",
+    soup: "Sopa",
+  },
+  days: {
+    monday: "Segunda-feira",
+    tuesday: "Terça-feira",
+    wednesday: "Quarta-feira",
+    thursday: "Quinta-feira",
+    friday: "Sexta-feira",
+    saturday: "Sábado",
+    sunday: "Domingo",
+  },
 };

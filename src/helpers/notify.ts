@@ -1,4 +1,5 @@
 import { Notify } from "quasar";
+
 function notify(
   message: string,
   color: string,
@@ -26,6 +27,15 @@ export function negativeNotify(
   color = "negative",
   icon = "error",
   timeout = 3000
+): void {
+  notify(message, color, icon, timeout);
+}
+
+export function infoNotify(
+  message: string,
+  color = "blue",
+  icon = "info",
+  timeout = 10000
 ): void {
   notify(message, color, icon, timeout);
 }

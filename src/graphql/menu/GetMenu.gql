@@ -1,0 +1,11 @@
+query GetMenu {
+  getMenu {
+    complement
+    id
+    dessert
+    protein
+    rice
+    salad
+    date
+  }
+}

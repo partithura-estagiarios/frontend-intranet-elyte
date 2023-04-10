@@ -73,7 +73,6 @@ async function auth() {
       };
       userStorage.setUser(usuario);
     }
-    // setTokenStorage(token);
     positiveNotify(t("notifications.success.login"));
     router.push("/home");
   } catch ({ message }) {

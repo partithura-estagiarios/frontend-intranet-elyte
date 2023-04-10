@@ -21,7 +21,10 @@ export const useUserStore = defineStore({
       return this.user;
     },
     isLoggedIn(): boolean {
-      return this.user.token === getTokenStorage();
+      if (this.getToken) {
+        return true;
+      }
+      return false;
     },
   },
   actions: {

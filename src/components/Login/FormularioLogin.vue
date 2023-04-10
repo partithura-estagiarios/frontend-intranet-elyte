@@ -72,11 +72,6 @@ async function auth() {
         token,
       };
       userStorage.setUser(usuario);
-      const teste = getTokenStorage();
-      if (teste) {
-        loga(teste);
-      }
-      loga(userStorage.getToken);
     }
     // setTokenStorage(token);
     positiveNotify(t("notifications.success.login"));

@@ -24,6 +24,10 @@
 <script setup lang="ts">
 const title = ref(t("titles.textIntranet"));
 const isLoggedUser = userStorage.isLoggedIn;
+
+if (isLoggedUser) {
+  loga("t");
+}
 </script>
 
 <style scoped>

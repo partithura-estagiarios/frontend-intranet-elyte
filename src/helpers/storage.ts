@@ -37,7 +37,7 @@ export function removeToken(): void {
  * Remove todos os itens do local storage
  */
 export function clearStorage(): void {
-  localStorage.clear();
+  localStorage.removeItem("userData");
 }
 
 export function getTokenStorage(): string | null {

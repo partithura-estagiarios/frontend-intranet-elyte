@@ -2,10 +2,10 @@
   <div class="q-ma-md">
     <q-table
       class="q-px-xl"
-      :rows-per-page-options="[10]"
+      :rows-per-page-options="[rows.length]"
       :grid="$q.screen.xs"
       :rows="props.rows"
-      :columns="columns"
+      :columns="columns as any"
       :filter="search"
       row-key="name"
     >
@@ -30,7 +30,9 @@
 </template>
 
 <script setup lang="ts">
-const icon = computed(() => {
+const emit = defineEmits(["add"]);
+
+const icon = computed((): any => {
   search.value ? "close" : "search";
 });
 

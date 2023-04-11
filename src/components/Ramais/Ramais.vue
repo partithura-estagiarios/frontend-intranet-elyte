@@ -67,7 +67,7 @@ onMounted(async () => {
 
 const columns = [
   {
-    field: (getRamais) => getRamais.ramal_user,
+    field: (getRamais: Ramal) => getRamais.ramal_user,
     required: true,
     sortable: true,
     label: t("text.name"),

@@ -8,6 +8,6 @@ import { Ramal } from "../../entities/Ramal";
 
 onMounted(async () => {
   const { getRamais } = await runQuery(GetRamais);
-  ramaisStorage.setRamais(getRamais as unknown as [Ramal]);
+  ramaisStorage.setRamais(getRamais as unknown as Ramal);
 });
 </script>

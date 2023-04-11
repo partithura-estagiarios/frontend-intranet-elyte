@@ -1,13 +1,14 @@
 <template>
-  <div class="margin">
-    <div class="row justify-center">
-      <q-card-section class="q-my-md">
-        <span class="text-black row font text-bold">
-          {{ $t("titles.Hr.Fones") }}
-          <q-icon color="primary" class="q-ml-sm" name="call" size="2rem" />
-        </span>
+  <q-item class="row">
+    <div class="col-5">
+      <BackButton class="justify-start row q-ml-md" />
+    </div>
+    <div class="col-6 row justify-start">
+      <span class="text-black font text-bold q-ml-xl">
+        {{ $t("titles.Hr.Fones") }}
+        <q-icon color="primary" class="q-ml-sm" name="call" size="2rem" />
         <q-separator size="0.5rem" color="primary" class="bar-style" />
-      </q-card-section>
+      </span>
     </div>
     <table-dynamic :columns="columns" :rows="ramalList" v-bind="$attrs">
       <template #top-left v-if="userStorage.isLoggedIn">
@@ -18,13 +19,12 @@
       </template>
     </table-dynamic>
 
-    <CreateRamal
-      :open="ramalForm"
-      v-bind="$attrs"
-      @confirm="addRamal"
-      @cancel="ramalForm = false"
-    />
-  </div>
+  <CreateRamal
+    :open="ramalForm"
+    v-bind="$attrs"
+    @confirm="addRamal"
+    @cancel="ramalForm = false"
+  />
 </template>
 
 <script setup lang="ts">
@@ -61,7 +61,7 @@ onMounted(async () => {
 
 const columns = [
   {
-    field: (getRamais) => getRamais.ramal_user,
+    field: (getRamais: Ramal) => getRamais.ramal_user,
     required: true,
     sortable: true,
     label: t("text.name"),
@@ -93,10 +93,5 @@ const ramal = reactive({});
 }
 .bar-style {
   border-radius: 10px;
-}
-.margin {
-  margin-top: -4rem;
-  padding-right: 6rem;
-  padding-left: 6rem;
 }
 </style>

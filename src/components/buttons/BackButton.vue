@@ -1,0 +1,9 @@
+<template>
+  <q-btn
+    round
+    color="primary"
+    icon="arrow_back"
+    @click="router.back"
+    size="1.2rem"
+  />
+</template>

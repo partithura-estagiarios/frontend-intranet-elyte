@@ -16,4 +16,5 @@ export interface UserStorageConstructor {
   state: UserStorage;
   getters: Getters;
   actions: Actions;
+  setUser(value: UserStorage): void;
 }

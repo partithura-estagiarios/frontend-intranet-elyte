@@ -20,10 +20,9 @@ onMounted(async () => {
   const { getMenu } = await runQuery(GetMenu);
   menuList.value = getMenu;
 });
-
 const columns = [
   {
-    field: "day",
+    field: "date",
     align: "left",
     label: t("text.day"),
   },

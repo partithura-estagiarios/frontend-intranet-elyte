@@ -1,3 +1,3 @@
 <template>
-  <createMenu />
+  <CreateMenu />
 </template>

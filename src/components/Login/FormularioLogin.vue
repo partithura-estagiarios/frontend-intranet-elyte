@@ -73,9 +73,6 @@ async function auth() {
       };
       userStorage.setUser(usuario);
     }
-    userStorage.setToken(token);
-    const userData = `user:{"nome": "${user.username}", "email":"${user.email}", "id":"${user.id}", "token":"${token}"}`;
-    localStorage.setItem("userData", userData);
     positiveNotify(t("notifications.success.login"));
     router.push("/home");
   } catch ({ message }) {

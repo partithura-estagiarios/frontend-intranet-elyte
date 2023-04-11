@@ -10,7 +10,7 @@
       </q-card-section>
     </div>
     <table-dynamic :columns="columns" :rows="ramalList" v-bind="$attrs">
-      <template #top-left>
+      <template #top-left v-if="userStorage.isLoggedIn">
         <q-btn outline color="primary" class="border" @click="ramalForm = true">
           <q-icon class="q-mr-sm" name="add" color="red" />
           <span>{{ $t("action.addRamal.index") }}</span>

@@ -1,25 +1,24 @@
 <template>
-  <p class="text-h3 text-black">{{ $t("titles.menu") }}</p>
+  <p class="text-h3 text-black q-mb-lg">{{ $t("titles.menu") }}</p>
 
   <TableDynamic :columns="columns" :rows="menuList" />
 </template>
 
 <script setup lang="ts">
-import { Ref } from "vue";
 import GetMenu from "../../graphql/menu/GetMenu.gql";
+import { Menu } from "../../entities";
 
-const menuList: Ref<Array<Record<string, string | number>>> = ref(
-  menusStorage.getMenus
-);
+onMounted(async () => {
+  const { getMenu } = await runMutation(GetMenu, {});
+  menusStorage.setMenus(getMenu as unknown as [Menu]);
+});
+
+const menuList = ref(menusStorage.getMenus);
 
 watchEffect(() => {
   menuList.value = menusStorage.getMenus;
 });
 
-onMounted(async () => {
-  const { getMenu } = await runQuery(GetMenu);
-  menuList.value = getMenu;
-});
 const columns = [
   {
     field: "date",

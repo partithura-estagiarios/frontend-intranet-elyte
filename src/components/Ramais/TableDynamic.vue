@@ -2,7 +2,7 @@
   <div class="q-ma-md">
     <q-table
       class="q-px-xl"
-      :rows-per-page-options="[rows.length]"
+      :rows-per-page-options="[10]"
       :grid="$q.screen.xs"
       :rows="props.rows"
       :columns="columns as any"

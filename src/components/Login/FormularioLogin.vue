@@ -43,6 +43,7 @@
 <script lang="ts" setup>
 import { AuthQuery } from "../../entities";
 import Auth from "../../graphql/auth/index.gql";
+import { infoNotify } from "../../helpers/index";
 
 const marginBtn = computed(() =>
   useQuasar().screen.gt.md ? "q-mt-xl" : "q-mt-sm"

@@ -111,6 +111,7 @@ import CreateMenu from "../../graphql/menu/CreateMenu.gql";
 import { Menu } from "../../entities";
 import { Field, Form } from "vee-validate";
 import * as yup from "yup";
+import { parseErrorMessage } from "../../helpers/index";
 
 const schema = yup.object({
   salad: makeRuleOfString(),

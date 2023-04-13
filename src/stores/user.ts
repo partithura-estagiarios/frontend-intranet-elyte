@@ -32,10 +32,10 @@ export const useUserStore = defineStore({
     },
     logout() {
       clearStorage();
-      this.$state.user.name = "";
-      this.$state.user.email = "";
-      this.$state.user.token = "";
-      this.$state.user.id = "";
+      this.user.name = "";
+      this.user.email = "";
+      this.user.token = "";
+      this.user.id = "";
     },
   },
   persist: true,

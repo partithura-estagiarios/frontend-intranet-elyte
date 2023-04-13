@@ -13,8 +13,8 @@
   </q-item>
   <table-dynamic
     :columns="columns"
-    :rows="ramalList"
-    v-bind="$attrs"
+    :rows="ramalList as unknown as Ramal[]"
+    :v-bind="$attrs"
     class="q-mt-lg"
   >
     <template #top-left>
@@ -40,8 +40,7 @@ import { Ramal } from "../../entities";
 
 const ramalList = ref(ramaisStorage.getRamais);
 const ramalForm = ref(false);
-
-const event = defineEmits(["add"]);
+loga(ramalList);
 
 watchEffect(() => {
   ramalList.value = ramaisStorage.getRamais;
@@ -51,7 +50,7 @@ async function addRamal(ramal: Record<string, string | number>) {
   try {
     const data = await runMutation(AddRamal, { data: { ...ramal } });
     const { getRamais } = await runMutation(GetRamais, {});
-    ramaisStorage.setRamais(getRamais as unknown as [Ramal]);
+    ramaisStorage.setRamais(getRamais as unknown as Ramal);
     positiveNotify(t("notifications.success.createRamal"));
   } catch {
     negativeNotify(t("notifications.fail.createRamal"));
@@ -59,11 +58,6 @@ async function addRamal(ramal: Record<string, string | number>) {
     ramalForm.value = false;
   }
 }
-
-onMounted(async () => {
-  const { getRamais } = await runMutation(GetRamais, {});
-  ramalList.value = getRamais;
-});
 
 const columns = [
   {

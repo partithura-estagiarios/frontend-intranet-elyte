@@ -13,7 +13,7 @@
       </q-toobar-section>
     </q-toolbar>
     <q-toobar-section>
-      <q-btn v-if="userStorage.isLoggedIn" clickable flat>
+      <q-btn v-if="isLoggedUser" clickable flat>
         <q-icon name="cancel" size="3rem" @click="userStorage.logout" />
       </q-btn>
       <q-btn v-else to="/login" clickable flat>
@@ -25,8 +25,6 @@
 
 <script setup lang="ts">
 const title = ref(t("titles.textIntranet"));
-const userData = JSON.parse(localStorage.getItem("userData") || "");
-userStorage.setUser(userData);
 </script>
 
 <style scoped>

@@ -4,7 +4,7 @@
       class="q-px-xl"
       :rows-per-page-options="[10]"
       :grid="$q.screen.xs"
-      :rows="props.rows"
+      :rows="rows"
       :columns="columns as any"
       :filter="search"
       row-key="name"
@@ -37,7 +37,7 @@ const icon = computed((): any => {
 });
 
 const search = ref();
-const props = defineProps({
+defineProps({
   columns: {
     default: () => [],
     type: Array,

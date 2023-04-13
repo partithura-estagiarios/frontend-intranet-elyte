@@ -17,4 +17,5 @@ export interface UserStorageConstructor {
   getters: Getters;
   actions: Actions;
   setUser(value: UserStorage): void;
+  isLoggedIn: boolean;
 }

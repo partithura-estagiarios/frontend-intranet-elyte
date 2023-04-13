@@ -18,3 +18,7 @@ export function loga(value: string | number | object) {
 export function parseErrorMessage(value: string): string {
   return value.replace("is a required field", "");
 }
+
+export const isLoggedUser = computed(() =>
+  userStorage.getToken != "" ? true : false
+);

@@ -45,9 +45,7 @@ import { AuthQuery, UserStorage } from "../../entities";
 import Auth from "../../graphql/auth/index.gql";
 import { userStorage } from "../../stores/index";
 
-const marginBtn = computed(() =>
-  useQuasar().screen.gt.md ? "q-mt-xl" : "q-mt-sm"
-);
+const marginBtn = computed(() => (useQuasar().screen.gt.md ? "q-mt-xl" : "q-mt-sm"));
 
 const data = reactive({
   email: "",
@@ -60,9 +58,9 @@ function contato() {
 
 async function auth() {
   try {
-    const { auth } = (await runMutation(Auth, {
+    const { auth } = ((await runMutation(Auth, {
       data,
-    })) as unknown as AuthQuery;
+    })) as unknown) as AuthQuery;
     const { token, user } = auth;
     if (token) {
       const usuario: UserStorage = {

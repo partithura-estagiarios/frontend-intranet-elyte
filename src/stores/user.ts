@@ -1,59 +1,44 @@
-import { defineStore, acceptHMRUpdate } from "pinia";
-import { getTokenStorage } from "../helpers/storage";
+import { UserStorage } from "./../entities/User";
+import { defineStore } from "pinia";
 
-import { UserStorage, UserStorageConstructor } from "../entities/User";
-
-function buildUser({ username, id, email, token }: UserStorage): UserStorage {
-  return {
-    username,
-    id,
-    email,
-    token,
-  };
-}
-const NULL_USER = {
-  username: "",
-  id: "",
-  email: "",
-  token: "",
-};
-export const useUserStore = defineStore("useUserStore", {
-  state: () => ({
-    user: buildUser(NULL_USER),
-  }),
+export const useUserStore = defineStore({
+  id: "User",
+  state: () => {
+    return {
+      user: {
+        name: "",
+        email: "",
+        token: "",
+        id: "",
+      },
+    };
+  },
   getters: {
-    getToken: (state) => {
-      return state.user.token;
+    getToken(): string {
+      return this.user.token;
     },
-    getUser: (state) => {
-      return state.user;
+    getUser(): UserStorage {
+      return this.user;
     },
-    getId: (state) => {
-      return state.user.id;
-    },
-    getEmail: (state) => {
-      return state.user.email;
-    },
-    getUsername: (state) => {
-      return state.user.username;
-    },
-    isLoggedIn: (state) => {
-      return state.user.token === getTokenStorage();
+    isLoggedIn(): boolean {
+      return !!this.getToken;
     },
   },
   actions: {
-    setToken(value: string) {
-      Object.assign(this.user.token, value !== null || getItemStorage());
-    },
     setUser(value: UserStorage) {
-      Object.assign(this.user, value);
+      Object.assign(this.$state.user, value);
+      const userData = `{"name": "${value.name}", "email":"${value.email}", "id":"${value.id}", "token":"${value.token}"}`;
+      localStorage.setItem("userData", userData);
     },
     logout() {
-      this.user = buildUser(NULL_USER);
       clearStorage();
+      this.$state.user.name = "";
+      this.$state.user.email = "";
+      this.$state.user.token = "";
+      this.$state.user.id = "";
     },
   },
   persist: true,
-}) as unknown as UserStorageConstructor;
+});
 
-export const userStorage = useUserStore;
+export const userStorage = useUserStore();

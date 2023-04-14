@@ -1,7 +1,8 @@
 import { defineStore } from "pinia";
 import { Menu } from "../entities";
 
-const Menus = defineStore("Menus", {
+const useMenusStorage = defineStore({
+  id: "Menus",
   state: () => {
     return {
       menus: {
@@ -20,15 +21,16 @@ const Menus = defineStore("Menus", {
     };
   },
   getters: {
-    getMenus: (state) => {
-      return state.menus;
+    getMenus(): Menu {
+      return this.menus;
     },
   },
   actions: {
-    setMenus(value: Menu[]) {
-      Object.assign(this.$state, value);
+    setMenus(value: Menu) {
+      Object.assign(this.menus, value);
     },
   },
   persist: true,
 });
-export const menusStorage = Menus();
+
+export const menusStorage = useMenusStorage();

@@ -1,23 +1,14 @@
 <template>
   <p class="text-h3 text-black q-mb-lg">{{ $t("titles.menu") }}</p>
 
-  <TableDynamic :columns="columns" :rows="menuList" />
+  <TableDynamic
+    :columns="columns"
+    :rows="menusStorage.getMenus as unknown as Menu[]"
+  />
 </template>
 
 <script setup lang="ts">
-import GetMenu from "../../graphql/menu/GetMenu.gql";
 import { Menu } from "../../entities";
-
-onMounted(async () => {
-  const { getMenu } = await runMutation(GetMenu, {});
-  menusStorage.setMenus(getMenu as unknown as [Menu]);
-});
-
-const menuList = ref(menusStorage.getMenus);
-
-watchEffect(() => {
-  menuList.value = menusStorage.getMenus;
-});
 
 const columns = [
   {

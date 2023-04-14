@@ -13,7 +13,7 @@
   </q-item>
   <table-dynamic
     :columns="columns"
-    :rows="ramalList as unknown as Ramal[]"
+    :rows="ramaisStorage.getRamais as unknown as Ramal[]"
     :v-bind="$attrs"
     class="q-mt-lg"
   >
@@ -38,7 +38,7 @@ import GetRamais from "../../graphql/ramais/getRamais.gql";
 import AddRamal from "../../graphql/ramais/createRamal.gql";
 import { Ramal } from "../../entities";
 
-const ramalList = ref(ramaisStorage.getRamais);
+const ramalList = ref();
 const ramalForm = ref(false);
 loga(ramalList);
 

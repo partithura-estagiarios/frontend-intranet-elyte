@@ -1,14 +1,24 @@
 import { defineStore } from "pinia";
 import { Menu } from "../entities";
 
-function buildMenus(menus: Menu[]): { menus: Menu[] } {
-  return {
-    menus,
-  };
-}
-
 const Menus = defineStore("Menus", {
-  state: () => buildMenus(null),
+  state: () => {
+    return {
+      menus: {
+        id: "",
+        complement: "",
+        dessert: "",
+        protein: "",
+        salad: "",
+        rice: "",
+        soup: "",
+        week: "",
+        day: "",
+        createdAt: "",
+        updatedAt: "",
+      },
+    };
+  },
   getters: {
     getMenus: (state) => {
       return state.menus;
@@ -16,9 +26,7 @@ const Menus = defineStore("Menus", {
   },
   actions: {
     setMenus(value: Menu[]) {
-      if (value !== null) {
-        this.menus = buildMenus(value).menus;
-      }
+      Object.assign(this.$state, value);
     },
   },
   persist: true,

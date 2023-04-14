@@ -11,7 +11,7 @@ export function decrement(value: number) {
   return (value -= 1);
 }
 
-export function loga(value: string | number | object) {
+export function loga(value: string | number | object | boolean) {
   console.log(value);
 }
 

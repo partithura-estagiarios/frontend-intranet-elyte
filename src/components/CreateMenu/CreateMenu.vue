@@ -134,7 +134,7 @@ async function addMenu(menu: Record<string, string | number>, actions: any) {
       throw new Error("Data já existe");
     }
     const { getMenu } = await runMutation(GetMenu, {});
-    menusStorage.setMenus(getMenu as unknown as [Menu]);
+    menusStorage.setMenus(getMenu as unknown as Menu);
     positiveNotify(t("notifications.success.createMenu"));
     actions.resetForm();
   } catch (e) {

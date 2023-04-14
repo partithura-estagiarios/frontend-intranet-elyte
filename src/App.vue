@@ -9,26 +9,13 @@ useHead({
     },
   ],
 });
+
+const currentRouteValue = ref(router.currentRoute.value.fullPath);
+
+loga(currentRouteValue.value);
 </script>
 
 <template>
-  <HeaderBar class="q-mb-xl" v-if="!$route.fullPath.includes('/login')" />
+  <HeaderBar class="q-mb-xl" />
   <RouterView />
 </template>
-
-<style scoped>
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.vue:hover {
-  filter: drop-shadow(0 0 2em #42b883aa);
-}
-.margin {
-  margin-bottom: 7rem;
-}
-</style>

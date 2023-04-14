@@ -9,13 +9,8 @@ useHead({
     },
   ],
 });
-
-const currentRouteValue = ref(router.currentRoute.value.fullPath);
-
-loga(currentRouteValue.value);
 </script>
 
 <template>
-  <HeaderBar class="q-mb-xl" />
   <RouterView />
 </template>

@@ -38,13 +38,7 @@ import GetRamais from "../../graphql/ramais/getRamais.gql";
 import AddRamal from "../../graphql/ramais/createRamal.gql";
 import { Ramal } from "../../entities";
 
-const ramalList = ref();
 const ramalForm = ref(false);
-loga(ramalList);
-
-watchEffect(() => {
-  ramalList.value = ramaisStorage.getRamais;
-});
 
 async function addRamal(ramal: Record<string, string | number>) {
   try {

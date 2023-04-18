@@ -2,6 +2,7 @@ export * from "./host";
 export * from "./query";
 export * from "./notify";
 export * from "./storage";
+export * from "./date";
 
 export function increment(value: number) {
   return (value += 1);

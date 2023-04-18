@@ -8,6 +8,7 @@
         color="secondary"
         label="Imprimir"
         size="1.2rem"
+        @click="printWindow"
       />
     </div>
     <q-item class="row justify-center">
@@ -49,6 +50,10 @@ const weekday = [
   t("text.days.friday"),
   t("text.days.saturday"),
 ];
+
+const printWindow = function () {
+  window.print();
+};
 
 const menus = menusStorage.getMenus as unknown as Menu[];
 

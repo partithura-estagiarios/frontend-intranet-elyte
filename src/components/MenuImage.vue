@@ -1,8 +1,17 @@
 <template>
   <div class="bg-grey-7 q-mb-xl cardapio">
-    <q-item class="column items-center">
-      <span class="text-h3 q-my-md">{{ t("titles.menu") }}</span>
-      <span class="text-h5 q-mb-xl"
+    <div class="row justify-between">
+      <BackButton class="row q-ml-md q-mt-md hide-print" />
+      <span class="text-h3 q-mt-md">{{ t("titles.menu") }}</span>
+      <q-btn
+        class="row q-mt-md q-mr-md hide-print"
+        color="secondary"
+        label="Imprimir"
+        size="1.2rem"
+      />
+    </div>
+    <q-item class="row justify-center">
+      <span class="text-h6 q-mr-xl"
         >{{ generateDateForm(menorData) }} a
         {{ generateDateForm(maiorData) }}</span
       >
@@ -62,10 +71,6 @@ const getDayWeek = function (day: string) {
   const date = generateDate(day);
   return weekday[date.getDay()];
 };
-
-// onMounted(() => {
-//   window.print();
-// });
 </script>
 
 <style scoped>
@@ -77,6 +82,9 @@ const getDayWeek = function (day: string) {
   .cardapio {
     color: white;
     margin: 0px;
+  }
+  .hide-print {
+    visibility: hidden;
   }
 }
 

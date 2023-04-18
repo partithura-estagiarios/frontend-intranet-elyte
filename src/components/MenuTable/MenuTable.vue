@@ -2,6 +2,13 @@
   <p class="text-h3 text-black">{{ $t("titles.menu") }}</p>
 
   <TableDynamic :columns="columns" :rows="menuList" />
+
+  <q-btn
+    color="primary"
+    :label="$t('action.print.index')"
+    size="1.2rem"
+    @click="router.push('/menu/menuexport')"
+  />
 </template>
 
 <script setup lang="ts">

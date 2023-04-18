@@ -46,4 +46,7 @@ export default {
   addMenu: {
     index: "Adicionar cardápio",
   },
+  print: {
+    index: "Imprimir",
+  },
 };

@@ -3,17 +3,11 @@
     <div class="row justify-between">
       <BackButton class="row q-ml-md q-mt-md hide-print" />
       <span class="text-h3 q-mt-md">{{ t("titles.menu") }}</span>
-      <q-btn
-        class="row q-mt-md q-mr-md hide-print"
-        color="secondary"
-        :label="$t('action.print.index')"
-        size="1.2rem"
-        @click="printWindow"
-      />
+      <PrintButton />
     </div>
     <q-item class="row justify-center">
-      <span class="text-h6 q-mr-xl"
-        >{{ generateDateForm(menorData) }} a
+      <span class="text-h6 q-mr-xl">
+        {{ generateDateForm(menorData) }} a
         {{ generateDateForm(maiorData) }}</span
       >
     </q-item>
@@ -51,10 +45,6 @@ const weekday = [
   t("text.days.saturday"),
 ];
 
-const printWindow = function () {
-  window.print();
-};
-
 const menus = menusStorage.getMenus as unknown as Menu[];
 
 const dates: Ref<Array<Date>> = ref([]);
@@ -86,21 +76,6 @@ const getDayWeek = function (day: string) {
 @media print {
   .cardapio {
     color: white;
-    margin: 0px;
   }
-  .hide-print {
-    visibility: hidden;
-  }
-}
-
-@page {
-  margin: 0cm;
-  padding: 0cm;
-  size: landscape;
-}
-
-* {
-  -webkit-print-color-adjust: exact !important;
-  print-color-adjust: exact !important;
 }
 </style>

@@ -18,7 +18,7 @@ const printWindow = function () {
 @page {
   margin: 0cm;
   padding: 0cm;
-  size: portrait;
+  size: landscape;
 }
 
 @media print {

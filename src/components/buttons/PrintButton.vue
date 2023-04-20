@@ -1,6 +1,6 @@
 <template>
   <q-btn
-    class="row q-mt-md q-mr-md hide-print"
+    class="row q-mt-md hide-print"
     color="secondary"
     :label="$t('action.print.index')"
     size="1.2rem"

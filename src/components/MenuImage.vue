@@ -1,31 +1,56 @@
 <template>
-  <div class="bg-grey-7 q-mb-xl cardapio">
+  <q-img
+    src="/images/bg0.jpg"
+    no-spinner
+    no-transition
+    class="opacity fixed-full"
+  />
+  <div>
     <div class="row justify-between">
-      <BackButton class="row q-ml-md q-mt-md hide-print" />
-      <span class="text-h3 q-mt-md">{{ t("titles.menu") }}</span>
-      <PrintButton />
-    </div>
-    <q-item class="row justify-center">
-      <span class="text-h6 q-mr-xl">
-        {{ generateDateForm(menorData) }} a
-        {{ generateDateForm(maiorData) }}</span
+      <BackButton class="row q-ml-md hide-print q-mt-md" />
+      <span class="text-white text-h5 relative-position q-mt-md"
+        >{{ $t("titles.menu") }} ( {{ generateDateForm(menorData) }} a
+        {{ generateDateForm(maiorData) }} )</span
       >
-    </q-item>
-    <div class="row">
+      <PrintButton class="q-mr-md" />
+    </div>
+
+    <div class="row justify-center">
       <q-card
-        class="bg-grey-9 card-size q-ma-lg text-uppercase col-2"
+        class="text-uppercase col-3 q-mt-md q-mx-md border"
         v-for="menu in menus"
       >
-        <q-card-section>
-          <div class="text-h6">{{ getDayWeek(menu.date) }}</div>
+        <q-card-section class="bg-primary">
+          <span class="text-subtitle2 text-white text-weight-bold">{{
+            getDayWeek(menu.date)
+          }}</span>
         </q-card-section>
-        <q-separator dark inset />
-        <q-card-section>{{ menu.rice }} </q-card-section>
-        <q-card-section>{{ menu.salad }} </q-card-section>
-        <q-card-section>{{ menu.complement }} </q-card-section>
-        <q-card-section>{{ menu.protein }} </q-card-section>
-        <q-card-section>{{ menu.soup }} </q-card-section>
-        <q-card-section>{{ menu.dessert }} </q-card-section>
+        <q-card-section class="text-subtitle2 text-black">
+          <q-card-item class="row">
+            <q-icon class="col-5 row" name="circle" color="primary" />
+            <p>{{ menu.rice }}</p>
+          </q-card-item>
+          <q-card-item class="row">
+            <q-icon name="circle" color="primary" class="row col-5" />
+            <p>{{ menu.salad }}</p>
+          </q-card-item>
+          <q-card-item class="row">
+            <q-icon class="row col-5" name="circle" color="primary" />
+            <p>{{ menu.soup }}</p>
+          </q-card-item>
+          <q-card-item class="row">
+            <q-icon class="row col-5" name="circle" color="primary" />
+            <p>{{ menu.complement }}</p>
+          </q-card-item>
+          <q-card-item class="row">
+            <q-icon class="col-5 row" name="circle" color="primary" />
+            <p>{{ menu.protein }}</p>
+          </q-card-item>
+          <q-card-item class="row">
+            <q-icon class="col-5 row" name="circle" color="primary" />
+            <p>{{ menu.dessert }}</p>
+          </q-card-item>
+        </q-card-section>
       </q-card>
     </div>
   </div>
@@ -69,13 +94,11 @@ const getDayWeek = function (day: string) {
 </script>
 
 <style scoped>
-.cardapio {
-  height: 100%;
+.opacity {
+  filter: brightness(50%);
 }
 
-@media print {
-  .cardapio {
-    color: white;
-  }
+.border {
+  border-radius: 16px;
 }
 </style>

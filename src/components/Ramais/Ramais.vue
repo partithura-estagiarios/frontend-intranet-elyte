@@ -13,7 +13,7 @@
   </q-item>
   <table-dynamic
     :columns="columns"
-    :rows="ramalList"
+    :rows="ramaisStorage.getRamais"
     v-bind="$attrs"
     class="q-mt-lg"
   >
@@ -23,6 +23,10 @@
         <span>{{ $t("action.addRamal.index") }}</span>
       </q-btn>
     </template>
+
+    <template #actions="{ item }">
+      <q-btn icon="delete" flat color="primary" @click="selectRamal(item)" />
+    </template>
   </table-dynamic>
 
   <CreateRamal
@@ -31,21 +35,49 @@
     @confirm="addRamal"
     @cancel="ramalForm = false"
   />
+
+  <ConfirmDelete
+    :open="confirm"
+    :text="$t('action.deleteRamal.index')"
+    class="text-black"
+    @cancel="confirm = false"
+    @confirm="deleteRamal"
+    :id="ramalId"
+  />
 </template>
 
 <script setup lang="ts">
 import GetRamais from "../../graphql/ramais/getRamais.gql";
 import AddRamal from "../../graphql/ramais/createRamal.gql";
+import DeleteRamal from "../../graphql/ramais/deleteRamal.gql";
 import { Ramal } from "../../entities";
+
+const ramalId = ref("");
 
 const ramalList = ref(ramaisStorage.getRamais);
 const ramalForm = ref(false);
+const confirm = ref(false);
 
-const event = defineEmits(["add"]);
+const selectRamal = function (item: Ramal) {
+  confirm.value = true;
+  ramalId.value = item.id;
+};
 
-watchEffect(() => {
-  ramalList.value = ramaisStorage.getRamais;
-});
+const event = defineEmits(["add", "delete"]);
+
+async function deleteRamal(id: string) {
+  event("delete", id);
+  try {
+    await runMutation(DeleteRamal, { id });
+    const { getRamais } = await runMutation(GetRamais, {});
+    ramaisStorage.setRamais(getRamais as unknown as Ramal);
+    positiveNotify(t("notifications.success.deleteRamal"));
+  } catch {
+    negativeNotify(t("notifications.fail.deleteRamal"));
+  } finally {
+    confirm.value = false;
+  }
+}
 
 async function addRamal(ramal: Record<string, string | number>) {
   try {
@@ -76,17 +108,22 @@ const columns = [
   },
   {
     field: "sector_user",
-    align: "center",
+    align: "left",
     label: t("text.sector"),
     sortable: true,
     name: "Setor",
   },
   {
     field: "ramal_number",
-    align: "right",
+    align: "left",
     label: t("text.number"),
     sortable: true,
     name: "Ramal",
+  },
+  {
+    name: "actions",
+    align: "center",
+    label: "",
   },
 ];
 

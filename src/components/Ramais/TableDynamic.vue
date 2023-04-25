@@ -12,7 +12,7 @@
       <template #top-right>
         <q-input
           v-model="search"
-          :placeholder="$t('action.search.index')"
+          :hint="$t('action.search.index')"
           debounce="300"
           dense
         >
@@ -24,6 +24,10 @@
 
       <template #top-left>
         <slot name="top-left" />
+      </template>
+
+      <template v-slot:body-cell-actions="item">
+        <slot name="actions" :item="item.row" />
       </template>
     </q-table>
   </div>

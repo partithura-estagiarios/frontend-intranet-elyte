@@ -6,6 +6,7 @@ export default {
     register: "Seu cadastro foi criado com sucesso",
     createRamal: "Ramal criado com sucesso",
     createMenu: "Cardápio criado com sucesso",
+    deleteRamal: "Ramal deletado com sucesso",
   },
 
   fail: {
@@ -15,5 +16,6 @@ export default {
     register: "Houve um erro ao criar seu cadastro",
     createRamal: "Houve um erro ao criar o ramal",
     createMenu: "Houve um erro ao criar o cardápio",
+    deleteRamal: "Houve um erro ao deletar o ramal",
   },
 };

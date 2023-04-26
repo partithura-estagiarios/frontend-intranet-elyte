@@ -49,4 +49,7 @@ export default {
   deleteRamal: {
     index: "Deseja apagar esse ramal?",
   },
+  editRamal: {
+    index: "Editar ramal",
+  },
 };

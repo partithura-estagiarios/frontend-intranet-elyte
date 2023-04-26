@@ -93,6 +93,11 @@ const selectEdit = function (item: Ramal) {
   ramalItem.sector_user = item.sector_user;
 };
 
+async function refreshRamais() {
+  const { getRamais } = await runMutation(GetRamais, {});
+  ramaisStorage.setRamais(getRamais as unknown as Ramal);
+}
+
 async function editRamal(item: Ramal) {
   event("edit", item);
   const id = item.id;
@@ -103,8 +108,7 @@ async function editRamal(item: Ramal) {
   };
   try {
     await runMutation(UpdateRamal, { id, data });
-    const { getRamais } = await runMutation(GetRamais, {});
-    ramaisStorage.setRamais(getRamais as unknown as Ramal);
+    await refreshRamais();
     positiveNotify(t("notifications.success.editRamal"));
   } catch {
     negativeNotify(t("notifications.fail.editRamal"));
@@ -117,8 +121,7 @@ async function deleteRamal(id: string) {
   event("delete", id);
   try {
     await runMutation(DeleteRamal, { id });
-    const { getRamais } = await runMutation(GetRamais, {});
-    ramaisStorage.setRamais(getRamais as unknown as Ramal);
+    await refreshRamais();
     positiveNotify(t("notifications.success.deleteRamal"));
   } catch {
     negativeNotify(t("notifications.fail.deleteRamal"));
@@ -130,8 +133,7 @@ async function deleteRamal(id: string) {
 async function addRamal(ramal: Record<string, string | number>) {
   try {
     const data = await runMutation(AddRamal, { data: { ...ramal } });
-    const { getRamais } = await runMutation(GetRamais, {});
-    ramaisStorage.setRamais(getRamais as unknown as Ramal);
+    await refreshRamais();
     positiveNotify(t("notifications.success.createRamal"));
   } catch {
     negativeNotify(t("notifications.fail.createRamal"));

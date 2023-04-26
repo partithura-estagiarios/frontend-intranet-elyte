@@ -27,7 +27,8 @@
       </template>
 
       <template v-slot:body-cell-actions="item">
-        <slot name="actions" :item="item.row" />
+        <slot name="action-edit" :item="item.row" />
+        <slot name="action-delete" :item="item.row" />
       </template>
     </q-table>
   </div>

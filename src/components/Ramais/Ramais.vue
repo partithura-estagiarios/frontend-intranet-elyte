@@ -24,8 +24,11 @@
       </q-btn>
     </template>
 
-    <template #actions="{ item }">
-      <q-btn icon="delete" flat color="primary" @click="selectRamal(item)" />
+    <template #action-edit="{ item }">
+      <q-btn icon="edit" flat color="blue" @click="selectEdit(item)" />
+    </template>
+    <template #action-delete="{ item }">
+      <q-btn icon="delete" flat color="primary" @click="selectDelete(item)" />
     </template>
   </table-dynamic>
 
@@ -44,26 +47,71 @@
     @confirm="deleteRamal"
     :id="ramalId"
   />
+
+  <EditRamal
+    :open="edit"
+    @cancel="edit = false"
+    class="text-black"
+    :item="ramalItem"
+    @confirm="editRamal"
+  />
 </template>
 
 <script setup lang="ts">
 import GetRamais from "../../graphql/ramais/getRamais.gql";
 import AddRamal from "../../graphql/ramais/createRamal.gql";
 import DeleteRamal from "../../graphql/ramais/deleteRamal.gql";
+import UpdateRamal from "../../graphql/ramais/updateRamal.gql";
 import { Ramal } from "../../entities";
 
 const ramalId = ref("");
 
+const ramalItem = reactive({
+  id: "",
+  ramal_number: "",
+  ramal_user: "",
+  sector_user: "",
+});
+
 const ramalList = ref(ramaisStorage.getRamais);
 const ramalForm = ref(false);
 const confirm = ref(false);
+const edit = ref(false);
 
-const selectRamal = function (item: Ramal) {
+const event = defineEmits(["add", "delete", "edit"]);
+
+const selectDelete = function (item: Ramal) {
   confirm.value = true;
   ramalId.value = item.id;
 };
 
-const event = defineEmits(["add", "delete"]);
+const selectEdit = function (item: Ramal) {
+  edit.value = true;
+  ramalItem.id = item.id;
+  ramalItem.ramal_number = item.ramal_number;
+  ramalItem.ramal_user = item.ramal_user;
+  ramalItem.sector_user = item.sector_user;
+};
+
+async function editRamal(item: Ramal) {
+  event("edit", item);
+  const id = item.id;
+  const data = {
+    ramal_user: item.ramal_user,
+    ramal_number: item.ramal_number,
+    sector_user: item.sector_user,
+  };
+  try {
+    await runMutation(UpdateRamal, { id, data });
+    const { getRamais } = await runMutation(GetRamais, {});
+    ramaisStorage.setRamais(getRamais as unknown as Ramal);
+    positiveNotify(t("notifications.success.editRamal"));
+  } catch {
+    negativeNotify(t("notifications.fail.editRamal"));
+  } finally {
+    edit.value = false;
+  }
+}
 
 async function deleteRamal(id: string) {
   event("delete", id);
@@ -83,7 +131,7 @@ async function addRamal(ramal: Record<string, string | number>) {
   try {
     const data = await runMutation(AddRamal, { data: { ...ramal } });
     const { getRamais } = await runMutation(GetRamais, {});
-    ramaisStorage.setRamais(getRamais as unknown as [Ramal]);
+    ramaisStorage.setRamais(getRamais as unknown as Ramal);
     positiveNotify(t("notifications.success.createRamal"));
   } catch {
     negativeNotify(t("notifications.fail.createRamal"));

@@ -1,22 +1,22 @@
 <template>
-  <DynamicDialog :title="$t('action.editRamal.index')" v-bind="item">
+  <DynamicDialog :title="$t('action.editRamal.index')" v-bind="$props">
     <q-form>
       <q-input
-        v-model="item.ramal_user"
+        v-model="$props.item.ramal_user"
         :label="$t('text.name')"
         stack-label
-        lazy-rules
+        lazy-lazy-rules
         :rules="[(val) => (val && val.length > 0) || $t('warning.ramalName')]"
       />
       <q-input
-        v-model="item.sector_user"
+        v-model="$props.item.sector_user"
         :label="$t('text.sector')"
         stack-label
         lazy-rules
         :rules="[(val) => (val && val.length > 0) || $t('warning.ramalSector')]"
       />
       <q-input
-        v-model="item.ramal_number"
+        v-model="$props.item.ramal_number"
         :label="$t('text.number')"
         stack-label
         lazy-rules
@@ -44,6 +44,9 @@
 const emit = defineEmits(["cancel", "confirm"]);
 
 defineProps({
-  item: Object,
+  item: {
+    type: Object,
+    required: true,
+  },
 });
 </script>

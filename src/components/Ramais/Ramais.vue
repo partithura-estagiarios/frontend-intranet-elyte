@@ -46,7 +46,7 @@
     @confirm="deleteRamal"
     :ramalItem="ramalItem"
   >
-    <template>
+    <template #text>
       <span class="text-subtitle1">
         {{
           t("action.deleteRamal.index", {

@@ -1,12 +1,6 @@
 <template>
-  <DynamicDialog v-bind="$props" :title="$t('action.confirm.index')">
-    <span class="text-subtitle1">{{
-      t("action.deleteRamal.index", {
-        numero: ramalItem.ramal_number,
-        nome: ramalItem.ramal_user,
-        setor: ramalItem.sector_user,
-      })
-    }}</span>
+  <DynamicDialog v-bind="$props">
+    <slot name="text" />
     <q-card-actions align="right">
       <q-btn
         flat

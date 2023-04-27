@@ -13,7 +13,7 @@
   </q-item>
   <table-dynamic
     :columns="columns"
-    :rows="ramaisStorage.getRamais"
+    :rows="ramaisStorage.getRamais as unknown as Ramal[]"
     v-bind="$attrs"
     class="q-mt-lg"
   >
@@ -41,12 +41,23 @@
 
   <ConfirmDelete
     :open="confirm"
-    :text="$t('action.deleteRamal.index')"
     class="text-black"
     @cancel="confirm = false"
     @confirm="deleteRamal"
-    :id="ramalId"
-  />
+    :ramalItem="ramalItem"
+  >
+    <template>
+      <span class="text-subtitle1">
+        {{
+          t("action.deleteRamal.index", {
+            numero: ramalItem.ramal_number,
+            nome: ramalItem.ramal_user,
+            setor: ramalItem.sector_user,
+          })
+        }}
+      </span>
+    </template>
+  </ConfirmDelete>
 
   <EditRamal
     :open="edit"
@@ -73,6 +84,13 @@ const ramalItem = reactive({
   sector_user: "",
 });
 
+const fillRamalItem = function (item: Ramal) {
+  ramalItem.id = item.id;
+  ramalItem.ramal_number = item.ramal_number;
+  ramalItem.ramal_user = item.ramal_user;
+  ramalItem.sector_user = item.sector_user;
+};
+
 const ramalList = ref(ramaisStorage.getRamais);
 const ramalForm = ref(false);
 const confirm = ref(false);
@@ -82,15 +100,13 @@ const event = defineEmits(["add", "delete", "edit"]);
 
 const selectDelete = function (item: Ramal) {
   confirm.value = true;
-  ramalId.value = item.id;
+  fillRamalItem(item);
+  loga(ramalItem);
 };
 
 const selectEdit = function (item: Ramal) {
   edit.value = true;
-  ramalItem.id = item.id;
-  ramalItem.ramal_number = item.ramal_number;
-  ramalItem.ramal_user = item.ramal_user;
-  ramalItem.sector_user = item.sector_user;
+  fillRamalItem(item);
 };
 
 async function refreshRamais() {
@@ -141,11 +157,6 @@ async function addRamal(ramal: Record<string, string | number>) {
     ramalForm.value = false;
   }
 }
-
-onMounted(async () => {
-  const { getRamais } = await runMutation(GetRamais, {});
-  ramalList.value = getRamais;
-});
 
 const columns = [
   {

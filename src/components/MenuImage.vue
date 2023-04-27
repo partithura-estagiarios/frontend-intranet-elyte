@@ -1,10 +1,5 @@
 <template>
-  <q-img
-    src="/images/bg0.jpg"
-    no-spinner
-    no-transition
-    class="opacity fixed-full"
-  />
+  <q-img src="/images/bg0.jpg" class="opacity fixed-full" />
   <div>
     <div class="row justify-between">
       <BackButton class="row q-ml-md hide-print q-mt-md" />
@@ -72,20 +67,20 @@ const weekday = [
 
 const menus = menusStorage.getMenus as unknown as Menu[];
 
-const dates: Ref<Array<Date>> = ref([]);
-const datas: Ref<Array<number>> = ref([]);
+const datesFormatted: Ref<Array<Date>> = ref([]);
+const datesInMilliseconds: Ref<Array<number>> = ref([]);
 
 menus.forEach((element) => {
   const date = generateDate(element.date);
-  dates.value.push(date);
+  datesFormatted.value.push(date);
 });
 
-dates.value.forEach((element) => {
-  datas.value.push(element.getTime());
+datesFormatted.value.forEach((element) => {
+  datesInMilliseconds.value.push(element.getTime());
 });
 
-const maiorData = Math.max(...datas.value);
-const menorData = Math.min(...datas.value);
+const maiorData = Math.max(...datesInMilliseconds.value);
+const menorData = Math.min(...datesInMilliseconds.value);
 
 const getDayWeek = function (day: string) {
   const date = generateDate(day);

@@ -1,25 +1,29 @@
-import { defineStore } from "pinia";
 import { Ramal } from "../entities";
+import { defineStore } from "pinia";
 
-function buildRamais(ramal: Ramal | null): Ramal | null {
-  return ramal;
-}
-
-const Ramais = defineStore("Ramais", {
-  state: () => ({
-    ramais: buildRamais(null),
-  }),
+export const useRamaisStorage = defineStore({
+  id: "Ramais",
+  state: () => {
+    return {
+      ramais: {
+        id: "",
+        ramal_user: "",
+        ramal_number: "",
+        sector_user: "",
+      },
+    };
+  },
   getters: {
-    getRamais: (state) => {
-      return state.ramais;
+    getRamais(): Ramal {
+      return this.ramais;
     },
   },
   actions: {
-    setRamais(value: Ramal | null) {
-      this.ramais = value;
+    setRamais(value: Ramal) {
+      Object.assign(this.ramais, value);
     },
   },
   persist: true,
 });
 
-export const ramaisStorage = Ramais();
+export const ramaisStorage = useRamaisStorage();

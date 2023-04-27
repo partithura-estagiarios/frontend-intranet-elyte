@@ -1,12 +1,18 @@
 <template>
   <DynamicDialog v-bind="$props" :title="$t('action.confirm.index')">
-    <span class="text-subtitle1">{{ text }}</span>
+    <span class="text-subtitle1">{{
+      t("action.deleteRamal.index", {
+        numero: ramalItem.ramal_number,
+        nome: ramalItem.ramal_user,
+        setor: ramalItem.sector_user,
+      })
+    }}</span>
     <q-card-actions align="right">
       <q-btn
         flat
         :label="$t('action.confirm.index')"
         color="primary"
-        @click="emit('confirm', id)"
+        @click="emit('confirm', ramalItem.id)"
       />
       <q-btn
         flat
@@ -20,8 +26,11 @@
 
 <script setup lang="ts">
 const emit = defineEmits(["cancel", "confirm"]);
+
 defineProps({
-  text: String,
-  id: String,
+  ramalItem: {
+    type: Object,
+    required: true,
+  },
 });
 </script>

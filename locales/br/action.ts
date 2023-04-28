@@ -46,4 +46,11 @@ export default {
   addMenu: {
     index: "Adicionar cardápio",
   },
+  deleteRamal: {
+    index:
+      "Tem certeza que deseja deletar o ramal {numero} do colaborador {nome} do setor {setor}?",
+  },
+  editRamal: {
+    index: "Editar ramal",
+  },
 };

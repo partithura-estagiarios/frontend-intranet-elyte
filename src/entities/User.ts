@@ -1,5 +1,5 @@
 export interface UserStorage {
-  username: string;
+  name: string;
   id: string;
   email: string;
   token: string;
@@ -9,7 +9,7 @@ type Getters = {
   getToken(): string;
 };
 type Actions = {
-  setUser(): void;
+  setUser(value: UserStorage): void;
 };
 
 export interface UserStorageConstructor {

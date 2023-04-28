@@ -1,5 +1,5 @@
 <template>
-  <HeaderBar class="q-mb-xl" />
+  <HeaderBar />
   <Ramais />
 </template>
 

@@ -1,5 +1,5 @@
 <template>
-  <q-item class="row items-center backgroundHeader">
+  <q-item class="row items-center backgroundHeader q-mb-xl">
     <q-toolbar-section class="q-ma-md row" clickable>
       <q-img src="/public/images/logo.png" width="10rem" />
     </q-toolbar-section>

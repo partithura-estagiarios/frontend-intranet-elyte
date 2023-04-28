@@ -10,6 +10,7 @@
         <q-separator size="0.5rem" color="primary" class="bar-style" />
       </span>
     </div>
+
   </q-item>
   <table-dynamic
     :columns="columns"
@@ -17,7 +18,7 @@
     v-bind="$attrs"
     class="q-mt-lg"
   >
-    <template #top-left>
+    <template #top-left v-if="userStorage.isLoggedIn">
       <q-btn outline color="primary" class="border" @click="ramalForm = true">
         <q-icon class="q-mr-sm" name="add" color="red" />
         <span>{{ $t("action.addRamal.index") }}</span>

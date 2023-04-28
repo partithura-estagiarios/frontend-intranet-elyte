@@ -13,17 +13,18 @@
       </q-toobar-section>
     </q-toolbar>
     <q-toobar-section>
-      <q-button>
-        <q-icon size="3rem" name="cancel" v-if="isLoggedUser" />
-        <q-icon size="3rem" name="login" v-else />
-      </q-button>
+      <q-btn v-if="isLoggedUser" clickable flat>
+        <q-icon name="cancel" size="3rem" @click="userStorage.logout" />
+      </q-btn>
+      <q-btn v-else to="/login" clickable flat>
+        <q-icon name="login" size="3rem" />
+      </q-btn>
     </q-toobar-section>
   </q-item>
 </template>
 
 <script setup lang="ts">
 const title = ref(t("titles.textIntranet"));
-const isLoggedUser = userStorage.isLoggedIn;
 </script>
 
 <style scoped>

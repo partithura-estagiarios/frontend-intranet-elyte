@@ -67,16 +67,11 @@ const weekday = [
 
 const menus = menusStorage.getMenus as unknown as Menu[];
 
-const datesFormatted: Ref<Array<Date>> = ref([]);
 const datesInMilliseconds: Ref<Array<number>> = ref([]);
 
 menus.forEach((element) => {
-  const date = generateDate(element.date);
-  datesFormatted.value.push(date);
-});
-
-datesFormatted.value.forEach((element) => {
-  datesInMilliseconds.value.push(element.getTime());
+  const date = generateDate(element.date).getTime();
+  datesInMilliseconds.value.push(date);
 });
 
 const maiorData = Math.max(...datesInMilliseconds.value);

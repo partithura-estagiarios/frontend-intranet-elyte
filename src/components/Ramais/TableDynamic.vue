@@ -28,8 +28,9 @@
       </template>
 
       <template v-slot:body-cell-actions="item">
-        <slot name="action-edit" :item="item.row" />
-        <slot name="action-delete" :item="item.row" />
+        <q-td auto-width>
+          <slot name="configButtons" :item="item.row" />
+        </q-td>
       </template>
     </q-table>
   </div>

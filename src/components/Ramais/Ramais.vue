@@ -10,147 +10,64 @@
         <q-separator size="0.5rem" color="primary" class="bar-style" />
       </span>
     </div>
-
   </q-item>
   <table-dynamic
     :columns="columns"
-    :rows="ramaisStorage.getRamais as unknown as Ramal[]"
+    :rows="(some.getRamais as any)"
     :v-bind="$attrs"
     class="q-mt-lg"
   >
-    <template #top-left v-if="userStorage.isLoggedIn">
+    <template #top-left>
       <q-btn outline color="primary" class="border" @click="ramalForm = true">
         <q-icon class="q-mr-sm" name="add" color="red" />
         <span>{{ $t("action.addRamal.index") }}</span>
       </q-btn>
     </template>
-
-    <template #action-edit="{ item }">
-      <q-btn icon="edit" flat color="blue" @click="selectEdit(item)" />
-    </template>
-    <template #action-delete="{ item }">
-      <q-btn icon="delete" flat color="primary" @click="selectDelete(item)" />
+    <template #configButtons="{ item }">
+      <ActionButtons :items="some.getRamais" :item="item" :buttons="buttons" />
     </template>
   </table-dynamic>
-
   <CreateRamal
     :open="ramalForm"
     v-bind="$attrs"
     @confirm="addRamal"
     @cancel="ramalForm = false"
   />
-
-  <ConfirmDelete
-    :open="confirm"
-    class="text-black"
-    @cancel="confirm = false"
-    @confirm="deleteRamal"
-    :ramalItem="ramalItem"
-  >
-    <template #text>
-      <span class="text-subtitle1">
-        {{
-          t("action.deleteRamal.index", {
-            numero: ramalItem.ramal_number,
-            nome: ramalItem.ramal_user,
-            setor: ramalItem.sector_user,
-          })
-        }}
-      </span>
-    </template>
-  </ConfirmDelete>
-
-  <EditRamal
-    :open="edit"
-    @cancel="edit = false"
-    class="text-black"
-    :item="ramalItem"
-    @confirm="editRamal"
-  />
 </template>
 
 <script setup lang="ts">
 import GetRamais from "../../graphql/ramais/getRamais.gql";
 import AddRamal from "../../graphql/ramais/createRamal.gql";
-import DeleteRamal from "../../graphql/ramais/deleteRamal.gql";
-import UpdateRamal from "../../graphql/ramais/updateRamal.gql";
 import { Ramal } from "../../entities";
+import DeleteBtn from "./DeleteBtn.vue";
+import EditBtn from "./EditBtn.vue";
 
-const ramalId = ref("");
+const some: any = ref([]);
 
-const ramalItem = reactive({
-  id: "",
-  ramal_number: "",
-  ramal_user: "",
-  sector_user: "",
+const ramalForm = ref(false);
+
+onMounted(() => {
+  parsedList();
 });
 
-const fillRamalItem = function (item: Ramal) {
-  ramalItem.id = item.id;
-  ramalItem.ramal_number = item.ramal_number;
-  ramalItem.ramal_user = item.ramal_user;
-  ramalItem.sector_user = item.sector_user;
-};
+const buttons = [
+  {
+    component: DeleteBtn,
+  },
+  {
+    component: EditBtn,
+  },
+];
 
-const ramalList = ref(ramaisStorage.getRamais);
-const ramalForm = ref(false);
-const confirm = ref(false);
-const edit = ref(false);
-
-const event = defineEmits(["add", "delete", "edit"]);
-
-const selectDelete = function (item: Ramal) {
-  confirm.value = true;
-  fillRamalItem(item);
-  loga(ramalItem);
-};
-
-const selectEdit = function (item: Ramal) {
-  edit.value = true;
-  fillRamalItem(item);
-};
-
-async function refreshRamais() {
-  const { getRamais } = await runMutation(GetRamais, {});
-  ramaisStorage.setRamais(getRamais as unknown as Ramal);
-}
-
-async function editRamal(item: Ramal) {
-  event("edit", item);
-  const id = item.id;
-  const data = {
-    ramal_user: item.ramal_user,
-    ramal_number: item.ramal_number,
-    sector_user: item.sector_user,
-  };
-  try {
-    await runMutation(UpdateRamal, { id, data });
-    await refreshRamais();
-    positiveNotify(t("notifications.success.editRamal"));
-  } catch {
-    negativeNotify(t("notifications.fail.editRamal"));
-  } finally {
-    edit.value = false;
-  }
-}
-
-async function deleteRamal(id: string) {
-  event("delete", id);
-  try {
-    await runMutation(DeleteRamal, { id });
-    await refreshRamais();
-    positiveNotify(t("notifications.success.deleteRamal"));
-  } catch {
-    negativeNotify(t("notifications.fail.deleteRamal"));
-  } finally {
-    confirm.value = false;
-  }
+async function parsedList() {
+  some.value = await runMutation(GetRamais, {});
+  return some;
 }
 
 async function addRamal(ramal: Record<string, string | number>) {
   try {
-    const data = await runMutation(AddRamal, { data: { ...ramal } });
-    await refreshRamais();
+    await runMutation(AddRamal, { data: { ...ramal } });
+    await parsedList();
     positiveNotify(t("notifications.success.createRamal"));
   } catch {
     negativeNotify(t("notifications.fail.createRamal"));

@@ -1,7 +1,7 @@
 <template>
   <q-item class="row items-center backgroundHeader">
     <q-toolbar-section class="q-ma-md row" clickable>
-      <q-img src="/public/images/logo.png" width="10rem" />
+      <q-img src="/images/logo.png" width="10rem" />
     </q-toolbar-section>
     <q-toolbar class="justify-center text-white">
       <q-toobar-section class="row">

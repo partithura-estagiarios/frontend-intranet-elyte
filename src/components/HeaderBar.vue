@@ -12,14 +12,6 @@
         <q-icon size="2rem" class="border" name="house" />
       </q-toobar-section>
     </q-toolbar>
-    <q-toobar-section>
-      <q-btn v-if="isLoggedUser" clickable flat>
-        <q-icon name="cancel" size="3rem" @click="userStorage.logout" />
-      </q-btn>
-      <q-btn v-else to="/login" clickable flat>
-        <q-icon name="login" size="3rem" />
-      </q-btn>
-    </q-toobar-section>
   </q-item>
 </template>
 

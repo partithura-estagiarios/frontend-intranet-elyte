@@ -42,7 +42,7 @@ async function getListRamal() {
 
 const columns = [
   {
-    field: (getRamais: Ramal) => getRamais.ramal_user,
+    field: (getRamais: Ramal) => getRamais.ramalUser,
     required: true,
     sortable: true,
     label: t("text.name"),
@@ -50,14 +50,14 @@ const columns = [
     name: "name",
   },
   {
-    field: "sector_user",
+    field: "sectorUser",
     align: "left",
     label: t("text.sector"),
     sortable: true,
     name: "Setor",
   },
   {
-    field: "ramal_number",
+    field: "ramalNumber",
     align: "left",
     label: t("text.number"),
     sortable: true,

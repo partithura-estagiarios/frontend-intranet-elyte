@@ -1,8 +1,8 @@
 export interface Ramal {
   id: string;
-  ramal_user: string;
-  sector_user: string;
-  ramal_number: string;
+  ramalUser: string;
+  sectorUser: string;
+  ramalNumber: string;
 }
 
 type State = {

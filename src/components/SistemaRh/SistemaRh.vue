@@ -61,11 +61,12 @@ onMounted(() => {
 });
 
 async function getListRh() {
-  const { menu } = (await runMutation(GetMenu, {
+  const { menuBySystem } = (await runMutation(GetMenu, {
     sistema: "rh",
-  })) as unknown as Record<"menu", Array<Menu>>;
+  })) as unknown as Record<"menuBySystem", Array<Menu>>;
 
-  rhList.value = menu;
+  rhList.value = menuBySystem;
+  console.log(menuBySystem);
   return rhList;
 }
 </script>

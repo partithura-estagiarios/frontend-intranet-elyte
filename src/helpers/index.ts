@@ -1,7 +1,6 @@
 export * from "./host";
 export * from "./query";
 export * from "./notify";
-export * from "./storage";
 
 export function increment(value: number) {
   return (value += 1);
@@ -18,7 +17,3 @@ export function loga(value: string | number | object) {
 export function parseErrorMessage(value: string): string {
   return value.replace("is a required field", "");
 }
-
-export const isLoggedUser = computed(() =>
-  userStorage.getToken != "" ? true : false
-);

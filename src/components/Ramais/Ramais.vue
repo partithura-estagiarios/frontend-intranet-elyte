@@ -13,7 +13,7 @@
   </q-item>
   <table-dynamic
     :columns="columns"
-    :rows="(some as Ramal[])"
+    :rows="(ramalList as Array<Ramal>)"
     :v-bind="$attrs"
     class="q-mt-lg"
   />
@@ -24,19 +24,20 @@ import GetRamais from "../../graphql/ramais/getRamais.gql";
 import { Ramal } from "../../entities";
 import { Ref } from "vue";
 
-const some: Ref<Ramal[]> = ref([]);
+const ramalList: Ref<Ramal[]> = ref([]);
 
 onMounted(() => {
   getListRamal();
 });
 
 async function getListRamal() {
-  const { getRamais } = (await runMutation(GetRamais, {})) as unknown as Record<
-    "getRamais",
+  const { ramais } = (await runMutation(GetRamais, {})) as unknown as Record<
+    "ramais",
     Array<Ramal>
   >;
-  some.value = getRamais;
-  return some;
+
+  ramalList.value = ramais;
+  return ramalList;
 }
 
 const columns = [

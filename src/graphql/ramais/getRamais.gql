@@ -1,5 +1,5 @@
-query GetRamais {
-  getRamais {
+query Ramais {
+  ramais {
     id
     ramal_user
     sector_user

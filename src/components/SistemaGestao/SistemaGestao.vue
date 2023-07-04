@@ -30,7 +30,7 @@
               <q-icon
                 class="border icon border-radius-inherit q-pa-md"
                 size="4rem"
-                :name="icon.img"
+                :name="icon.icon"
               />
             </q-avatar>
           </q-item-section>
@@ -40,7 +40,7 @@
               {{ $t(icon.label) }}
             </q-item-label>
             <q-item-label class="text-grey text-weight-bolder text-no-wrap">
-              {{ $t(icon.subLabel) }}
+              {{ $t(icon.sublabel) }}
             </q-item-label>
           </q-item-section>
         </q-item>
@@ -50,7 +50,24 @@
 </template>
 
 <script setup lang="ts">
-import { gestaoList } from "../lib";
+import GetMenu from "../../graphql/menu/GetMenu.gql";
+import { Menu } from "../../entities";
+import { Ref } from "vue";
+
+const gestaoList: Ref<Menu[]> = ref([]);
+
+onMounted(() => {
+  getGestaoList();
+});
+
+async function getGestaoList() {
+  const { menu } = (await runMutation(GetMenu, {
+    sistema: "gestao",
+  })) as unknown as Record<"menu", Array<Menu>>;
+
+  gestaoList.value = menu;
+  return gestaoList;
+}
 </script>
 
 <style scoped>

@@ -1,7 +1,7 @@
 <template>
   <q-item class="row items-center backgroundHeader">
     <q-toolbar-section class="q-ma-md row" clickable>
-      <q-img src="/public/images/logo.png" width="10rem" />
+      <q-img src="/images/logo.png" width="10rem" />
     </q-toolbar-section>
     <q-toolbar class="justify-center text-white">
       <q-toobar-section class="row">
@@ -12,14 +12,6 @@
         <q-icon size="2rem" class="border" name="house" />
       </q-toobar-section>
     </q-toolbar>
-    <q-toobar-section>
-      <q-btn v-if="isLoggedUser" clickable flat>
-        <q-icon name="cancel" size="3rem" @click="userStorage.logout" />
-      </q-btn>
-      <q-btn v-else to="/login" clickable flat>
-        <q-icon name="login" size="3rem" />
-      </q-btn>
-    </q-toobar-section>
   </q-item>
 </template>
 

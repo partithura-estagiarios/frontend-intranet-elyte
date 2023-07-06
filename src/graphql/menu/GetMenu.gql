@@ -1,13 +1,9 @@
-query GetMenu {
-  getMenu {
-    complement
+query MenuBySystem($sistema: String!) {
+  menuBySystem(sistema: $sistema) {
     id
-    dessert
-    protein
-    rice
-    salad
-    date
-    soup
-    created_at
+    icon
+    label
+    sublabel
+    link
   }
 }

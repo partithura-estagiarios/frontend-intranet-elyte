@@ -1,4 +1,5 @@
 export default {
+  rows_per_page: "Registros por página",
   profile: "Perfil",
   title: "Título",
   settings: "Configurações",

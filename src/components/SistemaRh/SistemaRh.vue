@@ -40,7 +40,7 @@
               {{ $t(icon.label) }}
             </q-item-label>
             <q-item-label class="text-grey text-weight-bolder text-no-wrap">
-              {{ $t(icon.subLabel) }}
+              {{ $t(icon.sublabel) }}
             </q-item-label>
           </q-item-section>
         </q-item>
@@ -50,7 +50,24 @@
 </template>
 
 <script setup lang="ts">
-import { rhList } from "../lib";
+import GetMenu from "../../graphql/menu/GetMenu.gql";
+import { Menu } from "../../entities";
+import { Ref } from "vue";
+
+const rhList: Ref<Menu[]> = ref([]);
+
+onMounted(() => {
+  getListRh();
+});
+
+async function getListRh() {
+  const { menuBySystem } = (await runMutation(GetMenu, {
+    sistema: "rh",
+  })) as unknown as Record<"menuBySystem", Array<Menu>>;
+
+  rhList.value = menuBySystem;
+  return rhList;
+}
 </script>
 
 <style scoped>

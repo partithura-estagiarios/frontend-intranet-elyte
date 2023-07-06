@@ -66,7 +66,6 @@ async function getListRh() {
   })) as unknown as Record<"menuBySystem", Array<Menu>>;
 
   rhList.value = menuBySystem;
-  console.log(menuBySystem);
   return rhList;
 }
 </script>

@@ -24,6 +24,7 @@
           class="column col-4 q-my-md items-center"
           clickable
           :href="icon.link"
+          target="_blank"
         >
           <q-item-section wrap>
             <q-avatar size="7rem">

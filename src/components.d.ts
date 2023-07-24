@@ -9,6 +9,7 @@ declare module "@vue/runtime-core" {
   export interface GlobalComponents {
     AntDesignTextBox: typeof import("./components/controls/AntDesignTextBox.vue")["default"];
     BackButton: typeof import("./components/buttons/BackButton.vue")["default"];
+    BackgroundLogin: typeof import("./components/Login/BackgroundLogin.vue")["default"];
     CardFooter: typeof import("./components/DynamicDialog/CardFooter.vue")["default"];
     CardHeader: typeof import("./components/DynamicDialog/CardHeader.vue")["default"];
     ConfirmDelete: typeof import("./components/ConfirmDelete.vue")["default"];
@@ -18,6 +19,7 @@ declare module "@vue/runtime-core" {
     FabButton: typeof import("./components/buttons/FabButton.vue")["default"];
     HeaderBar: typeof import("./components/HeaderBar.vue")["default"];
     LoaderButton: typeof import("./components/buttons/LoaderButton.vue")["default"];
+    LoginForm: typeof import("./components/Login/LoginForm.vue")["default"];
     MainCard: typeof import("./components/DynamicDialog/MainCard.vue")["default"];
     MainLayout: typeof import("./components/MainLayout/MainLayout.vue")["default"];
     OptionLocales: typeof import("./components/OptionLocales.vue")["default"];
@@ -30,6 +32,7 @@ declare module "@vue/runtime-core" {
     SistemaRh: typeof import("./components/SistemaRh/SistemaRh.vue")["default"];
     Switches: typeof import("./components/switches/index.vue")["default"];
     SwitchRouded: typeof import("./components/switches/SwitchRouded.vue")["default"];
+    TabHeader: typeof import("./components/TabHeader.vue")["default"];
     TableDynamic: typeof import("./components/Ramais/TableDynamic.vue")["default"];
     ThemeButton: typeof import("./components/buttons/ThemeButton.vue")["default"];
     ToggleTheme: typeof import("./components/ToggleTheme.vue")["default"];

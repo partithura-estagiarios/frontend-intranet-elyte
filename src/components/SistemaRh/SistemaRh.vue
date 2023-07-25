@@ -1,22 +1,22 @@
 <template>
   <div>
-    <q-card class="q-mx-lg row justify-center shadow-7">
-      <q-card-section class="q-my-md">
-        <span class="text-uppercase row text-h5 text-bold text-black">
-          {{ $t("titles.HrSystem") }}
-          <q-icon
-            color="primary"
-            class="q-ml-sm"
-            name="engineering"
-            size="2rem"
-          />
-        </span>
-        <q-separator
-          size="0.5rem"
-          color="primary"
-          class="border-radius-inherit"
-        />
+    <q-card class="q-mx-xl row justify-center shadow-7">
+      <q-card-section class="q-my-md row full-width">
+        <div class="col-12 col-md-8 row justify-end">
+          <span
+            class="text-uppercase border-title row text-h5 text-bold text-black"
+          >
+            {{ $t("titles.ManagementSystem") }}
+          </span>
+        </div>
+        <div
+          v-show="$route.fullPath.includes('/admin')"
+          class="col-12 col-md-4 row justify-end"
+        >
+          <ConfigMenu />
+        </div>
       </q-card-section>
+
       <q-card-section class="row col-12 justify-around">
         <q-item
           v-for="icon in rhList"
@@ -36,7 +36,9 @@
           </q-item-section>
 
           <q-item-section class="q-mt-md">
-            <q-item-label class="text-red text-weight-bolder text-no-wrap">
+            <q-item-label
+              class="text-grey-8 text-h6 text-weight-bolder text-no-wrap"
+            >
               {{ $t(icon.label) }}
             </q-item-label>
             <q-item-label class="text-grey text-weight-bolder text-no-wrap">
@@ -73,15 +75,19 @@ async function getListRh() {
 <style scoped>
 .border {
   border: 8px solid;
-  border-color: rgb(164, 164, 164);
+  border-color: rgb(164, 164, 164, 0.4);
+}
+.border-title {
+  border-bottom: 5px solid;
+  border-color: var(--q-primary);
 }
 .icon {
-  color: gray;
+  color: rgb(164, 164, 164, 0.4);
 }
 .icon:hover {
-  color: rgb(229, 57, 53);
+  color: var(--q-primary);
 }
 .border:hover {
-  border-color: rgb(229, 57, 53);
+  border-color: var(--q-primary);
 }
 </style>

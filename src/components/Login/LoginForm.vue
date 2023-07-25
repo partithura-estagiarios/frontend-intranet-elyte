@@ -10,22 +10,19 @@ const data = reactive({
 });
 async function auth() {
   try {
-    const { auth } = (await runMutation(Auth, {
-      data,
-    })) as unknown as AuthQuery;
+    const { auth } = (await runMutation(Auth, data)) as unknown as AuthQuery;
     const { token, user } = auth;
     if (token) {
       userStorage.setUser({
         username: user.username,
         id: user.id,
         email: user.email,
-        token,
       });
+      userStorage.setToken(user.id);
+      positiveNotify(t("notifications.success.login"));
+      router.push("/admin");
     }
-    setTokenStorage(token);
-    positiveNotify(t("notifications.success.login"));
-    router.push("/home");
-  } catch ({ message }) {
+  } catch (err) {
     negativeNotify(t("notifications.fail.login"));
   }
 }
@@ -66,7 +63,7 @@ async function auth() {
     :label="$t('action.submit.index')"
     rounded
     :class="marginBtn"
-    class="btn-enviar size"
+    class="btn-enviar size text-black bg-white"
     size="lg"
     @click="() => auth()"
   />
@@ -75,8 +72,6 @@ async function auth() {
 <style scoped>
 .btn-enviar {
   box-shadow: 0px 10px 40px -12px #fff;
-  background: #fff;
-  color: black;
 }
 .btn-enviar:hover {
   box-shadow: 0px 10px 40px -12px #ff0000;

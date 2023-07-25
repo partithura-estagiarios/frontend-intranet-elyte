@@ -12,7 +12,6 @@ declare global {
   const asyncComputed: typeof import("@vueuse/core")["asyncComputed"];
   const autoResetRef: typeof import("@vueuse/core")["autoResetRef"];
   const backgroundColor: typeof import("./composables/theme")["backgroundColor"];
-  const clearStorage: typeof import("./helpers/storage")["clearStorage"];
   const color: typeof import("./composables/theme")["color"];
   const computed: typeof import("vue")["computed"];
   const computedAsync: typeof import("@vueuse/core")["computedAsync"];
@@ -40,8 +39,6 @@ declare global {
   const getCurrentInstance: typeof import("vue")["getCurrentInstance"];
   const getCurrentScope: typeof import("vue")["getCurrentScope"];
   const getEnvironmentVariable: typeof import("./helpers/host")["getEnvironmentVariable"];
-  const getItemStorage: typeof import("./helpers/storage")["getItemStorage"];
-  const getTokenStorage: typeof import("./helpers/storage")["getTokenStorage"];
   const h: typeof import("vue")["h"];
   const ignorableWatch: typeof import("@vueuse/core")["ignorableWatch"];
   const increment: typeof import("./helpers/index")["increment"];
@@ -95,7 +92,6 @@ declare global {
   const refDefault: typeof import("@vueuse/core")["refDefault"];
   const refThrottled: typeof import("@vueuse/core")["refThrottled"];
   const refWithControl: typeof import("@vueuse/core")["refWithControl"];
-  const removeToken: typeof import("./helpers/storage")["removeToken"];
   const resolveComponent: typeof import("vue")["resolveComponent"];
   const resolveDirective: typeof import("vue")["resolveDirective"];
   const resolveRef: typeof import("@vueuse/core")["resolveRef"];
@@ -103,7 +99,6 @@ declare global {
   const router: typeof import("./composables/index")["router"];
   const runMutation: typeof import("./helpers/query")["runMutation"];
   const runQuery: typeof import("./helpers/query")["runQuery"];
-  const setTokenStorage: typeof import("./helpers/storage")["setTokenStorage"];
   const shallowReactive: typeof import("vue")["shallowReactive"];
   const shallowReadonly: typeof import("vue")["shallowReadonly"];
   const shallowRef: typeof import("vue")["shallowRef"];
@@ -324,9 +319,6 @@ declare module "vue" {
     readonly backgroundColor: UnwrapRef<
       typeof import("./composables/theme")["backgroundColor"]
     >;
-    readonly clearStorage: UnwrapRef<
-      typeof import("./helpers/storage")["clearStorage"]
-    >;
     readonly color: UnwrapRef<typeof import("./composables/theme")["color"]>;
     readonly computed: UnwrapRef<typeof import("vue")["computed"]>;
     readonly computedAsync: UnwrapRef<
@@ -395,12 +387,6 @@ declare module "vue" {
     >;
     readonly getEnvironmentVariable: UnwrapRef<
       typeof import("./helpers/host")["getEnvironmentVariable"]
-    >;
-    readonly getItemStorage: UnwrapRef<
-      typeof import("./helpers/storage")["getItemStorage"]
-    >;
-    readonly getTokenStorage: UnwrapRef<
-      typeof import("./helpers/storage")["getTokenStorage"]
     >;
     readonly h: UnwrapRef<typeof import("vue")["h"]>;
     readonly ignorableWatch: UnwrapRef<
@@ -511,9 +497,6 @@ declare module "vue" {
     readonly refWithControl: UnwrapRef<
       typeof import("@vueuse/core")["refWithControl"]
     >;
-    readonly removeToken: UnwrapRef<
-      typeof import("./helpers/storage")["removeToken"]
-    >;
     readonly resolveComponent: UnwrapRef<
       typeof import("vue")["resolveComponent"]
     >;
@@ -529,9 +512,6 @@ declare module "vue" {
       typeof import("./helpers/query")["runMutation"]
     >;
     readonly runQuery: UnwrapRef<typeof import("./helpers/query")["runQuery"]>;
-    readonly setTokenStorage: UnwrapRef<
-      typeof import("./helpers/storage")["setTokenStorage"]
-    >;
     readonly shallowReactive: UnwrapRef<
       typeof import("vue")["shallowReactive"]
     >;

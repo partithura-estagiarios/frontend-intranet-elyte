@@ -1,15 +1,15 @@
 <template>
   <div>
     <q-card class="q-mx-xl row justify-center shadow-7">
-      <q-card-section class="q-my-md row full-width">
-        <div class="col-12 col-md-8 row justify-end">
-          <span
-            class="text-uppercase border-title row text-h5 text-bold text-black"
-          >
-            {{ $t("titles.ManagementSystem") }}
-          </span>
+      <q-card-section class="q-my-md row full-width justify-center">
+        <span
+          class="text-uppercase border-title row text-h5 text-bold text-black"
+        >
+          {{ $t("titles.ManagementSystem") }}
+        </span>
+        <div v-show="$route.fullPath.includes('/admin')" class="absolute-right">
+          <ConfigMenu />
         </div>
-        <ConfigMenu />
       </q-card-section>
 
       <q-card-section class="row col-12 justify-around">

@@ -1,9 +1,10 @@
 <template>
-  <q-card class="card-width">
-    <CardHeader v-bind="$props" />
-    <q-card-section align="center">
+  <q-card>
+    <CardHeader v-bind="$props" @cancel="() => $emit('cancel')" />
+    <q-card-section>
       <slot />
     </q-card-section>
+    <CardFooter @cancel="() => $emit('cancel')" />
   </q-card>
 </template>
 
@@ -12,9 +13,3 @@ defineProps({
   title: String,
 });
 </script>
-
-<style scoped>
-.card-width {
-  width: 30vw;
-}
-</style>

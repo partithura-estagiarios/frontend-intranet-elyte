@@ -1,12 +1,21 @@
 <script setup lang="ts">
+const isActiveModal = ref(false);
+const selectedModel = ref("");
+
 const menuItems = [
-  { label: "Editar", icon: "mode" },
-  { label: "Adicionar", icon: "add" },
-  { label: "Deletar", icon: "delete" },
+  { label: "Editar", icon: "mode", model: "edit" },
+  { label: "Adicionar", icon: "add", model: "add" },
+  { label: "Deletar", icon: "delete", model: "delete" },
 ];
+
+const statusModal = (model: string): void => {
+  selectedModel.value = model;
+  isActiveModal.value = !isActiveModal.value;
+};
 </script>
 
 <template>
+  <SystemModals :selected="selectedModel" :isActiveModal="isActiveModal" />
   <div
     v-show="$route.fullPath.includes('/admin')"
     class="col-12 col-md-4 row justify-end"
@@ -18,11 +27,11 @@ const menuItems = [
       dropdown-icon="settings"
       no-icon-animation
     >
-      <q-list class="color no-scroll">
+      <q-list v-for="item in menuItems" class="text-secondary no-scroll">
         <q-item
-          v-for="item in menuItems"
+          clickable
+          @click="statusModal(item.model)"
           class="row items-center q-gutter-x-xs"
-          v-close-popup
         >
           <q-icon :name="item.icon" size="xs" color="primary" />
           <span class="text-subtitle1">{{ item.label }}</span>
@@ -31,13 +40,3 @@ const menuItems = [
     </q-btn-dropdown>
   </div>
 </template>
-
-<style scoped>
-.color {
-  color: #6e6e6e;
-}
-.border {
-  border: 1px solid;
-  border-color: var(--q-primary);
-}
-</style>

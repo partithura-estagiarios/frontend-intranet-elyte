@@ -1,6 +1,7 @@
 <template>
-  <q-card-section class="text-h5 text-center">
-    {{ title }}
+  <q-card-section class="row justify-between items-center bg-primary">
+    <span class="text-h6">{{ title }}</span>
+    <q-btn flat round icon="close" @click="$emit('cancel')" />
   </q-card-section>
 </template>
 
@@ -8,4 +9,5 @@
 defineProps({
   title: String,
 });
+defineEmits(["cancel"]);
 </script>

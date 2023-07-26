@@ -1,6 +1,6 @@
 <template>
   <q-dialog v-model="modal" persistent>
-    <MainCard class="background-dark" v-bind="$props">
+    <MainCard class="background-dark" v-bind="$props" @cancel="modal = false">
       <slot />
     </MainCard>
   </q-dialog>

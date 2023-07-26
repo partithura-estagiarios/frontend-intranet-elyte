@@ -1,0 +1,5 @@
+mutation CreateItemMenu($data: itemInput) {
+  createItemMenu(data: $data) {
+    __typename
+  }
+}

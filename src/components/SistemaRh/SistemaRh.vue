@@ -8,7 +8,7 @@
           {{ $t("titles.HrSystem") }}
         </span>
         <div v-show="$route.fullPath.includes('/admin')" class="absolute-right">
-          <ConfigMenu />
+          <ConfigMenu system="rh" />
         </div>
       </q-card-section>
 

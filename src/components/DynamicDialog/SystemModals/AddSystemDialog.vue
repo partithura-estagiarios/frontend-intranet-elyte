@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import createMenuItem from "../../graphql/menu/CreateMenuItem.gql";
+import createMenuItem from "../../../graphql/menu/CreateMenuItem.gql";
 
 const props = defineProps({
   selected: {
@@ -10,6 +10,10 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
+  systemType: {
+    type: String,
+    required: true,
+  },
 });
 const ICON_LIBRARY_BASE_URL = "https://pictogrammers.com/library/mdi/";
 const form = reactive({
@@ -17,26 +21,25 @@ const form = reactive({
   label: "",
   sublabel: "",
   link: "",
-  sistema: "gestao",
+  sistema: props.systemType,
 });
 
 async function createSystem() {
   try {
     const { data } = await runMutation(createMenuItem, { data: form });
     console.log(data);
-    // const { token, user } = auth;
-    // positiveNotify(t("notifications.success.login"));
+    positiveNotify(t("notifications.success.createSystem"));
   } catch (err) {
-    // negativeNotify(t("notifications.fail.login"));
+    negativeNotify(t("notifications.fail.createSystem"));
   }
 }
 </script>
 
 <template>
   <DynamicDialog
+    v-if="selected === 'add'"
     @cancel="() => $emit('cancel')"
     @confirm="createSystem"
-    v-if="selected === 'add'"
     :open="isActive"
     :title="$t('action.addSystem.index')"
   >
@@ -66,20 +69,13 @@ async function createSystem() {
         v-model="form.sublabel"
         label="Descrição"
       />
-      <q-input class="col-6 q-px-xs" v-model="form.sistema" label="Sistema" />
+      <q-input
+        class="col-6 q-px-xs"
+        v-model="form.sistema"
+        label="Sistema"
+        disable
+      />
       <q-input class="col-12 q-px-xs" v-model="form.link" label="Link" />
     </div>
-  </DynamicDialog>
-
-  <DynamicDialog
-    @cancel="() => $emit('cancel')"
-    v-if="selected === 'delete'"
-    :open="isActive"
-    :title="$t('action.delSystem.index')"
-  >
-    <span class="text-secondary text-h6">{{
-      $t("action.delSystem.messageConfirm", { name: "" })
-    }}</span
-    ><!--Alterar name conforme selecionado-->
   </DynamicDialog>
 </template>

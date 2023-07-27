@@ -1,7 +1,13 @@
 <script setup lang="ts">
+defineProps({
+  system: {
+    type: String,
+    required: true,
+  },
+});
+
 const isActiveModal = ref(false);
 const selectedModel = ref("");
-
 const menuItems = [
   { label: "Editar", icon: "mode", model: "edit" },
   { label: "Adicionar", icon: "add", model: "add" },
@@ -15,7 +21,8 @@ const statusModal = (model: string): void => {
 </script>
 
 <template>
-  <SystemModals
+  <AddSystemDialog
+    :system-type="system"
     :selected="selectedModel"
     :isActive="isActiveModal"
     @cancel="statusModal"

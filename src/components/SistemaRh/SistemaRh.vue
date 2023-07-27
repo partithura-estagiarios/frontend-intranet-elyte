@@ -5,7 +5,7 @@
         <span
           class="text-uppercase border-title row text-h5 text-bold text-black"
         >
-          {{ $t("titles.ManagementSystem") }}
+          {{ $t("titles.HrSystem") }}
         </span>
         <div v-show="$route.fullPath.includes('/admin')" class="absolute-right">
           <ConfigMenu />

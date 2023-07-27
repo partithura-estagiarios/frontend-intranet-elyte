@@ -1,4 +1,4 @@
-mutation CreateItemMenu($data: itemInput) {
+mutation CreateMenuItem($data: itemInput) {
   createItemMenu(data: $data) {
     __typename
   }

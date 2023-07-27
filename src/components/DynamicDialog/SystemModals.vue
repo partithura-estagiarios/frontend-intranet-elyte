@@ -1,10 +1,12 @@
 <script setup lang="ts">
-defineProps({
+import createMenuItem from "../../graphql/menu/CreateMenuItem.gql";
+
+const props = defineProps({
   selected: {
     type: String,
     default: "",
   },
-  isActiveModal: {
+  isActive: {
     type: Boolean,
     default: false,
   },
@@ -15,14 +17,27 @@ const form = reactive({
   label: "",
   sublabel: "",
   link: "",
-  sistema: "",
+  sistema: "gestao",
 });
+
+async function createSystem() {
+  try {
+    const { data } = await runMutation(createMenuItem, { data: form });
+    console.log(data);
+    // const { token, user } = auth;
+    // positiveNotify(t("notifications.success.login"));
+  } catch (err) {
+    // negativeNotify(t("notifications.fail.login"));
+  }
+}
 </script>
 
 <template>
   <DynamicDialog
+    @cancel="() => $emit('cancel')"
+    @confirm="createSystem"
     v-if="selected === 'add'"
-    :open="isActiveModal"
+    :open="isActive"
     :title="$t('action.addSystem.index')"
   >
     <div class="row justify-between">
@@ -57,8 +72,9 @@ const form = reactive({
   </DynamicDialog>
 
   <DynamicDialog
+    @cancel="() => $emit('cancel')"
     v-if="selected === 'delete'"
-    :open="isActiveModal"
+    :open="isActive"
     :title="$t('action.delSystem.index')"
   >
     <span class="text-secondary text-h6">{{

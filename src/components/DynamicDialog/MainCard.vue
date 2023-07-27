@@ -4,7 +4,10 @@
     <q-card-section>
       <slot />
     </q-card-section>
-    <CardFooter @cancel="() => $emit('cancel')" />
+    <CardFooter
+      @cancel="() => $emit('cancel')"
+      @confirm="() => $emit('confirm')"
+    />
   </q-card>
 </template>
 

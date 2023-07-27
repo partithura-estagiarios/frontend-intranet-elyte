@@ -15,7 +15,11 @@ const statusModal = (model: string): void => {
 </script>
 
 <template>
-  <SystemModals :selected="selectedModel" :isActiveModal="isActiveModal" />
+  <SystemModals
+    :selected="selectedModel"
+    :isActive="isActiveModal"
+    @cancel="statusModal"
+  />
   <div
     v-show="$route.fullPath.includes('/admin')"
     class="col-12 col-md-4 row justify-end"

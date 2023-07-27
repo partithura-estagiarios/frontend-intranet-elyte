@@ -3,4 +3,7 @@ export default {
   inputPassword: "Sua senha",
   inputEmail: "Seu e-mail",
   forgetPassword: "Esqueci a senha",
+  icon: "Icone",
+  description: "Descrição",
+  system: "Sistema",
 };

@@ -29,7 +29,7 @@ const form = reactive({
       <q-input
         class="col-sm-6 col-12 q-px-xs"
         v-model="form.label"
-        label="Título"
+        :label="$t('text.title')"
       />
       <q-input
         class="col-sm-6 col-12 q-px-xs"

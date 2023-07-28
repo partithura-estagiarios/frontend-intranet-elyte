@@ -16,7 +16,7 @@
         <q-item
           v-for="icon in rhList"
           :key="icon.id"
-          class="column col-4 q-my-md items-center color-grey"
+          class="column col-4 q-my-md items-center"
           clickable
           :href="icon.link"
         >

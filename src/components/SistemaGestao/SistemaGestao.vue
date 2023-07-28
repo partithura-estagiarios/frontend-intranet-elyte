@@ -16,7 +16,7 @@
         <q-item
           v-for="icon in gestaoList"
           :key="icon.id"
-          class="column col-4 q-my-md items-center"
+          class="column col-4 q-my-md items-center color-grey"
           clickable
           :href="icon.link"
           target="_blank"
@@ -77,6 +77,10 @@ async function getGestaoList() {
 .border-title {
   border-bottom: 5px solid;
   border-color: var(--q-primary);
+}
+
+.icon {
+  color: rgb(164, 164, 164, 0.4);
 }
 
 .icon:hover {

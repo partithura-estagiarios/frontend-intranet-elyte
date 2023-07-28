@@ -1,5 +1,5 @@
 mutation AddSystem($data: itemInput) {
-  AddSystem(data: $data) {
+  addSystem(data: $data) {
     __typename
   }
 }

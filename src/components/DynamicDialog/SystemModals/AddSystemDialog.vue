@@ -37,45 +37,41 @@ async function createSystem() {
 
 <template>
   <DynamicDialog
-    v-if="selected === 'add'"
     @cancel="() => $emit('cancel')"
     @confirm="createSystem"
     :open="isActive"
     :title="$t('action.addSystem.index')"
   >
-    <div class="row justify-between">
-      <q-input
-        class="col-sm-6 col-12 q-px-xs"
-        v-model="form.label"
-        :label="$t('text.title')"
-      />
-      <q-input
-        class="col-sm-6 col-12 q-px-xs"
-        v-model="form.icon"
-        label="Icone"
-      >
-        <template #prepend>
-          <q-item clickable :href="ICON_LIBRARY_BASE_URL" target="_blank">
-            <q-icon class="col-sm-6 col-12" name="pageview">
-              <q-tooltip anchor="top middle" self="bottom middle">
-                <span class="text-subtitle2">Procurar </span>
-              </q-tooltip>
-            </q-icon>
-          </q-item>
-        </template>
-      </q-input>
-      <q-input
-        class="col-6 q-px-xs"
-        v-model="form.sublabel"
-        label="Descrição"
-      />
-      <q-input
-        class="col-6 q-px-xs"
-        v-model="form.sistema"
-        label="Sistema"
-        disable
-      />
-      <q-input class="col-12 q-px-xs" v-model="form.link" label="Link" />
+    <div class="column">
+      <div class="row">
+        <q-input class="col-6" v-model="form.label" :label="$t('text.title')" />
+        <q-input class="col-6 q-px-xs" v-model="form.icon" label="Icone">
+          <template #prepend>
+            <q-item clickable :href="ICON_LIBRARY_BASE_URL" target="_blank">
+              <q-icon class="col-sm-6 col-12" name="pageview">
+                <q-tooltip anchor="top middle" self="bottom middle">
+                  <span class="text-subtitle2">Procurar </span>
+                </q-tooltip>
+              </q-icon>
+            </q-item>
+          </template>
+        </q-input>
+      </div>
+
+      <div class="row">
+        <q-input
+          class="col-6 q-px-xs"
+          v-model="form.sublabel"
+          label="Descrição"
+        />
+        <q-input
+          class="col-6 q-px-xs"
+          v-model="form.sistema"
+          label="Sistema"
+          disable
+        />
+      </div>
+      <q-input class="col-9 q-px-xs" v-model="form.link" label="Link" />
     </div>
   </DynamicDialog>
 </template>

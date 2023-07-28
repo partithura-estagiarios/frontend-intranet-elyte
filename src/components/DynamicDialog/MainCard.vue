@@ -1,5 +1,5 @@
 <template>
-  <q-card>
+  <q-card class="column card-size">
     <CardHeader v-bind="$props" @cancel="() => $emit('cancel')" />
     <q-card-section>
       <slot />
@@ -16,3 +16,8 @@ defineProps({
   title: String,
 });
 </script>
+<style scoped>
+.card-size {
+  max-width: 50vw;
+}
+</style>

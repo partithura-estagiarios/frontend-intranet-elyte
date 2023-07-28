@@ -1,0 +1,5 @@
+mutation AddSystem($data: itemInput) {
+  AddSystem(data: $data) {
+    __typename
+  }
+}

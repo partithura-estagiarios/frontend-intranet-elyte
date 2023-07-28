@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import createMenuItem from "../../../graphql/menu/CreateMenuItem.gql";
+import AddSystem from "../../../graphql/menu/AddSystem.gql";
 
 const props = defineProps({
   selected: {
@@ -26,8 +26,7 @@ const form = reactive({
 
 async function createSystem() {
   try {
-    const { data } = await runMutation(createMenuItem, { data: form });
-    console.log(data);
+    await runMutation(AddSystem, { data: form });
     positiveNotify(t("notifications.success.createSystem"));
   } catch (err) {
     negativeNotify(t("notifications.fail.createSystem"));

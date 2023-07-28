@@ -1,11 +1,13 @@
 <script setup lang="ts">
+import { Menu } from "../../entities";
+
 defineProps({
   system: {
     type: String,
     required: true,
   },
   systemList: {
-    type: Array,
+    type: Array<Menu>,
     required: true,
   },
 });
@@ -13,7 +15,6 @@ defineProps({
 const isActiveModal = ref(false);
 const selectedModel = ref("");
 const menuItems = [
-  { label: "Editar", icon: "mode", model: "edit" },
   { label: "Adicionar", icon: "add", model: "add" },
   { label: "Deletar", icon: "delete", model: "delete" },
 ];

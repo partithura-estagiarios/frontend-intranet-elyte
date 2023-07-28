@@ -8,7 +8,7 @@
           {{ $t("titles.ManagementSystem") }}
         </span>
         <div v-show="$route.fullPath.includes('/admin')" class="absolute-right">
-          <ConfigMenu system="gestao" />
+          <ConfigMenu system="gestao" :systemList="gestaoList" />
         </div>
       </q-card-section>
 
@@ -21,7 +21,7 @@
           :href="icon.link"
           target="_blank"
         >
-          <q-item-section wrap>
+          <q-item-section wrap class="relative">
             <q-avatar size="7rem">
               <q-icon
                 class="border icon border-radius-inherit q-pa-md"

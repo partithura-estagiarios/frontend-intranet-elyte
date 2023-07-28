@@ -6,4 +6,5 @@ export default {
   icon: "Icon",
   description: "Description",
   system: "System",
+  search: "Search",
 };

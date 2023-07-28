@@ -4,6 +4,10 @@ defineProps({
     type: String,
     required: true,
   },
+  systemList: {
+    type: Array,
+    required: true,
+  },
 });
 
 const isActiveModal = ref(false);
@@ -22,11 +26,19 @@ const statusModal = (model: string): void => {
 
 <template>
   <AddSystemDialog
+    v-if="selectedModel === 'add'"
     :system-type="system"
-    :selected="selectedModel"
     :isActive="isActiveModal"
-    @cancel="statusModal"
+    @cancel="isActiveModal = false"
   />
+  <DelSystemDialog
+    v-if="selectedModel === 'delete'"
+    :system-type="system"
+    :isActive="isActiveModal"
+    @cancel="isActiveModal = false"
+    :systems="systemList"
+  />
+
   <div
     v-show="$route.fullPath.includes('/admin')"
     class="col-12 col-md-4 row justify-end"

@@ -1,5 +1,5 @@
 <template>
-  <q-card-actions align="right">
+  <q-card-actions align="right" class="q-pa-lg">
     <q-btn
       flat
       :label="$t('action.cancel.index')"

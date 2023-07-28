@@ -42,7 +42,7 @@ async function createSystem() {
     :open="isActive"
     :title="$t('action.addSystem.index')"
   >
-    <div class="column">
+    <div class="column q-pa-lg">
       <div class="row">
         <q-input class="col-6" v-model="form.label" :label="$t('text.title')" />
         <q-input class="col-6 q-px-xs" v-model="form.icon" label="Icone">
@@ -50,7 +50,7 @@ async function createSystem() {
             <q-item clickable :href="ICON_LIBRARY_BASE_URL" target="_blank">
               <q-icon class="col-sm-6 col-12" name="pageview">
                 <q-tooltip anchor="top middle" self="bottom middle">
-                  <span class="text-subtitle2">Procurar </span>
+                  <span class="text-subtitle2">{{ $t("label.search") }}</span>
                 </q-tooltip>
               </q-icon>
             </q-item>

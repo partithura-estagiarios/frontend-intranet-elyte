@@ -49,16 +49,6 @@ async function auth() {
     v-model="data.password"
     :placeholder="$t('label.inputPassword')"
   />
-  <q-item class="size">
-    <q-item-section
-      class="cursor-pointer"
-      @click="router.push('/login/esqueciSenha')"
-      align="left"
-    >
-      {{ $t("label.forgetPassword") }}
-    </q-item-section>
-  </q-item>
-
   <q-btn
     :label="$t('action.submit.index')"
     rounded

@@ -50,7 +50,7 @@ async function deleteSystem() {
     :title="$t('action.delSystem.index')"
   >
     <div class="row q-gutter-md q-pa-md">
-      <span class="text-secondary text-h6 col-12 bg red q-pl-sm">{{
+      <span class="text-secondary text-h6 q-pl-lg">{{
         $t("action.delSystem.message")
       }}</span>
       <div class="row max-size-list scroll fit">
@@ -61,7 +61,7 @@ async function deleteSystem() {
           target="_blank"
           class="row q-py-lg no-scroll col-4 q-gutter-x-sm"
         >
-          <q-checkbox v-model="selectedSystems" :val="sys.id" class="">
+          <q-checkbox v-model="selectedSystems" :val="sys.id">
             <div class="row q-gutter-x-sm">
               <q-avatar size="4rem">
                 <q-icon class="fit" :name="sys.icon" color="secondary" />

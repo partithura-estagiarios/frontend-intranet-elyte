@@ -1,5 +1,5 @@
-mutation AddSystem($data: itemInput) {
+mutation AddSystem($data: systemInput) {
   addSystem(data: $data) {
-    __typename
+    id
   }
 }

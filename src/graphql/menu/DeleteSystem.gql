@@ -1,5 +1,3 @@
 mutation DeleteSystem($id: [ID!]) {
-  deleteSystem(id: $id) {
-    id
-  }
+  deleteSystem(id: $id)
 }

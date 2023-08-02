@@ -29,7 +29,7 @@ async function auth() {
 </script>
 
 <template>
-  <span class="titulo q-mb-lg">{{ $t("titles.Login.textLoginForm") }}</span>
+  <span class="q-mb-lg">{{ $t("titles.Login.textLoginForm") }}</span>
   <q-input
     rounded
     standout="bg-info"

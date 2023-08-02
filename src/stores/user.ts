@@ -25,10 +25,7 @@ export const useUserStore = defineStore("useUserStore", {
       return state.user.token;
     },
     isLoggedIn: (state) => {
-      if (state.user.token) {
-        return true;
-      }
-      return false;
+      return Boolean(state.user.token);
     },
   },
   actions: {

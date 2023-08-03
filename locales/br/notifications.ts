@@ -8,6 +8,9 @@ export default {
     createMenu: "Cardápio criado com sucesso",
     deleteRamal: "Ramal deletado com sucesso",
     editRamal: "Ramal editado com sucesso",
+    createSystem: "Sistema criado com sucesso",
+    deleteSystem:
+      "Sistema deletado com sucesso | Sistemas deletados com sucesso",
   },
 
   fail: {
@@ -19,5 +22,11 @@ export default {
     createMenu: "Houve um erro ao criar o cardápio",
     deleteRamal: "Houve um erro ao deletar o ramal",
     editRamal: "Ramal editado com sucesso",
+    createSystem: "Houve um erro ao criar o sistema",
+    deleteSystem: {
+      error:
+        "Houve um erro ao deletar o sistema | Houve um erro ao deletar os sistemas",
+      notSelected: "Você deve selecionar pelo menos um sistema para deletar",
+    },
   },
 };

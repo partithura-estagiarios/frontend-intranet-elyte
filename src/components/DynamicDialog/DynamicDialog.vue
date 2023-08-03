@@ -1,6 +1,11 @@
 <template>
   <q-dialog v-model="modal" persistent>
-    <MainCard class="background-dark" v-bind="$props">
+    <MainCard
+      class="background-dark"
+      v-bind="$props"
+      @cancel="() => $emit('cancel')"
+      @confirm="() => $emit('confirm')"
+    >
       <slot />
     </MainCard>
   </q-dialog>

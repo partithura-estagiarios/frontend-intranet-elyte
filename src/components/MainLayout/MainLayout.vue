@@ -5,8 +5,6 @@
   </div>
 </template>
 
-<script setup lang="ts"></script>
-
 <style scoped>
 .font {
   font-size: 2rem;

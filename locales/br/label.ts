@@ -3,4 +3,7 @@ export default {
   inputPassword: "Sua senha",
   inputEmail: "Seu e-mail",
   forgetPassword: "Esqueci a senha",
+  ramalNumber: "Número do ramal",
+  sector: "Setor",
+  name: "Nome",
 };

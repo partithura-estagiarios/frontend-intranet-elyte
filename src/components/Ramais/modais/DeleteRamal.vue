@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import DeleteRamal from "../../../graphql/ramais/deleteRamais.gql";
+import DeleteRamal from "../../../graphql/ramais/deleteRamal.gql";
 
 const emits = defineEmits(["reload", "cancel"]);
 defineProps({

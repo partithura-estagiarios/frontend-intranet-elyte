@@ -1,6 +1,8 @@
 import action from "./action";
 import text from "./text";
 import titles from "./titles";
+import label from "../br/label";
+
 export default {
   action,
   login: {
@@ -15,4 +17,5 @@ export default {
   about: "About",
   tags: "Tags",
   text,
+  label,
 };

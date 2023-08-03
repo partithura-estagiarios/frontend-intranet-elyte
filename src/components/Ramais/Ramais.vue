@@ -16,13 +16,25 @@
     :rows="(ramalList as Array<Ramal>)"
     :v-bind="$attrs"
     class="q-mt-lg"
-  />
+  >
+    <template #top-left>
+      <q-btn round class="bg-primary">
+        <q-icon name="add" color="white" />
+      </q-btn>
+    </template>
+
+    <template #configButtons="{ item }">
+      <ActionButton :buttons="buttons" :item="item" @reload="getListRamal()" />
+    </template>
+  </table-dynamic>
 </template>
 
 <script setup lang="ts">
 import GetRamais from "../../graphql/ramais/getRamais.gql";
 import { Ramal } from "../../entities";
 import { Ref } from "vue";
+import DeleteRamal from "./modais/DeleteRamal.vue";
+import EditRamal from "./modais/EditRamal.vue";
 
 const ramalList: Ref<Ramal[]> = ref([]);
 
@@ -39,6 +51,11 @@ async function getListRamal() {
   ramalList.value = ramais;
   return ramalList;
 }
+
+const buttons = [
+  { label: "Deletar", icon: "delete", component: DeleteRamal },
+  { label: "Editar", icon: "edit", component: EditRamal },
+];
 
 const columns = [
   {
@@ -62,6 +79,9 @@ const columns = [
     label: t("text.number"),
     sortable: true,
     name: "Ramal",
+  },
+  {
+    name: "actions",
   },
 ];
 </script>

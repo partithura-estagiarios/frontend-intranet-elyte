@@ -43,4 +43,11 @@ export default {
   addRamal: {
     index: "Add ramal",
   },
+  deleteRamal: {
+    index:
+      "Are you sure you wish to delete the branch line {number} from { name } from the sector { sector }?",
+  },
+  editRamal: {
+    index: "Edit branch line",
+  },
 };

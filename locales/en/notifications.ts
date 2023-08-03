@@ -11,4 +11,11 @@ export default {
   sucessRegister: "Your registration was created successfully",
   sucessCreateRamal: "The branch line was created successfully",
   failCreateRamal: "There was an error creating your branch line",
+
+  sucess: {
+    deleteRamal: "Branch line was deleted sucessfully",
+  },
+  fail: {
+    deleteRamal: "There was an error when deleting the branch line",
+  },
 };

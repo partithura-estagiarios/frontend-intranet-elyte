@@ -40,14 +40,15 @@ export default {
   search: {
     index: "Pesquisar",
   },
-  addRamal: {
-    index: "Adicionar ramal",
-  },
   addMenu: {
     index: "Adicionar cardápio",
   },
+  addRamal: {
+    index: "Adicionar ramal",
+  },
   deleteRamal: {
-    index:
+    index: "Deletar ramal",
+    message:
       "Tem certeza que deseja deletar o ramal {numero} de {nome} do setor {setor}?",
   },
   editRamal: {

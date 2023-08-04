@@ -66,11 +66,11 @@ async function getListRh() {
   return rhList;
 }
 
-function goToRoute(link: any) {
+function goToRoute(path: any) {
   if (router.currentRoute.value.fullPath === "/admin") {
-    return router.push(`admin${link}`);
+    return router.push(`admin${path}`);
   }
-  router.push(link);
+  router.push(path);
 }
 </script>
 

@@ -41,8 +41,7 @@ async function addRamal() {
         :rules="[(val: string) => validateNotEmpty(val)]"
       />
       <q-input
-        error
-        mask="######"
+        mask="#####"
         class="col-6 q-px-sm"
         v-model="form.ramalNumber"
         :label="$t('label.ramalNumber')"

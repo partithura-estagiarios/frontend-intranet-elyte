@@ -36,7 +36,7 @@ function deactivateModal() {
     <q-list v-for="(button, index) in buttons" :key="index" class="q-pa-xs">
       <q-item
         clickable
-        class="row justify-start items-center q-gutter-xs text-black fit"
+        class="row fit q-gutter-x-xs items-center text-black"
         @click="activateModal(index)"
       >
         <component

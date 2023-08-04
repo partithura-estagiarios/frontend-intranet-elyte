@@ -51,4 +51,11 @@ export default {
   editRamal: {
     index: "Edit branch line",
   },
+  addSystem: {
+    index: "Add System",
+  },
+  delSystem: {
+    index: "Delete System",
+    message: "Select the system that you wish to delete:",
+  },
 };

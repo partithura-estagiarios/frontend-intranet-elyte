@@ -6,4 +6,8 @@ export default {
   ramalNumber: "Número do ramal",
   sector: "Setor",
   name: "Nome",
+  icon: "Icone",
+  description: "Descrição",
+  system: "Sistema",
+  search: "Pesquisar",
 };

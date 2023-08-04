@@ -16,9 +16,12 @@
     :v-bind="$attrs"
     class="q-mt-lg"
   >
-    <template #top-left>
-      <q-btn round class="bg-primary" @click="activedModal = true">
-        <q-icon name="add" color="white" />
+    <template #top-left v-if="$route.fullPath.includes('/admin/ramais')">
+      <q-btn
+        class="bg-primary text-white text-bold"
+        @click="activedModal = true"
+        :label="$t('action.addRamal.index')"
+      >
         <AddRamal
           :isActive="activedModal"
           @reload="getListRamal()"
@@ -27,7 +30,10 @@
       </q-btn>
     </template>
 
-    <template #configButtons="{ item }">
+    <template
+      #configButtons="{ item }"
+      v-if="$route.fullPath.includes('/admin/ramais')"
+    >
       <ActionButton :buttons="buttons" :item="item" @reload="getListRamal()" />
     </template>
   </table-dynamic>

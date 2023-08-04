@@ -18,7 +18,7 @@
           :key="icon.id"
           class="column col-4 q-my-md items-center"
           clickable
-          :href="icon.link"
+          @click="goToRoute(icon.link)"
         >
           <q-item-section wrap>
             <q-avatar size="7rem">
@@ -64,6 +64,13 @@ async function getListRh() {
 
   rhList.value = menuBySystem;
   return rhList;
+}
+
+function goToRoute(link: any) {
+  if (router.currentRoute.value.fullPath === "/admin") {
+    return router.push(`admin${link}`);
+  }
+  router.push(link);
 }
 </script>
 

@@ -30,12 +30,12 @@ async function deleteRamal(id: object) {
     @cancel="() => $emit('cancel')"
     @confirm="deleteRamal(item.id)"
     :open="isActive"
-    :title="$t('action.delSystem.index')"
+    :title="$t('action.deleteRamal.index')"
   >
     <div class="row text-black">
       <span class="text-secondary text-h6 q-pl-lg">
         {{
-          $t("action.deleteRamal.index", {
+          $t("action.deleteRamal.message", {
             numero: item.ramalNumber,
             nome: item.ramalUser,
             setor: item.sectorUser,

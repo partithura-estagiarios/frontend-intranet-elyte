@@ -6,7 +6,6 @@
     <div class="col-6 row justify-start">
       <span class="text-black font text-bold q-ml-xl">
         {{ $t("titles.Hr.Fones") }}
-        <q-icon color="primary" class="q-ml-sm" name="call" size="2rem" />
         <q-separator size="0.5rem" color="primary" class="bar-style" />
       </span>
     </div>
@@ -18,8 +17,13 @@
     class="q-mt-lg"
   >
     <template #top-left>
-      <q-btn round class="bg-primary">
+      <q-btn round class="bg-primary" @click="activedModal = true">
         <q-icon name="add" color="white" />
+        <AddRamal
+          :isActive="activedModal"
+          @reload="getListRamal()"
+          @cancel="activedModal = false"
+        />
       </q-btn>
     </template>
 
@@ -37,6 +41,7 @@ import DeleteRamal from "./modais/DeleteRamal.vue";
 import EditRamal from "./modais/EditRamal.vue";
 
 const ramalList: Ref<Ramal[]> = ref([]);
+const activedModal = ref(false);
 
 onMounted(() => {
   getListRamal();

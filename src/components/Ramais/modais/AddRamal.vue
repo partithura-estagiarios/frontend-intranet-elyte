@@ -1,31 +1,27 @@
 <script setup lang="ts">
-import UpdateRamal from "../../../graphql/ramais/updateRamal.gql";
+import AddRamal from "../../../graphql/ramais/addRamal.gql";
 
 const emits = defineEmits(["reload", "cancel"]);
-const props = defineProps({
+defineProps({
   isActive: {
     type: Boolean,
     default: false,
   },
-  item: {
-    type: Object,
-    default: () => {},
-  },
 });
 const form = reactive({
-  ramalUser: props.item.ramalUser,
-  sectorUser: props.item.sectorUser,
-  ramalNumber: props.item.ramalNumber,
+  ramalUser: "",
+  sectorUser: "",
+  ramalNumber: "",
 });
 
-async function updateRamal() {
+async function addRamal() {
   try {
-    await runMutation(UpdateRamal, { id: props.item.id, data: form });
-    positiveNotify(t("notifications.success.deleteRamal"));
+    await runMutation(AddRamal, { data: form });
+    positiveNotify(t("notifications.success.createRamal"));
     emits("cancel");
     emits("reload");
   } catch {
-    negativeNotify(t("notifications.success.deleteRamal"));
+    negativeNotify(t("notifications.fail.createRamal"));
   }
 }
 </script>
@@ -33,9 +29,9 @@ async function updateRamal() {
 <template>
   <DynamicDialog
     @cancel="() => $emit('cancel')"
-    @confirm="updateRamal"
+    @confirm="addRamal"
     :open="isActive"
-    :title="$t('action.editRamal.index')"
+    :title="$t('action.addRamal.index')"
   >
     <div class="row q-pa-md">
       <q-input
@@ -45,8 +41,9 @@ async function updateRamal() {
         :rules="[(val: string) => validateNotEmpty(val)]"
       />
       <q-input
-        class="col-6 q-px-sm"
+        error
         mask="######"
+        class="col-6 q-px-sm"
         v-model="form.ramalNumber"
         :label="$t('label.ramalNumber')"
         :rules="[(val: string) => validateNotEmpty(val)]"

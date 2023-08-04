@@ -7,6 +7,7 @@
     </q-item>
     <q-tabs no-caps>
       <q-route-tab label="Home" href="/home" />
+      <q-route-tab label="Admin" href="/admin" />
     </q-tabs>
   </div>
 </template>

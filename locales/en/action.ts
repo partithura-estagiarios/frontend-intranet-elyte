@@ -43,4 +43,11 @@ export default {
   addRamal: {
     index: "Add ramal",
   },
+  addSystem: {
+    index: "Add System",
+  },
+  delSystem: {
+    index: "Delete System",
+    message: "Select the system that you wish to delete:",
+  },
 };

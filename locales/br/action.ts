@@ -60,4 +60,7 @@ export default {
     index: "Deletar Sistema",
     message: "Selecione o sistema que deseja deletar:",
   },
+  back: {
+    index: "Voltar",
+  },
 };

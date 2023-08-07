@@ -29,4 +29,10 @@ export default {
     FT: "Web Technical Sheet",
     DataSulPrototype: "Exclusive for Test",
   },
+  Login: {
+    textPasswordForm: "Recover your password!",
+    textLoginForm: "Enter your credentials",
+    recoverPassword: "Contact the IT department",
+    enterCode: "enter the code",
+  },
 };

@@ -7,7 +7,7 @@
         >
           {{ $t("titles.HrSystem") }}
         </span>
-        <div v-show="$route.fullPath.includes('/admin')" class="absolute-right">
+        <div v-show="userStorage.isLoggedIn" class="absolute-right">
           <ConfigMenu system="rh" :systemList="rhList" />
         </div>
       </q-card-section>
@@ -18,7 +18,7 @@
           :key="icon.id"
           class="column col-4 q-my-md items-center"
           clickable
-          @click="goToRoute(icon.link)"
+          :to="icon.link"
         >
           <q-item-section wrap>
             <q-avatar size="7rem">
@@ -64,13 +64,6 @@ async function getListRh() {
 
   rhList.value = menuBySystem;
   return rhList;
-}
-
-function goToRoute(path: any) {
-  if (router.currentRoute.value.fullPath === "/admin") {
-    return router.push(`admin${path}`);
-  }
-  router.push(path);
 }
 </script>
 

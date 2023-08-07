@@ -20,7 +20,7 @@ async function auth() {
       });
       userStorage.setToken(user.id);
       positiveNotify(t("notifications.success.login"));
-      router.push("/admin");
+      router.push("/");
     }
   } catch (err) {
     negativeNotify(t("notifications.fail.login"));

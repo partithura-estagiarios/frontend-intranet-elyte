@@ -16,7 +16,7 @@
     :v-bind="$attrs"
     class="q-mt-lg"
   >
-    <template #top-left v-if="$route.fullPath.includes('/admin/ramais')">
+    <template #top-left v-if="userStorage.isLoggedIn">
       <q-btn
         class="bg-primary text-white text-bold"
         @click="activedModal = true"
@@ -30,10 +30,7 @@
       </q-btn>
     </template>
 
-    <template
-      #configButtons="{ item }"
-      v-if="$route.fullPath.includes('/admin/ramais')"
-    >
+    <template #configButtons="{ item }" v-if="userStorage.isLoggedIn">
       <ActionButton :buttons="buttons" :item="item" @reload="getListRamal()" />
     </template>
   </table-dynamic>

@@ -9,8 +9,9 @@ import label from "./label";
 export default {
   about: "Sobre",
   action,
-  home: "Casa",
+  home: "Início",
   tags: "Entiquetas",
+  admin: "Administrador",
   markdown,
   titles,
   text,

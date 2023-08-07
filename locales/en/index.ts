@@ -3,6 +3,8 @@ import text from "./text";
 import titles from "./titles";
 export default {
   action,
+  home: "Home",
+  admin: "Admin",
   login: {
     title: "Login",
     labelInputName: "Your user name",

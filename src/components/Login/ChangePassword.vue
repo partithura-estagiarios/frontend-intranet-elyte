@@ -1,38 +1,80 @@
 <script lang="ts" setup>
 const form = reactive({
-  emailRecover: "",
+  newPwd: "",
+  confPwd: "",
+  isnewPwd: true,
+  isConfPwd: true,
 });
+
+const errorMessage = ref("");
+const emptyFieldPattern = /^\s*$/;
+const passwordPattern = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)[A-Za-z\d]{4,8}$/;
+
+const validatePassword = () => {
+  if (emptyFieldPattern.test(form.newPwd && form.confPwd)) {
+    errorMessage.value = t("notifications.fail.emptyField");
+    return;
+  }
+  if (!passwordPattern.test(form.newPwd)) {
+    errorMessage.value = t("notifications.fail.invalidPassword");
+    return;
+  }
+  if (form.newPwd !== form.confPwd) {
+    errorMessage.value = t("notifications.fail.equalPassword");
+    return;
+  }
+  router.push("/login");
+};
 </script>
+
 <template>
   <span class="titulo q-mb-lg">{{ $t("titles.Login.textPasswordForm") }}</span>
   <q-input
     rounded
+    class="tamanho"
     standout="bg-info"
     bg-color="primary"
+    v-model="form.newPwd"
     input-class="text-white"
-    v-model="form.emailRecover"
     :placeholder="$t('label.newPassword')"
-    type="text"
-    class="tamanho"
-  />
+    :type="form.isnewPwd ? 'password' : 'text'"
+  >
+    <template v-slot:append>
+      <q-icon
+        color="white"
+        class="cursor-pointer"
+        @click="form.isnewPwd = !form.isnewPwd"
+        :name="form.isnewPwd ? 'visibility_off' : 'visibility'"
+      />
+    </template>
+  </q-input>
   <q-input
     rounded
     standout="bg-info"
     bg-color="primary"
-    input-class="text-white"
-    v-model="form.emailRecover"
-    :placeholder="$t('label.confirmPassword')"
-    type="text"
+    v-model="form.confPwd"
     class="tamanho q-mt-md"
-  />
+    input-class="text-white"
+    :placeholder="$t('label.confirmPassword')"
+    :type="form.isConfPwd ? 'password' : 'text'"
+  >
+    <template v-slot:append>
+      <q-icon
+        color="white"
+        class="cursor-pointer"
+        @click="form.isConfPwd = !form.isConfPwd"
+        :name="form.isConfPwd ? 'visibility_off' : 'visibility'"
+      />
+    </template>
+  </q-input>
+  <p class="q-mt-md" v-if="errorMessage">{{ errorMessage }}</p>
   <q-btn
     :label="$t('action.submit.index')"
     rounded
     class="q-mt-md btn-enviar tamanho"
     size="lg"
-    to="/login"
+    @click="validatePassword"
   />
-
   <q-btn
     class="q-mt-md"
     icon="chevron_left"

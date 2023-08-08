@@ -11,4 +11,10 @@ export default {
   sucessRegister: "Your registration was created successfully",
   sucessCreateRamal: "The branch line was created successfully",
   failCreateRamal: "There was an error creating your branch line",
+  emptyField: "Algúm campo está vazio | O campo está vazio",
+  fail: {
+    invalidEmail: "Não é um email válido",
+    equalPassword: "As senhas não correspondem",
+    invalidPassword: "Senha inválida",
+  },
 };

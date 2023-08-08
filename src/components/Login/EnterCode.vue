@@ -1,28 +1,40 @@
 <script lang="ts" setup>
 const form = reactive({
-  emailRecover: "",
+  codeVerification: "",
 });
+
+const errorMessage = ref("");
+const emptyFieldPattern = /^\s*$/;
+
+const validateCode = () => {
+  if (emptyFieldPattern.test(form.codeVerification)) {
+    errorMessage.value = t("notifications.fail.emptyField", 2);
+    return;
+  }
+  router.push("/changePassword");
+};
 </script>
+
 <template>
   <span class="titulo q-mb-lg">{{ $t("titles.Login.enterCode") }}</span>
   <q-input
     rounded
+    type="text"
+    class="tamanho"
     standout="bg-info"
     bg-color="primary"
     input-class="text-white"
-    v-model="form.emailRecover"
+    v-model="form.codeVerification"
     :placeholder="$t('label.code')"
-    type="text"
-    class="tamanho"
   />
   <q-btn
     :label="$t('action.submit.index')"
     rounded
     class="q-mt-md btn-enviar tamanho"
     size="lg"
-    to="/changePassword"
+    @click="validateCode"
   />
-
+  <p class="q-mt-md" v-if="errorMessage">{{ errorMessage }}</p>
   <q-btn
     class="q-mt-md"
     icon="chevron_left"

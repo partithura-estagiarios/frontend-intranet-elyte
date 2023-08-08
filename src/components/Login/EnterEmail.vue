@@ -2,27 +2,44 @@
 const form = reactive({
   emailRecover: "",
 });
+
+const errorMessage = ref("");
+const emptyFieldPattern = /^\s*$/;
+const emailPattern = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
+
+const validateEmail = () => {
+  if (emptyFieldPattern.test(form.emailRecover)) {
+    errorMessage.value = t("notifications.fail.emptyField", 2);
+    return;
+  }
+  if (!emailPattern.test(form.emailRecover)) {
+    errorMessage.value = t("notifications.fail.invalidEmail");
+    return;
+  }
+  router.push("/enterCode");
+};
 </script>
+
 <template>
   <span class="titulo q-mb-lg">{{ $t("titles.Login.textPasswordForm") }}</span>
   <q-input
     rounded
+    type="email"
+    class="tamanho"
     standout="bg-info"
     bg-color="primary"
     input-class="text-white"
     v-model="form.emailRecover"
     :placeholder="$t('label.inputEmail')"
-    type="email"
-    class="tamanho"
   />
   <q-btn
     :label="$t('action.submit.index')"
     rounded
     class="q-mt-md btn-enviar tamanho"
     size="lg"
-    to="/enterCode"
+    @click="validateEmail"
   />
-
+  <p class="q-mt-md" v-if="errorMessage">{{ errorMessage }}</p>
   <q-btn
     class="q-mt-md"
     icon="chevron_left"

@@ -7,8 +7,12 @@
         >
           {{ $t("titles.ManagementSystem") }}
         </span>
-        <div v-show="$route.fullPath.includes('/admin')" class="absolute-right">
-          <ConfigMenu system="gestao" :systemList="gestaoList" />
+        <div class="absolute-right q-pa-md">
+          <ActionButton
+            :buttons="buttons"
+            :item="gestaoList"
+            @reload="getGestaoList()"
+          />
         </div>
       </q-card-section>
 
@@ -51,6 +55,10 @@
 import GetMenu from "../../graphql/menu/GetMenu.gql";
 import { Menu } from "../../entities";
 import { Ref } from "vue";
+import AddSystemDialog from "../DynamicDialog/SystemModals/AddSystemDialog.vue";
+import DelSystemDialog from "../DynamicDialog/SystemModals/DelSystemDialog.vue";
+import { Action } from "../../entities/Action";
+import EditSystemDialog from "../DynamicDialog/SystemModals/EditSystemDialog.vue";
 
 const gestaoList: Ref<Menu[]> = ref([]);
 
@@ -66,6 +74,12 @@ async function getGestaoList() {
   gestaoList.value = menuBySystem;
   return gestaoList;
 }
+
+const buttons: Action[] = [
+  { label: "Adicionar", icon: "add", component: AddSystemDialog },
+  { label: "Editar", icon: "edit", component: EditSystemDialog },
+  { label: "Delete", icon: "delete", component: DelSystemDialog },
+];
 </script>
 
 <style scoped>

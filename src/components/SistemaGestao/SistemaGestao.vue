@@ -7,7 +7,7 @@
         >
           {{ $t("titles.ManagementSystem") }}
         </span>
-        <div class="absolute-right q-pa-md">
+        <div class="absolute-right q-pa-md" v-if="userStorage.isLoggedIn">
           <ActionButton
             :buttons="buttons"
             :item="gestaoList"
@@ -76,9 +76,9 @@ async function getGestaoList() {
 }
 
 const buttons: Action[] = [
-  { label: "Adicionar", icon: "add", component: AddSystemDialog },
-  { label: "Editar", icon: "edit", component: EditSystemDialog },
-  { label: "Delete", icon: "delete", component: DelSystemDialog },
+  { label: t("action.add"), icon: "add", component: AddSystemDialog },
+  { label: t("action.edit"), icon: "edit", component: EditSystemDialog },
+  { label: t("action.delete"), icon: "delete", component: DelSystemDialog },
 ];
 </script>
 

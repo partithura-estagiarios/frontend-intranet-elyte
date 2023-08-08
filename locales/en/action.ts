@@ -17,21 +17,9 @@ export default {
     ing: "Resetting",
     ed: "Reseted",
   },
-  delete: {
-    index: "Delete",
-    ing: "Deleting",
-    ed: "Deleted",
-  },
-  update: {
-    index: "Update",
-    ing: "Updating",
-    ed: "Updated",
-  },
-  create: {
-    index: "Create",
-    ing: "Creating",
-    ed: "Created",
-  },
+  delete: "Delete",
+  edit: "Edit",
+  add: "Add",
   buy: {
     index: "Buy",
     ing: "Buying",

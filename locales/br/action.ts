@@ -17,21 +17,12 @@ export default {
     ing: "Reiniciando",
     ed: "Reiniciado",
   },
-  delete: {
-    index: "Eliminar",
-    ing: "Eliminando",
-    ed: "Eliminado",
-  },
-  update: {
-    index: "Atualizar",
-    ing: "Atualizando",
-    ed: "Atualizado",
-  },
-  create: {
-    index: "Criar",
-    ing: "Criando",
-    ed: "Criado",
-  },
+  delete: "Deletar",
+
+  edit: "Editar",
+
+  add: "Adicionar",
+
   buy: {
     index: "Comprar",
     ing: "Comprando",

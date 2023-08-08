@@ -2,39 +2,39 @@
 import { Menu } from "../../../entities";
 import DeleteSystem from "../../../graphql/menu/DeleteSystem.gql";
 
+const emits = defineEmits(["reload", "cancel"]);
 defineProps({
-  selected: {
-    type: String,
-    default: "",
-  },
   isActive: {
     type: Boolean,
     default: false,
   },
-  systemType: {
-    type: String,
-    required: true,
-  },
-  systems: {
+  item: {
     type: Array<Menu>,
     required: true,
   },
 });
-const SINGULAR_TITLE = 1;
-const PLURAL_TITLE = 2;
+
 const selectedSystems = ref([]);
 
 async function deleteSystem() {
-  const verifyPlural =
-    selectedSystems.value.length > SINGULAR_TITLE
-      ? PLURAL_TITLE
-      : SINGULAR_TITLE;
   if (selectedSystems.value.length >= 1) {
     try {
       await runMutation(DeleteSystem, { id: selectedSystems.value });
-      positiveNotify(t("notifications.success.deleteSystem", verifyPlural));
+      positiveNotify(
+        t(
+          "notifications.success.deleteSystem",
+          parseToPlural(selectedSystems.value)
+        )
+      );
+      emits("cancel");
+      emits("reload");
     } catch (err) {
-      negativeNotify(t("notifications.fail.deleteSystem.error", verifyPlural));
+      negativeNotify(
+        t(
+          "notifications.fail.deleteSystem.error",
+          parseToPlural(selectedSystems.value)
+        )
+      );
     }
     return;
   }
@@ -55,7 +55,7 @@ async function deleteSystem() {
       }}</span>
       <div class="row max-size-list scroll fit">
         <q-item
-          v-for="sys in systems"
+          v-for="sys in item"
           :key="sys.id"
           clickable
           target="_blank"

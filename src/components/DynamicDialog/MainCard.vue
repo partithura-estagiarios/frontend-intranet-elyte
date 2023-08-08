@@ -19,5 +19,6 @@ defineProps({
 <style scoped>
 .card-size {
   max-width: 50vw;
+  min-width: 30vw;
 }
 </style>

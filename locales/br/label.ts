@@ -7,4 +7,7 @@ export default {
   description: "Descrição",
   system: "Sistema",
   search: "Pesquisar",
+  ramalNumber: "Número do ramal",
+  sector: "Setor",
+  name: "Nome",
 };

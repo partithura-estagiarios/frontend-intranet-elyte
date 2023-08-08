@@ -41,7 +41,15 @@ export default {
     index: "Search",
   },
   addRamal: {
-    index: "Add ramal",
+    index: "Add branch line",
+  },
+  deleteRamal: {
+    index: "Delete branch line",
+    message:
+      "Are you sure you wish to delete the branch line {number} from { name } from the sector { sector }?",
+  },
+  editRamal: {
+    index: "Edit branch line",
   },
   addSystem: {
     index: "Add System",

@@ -47,8 +47,9 @@ export default {
     index: "Adicionar cardápio",
   },
   deleteRamal: {
-    index:
-      "Tem certeza que deseja deletar o ramal {numero} do colaborador {nome} do setor {setor}?",
+    index: "Deletar ramal",
+    message:
+      "Tem certeza que deseja deletar o ramal {numero} de {nome} do setor {setor}?",
   },
   editRamal: {
     index: "Editar ramal",

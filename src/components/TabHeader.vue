@@ -2,12 +2,12 @@
   <div
     class="full-width row no-wrap justify-between items-center text-white bg-primary"
   >
-    <q-item clickable href="/home" class="q-mx-md q-mt-sm">
+    <q-item clickable to="/home" class="q-mx-md q-mt-sm">
       <q-img src="/images/logo.png" class="logo" />
     </q-item>
-    <q-tabs no-caps>
-      <q-route-tab :label="$t('home')" href="/home" />
-      <q-route-tab :label="$t('admin')" href="/admin" />
+    <q-tabs no-caps indicator-color="transparent">
+      <q-route-tab :label="$t('home')" to="/home" />
+      <q-menu flat class="" :label="$t('admin')" to="/login"> </q-menu>
     </q-tabs>
   </div>
 </template>

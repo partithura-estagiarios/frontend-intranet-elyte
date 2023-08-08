@@ -46,6 +46,10 @@ export default {
   addSystem: {
     index: "Add System",
   },
+  editSystem: {
+    index: "Edit System",
+    message: "Select the system that you wish to edit: ",
+  },
   delSystem: {
     index: "Delete System",
     message: "Select the system that you wish to delete:",

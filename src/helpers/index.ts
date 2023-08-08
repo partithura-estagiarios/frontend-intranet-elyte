@@ -17,3 +17,13 @@ export function loga(value: string | number | object) {
 export function parseErrorMessage(value: string): string {
   return value.replace("is a required field", "");
 }
+
+export function parseToPlural(element: string[] | number[]): number {
+  const SINGULAR = 1;
+  const PLURAL = 2;
+  return element.length > SINGULAR ? PLURAL : SINGULAR;
+}
+
+export function validateNotEmpty(val: string) {
+  return !!val || t("warning.requiredField");
+}

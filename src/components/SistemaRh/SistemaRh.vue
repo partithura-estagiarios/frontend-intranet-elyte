@@ -7,8 +7,12 @@
         >
           {{ $t("titles.HrSystem") }}
         </span>
-        <div v-show="$route.fullPath.includes('/admin')" class="absolute-right">
-          <ConfigMenu system="rh" :systemList="rhList" />
+        <div class="absolute-right q-pa-md">
+          <ActionButton
+            :buttons="buttons"
+            :item="rhList"
+            @reload="getListRh()"
+          />
         </div>
       </q-card-section>
 
@@ -50,6 +54,10 @@
 import GetMenu from "../../graphql/menu/GetMenu.gql";
 import { Menu } from "../../entities";
 import { Ref } from "vue";
+import { Action } from "../../entities/Action";
+import AddSystemDialog from "../DynamicDialog/SystemModals/AddSystemDialog.vue";
+import EditSystemDialog from "../DynamicDialog/SystemModals/EditSystemDialog.vue";
+import DelSystemDialog from "../DynamicDialog/SystemModals/DelSystemDialog.vue";
 
 const rhList: Ref<Menu[]> = ref([]);
 
@@ -65,6 +73,12 @@ async function getListRh() {
   rhList.value = menuBySystem;
   return rhList;
 }
+
+const buttons: Action[] = [
+  { label: "Adicionar", icon: "add", component: AddSystemDialog },
+  { label: "Editar", icon: "edit", component: EditSystemDialog },
+  { label: "Delete", icon: "delete", component: DelSystemDialog },
+];
 </script>
 
 <style scoped>

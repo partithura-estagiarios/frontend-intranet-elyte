@@ -28,7 +28,7 @@ export default {
         "Houve um erro ao deletar o sistema | Houve um erro ao deletar os sistemas",
       notSelected: "Você deve selecionar pelo menos um sistema para deletar",
     },
-    emptyField: "Algúm campo está vazio | O campo está vazio",
+    emptyField: "Algum campo está vazio | O campo está vazio",
     invalidEmail: "Não é um email válido",
     equalPassword: "As senhas não correspondem",
     invalidPassword: "Senha inválida",

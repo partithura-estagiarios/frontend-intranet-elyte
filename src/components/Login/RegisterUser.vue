@@ -1,7 +1,4 @@
 <script lang="ts" setup>
-import { AuthQuery } from "../../entities";
-import Auth from "../../graphql/auth/login.gql";
-
 const marginBtn = computed(() =>
   useQuasar().screen.gt.md ? "q-mt-xl" : "q-mt-sm"
 );
@@ -9,25 +6,29 @@ const data = reactive({
   username: "",
   password: "",
   email: "",
+  isPwd: true,
 });
-async function auth() {
-  try {
-    const { auth } = (await runMutation(Auth, data)) as unknown as AuthQuery;
-    const { token, user } = auth;
-    if (token) {
-      userStorage.setUser({
-        username: user.username,
-        id: user.id,
-        email: user.email,
-      });
-      userStorage.setToken(user.id);
-      positiveNotify(t("notifications.success.login"));
-      router.push("/");
-    }
-  } catch (err) {
-    negativeNotify(t("notifications.fail.login"));
+
+const errorMessage = ref("");
+const emptyFieldPattern = /^\s*$/;
+const passwordPattern = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)[A-Za-z\d]{4,8}$/;
+const emailPattern = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
+
+const validatePassword = () => {
+  if (emptyFieldPattern.test(data.username && data.password && data.email)) {
+    errorMessage.value = t("notifications.fail.emptyField");
+    return;
   }
-}
+  if (!emailPattern.test(data.email)) {
+    errorMessage.value = t("notifications.fail.invalidEmail");
+    return;
+  }
+  if (!passwordPattern.test(data.password)) {
+    errorMessage.value = t("notifications.fail.invalidPassword");
+    return;
+  }
+  router.push("/home");
+};
 </script>
 
 <template>
@@ -44,13 +45,22 @@ async function auth() {
   <q-input
     rounded
     standout="bg-info"
-    type="password"
+    :type="data.isPwd ? 'password' : 'text'"
     bg-color="primary"
     input-class="text-white"
     class="q-pt-md size"
     v-model="data.password"
     :placeholder="$t('label.inputPassword')"
-  />
+  >
+    <template v-slot:append>
+      <q-icon
+        color="white"
+        class="cursor-pointer"
+        @click="data.isPwd = !data.isPwd"
+        :name="data.isPwd ? 'visibility_off' : 'visibility'"
+      />
+    </template>
+  </q-input>
   <q-input
     rounded
     standout="bg-info"
@@ -61,13 +71,16 @@ async function auth() {
     v-model="data.email"
     :placeholder="$t('label.inputEmail')"
   />
+  <p class="q-mt-md text-deep-orange-14" v-if="errorMessage">
+    {{ errorMessage }}
+  </p>
   <q-btn
-    :label="$t('action.submit.index')"
+    :label="$t('action.register.index')"
     rounded
     :class="marginBtn"
     class="btn-enviar size text-black bg-white"
     size="lg"
-    @click="() => auth()"
+    @click="validatePassword"
   />
 </template>
 

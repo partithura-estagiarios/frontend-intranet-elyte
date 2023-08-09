@@ -7,8 +7,10 @@ export {};
 
 declare module "@vue/runtime-core" {
   export interface GlobalComponents {
+    ActionButton: typeof import("./components/buttons/ActionButton.vue")["default"];
     Add: typeof import("./components/SistemaGestao/Modais/Add.vue")["default"];
     AddSys: typeof import("./components/Modais/AddSys.vue")["default"];
+    AddSystemDialog: typeof import("./components/DynamicDialog/SystemModals/AddSystemDialog.vue")["default"];
     AddSystemManage: typeof import("./components/Modais/AddSystemManage.vue")["default"];
     AntDesignTextBox: typeof import("./components/controls/AntDesignTextBox.vue")["default"];
     BackButton: typeof import("./components/buttons/BackButton.vue")["default"];
@@ -18,8 +20,10 @@ declare module "@vue/runtime-core" {
     ConfigMenu: typeof import("./components/buttons/ConfigMenu.vue")["default"];
     ConfirmDelete: typeof import("./components/ConfirmDelete.vue")["default"];
     DeleteButton: typeof import("./components/buttons/DeleteButton.vue")["default"];
+    DelSystemDialog: typeof import("./components/DynamicDialog/SystemModals/DelSystemDialog.vue")["default"];
     DropDown: typeof import("./components/buttons/DropDown.vue")["default"];
     DynamicDialog: typeof import("./components/DynamicDialog/DynamicDialog.vue")["default"];
+    EditSystemDialog: typeof import("./components/DynamicDialog/SystemModals/EditSystemDialog.vue")["default"];
     FabButton: typeof import("./components/buttons/FabButton.vue")["default"];
     FirstModal: typeof import("./components/DynamicDialog/FirstModal.vue")["default"];
     HeaderBar: typeof import("./components/HeaderBar.vue")["default"];
@@ -31,6 +35,7 @@ declare module "@vue/runtime-core" {
     OptionLocales: typeof import("./components/OptionLocales.vue")["default"];
     PaymentButton: typeof import("./components/buttons/PaymentButton.vue")["default"];
     Ramais: typeof import("./components/Ramais/Ramais.vue")["default"];
+    RegisterUser: typeof import("./components/Login/RegisterUser.vue")["default"];
     RouterLink: typeof import("vue-router")["RouterLink"];
     RouterView: typeof import("vue-router")["RouterView"];
     SendButton: typeof import("./components/buttons/SendButton.vue")["default"];

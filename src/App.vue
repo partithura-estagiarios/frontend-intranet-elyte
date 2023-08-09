@@ -12,6 +12,6 @@ useHead({
 </script>
 
 <template>
-  <TabHeader class="q-mb-xl" v-if="!$route.fullPath.includes('/login')" />
+  <TabHeader class="q-mb-xl" v-if="!$route.fullPath.includes('/register')" />
   <RouterView />
 </template>

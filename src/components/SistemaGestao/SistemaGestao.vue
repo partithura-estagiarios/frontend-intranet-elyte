@@ -9,7 +9,7 @@
         </span>
         <div class="absolute-right q-pa-md" v-if="userStorage.isLoggedIn">
           <ActionButton
-            :buttons="buttons"
+            :buttons="actionButtons"
             :item="gestaoList"
             @reload="getGestaoList()"
           />
@@ -55,10 +55,7 @@
 import GetMenu from "../../graphql/menu/GetMenu.gql";
 import { Menu } from "../../entities";
 import { Ref } from "vue";
-import AddSystemDialog from "../DynamicDialog/SystemModals/AddSystemDialog.vue";
-import DelSystemDialog from "../DynamicDialog/SystemModals/DelSystemDialog.vue";
-import { Action } from "../../entities/Action";
-import EditSystemDialog from "../DynamicDialog/SystemModals/EditSystemDialog.vue";
+import actionButtons from "./actionButtons";
 
 const gestaoList: Ref<Menu[]> = ref([]);
 
@@ -74,12 +71,6 @@ async function getGestaoList() {
   gestaoList.value = menuBySystem;
   return gestaoList;
 }
-
-const buttons: Action[] = [
-  { label: t("action.add"), icon: "add", component: AddSystemDialog },
-  { label: t("action.edit"), icon: "edit", component: EditSystemDialog },
-  { label: t("action.delete"), icon: "delete", component: DelSystemDialog },
-];
 </script>
 
 <style scoped>

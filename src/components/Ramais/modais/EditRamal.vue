@@ -22,7 +22,6 @@ async function updateRamal() {
   try {
     await runMutation(UpdateRamal, { id: props.item.id, data: form });
     positiveNotify(t("notifications.success.deleteRamal"));
-    emits("cancel");
     emits("reload");
   } catch {
     negativeNotify(t("notifications.success.deleteRamal"));

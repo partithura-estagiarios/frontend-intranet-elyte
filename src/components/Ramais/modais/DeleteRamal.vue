@@ -17,7 +17,6 @@ async function deleteRamal(id: object) {
   try {
     await runMutation(DeleteRamal, { id });
     positiveNotify(t("notifications.success.deleteRamal"));
-    emits("cancel");
     emits("reload");
   } catch {
     negativeNotify(t("notifications.fail.deleteRamal.error"));

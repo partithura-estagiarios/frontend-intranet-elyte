@@ -18,7 +18,6 @@ async function addRamal() {
   try {
     await runMutation(AddRamal, { data: form });
     positiveNotify(t("notifications.success.createRamal"));
-    emits("cancel");
     emits("reload");
   } catch {
     negativeNotify(t("notifications.fail.createRamal"));

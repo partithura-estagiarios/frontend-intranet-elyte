@@ -26,7 +26,6 @@ async function createSystem() {
   try {
     await runMutation(AddSystem, { data: form });
     positiveNotify(t("notifications.success.createSystem"));
-    emits("cancel");
     emits("reload");
   } catch (err) {
     negativeNotify(t("notifications.fail.createSystem"));

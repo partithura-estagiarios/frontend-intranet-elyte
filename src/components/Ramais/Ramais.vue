@@ -31,7 +31,11 @@
     </template>
 
     <template #configButtons="{ item }" v-if="userStorage.isLoggedIn">
-      <ActionButton :buttons="buttons" :item="item" @reload="getListRamal()" />
+      <ActionButton
+        :buttons="actionButtons"
+        :item="item"
+        @reload="getListRamal()"
+      />
     </template>
   </table-dynamic>
 </template>
@@ -40,8 +44,7 @@
 import GetRamais from "../../graphql/ramais/getRamais.gql";
 import { Ramal } from "../../entities";
 import { Ref } from "vue";
-import DeleteRamal from "./modais/DeleteRamal.vue";
-import EditRamal from "./modais/EditRamal.vue";
+import actionButtons from "./actionButtons";
 
 const ramalList: Ref<Ramal[]> = ref([]);
 const activedModal = ref(false);
@@ -59,11 +62,6 @@ async function getListRamal() {
   ramalList.value = ramais;
   return ramalList;
 }
-
-const buttons = [
-  { label: "Deletar", icon: "delete", component: DeleteRamal },
-  { label: "Editar", icon: "edit", component: EditRamal },
-];
 
 const columns = [
   {

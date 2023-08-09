@@ -9,7 +9,7 @@ useHead({
     },
   ],
 });
-const exceptionRoutes = ["/login", "/recover", "/changePassword"];
+const exceptionRoutes = ["/login", "/recover", "/changePassword", "/emailSent"];
 const showTabHeader = computed(() => {
   return !exceptionRoutes.some((route) =>
     window.location.pathname.includes(route)

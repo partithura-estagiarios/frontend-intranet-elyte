@@ -16,7 +16,7 @@ const validateEmail = () => {
     errorMessage.value = t("notifications.fail.invalidEmail");
     return;
   }
-  router.push("/enterCode");
+  router.push("/emailSent");
 };
 </script>
 

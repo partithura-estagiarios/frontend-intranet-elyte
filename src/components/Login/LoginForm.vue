@@ -69,13 +69,15 @@ async function auth() {
     </template>
   </q-input>
 
-  <q-item class="size" to="/enterEmail">
+  <q-item class="size" to="/recover">
     <q-item-section align="left">
       {{ $t("label.forgetPassword") }}
     </q-item-section>
   </q-item>
 
-  <p class="q-mt-md" v-if="errorMessage">{{ errorMessage }}</p>
+  <p class="q-mt-md text-deep-orange-14" v-if="errorMessage">
+    {{ errorMessage }}
+  </p>
   <q-btn
     :label="$t('action.submit.index')"
     rounded

@@ -33,6 +33,6 @@ export default {
     textPasswordForm: "Recover your password!",
     textLoginForm: "Enter your credentials",
     recoverPassword: "Contact the IT department",
-    enterCode: "enter the code",
+    emailSent: "Email sent with success, verify your email",
   },
 };

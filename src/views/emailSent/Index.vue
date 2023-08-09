@@ -1,5 +1,5 @@
 <template>
   <BackgroundLogin>
-    <EnterCode />
+    <EmailSent />
   </BackgroundLogin>
 </template>

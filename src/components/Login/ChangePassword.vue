@@ -67,7 +67,9 @@ const validatePassword = () => {
       />
     </template>
   </q-input>
-  <p class="q-mt-md" v-if="errorMessage">{{ errorMessage }}</p>
+  <p class="q-mt-md text-deep-orange-14" v-if="errorMessage">
+    {{ errorMessage }}
+  </p>
   <q-btn
     :label="$t('action.submit.index')"
     rounded
@@ -75,17 +77,6 @@ const validatePassword = () => {
     size="lg"
     @click="validatePassword"
   />
-  <q-btn
-    class="q-mt-md"
-    icon="chevron_left"
-    size="16px"
-    text-color="primary"
-    to="/enterCode"
-  >
-    <span class="text-white">
-      {{ $t("action.back.index") }}
-    </span>
-  </q-btn>
 </template>
 
 <style scoped>

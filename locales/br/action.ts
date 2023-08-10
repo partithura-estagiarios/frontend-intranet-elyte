@@ -17,7 +17,7 @@ export default {
     ing: "Reiniciando",
     ed: "Reiniciado",
   },
-  delete: "Deletar",
+  delete: "Excluir",
 
   edit: "Editar",
 
@@ -38,9 +38,9 @@ export default {
     index: "Adicionar cardápio",
   },
   deleteRamal: {
-    index: "Deletar ramal",
+    index: "Excluir ramal",
     message:
-      "Tem certeza que deseja deletar o ramal {numero} de {nome} do setor {setor}?",
+      "Tem certeza que deseja excluir o ramal {numero} de {nome} do setor {setor}?",
   },
   editRamal: {
     index: "Editar ramal",
@@ -53,7 +53,7 @@ export default {
     message: "Selecione o sistema que deseja editar: ",
   },
   delSystem: {
-    index: "Deletar Sistema",
-    message: "Selecione o sistema que deseja deletar:",
+    index: "Excluir Sistema",
+    message: "Selecione o sistema que deseja excluir:",
   },
 };

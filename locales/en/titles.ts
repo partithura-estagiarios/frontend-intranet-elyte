@@ -30,8 +30,8 @@ export default {
     DataSulPrototype: "Exclusive for Test",
   },
   Login: {
-    textLoginForm: "Digite suas credenciais",
-    recoverPassword: "Entre em contato com o setor de TI",
-    register: "Cadastrar Usuário",
+    textLoginForm: "Enter your credentials",
+    recoverPassword: "Contact the IT department to recover password",
+    register: "Register User",
   },
 };

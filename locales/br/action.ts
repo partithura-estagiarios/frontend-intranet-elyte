@@ -17,21 +17,12 @@ export default {
     ing: "Reiniciando",
     ed: "Reiniciado",
   },
-  delete: {
-    index: "Eliminar",
-    ing: "Eliminando",
-    ed: "Eliminado",
-  },
-  update: {
-    index: "Atualizar",
-    ing: "Atualizando",
-    ed: "Atualizado",
-  },
-  create: {
-    index: "Criar",
-    ing: "Criando",
-    ed: "Criado",
-  },
+  delete: "Excluir",
+
+  edit: "Editar",
+
+  add: "Adicionar",
+
   buy: {
     index: "Comprar",
     ing: "Comprando",
@@ -47,8 +38,9 @@ export default {
     index: "Adicionar cardápio",
   },
   deleteRamal: {
-    index:
-      "Tem certeza que deseja deletar o ramal {numero} do colaborador {nome} do setor {setor}?",
+    index: "Excluir ramal",
+    message:
+      "Tem certeza que deseja excluir o ramal {numero} de {nome} do setor {setor}?",
   },
   editRamal: {
     index: "Editar ramal",
@@ -61,7 +53,7 @@ export default {
     message: "Selecione o sistema que deseja editar: ",
   },
   delSystem: {
-    index: "Deletar Sistema",
-    message: "Selecione o sistema que deseja deletar:",
+    index: "Excluir Sistema",
+    message: "Selecione o sistema que deseja excluir:",
   },
 };

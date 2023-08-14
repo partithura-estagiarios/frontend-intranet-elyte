@@ -26,7 +26,6 @@ async function deleteSystem() {
           parseToPlural(selectedSystems.value)
         )
       );
-      emits("cancel");
       emits("reload");
     } catch (err) {
       negativeNotify(

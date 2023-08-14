@@ -1,4 +1,6 @@
 <script lang="ts" setup>
+import CreateUser from "../../graphql/registerUser/registeruser.gql";
+
 const marginBtn = computed(() =>
   useQuasar().screen.gt.md ? "q-mt-xl" : "q-mt-sm"
 );
@@ -6,28 +8,34 @@ const data = reactive({
   username: "",
   password: "",
   email: "",
-  isPwd: true,
 });
+const isPwd = ref(true);
 
 const errorMessage = ref("");
 const emptyFieldPattern = /^\s*$/;
 const passwordPattern = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)[A-Za-z\d]{4,8}$/;
 const emailPattern = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
 
-const validatePassword = () => {
-  if (emptyFieldPattern.test(data.username && data.password && data.email)) {
-    errorMessage.value = t("notifications.fail.emptyField");
-    return;
+const createUser = async () => {
+  try {
+    if (emptyFieldPattern.test(data.username && data.password && data.email)) {
+      errorMessage.value = t("notifications.fail.emptyField");
+      return;
+    }
+    if (!emailPattern.test(data.email)) {
+      errorMessage.value = t("notifications.fail.invalidEmail");
+      return;
+    }
+    if (!passwordPattern.test(data.password)) {
+      errorMessage.value = t("notifications.fail.invalidPassword");
+      return;
+    }
+    await runMutation(CreateUser, { data });
+    positiveNotify(t("notifications.success.login"));
+    router.push("/home");
+  } catch {
+    negativeNotify(t("notifications.fail.login"));
   }
-  if (!emailPattern.test(data.email)) {
-    errorMessage.value = t("notifications.fail.invalidEmail");
-    return;
-  }
-  if (!passwordPattern.test(data.password)) {
-    errorMessage.value = t("notifications.fail.invalidPassword");
-    return;
-  }
-  router.push("/home");
 };
 </script>
 
@@ -45,7 +53,7 @@ const validatePassword = () => {
   <q-input
     rounded
     standout="bg-info"
-    :type="data.isPwd ? 'password' : 'text'"
+    :type="isPwd ? 'password' : 'text'"
     bg-color="primary"
     input-class="text-white"
     class="q-pt-md size"
@@ -56,8 +64,8 @@ const validatePassword = () => {
       <q-icon
         color="white"
         class="cursor-pointer"
-        @click="data.isPwd = !data.isPwd"
-        :name="data.isPwd ? 'visibility_off' : 'visibility'"
+        @click="isPwd = !isPwd"
+        :name="isPwd ? 'visibility_off' : 'visibility'"
       />
     </template>
   </q-input>
@@ -80,7 +88,7 @@ const validatePassword = () => {
     :class="marginBtn"
     class="btn-enviar size text-black bg-white"
     size="lg"
-    @click="validatePassword"
+    @click="createUser"
   />
 </template>
 

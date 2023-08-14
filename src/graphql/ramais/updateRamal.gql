@@ -1,0 +1,3 @@
+mutation UpdateRamal($id: ID!, $data: ramalInput!) {
+  updateRamal(id: $id, data: $data)
+}

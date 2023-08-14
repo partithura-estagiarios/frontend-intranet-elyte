@@ -7,4 +7,7 @@ export default {
   description: "Description",
   system: "System",
   search: "Search",
+  ramalNumber: "Branch line number",
+  sector: "Sector",
+  name: "Name",
 };

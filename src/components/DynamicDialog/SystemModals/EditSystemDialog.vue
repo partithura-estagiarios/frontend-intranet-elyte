@@ -43,7 +43,6 @@ async function updateSystem() {
       data: form,
     });
     positiveNotify(t("notifications.success.editSystem"));
-    emits("cancel");
     emits("reload");
   } catch (err) {
     negativeNotify(t("notifications.fail.editSystem"));

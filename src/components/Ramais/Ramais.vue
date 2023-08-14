@@ -6,7 +6,6 @@
     <div class="col-6 row justify-start">
       <span class="text-black font text-bold q-ml-xl">
         {{ $t("titles.Hr.Fones") }}
-        <q-icon color="primary" class="q-ml-sm" name="call" size="2rem" />
         <q-separator size="0.5rem" color="primary" class="bar-style" />
       </span>
     </div>
@@ -16,15 +15,39 @@
     :rows="(ramalList as Array<Ramal>)"
     :v-bind="$attrs"
     class="q-mt-lg"
-  />
+  >
+    <template #top-left v-if="userStorage.isLoggedIn">
+      <q-btn
+        class="bg-primary text-white text-bold"
+        @click="activedModal = true"
+        :label="$t('action.addRamal.index')"
+      >
+        <AddRamal
+          :isActive="activedModal"
+          @reload="getListRamal()"
+          @cancel="activedModal = false"
+        />
+      </q-btn>
+    </template>
+
+    <template #configButtons="{ item }" v-if="userStorage.isLoggedIn">
+      <ActionButton
+        :buttons="actionButtons"
+        :item="item"
+        @reload="getListRamal()"
+      />
+    </template>
+  </table-dynamic>
 </template>
 
 <script setup lang="ts">
 import GetRamais from "../../graphql/ramais/getRamais.gql";
 import { Ramal } from "../../entities";
 import { Ref } from "vue";
+import actionButtons from "./actionButtons";
 
 const ramalList: Ref<Ramal[]> = ref([]);
+const activedModal = ref(false);
 
 onMounted(() => {
   getListRamal();
@@ -62,6 +85,9 @@ const columns = [
     label: t("text.number"),
     sortable: true,
     name: "Ramal",
+  },
+  {
+    name: "actions",
   },
 ];
 </script>

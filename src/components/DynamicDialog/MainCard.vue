@@ -5,6 +5,7 @@
       <slot />
     </q-card-section>
     <CardFooter
+      v-bind="$props"
       @cancel="() => $emit('cancel')"
       @confirm="() => $emit('confirm')"
     />
@@ -14,6 +15,8 @@
 <script setup lang="ts">
 defineProps({
   title: String,
+  closeLabel: String,
+  close: Boolean,
 });
 </script>
 <style scoped>

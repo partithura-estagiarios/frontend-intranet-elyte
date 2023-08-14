@@ -1,0 +1,17 @@
+query Event {
+  event {
+    id
+    roomId
+    userCreated
+    description
+    date
+    finalTime
+    initialTime
+    suport {
+      computer
+      projector
+      coffee
+      water
+    }
+  }
+}

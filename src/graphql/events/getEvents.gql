@@ -4,7 +4,6 @@ query Event {
     roomId
     userCreated
     description
-    date
     finalTime
     initialTime
     suport {

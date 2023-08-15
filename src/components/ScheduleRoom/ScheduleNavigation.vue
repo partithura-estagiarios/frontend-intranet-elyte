@@ -1,6 +1,12 @@
+<script setup lang="ts">
+const activedModal = ref(false);
+</script>
+
 <template>
-  <div class="row justify-center">
-    <div class="q-pa-md q-gutter-sm row text-black">
+  <AddSchedule :is-active="activedModal" @cancel="activedModal = false" />
+
+  <div class="row justify-between fit">
+    <div class="row q-pa-md q-gutter-sm text-black">
       <q-btn-group>
         <q-btn no-caps @click="$emit('prev')" label="Anterior" />
         <q-btn no-caps @click="$emit('today')" label="Hoje" />
@@ -14,11 +20,9 @@
         <q-btn no-caps label="Dia" />
       </q-btn-group>
     </div>
+
+    <div class="column justify-center">
+      <q-btn no-caps label="Agendar evento" @click="activedModal = true" />
+    </div>
   </div>
 </template>
-
-<script lang="ts">
-export default defineComponent({
-  name: "ScheduleNavigation",
-});
-</script>

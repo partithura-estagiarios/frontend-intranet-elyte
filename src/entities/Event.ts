@@ -1,11 +1,15 @@
 export interface Event {
-  date: string;
-  id: number;
-  scheduler: string;
-  time: string;
-  duration: number;
+  userCreated: string;
+  roomId: string;
   description: string;
-  roomId: number;
+  initialTime: string;
+  finalTime: string;
+  suport: {
+    computer: boolean;
+    projector: boolean;
+    coffee: boolean;
+    water: boolean;
+  };
 }
 
 export interface Room {

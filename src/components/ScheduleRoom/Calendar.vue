@@ -1,11 +1,8 @@
 <script setup lang="ts">
-import {
-  QCalendarMonth,
-  parseTimestamp,
-  today,
-} from "@quasar/quasar-ui-qcalendar/";
+import { QCalendarMonth, today } from "@quasar/quasar-ui-qcalendar/";
 import { Event, Room } from "../../entities";
 import GetEvent from "../../graphql/events/getEvents.gql";
+import { DateTime } from "luxon";
 
 const calendar = ref();
 const selectedDate = ref(today());
@@ -35,15 +32,25 @@ function addEvent(eventList: Array<Event | any>, event: Event): void {
   eventList.push(event);
 }
 
-const eventsMap = computed(() => {
-  return eventList.value.reduce((acc: Record<string, any>, event: Event) => {
-    const dateIntmz = event.date;
-    if (!acc[dateIntmz]) {
-      acc[dateIntmz] = [];
-    }
-    addEvent(acc[dateIntmz], event);
-    return acc;
-  }, {});
+function formatTimestampDate(event: number) {
+  const objectDate = DateTime.fromMillis(event).c;
+  return `${objectDate.year}-${String(objectDate.month).padStart(
+    2,
+    "0"
+  )}-${String(objectDate.day).padStart(2, "0")}`;
+}
+
+const joinDate = computed(() => {
+  if (eventList.value) {
+    return eventList.value.reduce((acc: Record<string, any>, event: Event) => {
+      const dateIntmz = formatTimestampDate(+event.initialTime);
+      if (!acc[dateIntmz]) {
+        acc[dateIntmz] = [];
+      }
+      addEvent(acc[dateIntmz], event);
+      return acc;
+    }, {});
+  }
 });
 
 function onPrev() {
@@ -75,7 +82,7 @@ function onToday() {
         <div class="row full-height items-end q-gutter-x-xs">
           <div
             class="row items-end no-padding cursor-pointer"
-            v-for="event in eventsMap[timestamp.date]"
+            v-for="event in joinDate[timestamp.date]"
             :key="event.id"
             @click="
               activedModal = true;

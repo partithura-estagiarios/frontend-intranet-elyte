@@ -100,7 +100,7 @@ const formatDate = (dateValue: number) => {
   <div>
     <div class="row justify-between">
       <BackButton class="row q-ml-md hide-print q-mt-md" />
-      <span class="text-white text-h5 relative-position q-mt-md">
+      <span class="text-white text-h4 relative-position text-bold">
         {{ $t("titles.menu") }} ( {{ formatDate(menorData) }} a
         {{ formatDate(maiorData) }} )
       </span>
@@ -109,7 +109,7 @@ const formatDate = (dateValue: number) => {
 
     <div class="row justify-center">
       <q-card
-        class="text-uppercase col-3 q-mt-md q-mx-md border"
+        class="text-uppercase col-3 q-ma-md border"
         v-for="(menu, index) in menus"
         :key="index"
       >

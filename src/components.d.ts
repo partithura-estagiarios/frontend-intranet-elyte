@@ -7,6 +7,7 @@ export {};
 
 declare module "@vue/runtime-core" {
   export interface GlobalComponents {
+    ActionButton: typeof import("./components/buttons/ActionButton.vue")["default"];
     Add: typeof import("./components/SistemaGestao/Modais/Add.vue")["default"];
     AddSys: typeof import("./components/Modais/AddSys.vue")["default"];
     AddSystemDialog: typeof import("./components/DynamicDialog/SystemModals/AddSystemDialog.vue")["default"];
@@ -20,10 +21,12 @@ declare module "@vue/runtime-core" {
     ChangePassword: typeof import("./components/Login/ChangePassword.vue")["default"];
     ConfigMenu: typeof import("./components/buttons/ConfigMenu.vue")["default"];
     ConfirmDelete: typeof import("./components/ConfirmDelete.vue")["default"];
+    CreateMenu: typeof import("./components/CreateMenu/index.vue")["default"];
     DeleteButton: typeof import("./components/buttons/DeleteButton.vue")["default"];
     DelSystemDialog: typeof import("./components/DynamicDialog/SystemModals/DelSystemDialog.vue")["default"];
     DropDown: typeof import("./components/buttons/DropDown.vue")["default"];
     DynamicDialog: typeof import("./components/DynamicDialog/DynamicDialog.vue")["default"];
+    EditSystemDialog: typeof import("./components/DynamicDialog/SystemModals/EditSystemDialog.vue")["default"];
     EmailSent: typeof import("./components/Login/EmailSent.vue")["default"];
     EnterCode: typeof import("./components/Login/EnterCode.vue")["default"];
     EnterEmail: typeof import("./components/Login/EnterEmail.vue")["default"];
@@ -34,9 +37,11 @@ declare module "@vue/runtime-core" {
     LoginForm: typeof import("./components/Login/LoginForm.vue")["default"];
     MainCard: typeof import("./components/DynamicDialog/MainCard.vue")["default"];
     MainLayout: typeof import("./components/MainLayout/MainLayout.vue")["default"];
+    MenuTable: typeof import("./components/MenuTable/index.vue")["default"];
     Modal: typeof import("./components/Modais/Modal.vue")["default"];
     OptionLocales: typeof import("./components/OptionLocales.vue")["default"];
     PaymentButton: typeof import("./components/buttons/PaymentButton.vue")["default"];
+    PrintButton: typeof import("./components/buttons/PrintButton.vue")["default"];
     Ramais: typeof import("./components/Ramais/Ramais.vue")["default"];
     RouterLink: typeof import("vue-router")["RouterLink"];
     RouterView: typeof import("vue-router")["RouterView"];

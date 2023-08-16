@@ -10,4 +10,7 @@ export default {
   system: "System",
   search: "Search",
   code: "Code",
+  ramalNumber: "Branch line number",
+  sector: "Sector",
+  name: "Name",
 };

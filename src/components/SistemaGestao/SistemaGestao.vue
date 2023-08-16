@@ -7,9 +7,9 @@
         >
           {{ $t("titles.ManagementSystem") }}
         </span>
-        <div class="absolute-right q-pa-md">
+        <div class="absolute-right q-pa-md" v-if="userStorage.isLoggedIn">
           <ActionButton
-            :buttons="buttons"
+            :buttons="actionButtons"
             :item="gestaoList"
             @reload="getGestaoList()"
           />
@@ -59,6 +59,7 @@ import AddSystemDialog from "../DynamicDialog/SystemModals/AddSystemDialog.vue";
 import DelSystemDialog from "../DynamicDialog/SystemModals/DelSystemDialog.vue";
 import { Action } from "../../entities/Action";
 import EditSystemDialog from "../DynamicDialog/SystemModals/EditSystemDialog.vue";
+import actionButtons from "./actionButtons";
 
 const gestaoList: Ref<Menu[]> = ref([]);
 

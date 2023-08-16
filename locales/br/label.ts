@@ -10,4 +10,7 @@ export default {
   system: "Sistema",
   search: "Pesquisar",
   code: "Código",
+  ramalNumber: "Número do ramal",
+  sector: "Setor",
+  name: "Nome",
 };

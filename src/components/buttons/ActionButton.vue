@@ -40,7 +40,7 @@ function deactivateModal() {
         @click="activateModal(index)"
       >
         <component
-          @reload="() => $emit('reload')"
+          @reload="() => $emit('reload', deactivateModal())"
           @cancel="deactivateModal()"
           :isActive="activedModal === index"
           :is="button.component"

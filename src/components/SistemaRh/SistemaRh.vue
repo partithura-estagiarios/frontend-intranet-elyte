@@ -7,9 +7,9 @@
         >
           {{ $t("titles.HrSystem") }}
         </span>
-        <div class="absolute-right q-pa-md">
+        <div class="absolute-right q-pa-md" v-if="userStorage.isLoggedIn">
           <ActionButton
-            :buttons="buttons"
+            :buttons="actionButtons"
             :item="rhList"
             @reload="getListRh()"
           />
@@ -58,6 +58,7 @@ import { Action } from "../../entities/Action";
 import AddSystemDialog from "../DynamicDialog/SystemModals/AddSystemDialog.vue";
 import EditSystemDialog from "../DynamicDialog/SystemModals/EditSystemDialog.vue";
 import DelSystemDialog from "../DynamicDialog/SystemModals/DelSystemDialog.vue";
+import actionButtons from "./actionButtons";
 
 const rhList: Ref<Menu[]> = ref([]);
 

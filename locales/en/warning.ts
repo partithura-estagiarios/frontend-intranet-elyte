@@ -9,4 +9,5 @@ export default {
   uppercase: "Must contain an uppercase letter",
   containDigit: "Must contain a digit",
   containSpecialChar: "Must contain a special character",
+  requiredField: "Field is required",
 };

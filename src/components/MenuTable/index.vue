@@ -100,9 +100,9 @@ const formatDate = (dateValue: number) => {
   <div>
     <div class="row justify-between">
       <BackButton class="row q-ml-md hide-print q-mt-md" />
-      <span class="text-white text-h4 relative-position text-bold">
-        {{ $t("titles.menu") }} ( {{ formatDate(menorData) }} a
-        {{ formatDate(maiorData) }} )
+      <span class="text-white text-h3 relative-position text-bold">
+        {{ $t("titles.menu") }} {{ formatDate(menorData) }} a
+        {{ formatDate(maiorData) }}
       </span>
       <PrintButton class="q-mr-md" />
     </div>
@@ -114,12 +114,12 @@ const formatDate = (dateValue: number) => {
         :key="index"
       >
         <q-card-section class="bg-primary">
-          <span class="text-subtitle2 text-white text-weight-bold">
+          <span class="text-h5 text-white text-weight-bold">
             {{ getDayWeek(menu.date) }}
           </span>
         </q-card-section>
         <q-card-section class="text-subtitle2 text-black">
-          <div v-for="item in menuItems" :key="item.field" class="row">
+          <div v-for="item in menuItems" :key="item.field" class="column">
             <q-icon class="col-5 row" :name="item.icon" color="primary" />
             <p>{{ menu[item.field] }}</p>
           </div>

@@ -39,6 +39,7 @@ declare module "@vue/runtime-core" {
     RouterLink: typeof import("vue-router")["RouterLink"];
     RouterView: typeof import("vue-router")["RouterView"];
     SendButton: typeof import("./components/buttons/SendButton.vue")["default"];
+    SimpleForm: typeof import("./components/SimpleForm.vue")["default"];
     SimpleModal: typeof import("./components/Modais/SimpleModal.vue")["default"];
     SistemaGestao: typeof import("./components/SistemaGestao/SistemaGestao.vue")["default"];
     SistemaRh: typeof import("./components/SistemaRh/SistemaRh.vue")["default"];

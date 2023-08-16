@@ -1,22 +1,18 @@
 <script lang="ts" setup>
-const form = reactive({
+import SendRecoveryEmail from "../../graphql/sendEmail/SendEmail.gql";
+
+const data = reactive({
   emailRecover: "",
 });
 
-const errorMessage = ref("");
-const emptyFieldPattern = /^\s*$/;
-const emailPattern = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
-
-const validateEmail = () => {
-  if (emptyFieldPattern.test(form.emailRecover)) {
-    errorMessage.value = t("notifications.fail.emptyField", 2);
-    return;
+const sendRecoveryEmail = async () => {
+  try {
+    await runMutation(SendRecoveryEmail, { data });
+    positiveNotify(t("notifications.success.login"));
+    router.push("/emailSent");
+  } catch {
+    negativeNotify(t("notifications.fail.login"));
   }
-  if (!emailPattern.test(form.emailRecover)) {
-    errorMessage.value = t("notifications.fail.invalidEmail");
-    return;
-  }
-  router.push("/emailSent");
 };
 </script>
 
@@ -29,7 +25,7 @@ const validateEmail = () => {
     standout="bg-info"
     bg-color="primary"
     input-class="text-white"
-    v-model="form.emailRecover"
+    v-model="data.emailRecover"
     :placeholder="$t('label.inputEmail')"
   />
   <q-btn
@@ -37,9 +33,8 @@ const validateEmail = () => {
     rounded
     class="q-mt-md btn-enviar tamanho"
     size="lg"
-    @click="validateEmail"
+    @click="sendRecoveryEmail"
   />
-  <p class="q-mt-md" v-if="errorMessage">{{ errorMessage }}</p>
   <q-btn
     class="q-mt-md"
     icon="chevron_left"

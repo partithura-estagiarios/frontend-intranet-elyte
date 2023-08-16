@@ -1,35 +1,19 @@
 <script lang="ts" setup>
 import CreateUser from "../../graphql/registerUser/registeruser.gql";
+import { Field, Form } from "vee-validate";
+import { validationSchema } from "../../validation";
 
 const marginBtn = computed(() =>
   useQuasar().screen.gt.md ? "q-mt-xl" : "q-mt-sm"
 );
 const data = reactive({
   username: "",
-  password: "",
   email: "",
+  password: "",
 });
-const isPwd = ref(true);
-
-const errorMessage = ref("");
-const emptyFieldPattern = /^\s*$/;
-const passwordPattern = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)[A-Za-z\d]{4,8}$/;
-const emailPattern = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
-
+const isPwdvisible = ref(true);
 const createUser = async () => {
   try {
-    if (emptyFieldPattern.test(data.username && data.password && data.email)) {
-      errorMessage.value = t("notifications.fail.emptyField");
-      return;
-    }
-    if (!emailPattern.test(data.email)) {
-      errorMessage.value = t("notifications.fail.invalidEmail");
-      return;
-    }
-    if (!passwordPattern.test(data.password)) {
-      errorMessage.value = t("notifications.fail.invalidPassword");
-      return;
-    }
     await runMutation(CreateUser, { data });
     positiveNotify(t("notifications.success.login"));
     router.push("/home");
@@ -41,55 +25,80 @@ const createUser = async () => {
 
 <template>
   <span class="q-mb-lg">{{ $t("titles.Login.textLoginForm") }}</span>
-  <q-input
-    rounded
-    standout="bg-info"
-    bg-color="primary"
-    input-class="text-white"
-    class="size text-white"
-    v-model="data.username"
-    :placeholder="$t('label.inputName')"
-  />
-  <q-input
-    rounded
-    standout="bg-info"
-    :type="isPwd ? 'password' : 'text'"
-    bg-color="primary"
-    input-class="text-white"
-    class="q-pt-md size"
-    v-model="data.password"
-    :placeholder="$t('label.inputPassword')"
+  <Form
+    @submit="createUser"
+    :validation-schema="validationSchema"
+    class="q-gutter-md"
   >
-    <template v-slot:append>
-      <q-icon
-        color="white"
-        class="cursor-pointer"
-        @click="isPwd = !isPwd"
-        :name="isPwd ? 'visibility_off' : 'visibility'"
+    <Field name="username" v-slot="item">
+      <q-input
+        :model-value="item.value"
+        v-bind="item.field"
+        rounded
+        standout="bg-info"
+        bg-color="primary"
+        input-class="text-white"
+        class="size text-white"
+        :placeholder="$t('label.inputName')"
       />
-    </template>
-  </q-input>
-  <q-input
-    rounded
-    standout="bg-info"
-    type="email"
-    bg-color="primary"
-    input-class="text-white"
-    class="q-pt-md size"
-    v-model="data.email"
-    :placeholder="$t('label.inputEmail')"
-  />
-  <p class="q-mt-md text-deep-orange-14" v-if="errorMessage">
-    {{ errorMessage }}
-  </p>
-  <q-btn
-    :label="$t('action.register.index')"
-    rounded
-    :class="marginBtn"
-    class="btn-enviar size text-black bg-white"
-    size="lg"
-    @click="createUser"
-  />
+      <span v-if="item.errorMessage" class="text-red">
+        {{ parseErrorMessage(item.errorMessage) }}
+      </span>
+    </Field>
+
+    <Field name="email" v-slot="item">
+      <q-input
+        :model-value="item.value"
+        v-bind="item.field"
+        rounded
+        standout="bg-info"
+        bg-color="primary"
+        input-class="text-white"
+        class="size text-white"
+        :placeholder="$t('label.inputEmail')"
+      />
+      <span v-if="item.errorMessage" class="text-red">
+        {{ parseErrorMessage(item.errorMessage) }}
+      </span>
+    </Field>
+
+    <Field name="password" v-slot="item">
+      <div>
+        <q-input
+          :model-value="item.value"
+          v-bind="item.field"
+          rounded
+          standout="bg-info"
+          bg-color="primary"
+          input-class="text-white"
+          class="size text-white"
+          :placeholder="$t('label.inputPassword')"
+          :type="isPwdvisible ? 'password' : 'text'"
+        >
+          <template v-slot:append>
+            <q-icon
+              color="white"
+              class="cursor-pointer"
+              @click="isPwdvisible = !isPwdvisible"
+              :name="isPwdvisible ? 'visibility_off' : 'visibility'"
+            />
+          </template>
+        </q-input>
+        <span v-if="item.errorMessage" class="text-red">
+          {{ parseErrorMessage(item.errorMessage) }}
+        </span>
+      </div>
+    </Field>
+    <Button class="bg-transparent no-padding">
+      <q-btn
+        :label="$t('action.register.index')"
+        rounded
+        :class="marginBtn"
+        class="btn-enviar size text-black bg-white"
+        size="lg"
+      />
+    </Button>
+  </Form>
 </template>
 
 <style scoped>

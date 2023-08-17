@@ -2,17 +2,16 @@
 import CreateUser from "../../graphql/registerUser/registeruser.gql";
 import { Field, Form } from "vee-validate";
 import { validationSchema } from "../../validation";
+import { UserForm } from "../../entities/User";
 
 const marginBtn = computed(() =>
   useQuasar().screen.gt.md ? "q-mt-xl" : "q-mt-sm"
 );
-const data = reactive({
-  username: "",
-  email: "",
-  password: "",
-});
+
 const isPwdvisible = ref(true);
-const createUser = async () => {
+const createUser = async (data: UserForm) => {
+  console.log(data);
+
   try {
     await runMutation(CreateUser, { data });
     positiveNotify(t("notifications.success.login"));

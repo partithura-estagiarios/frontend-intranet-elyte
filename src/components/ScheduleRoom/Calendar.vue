@@ -13,16 +13,11 @@ const selectedEvent = {};
 onMounted(() => {
   getEvents();
 });
-
 // Dados de sala mockados
 const rooms = [
-  { id: 1, name: "Sala A", color: "blue-5" },
-  { id: 2, name: "Sala B", color: "green-9" },
+  { id: 1, name: "A", color: "blue-5" },
+  { id: 2, name: "B", color: "green-9" },
 ];
-
-async function getEvents(): Promise<void> {
-  eventList.value = await runQuery(GetEvent).then((data) => data.event);
-}
 
 function getRoomByEvent(event: Event): Pick<Room, "color"> {
   return rooms.find((room) => room.id === +event.roomId) as Room;
@@ -32,22 +27,28 @@ function addEvent(eventList: Array<Event | any>, event: Event): void {
   eventList.push(event);
 }
 
-function formatTimestampDate(event: number) {
-  const objectDate = DateTime.fromMillis(event).c;
-  return `${objectDate.year}-${String(objectDate.month).padStart(
-    2,
-    "0"
-  )}-${String(objectDate.day).padStart(2, "0")}`;
+async function getEvents(): Promise<void> {
+  eventList.value = await runQuery(GetEvent).then((data) => data.event);
 }
 
 const joinDate = computed(() => {
   if (eventList.value) {
     return eventList.value.reduce((acc: Record<string, any>, event: Event) => {
-      const dateIntmz = formatTimestampDate(+event.initialTime);
-      if (!acc[dateIntmz]) {
-        acc[dateIntmz] = [];
+      const initialDateTime = DateTime.fromMillis(event.initialTime);
+      const finalDateTime = DateTime.fromMillis(event.finalTime);
+      for (
+        let dt = initialDateTime;
+        dt <= finalDateTime;
+        dt = dt.plus({ days: 1 })
+      ) {
+        const currentDate = dt.toISODate();
+        if (currentDate) {
+          if (!acc[currentDate]) {
+            acc[currentDate] = [];
+          }
+          addEvent(acc[currentDate], event);
+        }
       }
-      addEvent(acc[dateIntmz], event);
       return acc;
     }, {});
   }
@@ -62,12 +63,20 @@ function onNext() {
 function onToday() {
   calendar.value.moveToToday();
 }
+function onReload() {
+  getEvents();
+}
 </script>
 
 <template>
   <div class="column items-start text-black q-gutter-y-md q-pa-xl">
     {{ selectedDate }}
-    <ScheduleNavigation @prev="onPrev" @next="onNext" @today="onToday" />
+    <ScheduleNavigation
+      @prev="onPrev"
+      @next="onNext"
+      @today="onToday"
+      @reload="onReload"
+    />
     <q-calendar-month
       ref="calendar"
       v-model="selectedDate"
@@ -82,8 +91,8 @@ function onToday() {
         <div class="row full-height items-end q-gutter-x-xs">
           <div
             class="row items-end no-padding cursor-pointer"
-            v-for="event in joinDate[timestamp.date]"
-            :key="event.id"
+            v-for="(event, index) in joinDate[timestamp.date]"
+            :key="index"
             @click="
               activedModal = true;
               selectedEvent = event;
@@ -110,7 +119,7 @@ function onToday() {
         :key="room.name"
       >
         <q-icon name="circle" />
-        {{ room.name }}
+        {{ $t("label.room") + " " + room.name }}
       </span>
     </div>
   </div>

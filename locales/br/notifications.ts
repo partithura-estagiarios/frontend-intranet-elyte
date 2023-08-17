@@ -10,6 +10,7 @@ export default {
     createSystem: "Sistema criado com sucesso",
     deleteSystem:
       "Sistema deletado com sucesso | Sistemas deletados com sucesso",
+    scheduleEvent: "Evento agendado com sucesso",
   },
 
   fail: {
@@ -26,5 +27,6 @@ export default {
         "Houve um erro ao deletar o sistema | Houve um erro ao deletar os sistemas",
       notSelected: "Você deve selecionar pelo menos um sistema para deletar",
     },
+    scheduleEvent: "Houve um erro ao agendar o evento",
   },
 };

@@ -10,4 +10,23 @@ export default {
   ramalNumber: "Número do ramal",
   sector: "Setor",
   name: "Nome",
+  date: {
+    year: "Ano",
+    month: "Mês",
+    day: "Dia",
+    week: "Semana",
+    today: "Hoje",
+    initial: "Data inicial",
+    final: "Data final",
+  },
+  next: "Próximo",
+  previous: "Anterior",
+  room: "Sala",
+  suport: {
+    index: "Material de apoio",
+    computer: "Computador",
+    water: "Água",
+    coffee: "Café",
+    projector: "Projetor",
+  },
 };

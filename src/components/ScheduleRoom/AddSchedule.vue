@@ -1,9 +1,11 @@
 <script setup lang="ts">
 import { parseTimestamp } from "@quasar/quasar-ui-qcalendar";
-import { Room, Event } from "../../entities";
 import { DateTime } from "luxon";
 import { QSelect } from "quasar";
+import { Room, Event } from "../../entities";
+import AddEvent from "../../graphql/events/addEvent.gql";
 
+const emits = defineEmits(["reload"]);
 defineProps({
   isActive: {
     type: Boolean,
@@ -13,37 +15,53 @@ defineProps({
 const date = ref(null);
 // Dados de sala mockados
 const rooms = [
-  { id: 1, name: "Sala A", color: "blue-5" },
-  { id: 2, name: "Sala B", color: "green-9" },
+  { id: 1, name: "A", color: "blue-5" },
+  { id: 2, name: "B", color: "green-9" },
 ];
 
-const form: Event = {
+const form: Event = reactive({
   userCreated: "",
   roomId: "",
   description: "",
-  initialTime: "",
-  finalTime: "",
+  initialTime: null as unknown as number,
+  finalTime: null as unknown as number,
   suport: {
     computer: false,
     projector: false,
     coffee: false,
     water: false,
   },
-};
+});
 
 function parseDateToObject(tsDate: any) {
   const { day, month, year, hour, minute } = tsDate;
   return { day, month, year, hour, minute };
 }
 
-function setDate(paramsDate: keyof Omit<Event, "suport">, select: QSelect) {
+function setDate(
+  paramsDate: keyof Pick<Event, "initialTime" | "finalTime">,
+  select: QSelect
+) {
   if (date.value) {
     const parsedDate = parseDateToObject(parseTimestamp(date.value));
-    form[paramsDate] = DateTime.fromObject(parsedDate).toString();
+    form[paramsDate] = DateTime.fromObject(parsedDate).toMillis();
   }
-
   select.hidePopup();
   date.value = null;
+}
+
+async function addEvent() {
+  try {
+    const { addEvent } = await runMutation(AddEvent, { data: form });
+    if (addEvent) {
+      positiveNotify(t("notifications.success.scheduleEvent"));
+      emits("reload");
+      return;
+    }
+    negativeNotify("Data inválida");
+  } catch {
+    negativeNotify(t("notifications.fail.scheduleEvent"));
+  }
 }
 </script>
 
@@ -51,7 +69,8 @@ function setDate(paramsDate: keyof Omit<Event, "suport">, select: QSelect) {
   <DynamicDialog
     @cancel="() => $emit('cancel')"
     :open="isActive"
-    :title="'Agendar Evento'"
+    :title="$t('action.scheduleEvent')"
+    @confirm="addEvent"
   >
     <div class="row q-px-lg q-py-md text-black text-body1">
       <q-input
@@ -61,18 +80,20 @@ function setDate(paramsDate: keyof Omit<Event, "suport">, select: QSelect) {
       />
       <q-select
         class="col-6 q-px-xs"
-        label="Local"
-        v-model="form.roomId"
+        :label="$t('label.room')"
         popup-content-class="text-black"
+        map-options
+        emit-value
+        v-model="form.roomId"
         :options="rooms"
         :option-label="(room: Room) => room.name"
         :option-value="(room: Room) => room.id"
       />
       <q-select
         class="col-6 q-px-xs"
-        label="Data Inicial"
+        :label="$t('label.date.initial')"
         v-model="form.initialTime"
-        ref="select"
+        ref="initialSelect"
       >
         <template #no-option>
           <div class="row justify-center">
@@ -91,15 +112,16 @@ function setDate(paramsDate: keyof Omit<Event, "suport">, select: QSelect) {
               mask="YYYY-MM-DD HH:mm"
               class="text-black col-8"
               format24h
-              @click="setDate('initialTime', $refs.select as QSelect)"
+              @click="setDate('initialTime', $refs.initialSelect as QSelect)"
             />
           </div>
         </template>
       </q-select>
       <q-select
         class="col-6 q-px-xs"
-        label="Data Final"
+        :label="$t('label.date.final')"
         v-model="form.finalTime"
+        ref="finalSelect"
       >
         <template #no-option>
           <div class="row justify-center">
@@ -118,7 +140,7 @@ function setDate(paramsDate: keyof Omit<Event, "suport">, select: QSelect) {
               mask="YYYY-MM-DD HH:mm"
               class="text-black col-8"
               format24h
-              @click="setDate('finalTime', $refs.select as QSelect)"
+              @click="setDate('finalTime', $refs.finalSelect as QSelect)"
             />
           </div>
         </template>
@@ -129,11 +151,23 @@ function setDate(paramsDate: keyof Omit<Event, "suport">, select: QSelect) {
         v-model="form.description"
       />
       <div class="column q-mt-md">
-        <span class="text-h6">Materiais de apoio</span>
-        <q-checkbox v-model="form.suport.computer" label="Computador" />
-        <q-checkbox v-model="form.suport.projector" label="Projetor" />
-        <q-checkbox v-model="form.suport.water" label="Água" />
-        <q-checkbox v-model="form.suport.coffee" label="Café" />
+        <span class="text-h6">{{ $t("label.suport.index") }}</span>
+        <q-checkbox
+          v-model="form.suport.computer"
+          :label="$t('label.suport.computer')"
+        />
+        <q-checkbox
+          v-model="form.suport.projector"
+          :label="$t('label.suport.projector')"
+        />
+        <q-checkbox
+          v-model="form.suport.water"
+          :label="$t('label.suport.water')"
+        />
+        <q-checkbox
+          v-model="form.suport.coffee"
+          :label="$t('label.suport.coffee')"
+        />
       </div>
     </div>
   </DynamicDialog>

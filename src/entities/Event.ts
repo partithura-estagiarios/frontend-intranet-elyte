@@ -2,8 +2,8 @@ export interface Event {
   userCreated: string;
   roomId: string;
   description: string;
-  initialTime: string;
-  finalTime: string;
+  initialTime: number;
+  finalTime: number;
   suport: {
     computer: boolean;
     projector: boolean;

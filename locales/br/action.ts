@@ -56,4 +56,5 @@ export default {
     index: "Excluir Sistema",
     message: "Selecione o sistema que deseja excluir:",
   },
+  scheduleEvent: "Agendar evento",
 };

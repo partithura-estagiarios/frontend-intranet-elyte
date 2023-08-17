@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { DateTime } from "luxon";
+
 defineProps({
   isActive: {
     type: Boolean,
@@ -9,6 +11,10 @@ defineProps({
     required: true,
   },
 });
+
+function parseDate(date: number) {
+  return DateTime.fromMillis(date).toISODate();
+}
 </script>
 
 <template>
@@ -29,7 +35,7 @@ defineProps({
       <span>
         <q-icon name="schedule" />
         Horário:
-        {{ item.initialTime }}
+        {{ parseDate(item.initialTime) }}
       </span>
 
       <q-separator />

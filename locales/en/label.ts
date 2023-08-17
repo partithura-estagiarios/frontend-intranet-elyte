@@ -10,4 +10,21 @@ export default {
   ramalNumber: "Branch line number",
   sector: "Sector",
   name: "Name",
+  date: {
+    year: "Year",
+    month: "Month",
+    day: "Day",
+    week: "Week",
+    today: "Today",
+    initial: "Initial date",
+    final: "Final date",
+  },
+  room: "Room",
+  suport: {
+    index: "Suports Material",
+    computer: "Computer",
+    water: "Water",
+    coffee: "Coffee",
+    projector: "Projector",
+  },
 };

@@ -6,13 +6,13 @@ import { Field, Form } from "vee-validate";
 import * as yup from "yup";
 
 const options = [
-  "Domingo",
-  "Segunda-feira",
-  "Terça-feira",
-  "Quarta-feira",
-  "Quinta-feira",
-  "Sexta-feira",
-  "Sábado",
+  t("text.days.sunday"),
+  t("text.days.monday"),
+  t("text.days.tuesday"),
+  t("text.days.wednesday"),
+  t("text.days.thursday"),
+  t("text.days.friday"),
+  t("text.days.saturday"),
 ];
 
 const schema = yup.object({

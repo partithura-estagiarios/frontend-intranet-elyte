@@ -6,8 +6,8 @@
       <q-img src="/images/logo.png" class="logo" />
     </q-item>
     <q-tabs no-caps>
-      <q-route-tab :label="$t('home')" href="/home" />
-      <q-route-tab :label="$t('admin')" href="/admin" />
+      <q-route-tab :label="$t('home')" :to="'/home'" />
+      <q-route-tab :label="$t('admin')" :to="'/admin'" />
     </q-tabs>
   </div>
 </template>

@@ -14,7 +14,7 @@ const printWindow = function () {
 };
 </script>
 
-<style>
+<style scoped>
 @page {
   margin: 0cm;
   padding: 0cm;

@@ -9,7 +9,7 @@ mutation CreateMenu($data: MenuInput!) {
     soup
     week
     day
-    created_at
-    updated_at
+    createdAt
+    updatedAt
   }
 }

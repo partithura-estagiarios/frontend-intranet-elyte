@@ -1,5 +1,5 @@
-mutation SendRecoveryEmail($data: changePasswordInput!) {
-  sendRecoveryEmail(data: $data) {
-    id
+mutation SendRecoveryEmail($email: String!) {
+  sendRecoveryEmail(email: $email) {
+    email
   }
 }

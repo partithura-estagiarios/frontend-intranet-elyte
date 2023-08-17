@@ -1,51 +1,70 @@
 <script lang="ts" setup>
 import SendRecoveryEmail from "../../graphql/sendEmail/SendEmail.gql";
+import { Field, Form } from "vee-validate";
+import { validationSchema } from "../../validation";
 
 const data = reactive({
   emailRecover: "",
 });
 
 const sendRecoveryEmail = async () => {
-  try {
-    await runMutation(SendRecoveryEmail, { data });
-    positiveNotify(t("notifications.success.login"));
-    router.push("/emailSent");
-  } catch {
-    negativeNotify(t("notifications.fail.login"));
-  }
+  console.log("ws");
+  // try {
+  //   await runMutation(SendRecoveryEmail, { data });
+  //   positiveNotify(t("notifications.success.login"));
+  //   router.push("/emailSent");
+  // } catch {
+  //   negativeNotify(t("notifications.fail.login"));
+  // }
 };
 </script>
 
 <template>
   <span class="titulo q-mb-lg">{{ $t("titles.Login.textPasswordForm") }}</span>
-  <q-input
-    rounded
-    type="email"
-    class="tamanho"
-    standout="bg-info"
-    bg-color="primary"
-    input-class="text-white"
-    v-model="data.emailRecover"
-    :placeholder="$t('label.inputEmail')"
-  />
-  <q-btn
-    :label="$t('action.submit.index')"
-    rounded
-    class="q-mt-md btn-enviar tamanho"
-    size="lg"
-    @click="sendRecoveryEmail"
-  />
-  <q-btn
-    class="q-mt-md"
-    icon="chevron_left"
-    size="16px"
-    text-color="primary"
-    to="/login"
+  <Form
+    @submit="sendRecoveryEmail()"
+    :validation-schema="validationSchema"
+    class="q-gutter-md"
   >
-    <span class="text-white">
-      {{ $t("action.back.index") }}
-    </span>
-  </q-btn>
+    <Field name="email" v-slot="item">
+      <q-input
+        :model-value="item.value"
+        v-bind="item.field"
+        rounded
+        standout="bg-info"
+        bg-color="primary"
+        input-class="text-white"
+        class="size text-white"
+        :placeholder="$t('label.inputEmail')"
+      />
+      <span v-if="item.errorMessage" class="text-red">
+        {{ parseErrorMessage(item.errorMessage) }}
+      </span>
+    </Field>
+    <div class="column">
+      <button class="bg-transparent no-padding">
+        <q-btn
+          :label="$t('action.submit.index')"
+          rounded
+          class="btn-enviar size text-black bg-white"
+          size="lg"
+        />
+      </button>
+      <!-- <button class="bg-transparent no-padding">
+        <q-btn
+          class="q-mt-md"
+          icon="chevron_left"
+          size="16px"
+          text-color="primary"
+          to="/login"
+        >
+          <span class="text-white">
+            {{ $t("action.back.index") }}
+          </span>
+        </q-btn>
+      </button> -->
+    </div>
+  </Form>
 </template>
 
 <style scoped>
@@ -57,7 +76,7 @@ const sendRecoveryEmail = async () => {
 .btn-enviar:hover {
   box-shadow: 0px 10px 40px -12px #ff0000;
 }
-.tamanho {
+.size {
   width: 20rem;
 }
 </style>

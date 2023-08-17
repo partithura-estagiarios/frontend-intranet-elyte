@@ -1,6 +1,8 @@
 <script lang="ts" setup>
 import { AuthQuery } from "../../entities";
 import Auth from "../../graphql/auth/login.gql";
+import { Field, Form } from "vee-validate";
+import { validationSchema } from "../../validation";
 
 const marginBtn = computed(() =>
   useQuasar().screen.gt.md ? "q-mt-xl" : "q-mt-sm"
@@ -9,16 +11,11 @@ const marginBtn = computed(() =>
 const data = reactive({
   username: "",
   password: "",
-  isPwd: true,
 });
 
-const errorMessage = ref("");
-const emptyFieldPattern = /^\s*$/;
+const isPwdvisible = ref(true);
 
 async function auth() {
-  if (emptyFieldPattern.test(data.username && data.password)) {
-    errorMessage.value = t("notifications.fail.emptyField", 1);
-  }
   try {
     const { auth } = (await runMutation(Auth, data)) as unknown as AuthQuery;
     const { token, user } = auth;
@@ -40,52 +37,68 @@ async function auth() {
 
 <template>
   <span class="q-mb-lg">{{ $t("titles.Login.textLoginForm") }}</span>
-  <q-input
-    rounded
-    standout="bg-info"
-    bg-color="primary"
-    class="size text-white"
-    v-model="data.username"
-    input-class="text-white"
-    :placeholder="$t('label.inputName')"
-  />
-  <q-input
-    rounded
-    standout="bg-info"
-    bg-color="primary"
-    class="q-pt-md size"
-    v-model="data.password"
-    input-class="text-white"
-    :type="data.isPwd ? 'password' : 'text'"
-    :placeholder="$t('label.inputPassword')"
+  <Form
+    @submit="() => auth()"
+    :validation-schema="validationSchema"
+    class="q-gutter-md"
   >
-    <template v-slot:append>
-      <q-icon
-        color="white"
-        class="cursor-pointer"
-        @click="data.isPwd = !data.isPwd"
-        :name="data.isPwd ? 'visibility_off' : 'visibility'"
+    <Field name="username" v-slot="item">
+      <q-input
+        :model-value="item.value"
+        v-bind="item.field"
+        rounded
+        standout="bg-info"
+        bg-color="primary"
+        input-class="text-white"
+        class="size text-white"
+        :placeholder="$t('label.inputName')"
       />
-    </template>
-  </q-input>
-
-  <q-item class="size" to="/recover">
-    <q-item-section align="left">
-      {{ $t("label.forgetPassword") }}
-    </q-item-section>
-  </q-item>
-
-  <p class="q-mt-md text-deep-orange-14" v-if="errorMessage">
-    {{ errorMessage }}
-  </p>
-  <q-btn
-    :label="$t('action.submit.index')"
-    rounded
-    :class="marginBtn"
-    class="btn-enviar size text-black bg-white"
-    size="lg"
-    @click="() => auth()"
-  />
+      <span v-if="item.errorMessage" class="text-red">
+        {{ parseErrorMessage(item.errorMessage) }}
+      </span>
+    </Field>
+    <Field name="password" v-slot="item">
+      <div>
+        <q-input
+          :model-value="item.value"
+          v-bind="item.field"
+          rounded
+          standout="bg-info"
+          bg-color="primary"
+          input-class="text-white"
+          class="size text-white"
+          :placeholder="$t('label.inputPassword')"
+          :type="isPwdvisible ? 'password' : 'text'"
+        >
+          <template v-slot:append>
+            <q-icon
+              color="white"
+              class="cursor-pointer"
+              @click="isPwdvisible = !isPwdvisible"
+              :name="isPwdvisible ? 'visibility_off' : 'visibility'"
+            />
+          </template>
+        </q-input>
+        <span v-if="item.errorMessage" class="text-red">
+          {{ parseErrorMessage(item.errorMessage) }}
+        </span>
+      </div>
+    </Field>
+    <q-item class="size" to="/recover">
+      <q-item-section align="left">
+        {{ $t("label.forgetPassword") }}
+      </q-item-section>
+    </q-item>
+    <button class="bg-transparent no-padding">
+      <q-btn
+        :label="$t('action.submit.index')"
+        rounded
+        :class="marginBtn"
+        class="btn-enviar size text-black bg-white"
+        size="lg"
+      />
+    </button>
+  </Form>
 </template>
 
 <style scoped>

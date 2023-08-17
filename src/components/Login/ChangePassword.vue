@@ -1,82 +1,101 @@
 <script lang="ts" setup>
-const form = reactive({
+import { Field, Form } from "vee-validate";
+import { validationSchema } from "../../validation";
+import UpdatePassword from "../../graphql/changePwd/ChangePwd.gql";
+
+const marginBtn = computed(() =>
+  useQuasar().screen.gt.md ? "q-mt-xl" : "q-mt-sm"
+);
+
+const data = reactive({
   newPwd: "",
   confPwd: "",
-  isnewPwd: true,
-  isConfPwd: true,
 });
+const isNewPwdVisible = ref(true);
+const isConfPwdVisible = ref(true);
 
-const errorMessage = ref("");
-const emptyFieldPattern = /^\s*$/;
-const passwordPattern = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)[A-Za-z\d]{4,8}$/;
-
-const validatePassword = () => {
-  if (emptyFieldPattern.test(form.newPwd && form.confPwd)) {
-    errorMessage.value = t("notifications.fail.emptyField");
-    return;
+const updatePassword = async () => {
+  try {
+    await runMutation(UpdatePassword, { data });
+    positiveNotify(t("notifications.success.login"));
+    router.push("/login");
+  } catch {
+    negativeNotify(t("notifications.fail.login"));
   }
-  if (!passwordPattern.test(form.newPwd)) {
-    errorMessage.value = t("notifications.fail.invalidPassword");
-    return;
-  }
-  if (form.newPwd !== form.confPwd) {
-    errorMessage.value = t("notifications.fail.equalPassword");
-    return;
-  }
-  router.push("/login");
 };
 </script>
 
 <template>
   <span class="titulo q-mb-lg">{{ $t("titles.Login.textPasswordForm") }}</span>
-  <q-input
-    rounded
-    class="tamanho"
-    standout="bg-info"
-    bg-color="primary"
-    v-model="form.newPwd"
-    input-class="text-white"
-    :placeholder="$t('label.newPassword')"
-    :type="form.isnewPwd ? 'password' : 'text'"
+  <Form
+    @submit="() => updatePassword()"
+    :validation-schema="validationSchema"
+    class="q-gutter-md"
   >
-    <template v-slot:append>
-      <q-icon
-        color="white"
-        class="cursor-pointer"
-        @click="form.isnewPwd = !form.isnewPwd"
-        :name="form.isnewPwd ? 'visibility_off' : 'visibility'"
+    <Field name="password" v-slot="item">
+      <div>
+        <q-input
+          :model-value="item.value"
+          v-bind="item.field"
+          rounded
+          standout="bg-info"
+          bg-color="primary"
+          input-class="text-white"
+          class="size text-white"
+          :placeholder="$t('label.inputPassword')"
+          :type="isNewPwdVisible ? 'password' : 'text'"
+        >
+          <template v-slot:append>
+            <q-icon
+              color="white"
+              class="cursor-pointer"
+              @click="isNewPwdVisible = !isNewPwdVisible"
+              :name="isNewPwdVisible ? 'visibility_off' : 'visibility'"
+            />
+          </template>
+        </q-input>
+        <span v-if="item.errorMessage" class="text-red">
+          {{ parseErrorMessage(item.errorMessage) }}
+        </span>
+      </div>
+    </Field>
+    <Field name="confirmPassword" v-slot="item">
+      <div>
+        <q-input
+          :model-value="item.value"
+          v-bind="item.field"
+          rounded
+          standout="bg-info"
+          bg-color="primary"
+          input-class="text-white"
+          class="size text-white"
+          :placeholder="$t('label.confirmPwd')"
+          :type="isConfPwdVisible ? 'password' : 'text'"
+        >
+          <template v-slot:append>
+            <q-icon
+              color="white"
+              class="cursor-pointer"
+              @click="isConfPwdVisible = !isConfPwdVisible"
+              :name="isConfPwdVisible ? 'visibility_off' : 'visibility'"
+            />
+          </template>
+        </q-input>
+        <span v-if="item.errorMessage" class="text-red">
+          {{ parseErrorMessage(item.errorMessage) }}
+        </span>
+      </div>
+    </Field>
+    <button class="bg-transparent no-padding">
+      <q-btn
+        :label="$t('action.submit.index')"
+        rounded
+        :class="marginBtn"
+        class="btn-enviar size text-black bg-white"
+        size="lg"
       />
-    </template>
-  </q-input>
-  <q-input
-    rounded
-    standout="bg-info"
-    bg-color="primary"
-    v-model="form.confPwd"
-    class="tamanho q-mt-md"
-    input-class="text-white"
-    :placeholder="$t('label.confirmPassword')"
-    :type="form.isConfPwd ? 'password' : 'text'"
-  >
-    <template v-slot:append>
-      <q-icon
-        color="white"
-        class="cursor-pointer"
-        @click="form.isConfPwd = !form.isConfPwd"
-        :name="form.isConfPwd ? 'visibility_off' : 'visibility'"
-      />
-    </template>
-  </q-input>
-  <p class="q-mt-md text-deep-orange-14" v-if="errorMessage">
-    {{ errorMessage }}
-  </p>
-  <q-btn
-    :label="$t('action.submit.index')"
-    rounded
-    class="q-mt-md btn-enviar tamanho"
-    size="lg"
-    @click="validatePassword"
-  />
+    </button>
+  </Form>
 </template>
 
 <style scoped>

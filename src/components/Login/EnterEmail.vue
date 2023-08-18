@@ -2,27 +2,24 @@
 import SendRecoveryEmail from "../../graphql/sendEmail/SendEmail.gql";
 import { Field, Form } from "vee-validate";
 import { validationSchema } from "../../validation";
+import { UserForm } from "../../entities/User";
 
-const data = reactive({
-  emailRecover: "",
-});
-
-const sendRecoveryEmail = async () => {
-  console.log("ws");
-  // try {
-  //   await runMutation(SendRecoveryEmail, { data });
-  //   positiveNotify(t("notifications.success.login"));
-  //   router.push("/emailSent");
-  // } catch {
-  //   negativeNotify(t("notifications.fail.login"));
-  // }
+const sendRecoveryEmail = async (data: UserForm) => {
+  console.log("data");
+  try {
+    await runMutation(SendRecoveryEmail, { data });
+    positiveNotify(t("notifications.success.login"));
+    router.push("/emailSent");
+  } catch {
+    negativeNotify(t("notifications.fail.login"));
+  }
 };
 </script>
 
 <template>
   <span class="titulo q-mb-lg">{{ $t("titles.Login.textPasswordForm") }}</span>
   <Form
-    @submit="sendRecoveryEmail()"
+    @submit="sendRecoveryEmail"
     :validation-schema="validationSchema"
     class="q-gutter-md"
   >
@@ -41,16 +38,16 @@ const sendRecoveryEmail = async () => {
         {{ parseErrorMessage(item.errorMessage) }}
       </span>
     </Field>
-    <div class="column">
-      <button class="bg-transparent no-padding">
+    <button>Submit</button>
+    <!-- <Button class="bg-transparent no-padding">
         <q-btn
           :label="$t('action.submit.index')"
           rounded
           class="btn-enviar size text-black bg-white"
           size="lg"
         />
-      </button>
-      <!-- <button class="bg-transparent no-padding">
+      </Button>
+      <Button class="bg-transparent no-padding">
         <q-btn
           class="q-mt-md"
           icon="chevron_left"
@@ -62,8 +59,7 @@ const sendRecoveryEmail = async () => {
             {{ $t("action.back.index") }}
           </span>
         </q-btn>
-      </button> -->
-    </div>
+      </Button> -->
   </Form>
 </template>
 

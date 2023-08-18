@@ -54,7 +54,6 @@
 import GetMenu from "../../graphql/menu/GetMenu.gql";
 import { Menu } from "../../entities";
 import { Ref } from "vue";
-import actionButtons from "./actionButtons";
 
 const rhList: Ref<Menu[]> = ref([]);
 

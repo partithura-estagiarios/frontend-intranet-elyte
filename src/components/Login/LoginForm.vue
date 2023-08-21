@@ -2,7 +2,7 @@
 import { AuthQuery } from "../../entities";
 import Auth from "../../graphql/auth/login.gql";
 import { Field, Form } from "vee-validate";
-import { userSchema } from "../../validation";
+import { loginSchema } from "../../validation";
 
 const marginBtn = computed(() =>
   useQuasar().screen.gt.md ? "q-mt-xl" : "q-mt-sm"
@@ -40,9 +40,9 @@ async function auth() {
   <Form
     @submit="() => auth()"
     class="q-gutter-md"
-    :validation-schema="userSchema"
+    :validation-schema="loginSchema"
   >
-    <Field name="username" v-slot="item">
+    <Field name="user" v-slot="item">
       <q-input
         :model-value="item.value"
         v-bind="item.field"
@@ -57,7 +57,7 @@ async function auth() {
         {{ parseErrorMessage(item.errorMessage) }}
       </span>
     </Field>
-    <Field name="password" v-slot="item">
+    <Field name="pwd" v-slot="item">
       <div>
         <q-input
           :model-value="item.value"

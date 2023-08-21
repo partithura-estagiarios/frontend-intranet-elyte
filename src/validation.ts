@@ -43,3 +43,8 @@ export const userSchema = yup.object({
   email,
   password,
 });
+
+export const loginSchema = yup.object({
+  user: yup.string().required(t("warning.requiredField")),
+  pwd: yup.string().required(t("warning.requiredField")),
+});

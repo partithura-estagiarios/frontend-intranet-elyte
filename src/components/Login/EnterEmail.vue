@@ -1,21 +1,24 @@
 <script lang="ts" setup>
 import SendRecoveryEmail from "../../graphql/sendEmail/SendEmail.gql";
 import { Field, Form } from "vee-validate";
-import { validationSchema } from "../../validation";
+import { emailSchema } from "../../validation";
 import { UserForm } from "../../entities/User";
 
 const marginBtn = computed(() =>
   useQuasar().screen.gt.md ? "q-mt-xl" : "q-mt-sm"
 );
 
-const sendRecoveryEmail = async (data: UserForm) => {
-  console.log("data");
+const sendRecoveryEmail = async (email: UserForm) => {
   try {
-    await runMutation(SendRecoveryEmail, { data });
-    positiveNotify(t("notifications.success.login"));
-    router.push("/emailSent");
+    const result = await runMutation(SendRecoveryEmail, email);
+    if (result) {
+      positiveNotify(t("notifications.success.sendEmail"));
+      router.push("/login");
+      return;
+    }
+    negativeNotify(t("notifications.fail.emailNotFound"));
   } catch {
-    negativeNotify(t("notifications.fail.login"));
+    negativeNotify(t("notifications.fail.sendEmail"));
   }
 };
 </script>
@@ -24,7 +27,7 @@ const sendRecoveryEmail = async (data: UserForm) => {
   <span class="titulo q-mb-lg">{{ $t("titles.Login.textPasswordForm") }}</span>
   <Form
     @submit="sendRecoveryEmail"
-    :validation-schema="validationSchema"
+    :validation-schema="emailSchema"
     class="q-gutter-md"
   >
     <Field name="email" v-slot="item">
@@ -42,25 +45,29 @@ const sendRecoveryEmail = async (data: UserForm) => {
         {{ parseErrorMessage(item.errorMessage) }}
       </span>
     </Field>
-    <q-btn
-      :label="$t('action.submit.index')"
-      rounded
-      class="btn-enviar size text-black bg-white"
-      size="lg"
-      :class="marginBtn"
-    />
-    <q-btn
-      class="q-mt-md"
-      icon="chevron_left"
-      size="16px"
-      text-color="primary"
-      to="/login"
-    >
-      <span class="text-white">
-        {{ $t("action.back.index") }}
-      </span>
-    </q-btn>
+    <div>
+      <button class="bg-transparent no-padding">
+        <q-btn
+          :label="$t('action.submit.index')"
+          rounded
+          class="btn-enviar size text-black bg-white"
+          size="lg"
+          :class="marginBtn"
+        />
+      </button>
+    </div>
   </Form>
+  <q-btn
+    class="q-mt-md"
+    icon="chevron_left"
+    size="16px"
+    text-color="primary"
+    to="/login"
+  >
+    <span class="text-white">
+      {{ $t("action.back.index") }}
+    </span>
+  </q-btn>
 </template>
 
 <style scoped>

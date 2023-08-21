@@ -1,5 +1,3 @@
 mutation SendRecoveryEmail($email: String!) {
-  sendRecoveryEmail(email: $email) {
-    email
-  }
+  sendRecoveryEmail(email: $email)
 }

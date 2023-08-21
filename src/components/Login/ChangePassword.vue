@@ -1,20 +1,17 @@
 <script lang="ts" setup>
 import { Field, Form } from "vee-validate";
-import { validationSchema } from "../../validation";
+import { UserForm } from "../../entities/User";
+import { confirmPwdSchema } from "../../validation";
 import UpdatePassword from "../../graphql/changePwd/ChangePwd.gql";
+
+const isNewPwdVisible = ref(true);
+const isConfPwdVisible = ref(true);
 
 const marginBtn = computed(() =>
   useQuasar().screen.gt.md ? "q-mt-xl" : "q-mt-sm"
 );
 
-const data = reactive({
-  newPwd: "",
-  confPwd: "",
-});
-const isNewPwdVisible = ref(true);
-const isConfPwdVisible = ref(true);
-
-const updatePassword = async () => {
+const updatePassword = async (data: UserForm) => {
   try {
     await runMutation(UpdatePassword, { data });
     positiveNotify(t("notifications.success.login"));
@@ -28,8 +25,8 @@ const updatePassword = async () => {
 <template>
   <span class="titulo q-mb-lg">{{ $t("titles.Login.textPasswordForm") }}</span>
   <Form
-    @submit="() => updatePassword()"
-    :validation-schema="validationSchema"
+    @submit="updatePassword"
+    :validation-schema="confirmPwdSchema"
     class="q-gutter-md"
   >
     <Field name="password" v-slot="item">

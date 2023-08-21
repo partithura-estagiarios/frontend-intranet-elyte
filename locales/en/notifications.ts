@@ -14,6 +14,7 @@ export default {
   fail: {
     login: "Incorrect credentials, please try again!",
     sendEmail: "An error occurred while trying to send the email",
+    emailNotFound: "E-mail not found",
     changePwd: "An error occurred while trying to change your password",
     register: "An error occurred while creating your registration",
     createBranchLine: "An error occurred while creating the branch line",
@@ -25,5 +26,9 @@ export default {
         "An error occurred while deleting the system | An error occurred while deleting the systems",
       notSelected: "You must select at least one system to delete",
     },
+    emptyField: "Required field",
+    invalidEmail: "Invalid email",
+    equalPassword: "Passwords do not match",
+    invalidPassword: "Invalid password",
   },
 };

@@ -15,6 +15,7 @@ export default {
   fail: {
     login: "Credenciais incorretas, tente novamente!",
     sendEmail: "Houve um erro ao tentar enviar o email",
+    emailNotFound: "E-mail não encontrado",
     changePwd: "Houve um erro ao tentar mudar sua senha",
     register: "Houve um erro ao criar seu cadastro",
     createRamal: "Houve um erro ao criar o ramal",
@@ -26,8 +27,8 @@ export default {
         "Houve um erro ao deletar o sistema | Houve um erro ao deletar os sistemas",
       notSelected: "Você deve selecionar pelo menos um sistema para deletar",
     },
-    emptyField: "Algum campo está vazio | O campo está vazio",
-    invalidEmail: "Não é um email válido",
+    emptyField: "Campo obrigatório",
+    invalidEmail: "Email inválido",
     equalPassword: "As senhas não correspondem",
     invalidPassword: "Senha inválida",
   },

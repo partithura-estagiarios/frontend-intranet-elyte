@@ -74,12 +74,12 @@ async function getGestaoList() {
 
   gestaoList.value = menuBySystem;
   return gestaoList;
-}
+
 
 const buttons: Action[] = [
-  { label: "Adicionar", icon: "add", component: AddSystemDialog },
-  { label: "Editar", icon: "edit", component: EditSystemDialog },
-  { label: "Delete", icon: "delete", component: DelSystemDialog },
+  { label: t("actions.add"), icon: "add", component: AddSystemDialog },
+  { label: t("actions.edit"), icon: "edit", component: EditSystemDialog },
+  { label: t("actions.delete"), icon: "delete", component: DelSystemDialog },
 ];
 </script>
 

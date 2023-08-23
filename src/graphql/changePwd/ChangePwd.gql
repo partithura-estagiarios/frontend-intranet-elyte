@@ -1,4 +1,4 @@
-mutation UpdatePassword($data: changePasswordInput!) {
+mutation UpdatePassword($data: ChangePasswordInput!) {
   updatePassword(data: $data) {
     id
   }

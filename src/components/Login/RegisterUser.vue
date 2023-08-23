@@ -10,8 +10,6 @@ const marginBtn = computed(() =>
 
 const isPwdvisible = ref(true);
 const createUser = async (data: UserForm) => {
-  console.log(data);
-
   try {
     await runMutation(CreateUser, { data });
     positiveNotify(t("notifications.success.login"));

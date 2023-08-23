@@ -12,6 +12,7 @@
             :buttons="actionButtons"
             :item="rhList"
             @reload="getListRh()"
+            system="rh"
           />
         </div>
       </q-card-section>
@@ -54,10 +55,6 @@
 import GetMenu from "../../graphql/menu/GetMenu.gql";
 import { Menu } from "../../entities";
 import { Ref } from "vue";
-import { Action } from "../../entities/Action";
-import AddSystemDialog from "../DynamicDialog/SystemModals/AddSystemDialog.vue";
-import EditSystemDialog from "../DynamicDialog/SystemModals/EditSystemDialog.vue";
-import DelSystemDialog from "../DynamicDialog/SystemModals/DelSystemDialog.vue";
 import actionButtons from "./actionButtons";
 
 const rhList: Ref<Menu[]> = ref([]);
@@ -74,12 +71,6 @@ async function getListRh() {
   rhList.value = menuBySystem;
   return rhList;
 }
-
-const buttons: Action[] = [
-  { label: t("actions.add"), icon: "add", component: AddSystemDialog },
-  { label: t("actions.edit"), icon: "edit", component: EditSystemDialog },
-  { label: t("actions.delete"), icon: "delete", component: DelSystemDialog },
-];
 </script>
 
 <style scoped>

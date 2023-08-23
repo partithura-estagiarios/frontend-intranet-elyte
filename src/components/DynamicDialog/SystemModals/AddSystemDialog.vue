@@ -12,6 +12,10 @@ const props = defineProps({
     type: Array<Menu>,
     required: true,
   },
+  system: {
+    type: String,
+    default: "",
+  },
 });
 const ICON_LIBRARY_BASE_URL = "https://pictogrammers.com/library/mdi/";
 
@@ -20,7 +24,7 @@ const form = reactive({
   label: "",
   sublabel: "",
   link: "",
-  sistema: props.item[0].sistema,
+  sistema: props.system,
 });
 async function createSystem() {
   try {

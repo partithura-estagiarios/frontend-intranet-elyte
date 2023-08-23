@@ -19,6 +19,20 @@ const username = yup
   .required(t("warning.requiredField"))
   .min(2, t("warning.username"));
 
+const title = yup.string().required(t("warning.requiredField"));
+const icon = yup.string().required(t("warning.requiredField"));
+const description = yup.string().required(t("warning.requiredField"));
+const system = yup.string().required(t("warning.requiredField"));
+const link = yup.string().required(t("warning.requiredField"));
+
+export const inputSchema = yup.object({
+  title,
+  icon,
+  description,
+  system,
+  link,
+});
+
 export const usernameSchema = yup.object({
   username,
 });
@@ -45,6 +59,6 @@ export const userSchema = yup.object({
 });
 
 export const loginSchema = yup.object({
-  user: yup.string().required(t("warning.requiredField")),
-  pwd: yup.string().required(t("warning.requiredField")),
+  username: yup.string().required(t("warning.requiredField")),
+  password: yup.string().required(t("warning.requiredField")),
 });

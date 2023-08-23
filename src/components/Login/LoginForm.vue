@@ -3,19 +3,15 @@ import { AuthQuery } from "../../entities";
 import Auth from "../../graphql/auth/login.gql";
 import { Field, Form } from "vee-validate";
 import { loginSchema } from "../../validation";
+import { UserForm } from "../../entities/User";
 
 const marginBtn = computed(() =>
   useQuasar().screen.gt.md ? "q-mt-xl" : "q-mt-sm"
 );
 
-const data = reactive({
-  username: "",
-  password: "",
-});
-
 const isPwdvisible = ref(true);
 
-async function auth() {
+async function auth(data: UserForm) {
   try {
     const { auth } = (await runMutation(Auth, data)) as unknown as AuthQuery;
     const { token, user } = auth;
@@ -37,12 +33,8 @@ async function auth() {
 
 <template>
   <span class="q-mb-lg">{{ $t("titles.Login.textLoginForm") }}</span>
-  <Form
-    @submit="() => auth()"
-    class="q-gutter-md"
-    :validation-schema="loginSchema"
-  >
-    <Field name="user" v-slot="item">
+  <Form @submit="auth" class="q-gutter-md" :validation-schema="loginSchema">
+    <Field name="username" v-slot="item">
       <q-input
         :model-value="item.value"
         v-bind="item.field"
@@ -57,7 +49,7 @@ async function auth() {
         {{ parseErrorMessage(item.errorMessage) }}
       </span>
     </Field>
-    <Field name="pwd" v-slot="item">
+    <Field name="password" v-slot="item">
       <div>
         <q-input
           :model-value="item.value"

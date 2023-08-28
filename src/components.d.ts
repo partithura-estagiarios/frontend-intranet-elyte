@@ -15,6 +15,7 @@ declare module "@vue/runtime-core" {
     AntDesignTextBox: typeof import("./components/controls/AntDesignTextBox.vue")["default"];
     BackButton: typeof import("./components/buttons/BackButton.vue")["default"];
     BackgroundLogin: typeof import("./components/Login/BackgroundLogin.vue")["default"];
+    CalendarDialog: typeof import("./components/CalendarDialog.vue")["default"];
     CardFooter: typeof import("./components/DynamicDialog/CardFooter.vue")["default"];
     CardHeader: typeof import("./components/DynamicDialog/CardHeader.vue")["default"];
     Changepassword: typeof import("./components/Login/ChangePassword.vue")["default"];

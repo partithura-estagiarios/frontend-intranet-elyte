@@ -5,29 +5,18 @@ import { Menu } from "../../entities";
 import { Field, Form } from "vee-validate";
 import * as yup from "yup";
 
-const options = [
-  t("text.days.sunday"),
-  t("text.days.monday"),
-  t("text.days.tuesday"),
-  t("text.days.wednesday"),
-  t("text.days.thursday"),
-  t("text.days.friday"),
-  t("text.days.saturday"),
-];
-
-function makeRuleOfString(message: string = "warning.requiredField") {
-  return yup.string().required().label(t(message));
-}
+const showCalendar = ref(false);
+const selectedDate = ref(null);
 
 const schema = yup.object({
-  salad: makeRuleOfString(),
-  rice: makeRuleOfString(),
-  complement: makeRuleOfString(),
-  soup: makeRuleOfString(),
-  protein: makeRuleOfString(),
-  dessert: makeRuleOfString(),
-  day: makeRuleOfString(),
-  week: makeRuleOfString(),
+  salad: yup.string().required().label(t("warning.requiredField")),
+  rice: yup.string().required().label(t("warning.requiredField")),
+  complement: yup.string().required().label(t("warning.requiredField")),
+  soup: yup.string().required().label(t("warning.requiredField")),
+  protein: yup.string().required().label(t("warning.requiredField")),
+  dessert: yup.string().required().label(t("warning.requiredField")),
+  day: yup.string().required().label(t("warning.requiredField")),
+  week: yup.string().required().label(t("warning.requiredField")),
 });
 
 async function addMenu(menu: Record<string, string | number>, actions: any) {
@@ -41,6 +30,10 @@ async function addMenu(menu: Record<string, string | number>, actions: any) {
     negativeNotify(t("notifications.fail.createMenu"));
   }
 }
+
+watch(selectedDate, () => {
+  showCalendar.value = false;
+});
 </script>
 
 <template>
@@ -53,26 +46,25 @@ async function addMenu(menu: Record<string, string | number>, actions: any) {
       class="col-6 q-gutter-md"
     >
       <Field name="day" v-slot="item">
-        <q-select
-          :model-value="item.value"
+        <q-input
+          v-model="selectedDate"
           v-bind="item.field"
           :label="$t('text.day')"
-          bg-color="grey-3"
-          :options="options"
-          :popup-content-style="{ color: 'black' }"
-        />
-        <span v-if="item.errorMessage" class="text-red q-mb-xl">
-          {{ parseErrorMessage(item.errorMessage) }}
-        </span>
-      </Field>
-
-      <Field name="week" v-slot="item">
-        <q-input
-          :model-value="item.value"
-          v-bind="item.field"
-          :label="$t('text.week')"
           filled
+          @click="showCalendar = true"
         />
+
+        <q-date
+          v-model="selectedDate"
+          v-if="showCalendar"
+          :label="$t('text.day')"
+          bg-color="grey-3"
+          class="text-black"
+          :popup-content-style="{ color: 'black' }"
+          @input="showCalendar = false"
+        >
+        </q-date>
+
         <span v-if="item.errorMessage" class="text-red q-mb-xl">
           {{ parseErrorMessage(item.errorMessage) }}
         </span>

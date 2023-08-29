@@ -10,4 +10,6 @@ export default {
   containDigit: "Must contain a digit",
   containSpecialChar: "Must contain a special character",
   requiredField: "Field is required",
+  matchingPwd: "Passwords must match",
+  confirmPwd: "Confirm your password",
 };

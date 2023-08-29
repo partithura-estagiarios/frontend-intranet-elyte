@@ -10,4 +10,6 @@ export default {
   uppercase: "Deve conter uma letra maiúscula",
   containDigit: "Deve conter um número",
   containSpecialChar: "Deve conter um caractér especial",
+  matchingPwd: "As senhas devem ser iguais",
+  confirmPwd: "Confirme sua senha",
 };

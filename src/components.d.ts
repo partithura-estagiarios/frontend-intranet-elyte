@@ -9,6 +9,7 @@ declare module "@vue/runtime-core" {
   export interface GlobalComponents {
     ActionButton: typeof import("./components/buttons/ActionButton.vue")["default"];
     Add: typeof import("./components/SistemaGestao/Modais/Add.vue")["default"];
+    AddRamal: typeof import("./components/Ramais/modais/AddRamal.vue")["default"];
     AddSys: typeof import("./components/Modais/AddSys.vue")["default"];
     AddSystemDialog: typeof import("./components/DynamicDialog/SystemModals/AddSystemDialog.vue")["default"];
     AddSystemManage: typeof import("./components/Modais/AddSystemManage.vue")["default"];
@@ -24,9 +25,11 @@ declare module "@vue/runtime-core" {
     ConfirmDelete: typeof import("./components/ConfirmDelete.vue")["default"];
     CreateMenu: typeof import("./components/CreateMenu/index.vue")["default"];
     DeleteButton: typeof import("./components/buttons/DeleteButton.vue")["default"];
+    DeleteRamal: typeof import("./components/Ramais/modais/DeleteRamal.vue")["default"];
     DelSystemDialog: typeof import("./components/DynamicDialog/SystemModals/DelSystemDialog.vue")["default"];
     DropDown: typeof import("./components/buttons/DropDown.vue")["default"];
     DynamicDialog: typeof import("./components/DynamicDialog/DynamicDialog.vue")["default"];
+    EditRamal: typeof import("./components/Ramais/modais/EditRamal.vue")["default"];
     EditSystemDialog: typeof import("./components/DynamicDialog/SystemModals/EditSystemDialog.vue")["default"];
     EmailSent: typeof import("./components/Login/EmailSent.vue")["default"];
     EnterCode: typeof import("./components/Login/EnterCode.vue")["default"];

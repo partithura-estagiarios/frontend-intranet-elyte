@@ -6,7 +6,6 @@ function buildMenus(menus: Menu[]): { menus: Menu[] } {
     menus,
   };
 }
-
 const Menus = defineStore("Menus", {
   state: () => buildMenus(null),
   getters: {

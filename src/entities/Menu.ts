@@ -6,8 +6,5 @@ export interface Menu {
   salad: string;
   rice: string;
   soup: string;
-  week: string;
   day: string;
-  createdAt: string;
-  updatedAt: string;
 }

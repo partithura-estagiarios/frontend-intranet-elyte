@@ -1,45 +1,62 @@
 <script lang="ts" setup>
-const form = reactive({
-  emailRecover: "",
-});
+import SendRecoveryEmail from "../../graphql/sendEmail/SendEmail.gql";
+import { Field, Form } from "vee-validate";
+import { emailSchema } from "../../validation";
+import { UserForm } from "../../entities/User";
 
-const errorMessage = ref("");
-const emptyFieldPattern = /^\s*$/;
-const emailPattern = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
+const marginBtn = computed(() =>
+  useQuasar().screen.gt.md ? "q-mt-xl" : "q-mt-sm"
+);
 
-const validateEmail = () => {
-  if (emptyFieldPattern.test(form.emailRecover)) {
-    errorMessage.value = t("notifications.fail.emptyField", 2);
-    return;
+const sendRecoveryEmail = async (email: UserForm) => {
+  try {
+    const result = await runMutation(SendRecoveryEmail, email);
+    if (result) {
+      positiveNotify(t("notifications.success.sendEmail"));
+      router.push("/login");
+      return;
+    }
+    negativeNotify(t("notifications.fail.emailNotFound"));
+  } catch {
+    negativeNotify(t("notifications.fail.sendEmail"));
   }
-  if (!emailPattern.test(form.emailRecover)) {
-    errorMessage.value = t("notifications.fail.invalidEmail");
-    return;
-  }
-  router.push("/enterCode");
 };
 </script>
 
 <template>
   <span class="titulo q-mb-lg">{{ $t("titles.Login.textPasswordForm") }}</span>
-  <q-input
-    rounded
-    type="email"
-    class="tamanho"
-    standout="bg-info"
-    bg-color="primary"
-    input-class="text-white"
-    v-model="form.emailRecover"
-    :placeholder="$t('label.inputEmail')"
-  />
-  <q-btn
-    :label="$t('action.submit.index')"
-    rounded
-    class="q-mt-md btn-enviar tamanho"
-    size="lg"
-    @click="validateEmail"
-  />
-  <p class="q-mt-md" v-if="errorMessage">{{ errorMessage }}</p>
+  <Form
+    @submit="sendRecoveryEmail"
+    :validation-schema="emailSchema"
+    class="q-gutter-md"
+  >
+    <Field name="email" v-slot="item">
+      <q-input
+        :model-value="item.value"
+        v-bind="item.field"
+        rounded
+        standout="bg-info"
+        bg-color="primary"
+        input-class="text-white"
+        class="size text-white"
+        :placeholder="$t('label.inputEmail')"
+      />
+      <span v-if="item.errorMessage" class="text-red">
+        {{ parseErrorMessage(item.errorMessage) }}
+      </span>
+    </Field>
+    <div>
+      <button class="bg-transparent no-padding">
+        <q-btn
+          :label="$t('action.submit.index')"
+          rounded
+          class="btn-enviar size text-black bg-white"
+          size="lg"
+          :class="marginBtn"
+        />
+      </button>
+    </div>
+  </Form>
   <q-btn
     class="q-mt-md"
     icon="chevron_left"
@@ -56,13 +73,11 @@ const validateEmail = () => {
 <style scoped>
 .btn-enviar {
   box-shadow: 0px 10px 40px -12px #fff;
-  background: #fff;
-  color: black;
 }
 .btn-enviar:hover {
   box-shadow: 0px 10px 40px -12px #ff0000;
 }
-.tamanho {
+.size {
   width: 20rem;
 }
 </style>

@@ -13,6 +13,10 @@ defineProps({
     type: Array<Action>,
     default: () => [],
   },
+  system: {
+    type: String,
+    default: "",
+  },
 });
 const activedModal: Ref<number | null> = ref(null);
 
@@ -40,11 +44,12 @@ function deactivateModal() {
         @click="activateModal(index)"
       >
         <component
-          @reload="() => $emit('reload')"
+          @reload="() => $emit('reload', deactivateModal())"
           @cancel="deactivateModal()"
           :isActive="activedModal === index"
           :is="button.component"
           :item="item"
+          :system="system"
         />
         <q-icon :name="button.icon" color="primary" size="xs" />
         <span class="text-subtitle1">{{ button.label }}</span>

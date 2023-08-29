@@ -17,21 +17,9 @@ export default {
     ing: "Resetting",
     ed: "Reseted",
   },
-  delete: {
-    index: "Delete",
-    ing: "Deleting",
-    ed: "Deleted",
-  },
-  update: {
-    index: "Update",
-    ing: "Updating",
-    ed: "Updated",
-  },
-  create: {
-    index: "Create",
-    ing: "Creating",
-    ed: "Created",
-  },
+  delete: "Delete",
+  edit: "Edit",
+  add: "Add",
   buy: {
     index: "Buy",
     ing: "Buying",
@@ -41,7 +29,15 @@ export default {
     index: "Search",
   },
   addRamal: {
-    index: "Add ramal",
+    index: "Add branch line",
+  },
+  deleteRamal: {
+    index: "Delete branch line",
+    message:
+      "Are you sure you wish to delete the branch line {number} from { name } from the sector { sector }?",
+  },
+  editRamal: {
+    index: "Edit branch line",
   },
   addSystem: {
     index: "Add System",

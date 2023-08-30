@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Event } from "../../entities";
+import { EventTimes } from "../../entities";
 import GetEventTime from "../../graphql/events/GetEventTime.gql";
 import { DateTime } from "luxon";
 
@@ -9,8 +9,8 @@ const time = ref(null);
 const date = ref(null);
 const openTime = ref(false);
 const openMinute = ref(false);
-const eventsByDay = ref([]);
-const availableMinutes = ref<number[]>([]);
+const eventsByDay = ref<EventTimes[]>([]);
+const availableMinutes = ref<Array<number>>([]);
 const dayHours = [
   0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21,
   22, 23,
@@ -29,24 +29,26 @@ watch(date, async () => {
   eventsByDay.value = response.getEventTime;
 });
 
-function hourIsDisabled(hour: number) {
-  const foundHour = eventsByDay.value.find((event) => event.hour === hour);
+function hourIsDisabled(hour: number): boolean {
+  const foundHour = eventsByDay.value.find(
+    (event: EventTimes) => event.hour === hour
+  ) as unknown as EventTimes;
   if (foundHour) {
     return !(foundHour.initial.available || foundHour.half.available);
   }
   return true;
 }
 
-function minuteIsDisabled(minute: number) {
+function minuteIsDisabled(minute: number): boolean {
   return !availableMinutes.value.includes(DateTime.fromMillis(minute).minute);
 }
 
-function getMinutesAvailable(selectedHour: number) {
-  availableMinutes.value = []; // Limpa a matriz antes de adicionar novos minutos
+function getMinutesAvailable(selectedHour: number): void {
+  availableMinutes.value = [];
 
   const foundHour = eventsByDay.value.find(
-    (event) => event.hour === selectedHour
-  );
+    (event: EventTimes) => event.hour === selectedHour
+  ) as unknown as EventTimes;
   if (foundHour?.initial.available) {
     availableMinutes.value.push(0);
   }
@@ -66,7 +68,6 @@ function generateTimeList(selectedHour: number): void {
   times.push(hour.getTime(), hoursPlus30.getTime());
 
   minutes.value = times;
-  console.log(minutes.value);
   openMinute.value = true;
 }
 
@@ -74,16 +75,12 @@ function finishSelector(minute: number) {
   emits("setTime", minute);
   openMinute.value = false;
   openTime.value = false;
+  date.value = null;
 }
 </script>
 
 <template>
-  <q-select
-    class="col-6 q-px-xs row select"
-    :label="$t('label.date.initial')"
-    v-model="time"
-    ref="initialSelect"
-  >
+  <q-select class="col-6 q-px-xs row select" v-model="time" ref="initialSelect">
     <template #no-option>
       <div class="row justify-center date-menu">
         <q-date

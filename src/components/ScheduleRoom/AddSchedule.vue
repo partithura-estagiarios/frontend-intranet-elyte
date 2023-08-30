@@ -77,8 +77,10 @@ async function addEvent() {
       <SelectTime
         @setTime="(args) => setDate('initialTime', args)"
         v-model="form.initialTime"
+        :label="$t('label.date.initial')"
       />
       <SelectTime
+        :label="$t('label.date.final')"
         @setTime="(args) => setDate('finalTime', args)"
         v-model="form.finalTime"
       />

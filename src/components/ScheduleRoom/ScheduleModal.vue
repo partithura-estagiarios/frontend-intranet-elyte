@@ -13,7 +13,7 @@ defineProps({
 });
 
 function parseDate(date: number) {
-  return DateTime.fromMillis(date).toISODate();
+  return DateTime.fromMillis(date).toFormat("HH:mm");
 }
 </script>
 
@@ -26,7 +26,7 @@ function parseDate(date: number) {
     close
   >
     <div class="column q-px-lg q-py-md text-black text-body1 q-gutter-md">
-      <span class="text-h6">Informações</span>
+      <span class="text-h6">{{ $t("titles.info", 2) }}</span>
       <span>
         <q-icon name="person" />
         Nome:
@@ -35,13 +35,13 @@ function parseDate(date: number) {
       <span>
         <q-icon name="schedule" />
         Horário:
-        {{ parseDate(item.initialTime) }}
+        {{ parseDate(item.initialTime) + " às " + parseDate(item.finalTime) }}
       </span>
 
       <q-separator />
 
       <div class="column q-gutter-y-md">
-        <span class="text-h6">Material de apoio</span>
+        <span class="text-h6">{{ $t("label.suport.index") }}</span>
         <span>
           <q-icon name="computer" />
           Computador:
@@ -51,6 +51,16 @@ function parseDate(date: number) {
           <q-icon name="videocam" />
           Projetor:
           {{ item.suport.computer }}
+        </span>
+        <span>
+          <q-icon name="computer" />
+          Água:
+          {{ item.suport.water }}
+        </span>
+        <span>
+          <q-icon name="videocam" />
+          Café:
+          {{ item.suport.coffee }}
         </span>
       </div>
     </div>

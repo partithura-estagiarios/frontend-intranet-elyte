@@ -2,6 +2,7 @@ export default {
   ManagementSystem: "Management System",
   HrSystem: "Hr System",
   OtherSystems: "OTHERS",
+  info: "Information | Informations",
   Management: {
     DataSul: "DataSul",
     Partithura: "Partithura",

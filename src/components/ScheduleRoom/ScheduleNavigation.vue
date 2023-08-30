@@ -1,10 +1,18 @@
 <script setup lang="ts">
+defineProps({
+  rooms: {
+    type: Array,
+    required: true,
+  },
+});
+
 const activedModal = ref(false);
 </script>
 
 <template>
   <AddSchedule
     :is-active="activedModal"
+    :rooms="rooms"
     @cancel="activedModal = false"
     @reload="$emit('reload', (activedModal = false))"
   />

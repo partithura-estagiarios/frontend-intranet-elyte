@@ -1,34 +1,36 @@
 <script setup lang="ts">
 import { QCalendarMonth, today } from "@quasar/quasar-ui-qcalendar/";
 import { Event, Room } from "../../entities";
-import GetEvent from "../../graphql/events/getEvents.gql";
+import GetEvent from "../../graphql/events/GetEvents.gql";
+import GetRooms from "../../graphql/rooms/GetRooms.gql";
 import { DateTime } from "luxon";
 
 const calendar = ref();
 const selectedDate = ref(today());
 const activedModal = ref(false);
 const eventList = ref();
+const roomList = ref();
 const selectedEvent = {};
 
 onMounted(() => {
   getEvents();
+  getRooms();
 });
-// Dados de sala mockados
-const rooms = [
-  { id: 1, name: "A", color: "blue-5" },
-  { id: 2, name: "B", color: "green-9" },
-];
 
-function getRoomByEvent(event: Event): Pick<Room, "color"> {
-  return rooms.find((room) => room.id === +event.roomId) as Room;
-}
-
-function addEvent(eventList: Array<Event | any>, event: Event): void {
-  eventList.push(event);
+async function getRooms(): Promise<void> {
+  roomList.value = await runQuery(GetRooms).then((data) => data.room);
 }
 
 async function getEvents(): Promise<void> {
   eventList.value = await runQuery(GetEvent).then((data) => data.event);
+  console.log(eventList.value);
+}
+function getRoomByEvent(event: Event): Pick<Room, "color"> {
+  return roomList.value?.find((room: Room) => room.id == +event.roomId) as Room;
+}
+
+function addEvent(eventList: Array<Event | any>, event: Event): void {
+  eventList.push(event);
 }
 
 const joinDate = computed(() => {
@@ -75,7 +77,8 @@ function onReload() {
       @prev="onPrev"
       @next="onNext"
       @today="onToday"
-      @reload="onReload"
+      @reload="() => onReload"
+      :rooms="roomList"
     />
     <q-calendar-month
       ref="calendar"
@@ -103,7 +106,7 @@ function onReload() {
               @cancel="activedModal = false"
               :item="selectedEvent"
             />
-            <q-icon name="circle" :color="getRoomByEvent(event).color" />
+            <q-icon name="circle" :color="getRoomByEvent(event)?.color" />
             <q-tooltip class="bg-black text-bold">{{
               event.userCreated
             }}</q-tooltip>
@@ -115,7 +118,7 @@ function onReload() {
     <div class="row q-gutter-md text-body1">
       <span
         :class="`text-${room.color}`"
-        v-for="room in rooms"
+        v-for="room in roomList"
         :key="room.name"
       >
         <q-icon name="circle" />

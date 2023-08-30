@@ -1,0 +1,13 @@
+query GetValidTime($day: Timestamp!, $roomId: ID) {
+  getEventTime(day: $day, roomId: $roomId) {
+    hour
+    initial {
+      available
+      value
+    }
+    half {
+      available
+      value
+    }
+  }
+}

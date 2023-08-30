@@ -1,4 +1,5 @@
 export interface Event {
+  id: string;
   userCreated: string;
   roomId: string;
   description: string;

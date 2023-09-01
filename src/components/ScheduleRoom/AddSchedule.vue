@@ -35,7 +35,7 @@ function setDate(
 ) {
   const formattedDate = DateTime.fromMillis(time)
     .setLocale("pt-BR")
-    .toLocaleString(DateTime.DATE_SHORT);
+    .toLocaleString(DateTime.DATETIME_SHORT);
   form[paramsDate] = formattedDate;
 }
 

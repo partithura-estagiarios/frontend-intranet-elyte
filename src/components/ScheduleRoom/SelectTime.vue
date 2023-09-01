@@ -4,11 +4,16 @@ import GetEventTime from "../../graphql/events/GetEventTime.gql";
 import { DateTime } from "luxon";
 
 const emits = defineEmits(["setTime"]);
+const props = defineProps({
+  type: {
+    type: String,
+    default: "",
+  },
+});
 
 const time = ref(null);
 const date = ref(null);
-const openTime = ref(false);
-const openMinute = ref(false);
+const selectionStep = ref<"date" | "hour" | "minute" | null>(null);
 const eventsByDay = ref<EventTimes[]>([]);
 const availableMinutes = ref<Array<number>>([]);
 const dayHours = [
@@ -40,7 +45,11 @@ function hourIsDisabled(hour: number): boolean {
 }
 
 function minuteIsDisabled(minute: number): boolean {
-  return !availableMinutes.value.includes(DateTime.fromMillis(minute).minute);
+  console.log(props.type);
+  if (props.type === "initial") {
+    return !availableMinutes.value.includes(DateTime.fromMillis(minute).minute);
+  }
+  return false;
 }
 
 function getMinutesAvailable(selectedHour: number): void {
@@ -68,34 +77,37 @@ function generateTimeList(selectedHour: number): void {
   times.push(hour.getTime(), hoursPlus30.getTime());
 
   minutes.value = times;
-  openMinute.value = true;
+  selectionStep.value = "minute";
 }
 
 function finishSelector(minute: number) {
   emits("setTime", minute);
-  openMinute.value = false;
-  openTime.value = false;
   date.value = null;
+  selectionStep.value = null;
 }
 </script>
 
 <template>
-  <q-select class="col-6 q-px-xs row select" v-model="time" ref="initialSelect">
+  <q-select
+    class="col-6 q-px-xs row select"
+    v-model="time"
+    ref="initialSelect"
+    @popup-show="selectionStep = 'date'"
+  >
     <template #no-option>
       <div class="row justify-center date-menu">
         <q-date
-          v-if="!openTime"
+          v-if="!selectionStep || selectionStep === 'date'"
           class="text-black"
           v-model="date"
           minimal
           flat
           mask="YYYY-MM-DD HH:mm"
-          @update:model-value="openTime = true"
+          @update:model-value="selectionStep = 'hour'"
         />
-        <div v-else class="text-black row">
+        <div v-else-if="selectionStep === 'hour'" class="text-black row">
           <div class="row q-pa-md">
             <q-item
-              v-if="!openMinute"
               dense
               class="item-size col-3"
               v-for="hour in dayHours"
@@ -107,8 +119,11 @@ function finishSelector(minute: number) {
             >
               {{ DateTime.fromObject({ hour }).toFormat("HH:mm") }}
             </q-item>
+          </div>
+        </div>
+        <div v-else class="text-black row">
+          <div class="row q-pa-md">
             <q-item
-              v-else
               dense
               class="item-size col-6"
               v-for="minute in minutes"

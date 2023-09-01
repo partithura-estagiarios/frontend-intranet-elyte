@@ -2,6 +2,7 @@
 import { QSelect } from "quasar";
 import { Room, Event } from "../../entities";
 import AddEvent from "../../graphql/events/AddEvent.gql";
+import { DateTime } from "luxon";
 
 const emits = defineEmits(["reload"]);
 defineProps({
@@ -19,8 +20,8 @@ const form: Omit<Event, "id"> = reactive({
   userCreated: "",
   roomId: "",
   description: "",
-  initialTime: null as unknown as number,
-  finalTime: null as unknown as number,
+  initialTime: null as unknown as string,
+  finalTime: null as unknown as string,
   suport: {
     computer: false,
     projector: false,
@@ -32,7 +33,10 @@ function setDate(
   paramsDate: keyof Pick<Event, "initialTime" | "finalTime">,
   time: number
 ) {
-  form[paramsDate] = time;
+  const formattedDate = DateTime.fromMillis(time)
+    .setLocale("pt-BR")
+    .toLocaleString(DateTime.DATE_SHORT);
+  form[paramsDate] = formattedDate;
 }
 
 async function addEvent() {
@@ -78,11 +82,13 @@ async function addEvent() {
         @setTime="(args) => setDate('initialTime', args)"
         v-model="form.initialTime"
         :label="$t('label.date.initial')"
+        type="initial"
       />
       <SelectTime
         :label="$t('label.date.final')"
         @setTime="(args) => setDate('finalTime', args)"
         v-model="form.finalTime"
+        type="final"
       />
       <q-input
         class="col-12 q-px-xs"

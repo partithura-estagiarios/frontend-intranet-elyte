@@ -36,8 +36,8 @@ function addEvent(eventList: Array<Event | any>, event: Event): void {
 const joinDate = computed(() => {
   if (eventList.value) {
     return eventList.value.reduce((acc: Record<string, any>, event: Event) => {
-      const initialDateTime = DateTime.fromMillis(event.initialTime);
-      const finalDateTime = DateTime.fromMillis(event.finalTime);
+      const initialDateTime = DateTime.fromMillis(event.initialTime as number);
+      const finalDateTime = DateTime.fromMillis(event.finalTime as number);
       for (
         let dt = initialDateTime;
         dt <= finalDateTime;

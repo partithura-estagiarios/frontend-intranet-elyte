@@ -1,6 +1,14 @@
 <script setup lang="ts">
+import GetMenu from "../../graphql/menu/GetMenu.gql";
+import { Menu } from "../../entities";
+
+onMounted(() => {
+  getMenu();
+});
+
+const menus = ref<Menu[]>([]);
+
 const weekday = [
-  t("text.days.sunday"),
   t("text.days.monday"),
   t("text.days.tuesday"),
   t("text.days.wednesday"),
@@ -18,75 +26,34 @@ const menuItems = [
   { field: "dessert" },
 ];
 
-const menus = ref<Array<Menu>>([
-  {
-    date: "2023-08-15",
-    rice: "ARROZ",
-    salad: "SALADA",
-    soup: "SOPA",
-    complement: "BATATA",
-    protein: "FRANGO",
-    dessert: "MAÇA",
-  },
-  {
-    date: "2023-08-16",
-    rice: "ARROZ",
-    salad: "SALADA",
-    soup: "SOPA",
-    complement: "FRANGO",
-    protein: "FRANGO",
-    dessert: "MAÇA",
-  },
-  {
-    date: "2023-08-17",
-    rice: "ARROZ",
-    salad: "SALADA",
-    soup: "SOPA",
-    complement: "FRANGO",
-    protein: "FRANGO",
-    dessert: "MAÇA",
-  },
-  {
-    date: "2023-08-18",
-    rice: "ARROZ",
-    salad: "SALADA",
-    soup: "SOPA",
-    complement: "FRANGO",
-    protein: "FRANGO",
-    dessert: "MAÇA",
-  },
-  {
-    date: "2023-08-19",
-    rice: "ARROZ",
-    salad: "SALADA",
-    soup: "SOPA",
-    complement: "FRANGO",
-    protein: "FRANGO",
-    dessert: "MAÇA",
-  },
-  {
-    date: "2023-08-20",
-    rice: "ARROZ",
-    salad: "SALADA",
-    soup: "SOPA",
-    complement: "FRANGO",
-    protein: "FRANGO",
-    dessert: "MAÇA",
-  },
-]);
+async function getMenu() {
+  const { getMenu: rawData } = await runQuery(GetMenu);
 
-const datesInMilliseconds = ref<Array<number>>([]);
-menus.value.forEach((element) => {
-  const date = new Date(element.date).getTime();
-  datesInMilliseconds.value.push(date);
-});
+  if (Array.isArray(rawData)) {
+    menus.value = rawData.map((item: any) => {
+      return {
+        ...item,
+        date: new Date(parseInt(item.date)),
+      };
+    });
+  }
+}
 
-const maiorData = Math.max(...datesInMilliseconds.value);
-const menorData = Math.min(...datesInMilliseconds.value);
+const groupMenusByDate = () => {
+  const groupedMenus: Record<string, Menu[]> = {};
 
-const getDayWeek = function (day: string) {
-  const date = new Date(day);
-  return weekday[date.getDay()];
+  menus.value.forEach((menu) => {
+    const date = menu.date.toISOString().split("T")[0];
+    const dayOfWeekIndex = new Date(date).getDay();
+    const dayOfWeek = weekday[dayOfWeekIndex];
+
+    if (!groupedMenus[date]) {
+      groupedMenus[date] = [];
+    }
+    groupedMenus[date].push({ ...menu, dayOfWeek });
+  });
+
+  return groupedMenus;
 };
 
 const formatDate = (dateValue: number) => {
@@ -100,31 +67,32 @@ const formatDate = (dateValue: number) => {
   <div>
     <div class="row justify-between">
       <BackButton class="row q-ml-md hide-print q-mt-md" />
-      <span class="text-white text-h3 relative-position text-bold">
-        {{ $t("titles.menu") }} {{ formatDate(menorData) }} a
-        {{ formatDate(maiorData) }}
-      </span>
       <PrintButton class="q-mr-md" />
     </div>
 
     <div class="row justify-center">
-      <q-card
-        class="text-uppercase col-3 q-ma-md border"
-        v-for="(menu, index) in menus"
-        :key="index"
+      <template
+        v-for="(dayMenus, dayOfWeek) in groupMenusByDate()"
+        :key="dayOfWeek"
       >
-        <q-card-section class="bg-primary">
-          <span class="text-h5 text-white text-weight-bold">
-            {{ getDayWeek(menu.date) }}
-          </span>
-        </q-card-section>
-        <q-card-section class="text-subtitle2 text-black">
-          <div v-for="item in menuItems" :key="item.field" class="column">
-            <q-icon class="col-5 row" :name="item.icon" color="primary" />
-            <p>{{ menu[item.field] }}</p>
-          </div>
-        </q-card-section>
-      </q-card>
+        <q-card class="text-uppercase col-3 q-ma-md border">
+          <q-card-section class="bg-primary">
+            <div v-for="menu in dayMenus" :key="menu.DATE">
+              <div>
+                {{ menu.dayOfWeek }}
+              </div>
+            </div>
+          </q-card-section>
+          <q-card-section class="text-subtitle2 text-black">
+            <div v-for="menu in dayMenus" :key="menu.DATE">
+              <div v-for="item in menuItems" :key="item.field" class="column">
+                {{ item.field }}
+                <p>{{ menu[item.field] }}</p>
+              </div>
+            </div>
+          </q-card-section>
+        </q-card>
+      </template>
     </div>
   </div>
 </template>

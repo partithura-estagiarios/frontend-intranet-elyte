@@ -45,7 +45,6 @@ function hourIsDisabled(hour: number): boolean {
 }
 
 function minuteIsDisabled(minute: number): boolean {
-  console.log(props.type);
   if (props.type === "initial") {
     return !availableMinutes.value.includes(DateTime.fromMillis(minute).minute);
   }

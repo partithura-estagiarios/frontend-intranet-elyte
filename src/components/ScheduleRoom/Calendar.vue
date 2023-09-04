@@ -23,7 +23,6 @@ async function getRooms(): Promise<void> {
 
 async function getEvents(): Promise<void> {
   eventList.value = await runQuery(GetEvent).then((data) => data.event);
-  console.log(eventList.value);
 }
 function getRoomByEvent(event: Event): Pick<Room, "color"> {
   return roomList.value?.find((room: Room) => room.id == +event.roomId) as Room;

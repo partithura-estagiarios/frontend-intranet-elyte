@@ -12,6 +12,7 @@
             :buttons="actionButtons"
             :item="rhList"
             @reload="getListRh()"
+            system="rh"
           />
         </div>
       </q-card-section>

@@ -9,17 +9,24 @@ declare module "@vue/runtime-core" {
   export interface GlobalComponents {
     Add: typeof import("./components/SistemaGestao/Modais/Add.vue")["default"];
     AddSys: typeof import("./components/Modais/AddSys.vue")["default"];
+    AddSystemDialog: typeof import("./components/DynamicDialog/SystemModals/AddSystemDialog.vue")["default"];
     AddSystemManage: typeof import("./components/Modais/AddSystemManage.vue")["default"];
     AntDesignTextBox: typeof import("./components/controls/AntDesignTextBox.vue")["default"];
     BackButton: typeof import("./components/buttons/BackButton.vue")["default"];
     BackgroundLogin: typeof import("./components/Login/BackgroundLogin.vue")["default"];
     CardFooter: typeof import("./components/DynamicDialog/CardFooter.vue")["default"];
     CardHeader: typeof import("./components/DynamicDialog/CardHeader.vue")["default"];
+    Changepassword: typeof import("./components/Login/ChangePassword.vue")["default"];
+    ChangePassword: typeof import("./components/Login/ChangePassword.vue")["default"];
     ConfigMenu: typeof import("./components/buttons/ConfigMenu.vue")["default"];
     ConfirmDelete: typeof import("./components/ConfirmDelete.vue")["default"];
     DeleteButton: typeof import("./components/buttons/DeleteButton.vue")["default"];
+    DelSystemDialog: typeof import("./components/DynamicDialog/SystemModals/DelSystemDialog.vue")["default"];
     DropDown: typeof import("./components/buttons/DropDown.vue")["default"];
     DynamicDialog: typeof import("./components/DynamicDialog/DynamicDialog.vue")["default"];
+    EmailSent: typeof import("./components/Login/EmailSent.vue")["default"];
+    EnterCode: typeof import("./components/Login/EnterCode.vue")["default"];
+    EnterEmail: typeof import("./components/Login/EnterEmail.vue")["default"];
     FabButton: typeof import("./components/buttons/FabButton.vue")["default"];
     FirstModal: typeof import("./components/DynamicDialog/FirstModal.vue")["default"];
     HeaderBar: typeof import("./components/HeaderBar.vue")["default"];

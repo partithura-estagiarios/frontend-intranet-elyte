@@ -37,7 +37,9 @@ export default {
     Reports: "ERP",
   },
   Login: {
+    textPasswordForm: "Recupere sua senha!",
     textLoginForm: "Digite suas credenciais",
     recoverPassword: "Entre em contato com o setor de TI",
+    emailSent: "Email enviado com sucesso, verifique seu email",
   },
 };

@@ -51,4 +51,7 @@ export default {
     message: "Select the system that you wish to delete:",
   },
   scheduleEvent: "Schedule event",
+  back: {
+    index: "Voltar",
+  },
 };

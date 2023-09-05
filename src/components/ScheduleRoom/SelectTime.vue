@@ -81,6 +81,7 @@ function generateTimeList(selectedHour: number): void {
 
 function finishSelector(minute: number) {
   emits("setTime", minute);
+  time.value = null;
   date.value = null;
   selectionStep.value = null;
 }
@@ -92,6 +93,10 @@ function finishSelector(minute: number) {
     v-model="time"
     ref="initialSelect"
     @popup-show="selectionStep = 'date'"
+    map-options
+    emit-value
+    :option-label="(date: number) => DateTime.fromMillis(+date).setLocale('pt-BR').toFormat('dd/MM/yyyy HH:mm')"
+    :option-value="(date: number) => date"
   >
     <template #no-option>
       <div class="row justify-center date-menu">

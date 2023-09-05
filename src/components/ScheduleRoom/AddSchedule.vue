@@ -33,10 +33,7 @@ function setDate(
   paramsDate: keyof Pick<Event, "initialTime" | "finalTime">,
   time: number
 ) {
-  const formattedDate = DateTime.fromMillis(time)
-    .setLocale("pt-BR")
-    .toLocaleString(DateTime.DATETIME_SHORT);
-  form[paramsDate] = formattedDate;
+  form[paramsDate] = time;
 }
 
 async function addEvent() {

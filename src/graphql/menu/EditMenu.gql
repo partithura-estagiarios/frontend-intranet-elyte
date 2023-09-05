@@ -1,0 +1,11 @@
+mutation EditMenu($id: ID!, $data: InputAddMenu!) {
+  editMenu(id: $id, data: $data) {
+    date
+    rice
+    salad
+    soup
+    complement
+    protein
+    dessert
+  }
+}

@@ -70,6 +70,12 @@ function onReload() {
 </script>
 
 <template>
+  <ScheduleModal
+    :isActive="activedModal"
+    @cancel="activedModal = false"
+    :item="selectedEvent"
+  />
+
   <div class="column items-start text-black q-gutter-y-md q-pa-xl">
     {{ selectedDate }}
     <ScheduleNavigation
@@ -100,11 +106,6 @@ function onReload() {
               selectedEvent = event;
             "
           >
-            <ScheduleModal
-              :isActive="activedModal"
-              @cancel="activedModal = false"
-              :item="selectedEvent"
-            />
             <q-icon name="circle" :color="getRoomByEvent(event)?.color" />
             <q-tooltip class="bg-black text-bold">{{
               event.userCreated

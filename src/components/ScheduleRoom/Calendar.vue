@@ -28,9 +28,9 @@ function getRoomByEvent(event: Event): Pick<Room, "color"> {
   return roomList.value?.find((room: Room) => room.id == +event.roomId) as Room;
 }
 
-const joinDate = computed(() => {
+const joinDates = computed(() => {
   if (eventList.value) {
-    const result = eventList.value.reduce(
+    const joinedDatesResult = eventList.value.reduce(
       (acc: Record<string, Event[]>, event: Event) => {
         const initialDateTime = DateTime.fromMillis(
           event.initialTime as number
@@ -42,7 +42,6 @@ const joinDate = computed(() => {
         const dateRange = Array.from({ length: numberOfDays }, (_, index) =>
           initialDateTime.plus({ days: index })
         );
-
         dateRange.forEach((dt) => {
           const currentDate = dt.toISODate();
           if (currentDate) {
@@ -53,7 +52,7 @@ const joinDate = computed(() => {
       },
       {}
     );
-    return result;
+    return joinedDatesResult;
   }
 });
 
@@ -101,7 +100,7 @@ function onReload() {
         <div class="row full-height items-end q-gutter-x-xs">
           <div
             class="row items-end no-padding cursor-pointer"
-            v-for="(event, index) in joinDate[timestamp.date]"
+            v-for="(event, index) in joinDates[timestamp.date]"
             :key="index"
             @click="
               activedModal = true;

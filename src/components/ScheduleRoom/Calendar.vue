@@ -28,30 +28,32 @@ function getRoomByEvent(event: Event): Pick<Room, "color"> {
   return roomList.value?.find((room: Room) => room.id == +event.roomId) as Room;
 }
 
-function addEvent(eventList: Array<Event | any>, event: Event): void {
-  eventList.push(event);
-}
-
 const joinDate = computed(() => {
   if (eventList.value) {
-    return eventList.value.reduce((acc: Record<string, any>, event: Event) => {
-      const initialDateTime = DateTime.fromMillis(event.initialTime as number);
-      const finalDateTime = DateTime.fromMillis(event.finalTime as number);
-      for (
-        let dt = initialDateTime;
-        dt <= finalDateTime;
-        dt = dt.plus({ days: 1 })
-      ) {
-        const currentDate = dt.toISODate();
-        if (currentDate) {
-          if (!acc[currentDate]) {
-            acc[currentDate] = [];
+    const result = eventList.value.reduce(
+      (acc: Record<string, Event[]>, event: Event) => {
+        const initialDateTime = DateTime.fromMillis(
+          event.initialTime as number
+        );
+        const finalDateTime = DateTime.fromMillis(event.finalTime as number);
+
+        const numberOfDays =
+          finalDateTime.diff(initialDateTime, "days").days + 1;
+        const dateRange = Array.from({ length: numberOfDays }, (_, index) =>
+          initialDateTime.plus({ days: index })
+        );
+
+        dateRange.forEach((dt) => {
+          const currentDate = dt.toISODate();
+          if (currentDate) {
+            acc[currentDate] = [...(acc[currentDate] || []), event];
           }
-          addEvent(acc[currentDate], event);
-        }
-      }
-      return acc;
-    }, {});
+        });
+        return acc;
+      },
+      {}
+    );
+    return result;
   }
 });
 

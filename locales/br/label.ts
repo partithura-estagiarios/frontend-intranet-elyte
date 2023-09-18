@@ -12,7 +12,15 @@ export default {
   code: "Código",
   ramalNumber: "Número do ramal",
   sector: "Setor",
-  name: "Nome",
+  name: {
+    index: "Nome",
+    pronoun: "Seu nome",
+  },
+  register: {
+    index: "Matrícula",
+    pronoun: "Sua matrícula",
+  },
+  numberParticipants: "Número de participantes",
   date: {
     year: "Ano",
     month: "Mês",
@@ -26,7 +34,7 @@ export default {
   previous: "Anterior",
   room: "Sala",
   suport: {
-    index: "Material de apoio",
+    index: "Materiais de apoio",
     computer: "Computador",
     water: "Água",
     coffee: "Café",

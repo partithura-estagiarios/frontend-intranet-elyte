@@ -4,7 +4,6 @@ export default {
   HrSystem: "sistema de RH",
   OtherSystems: "Outros",
   menu: "Cardápio",
-  info: "Informação | Informações",
   Management: {
     DataSul: "DataSul",
     DataSulPrototype: "DataSul Protótipo",

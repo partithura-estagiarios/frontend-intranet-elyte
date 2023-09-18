@@ -5,7 +5,7 @@ export interface Event {
   description: string;
   initialTime: string | number;
   finalTime: string | number;
-  suport: {
+  support: {
     computer: boolean;
     projector: boolean;
     coffee: boolean;

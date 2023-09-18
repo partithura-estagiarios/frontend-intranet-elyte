@@ -1,73 +1,19 @@
 <script setup lang="ts">
-import { EventTimes } from "../../entities";
-import GetEventTime from "../../graphql/events/GetEventTime.gql";
 import { DateTime } from "luxon";
 
 const emits = defineEmits(["setTime"]);
-const props = defineProps({
-  type: {
-    type: String,
-    default: "",
-  },
-});
 
 const time = ref(null);
 const date = ref(null);
 const selectionStep = ref<"date" | "hour" | "minute" | null>(null);
-const eventsByDay = ref<EventTimes[]>([]);
-const availableMinutes = ref<Array<number>>([]);
 const dayHours = [
   0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21,
   22, 23,
 ];
 const minutes = ref<Array<number>>([]);
 
-watch(date, async () => {
-  const parseDate = DateTime.fromJSDate(
-    new Date(date.value as unknown as Date)
-  ).toMillis();
-
-  const response = await runQuery(GetEventTime, {
-    day: parseDate,
-    roomId: "1",
-  });
-  eventsByDay.value = response.getEventTime;
-});
-
-function hourIsDisabled(hour: number): boolean {
-  const foundHour = eventsByDay.value.find(
-    (event: EventTimes) => event.hour === hour
-  ) as unknown as EventTimes;
-  if (foundHour) {
-    return !(foundHour.initial.available || foundHour.half.available);
-  }
-  return true;
-}
-
-function minuteIsDisabled(minute: number): boolean {
-  if (props.type === "initial") {
-    return !availableMinutes.value.includes(DateTime.fromMillis(minute).minute);
-  }
-  return false;
-}
-
-function getMinutesAvailable(selectedHour: number): void {
-  availableMinutes.value = [];
-
-  const foundHour = eventsByDay.value.find(
-    (event: EventTimes) => event.hour === selectedHour
-  ) as unknown as EventTimes;
-  if (foundHour?.initial.available) {
-    availableMinutes.value.push(0);
-  }
-  if (foundHour?.half.available) {
-    availableMinutes.value.push(30);
-  }
-}
-
 function generateTimeList(selectedHour: number): void {
   const times = [];
-  getMinutesAvailable(selectedHour);
 
   const hour = new Date(date.value as unknown as number);
   hour.setHours(selectedHour);
@@ -85,19 +31,36 @@ function finishSelector(minute: number) {
   date.value = null;
   selectionStep.value = null;
 }
+
+function reopenSelect() {
+  time.value = null;
+  date.value = null;
+  selectionStep.value = "date";
+}
 </script>
 
 <template>
   <q-select
-    class="col-6 q-px-xs row select"
+    class="col-5 row select"
+    bg-color="white"
+    borderless
     v-model="time"
     ref="initialSelect"
-    @popup-show="selectionStep = 'date'"
+    @popup-show="reopenSelect"
     map-options
     emit-value
     :option-label="(date: number) => DateTime.fromMillis(+date).setLocale('pt-BR').toFormat('dd/MM/yyyy HH:mm')"
     :option-value="(date: number) => date"
   >
+    <template #prepend>
+      <q-icon
+        name="mdi-calendar-clock"
+        class="bg-primary fit q-px-xs"
+        size="md"
+        color="white"
+      />
+    </template>
+
     <template #no-option>
       <div class="row justify-center date-menu">
         <q-date
@@ -117,8 +80,6 @@ function finishSelector(minute: number) {
               v-for="hour in dayHours"
               :key="hour"
               clickable
-              :disable="hourIsDisabled(hour)"
-              :class="{ 'q-item-disable': hourIsDisabled(hour) }"
               @click="generateTimeList(hour)"
             >
               {{ DateTime.fromObject({ hour }).toFormat("HH:mm") }}
@@ -133,8 +94,6 @@ function finishSelector(minute: number) {
               v-for="minute in minutes"
               clickable
               @click="finishSelector(minute)"
-              :disable="minuteIsDisabled(minute)"
-              :class="{ 'q-item-disable': minuteIsDisabled(minute) }"
             >
               {{ DateTime.fromMillis(minute).toFormat("HH:mm") }}
             </q-item>

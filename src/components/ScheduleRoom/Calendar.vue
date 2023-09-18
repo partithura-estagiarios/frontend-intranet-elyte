@@ -11,6 +11,7 @@ const activedModal = ref(false);
 const eventList = ref();
 const roomList = ref();
 const selectedEvent = {};
+const currentDay = DateTime.fromISO(today()).toFormat("yyyy-MM-dd");
 
 onMounted(() => {
   getEvents();
@@ -56,14 +57,15 @@ const joinDates = computed(() => {
   }
 });
 
+function parsedScheduleDate(date: number) {
+  return DateTime.fromMillis(date).toFormat("HH:mm");
+}
+
 function onPrev() {
   calendar.value.prev();
 }
 function onNext() {
   calendar.value.next();
-}
-function onToday() {
-  calendar.value.moveToToday();
 }
 function onReload() {
   getEvents();
@@ -76,55 +78,104 @@ function onReload() {
     @cancel="activedModal = false"
     :item="selectedEvent"
   />
+  <div class="row q-px-xl">
+    <div class="column items-start text-black q-gutter-y-md q-pa-xl col-9">
+      <ScheduleNavigation
+        :date="selectedDate"
+        @prev="onPrev"
+        @next="onNext"
+        @reload="() => onReload"
+        :rooms="roomList"
+      />
+      <q-calendar-month
+        ref="calendar"
+        v-model="selectedDate"
+        use-navigation
+        locale="pt-br"
+        :focus-type="['day']"
+        :day-min-height="100"
+        animated
+      >
+        <template #day="{ scope: { timestamp } }">
+          <div class="row full-height items-end q-gutter-x-xs">
+            <div
+              class="row items-end no-padding cursor-pointer"
+              v-for="(event, index) in joinDates[timestamp.date]"
+              :key="index"
+              @click="
+                activedModal = true;
+                selectedEvent = event;
+              "
+            >
+              <q-icon name="circle" :color="getRoomByEvent(event)?.color" />
+              <q-tooltip class="bg-black text-bold">{{
+                event.userCreated
+              }}</q-tooltip>
+            </div>
+          </div>
+        </template>
+      </q-calendar-month>
 
-  <div class="column items-start text-black q-gutter-y-md q-pa-xl">
-    {{ selectedDate }}
-    <ScheduleNavigation
-      @prev="onPrev"
-      @next="onNext"
-      @today="onToday"
-      @reload="() => onReload"
-      :rooms="roomList"
-    />
-    <q-calendar-month
-      ref="calendar"
-      v-model="selectedDate"
-      use-navigation
-      locale="pt-br"
-      :focus-type="['day']"
-      :day-min-height="100"
-      animated
-      bordered
-    >
-      <template #day="{ scope: { timestamp } }">
-        <div class="row full-height items-end q-gutter-x-xs">
-          <div
-            class="row items-end no-padding cursor-pointer"
-            v-for="(event, index) in joinDates[timestamp.date]"
-            :key="index"
-            @click="
-              activedModal = true;
-              selectedEvent = event;
-            "
-          >
-            <q-icon name="circle" :color="getRoomByEvent(event)?.color" />
-            <q-tooltip class="bg-black text-bold">{{
-              event.userCreated
-            }}</q-tooltip>
+      <div class="row q-gutter-md text-body1">
+        <span
+          :class="`text-${room.color}`"
+          v-for="room in roomList"
+          :key="room.name"
+        >
+          <q-icon name="circle" />
+          {{ $t("label.room") + " " + room.name }}
+        </span>
+      </div>
+    </div>
+    <div class="grow q-py-xl">
+      <q-card bordered class="text-white">
+        <q-card-section class="bg-primary">
+          <div class="text-h4">Eventos do Dia</div>
+        </q-card-section>
+        <q-card-section class="row q-gutter-x-lg justify-center items-center">
+          <div class="text-h6 text-black">
+            {{ DateTime.now().setLocale("pt-br").weekdayLong }}
+          </div>
+          <div class="text-h2 text-black">{{ DateTime.now().day }}</div>
+          <div class="text-h6 text-black">
+            {{ DateTime.now().setLocale("pt-br").monthLong }}
+          </div>
+        </q-card-section>
+
+        <div
+          v-if="eventList"
+          class="text-h6 text-black row q-pa-md items-start q-gutter-x-sm"
+          v-for="(event, index) in joinDates[currentDay]"
+          :key="index"
+        >
+          <div class="row q-gutter-x-sm">
+            <q-icon
+              class="q-py-sm"
+              name="circle"
+              :color="getRoomByEvent(event)?.color"
+            />
+            <q-item class="column items-start no-padding">
+              <span> {{ event.userCreated }} - {{ event.description }} </span>
+              <span class="text-secondary"
+                >{{ parsedScheduleDate(event.initialTime) }} -
+                {{ parsedScheduleDate(event.finalTime) }}</span
+              >
+            </q-item>
           </div>
         </div>
-      </template>
-    </q-calendar-month>
-
-    <div class="row q-gutter-md text-body1">
-      <span
-        :class="`text-${room.color}`"
-        v-for="room in roomList"
-        :key="room.name"
-      >
-        <q-icon name="circle" />
-        {{ $t("label.room") + " " + room.name }}
-      </span>
+      </q-card>
     </div>
   </div>
 </template>
+
+<style>
+.q-calendar-month__day {
+  border: transparent;
+}
+.q-calendar__button {
+  font-size: 30px;
+}
+:root {
+  --calendar-border: none;
+}
+</style>

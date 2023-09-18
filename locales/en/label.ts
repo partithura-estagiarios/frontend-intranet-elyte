@@ -12,7 +12,15 @@ export default {
   code: "Code",
   ramalNumber: "Branch line number",
   sector: "Sector",
-  name: "Name",
+  name: {
+    index: "Name",
+    pronoun: "Your name",
+  },
+  register: {
+    index: "Register",
+    pronoun: "Your register",
+  },
+  numberParticipants: "Number of participants",
   date: {
     year: "Year",
     month: "Month",

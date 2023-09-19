@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { DateTime } from "luxon";
 
-defineProps({
+const props = defineProps({
   isActive: {
     type: Boolean,
     default: false,
@@ -12,8 +12,33 @@ defineProps({
   },
 });
 
+const suports = computed(() => {
+  return [
+    {
+      label: t("label.suport.computer"),
+      icon: "computer",
+      value: props.item.support["computer"],
+    },
+    {
+      label: t("label.suport.projector"),
+      icon: "mdi-projector",
+      value: props.item.support["projector"],
+    },
+    {
+      label: t("label.suport.water"),
+      icon: "water_drop",
+      value: props.item.support["water"],
+    },
+    {
+      label: t("label.suport.coffee"),
+      icon: "coffee",
+      value: props.item.support["coffee"],
+    },
+  ];
+});
+
 function parseDate(date: number) {
-  return DateTime.fromMillis(date).toFormat("HH:mm");
+  return DateTime.fromMillis(date).toFormat("dd/MM/yyyy HH:mm");
 }
 </script>
 
@@ -26,43 +51,115 @@ function parseDate(date: number) {
     close
   >
     <div class="column q-px-lg q-py-md text-black text-body1 q-gutter-md">
-      <span class="text-h6">{{ $t("titles.info", 2) }}</span>
-      <span>
-        <q-icon name="person" />
-        Nome:
-        {{ item.userCreated }}
-      </span>
-      <span>
-        <q-icon name="schedule" />
-        Horário:
-        {{ parseDate(item.initialTime) + " às " + parseDate(item.finalTime) }}
-      </span>
+      <div class="row q-mt-md q-px-lg text-black">
+        <q-list class="row justify-between q-gutter-md">
+          <div class="row info-item-border col-5">
+            <q-icon
+              name="person"
+              class="bg-primary q-pa-md"
+              color="white"
+              size="sm"
+            />
+            <q-item-label class="q-pa-md">{{ item.userCreated }}</q-item-label>
+          </div>
 
-      <q-separator />
+          <div class="row info-item-border col-5">
+            <q-icon
+              name="mdi-card-account-details-outline"
+              class="bg-primary q-pa-md"
+              color="white"
+              size="sm"
+            />
+            <q-item-label class="q-pa-md">{{ "15550" }}</q-item-label>
+          </div>
 
-      <div class="column q-gutter-y-md">
-        <span class="text-h6">{{ $t("label.suport.index") }}</span>
-        <span>
-          <q-icon name="computer" />
-          Computador:
-          {{ item.suport.computer }}
-        </span>
-        <span>
-          <q-icon name="videocam" />
-          Projetor:
-          {{ item.suport.computer }}
-        </span>
-        <span>
-          <q-icon name="computer" />
-          Água:
-          {{ item.suport.water }}
-        </span>
-        <span>
-          <q-icon name="videocam" />
-          Café:
-          {{ item.suport.coffee }}
-        </span>
+          <div class="row info-item-border col-5">
+            <q-icon
+              name="mdi-phone-in-talk"
+              class="bg-primary q-pa-md"
+              color="white"
+              size="sm"
+            />
+            <q-item-label class="q-pa-md">{{ "00000" }}</q-item-label>
+          </div>
+
+          <div class="row info-item-border col-5">
+            <q-icon
+              name="mdi-map-marker-radius"
+              class="bg-primary q-pa-md"
+              color="white"
+              size="sm"
+            />
+            <q-item-label class="q-pa-md">{{ "Sala A" }}</q-item-label>
+          </div>
+
+          <div class="row info-item-border col-5">
+            <q-icon
+              name="groups"
+              class="bg-primary q-pa-md"
+              color="white"
+              size="sm"
+            />
+            <q-item-label class="q-pa-md">{{ "15" }}</q-item-label>
+          </div>
+
+          <div class="row info-item-border col-5">
+            <q-icon
+              name="email"
+              class="bg-primary q-pa-md"
+              color="white"
+              size="sm"
+            />
+            <q-item-label class="q-pa-md">{{ "email@gmail.com" }}</q-item-label>
+          </div>
+
+          <div class="row info-item-border col-5">
+            <q-icon
+              name="mdi-calendar-clock"
+              class="bg-primary q-pa-md"
+              color="white"
+              size="sm"
+            />
+            <q-item-label class="q-pa-md">{{
+              parseDate(item.initialTime)
+            }}</q-item-label>
+          </div>
+
+          <div class="row info-item-border col-5">
+            <q-icon
+              name="mdi-calendar-clock"
+              class="bg-primary q-pa-md"
+              color="white"
+              size="sm"
+            />
+            <q-item-label class="q-pa-md">{{
+              parseDate(item.finalTime)
+            }}</q-item-label>
+          </div>
+
+          <div
+            class="row info-item-border col-5"
+            v-for="(suport, index) in suports"
+            :key="index"
+            v-show="suport.value"
+          >
+            <q-icon
+              :name="suport.icon"
+              class="bg-primary q-pa-md"
+              color="white"
+              size="sm"
+            />
+            <q-item-label class="q-pa-md">{{ suport.label }}</q-item-label>
+          </div>
+        </q-list>
       </div>
     </div>
   </DynamicDialog>
 </template>
+
+<style scoped>
+.info-item-border {
+  border: 1px solid #ff0321;
+  border-radius: 5px;
+}
+</style>

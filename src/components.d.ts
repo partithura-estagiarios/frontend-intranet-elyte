@@ -7,6 +7,7 @@ export {};
 
 declare module "@vue/runtime-core" {
   export interface GlobalComponents {
+    ActionButton: typeof import("./components/buttons/ActionButton.vue")["default"];
     Add: typeof import("./components/SistemaGestao/Modais/Add.vue")["default"];
     AddSys: typeof import("./components/Modais/AddSys.vue")["default"];
     AddSystemDialog: typeof import("./components/DynamicDialog/SystemModals/AddSystemDialog.vue")["default"];
@@ -24,7 +25,6 @@ declare module "@vue/runtime-core" {
     DelSystemDialog: typeof import("./components/DynamicDialog/SystemModals/DelSystemDialog.vue")["default"];
     DropDown: typeof import("./components/buttons/DropDown.vue")["default"];
     DynamicDialog: typeof import("./components/DynamicDialog/DynamicDialog.vue")["default"];
-    EmailSent: typeof import("./components/Login/EmailSent.vue")["default"];
     EnterCode: typeof import("./components/Login/EnterCode.vue")["default"];
     EnterEmail: typeof import("./components/Login/EnterEmail.vue")["default"];
     FabButton: typeof import("./components/buttons/FabButton.vue")["default"];
@@ -38,9 +38,11 @@ declare module "@vue/runtime-core" {
     OptionLocales: typeof import("./components/OptionLocales.vue")["default"];
     PaymentButton: typeof import("./components/buttons/PaymentButton.vue")["default"];
     Ramais: typeof import("./components/Ramais/Ramais.vue")["default"];
+    RegisterUser: typeof import("./components/Login/RegisterUser.vue")["default"];
     RouterLink: typeof import("vue-router")["RouterLink"];
     RouterView: typeof import("vue-router")["RouterView"];
     SendButton: typeof import("./components/buttons/SendButton.vue")["default"];
+    SimpleForm: typeof import("./components/SimpleForm.vue")["default"];
     SimpleModal: typeof import("./components/Modais/SimpleModal.vue")["default"];
     SistemaGestao: typeof import("./components/SistemaGestao/SistemaGestao.vue")["default"];
     SistemaRh: typeof import("./components/SistemaRh/SistemaRh.vue")["default"];

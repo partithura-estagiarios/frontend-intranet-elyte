@@ -7,7 +7,17 @@
     </q-item>
     <q-tabs no-caps indicator-color="transparent">
       <q-route-tab :label="$t('home')" to="/home" />
-      <q-route-tab :label="$t('admin')" to="/login" />
+      <q-btn flat color="white" :label="$t('admin')">
+        <q-menu v-if="userStorage.isLoggedIn">
+          <q-list>
+            <q-item clickable v-close-popup to="/register">
+              <q-item-section class="text-black">{{
+                $t("titles.Login.register")
+              }}</q-item-section>
+            </q-item>
+          </q-list>
+        </q-menu>
+      </q-btn>
     </q-tabs>
   </div>
 </template>

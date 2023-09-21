@@ -91,7 +91,8 @@ function reopenSelect() {
             <q-item
               dense
               class="item-size col-6"
-              v-for="minute in minutes"
+              v-for="(minute, index) in minutes"
+              :key="index"
               clickable
               @click="finishSelector(minute)"
             >

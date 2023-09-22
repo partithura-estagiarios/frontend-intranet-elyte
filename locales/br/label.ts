@@ -11,6 +11,7 @@ export default {
   search: "Pesquisar",
   code: "Código",
   ramalNumber: "Número do ramal",
+  ramalOrPhone: "Seu Ramal ou Telefone",
   sector: "Setor",
   name: {
     index: "Nome",
@@ -33,11 +34,13 @@ export default {
   next: "Próximo",
   previous: "Anterior",
   room: "Sala",
-  suport: {
+  support: {
     index: "Materiais de apoio",
     computer: "Computador",
     water: "Água",
     coffee: "Café",
     projector: "Projetor",
+    flipChart: "Flip Chart",
+    speaker: "Som",
   },
 };

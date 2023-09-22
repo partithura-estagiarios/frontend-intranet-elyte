@@ -11,6 +11,7 @@ export default {
   search: "Search",
   code: "Code",
   ramalNumber: "Branch line number",
+  ramalOrPhone: "Your Branch line Or Phone",
   sector: "Sector",
   name: {
     index: "Name",
@@ -31,11 +32,13 @@ export default {
     final: "Final date",
   },
   room: "Room",
-  suport: {
+  support: {
     index: "Suports Material",
     computer: "Computer",
     water: "Water",
     coffee: "Coffee",
     projector: "Projector",
+    flipChart: "Flip Chart",
+    speaker: "Speaker",
   },
 };

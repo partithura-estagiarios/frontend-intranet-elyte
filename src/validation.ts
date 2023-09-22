@@ -66,8 +66,7 @@ export const loginSchema = yup.object({
 export const scheduleSchema = yup.object({
   name: yup.string().required(t("warning.requiredField")),
   register: yup.number().required(t("warning.requiredField")),
-  ramal: yup.number().required(t("warning.requiredField")),
-  phone: yup.number().required(t("warning.requiredField")),
+  ramalOrPhone: yup.number().required(t("warning.requiredField")),
   email,
   initialDate: yup.date().required(t("warning.requiredField")),
   finalDate: yup.date().required(t("warning.requiredField")),

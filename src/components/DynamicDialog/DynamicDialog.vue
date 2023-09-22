@@ -23,5 +23,6 @@ const props = defineProps({
   title: String,
   closeLabel: String,
   close: Boolean,
+  hideControls: Boolean,
 });
 </script>

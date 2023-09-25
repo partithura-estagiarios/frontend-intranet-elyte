@@ -1,5 +1,6 @@
 query GetMenu {
   getMenu {
+    id
     date
     rice
     salad

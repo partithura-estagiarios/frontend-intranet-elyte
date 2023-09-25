@@ -1,5 +1,6 @@
 mutation EditMenu($id: ID!, $data: InputAddMenu!) {
   editMenu(id: $id, data: $data) {
+    id
     date
     rice
     salad

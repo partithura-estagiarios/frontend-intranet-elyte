@@ -2,7 +2,7 @@
   <q-btn
     icon="print"
     class="row q-mt-md hide-print"
-    color="secondary"
+    color="primary"
     size="1.2rem"
     @click="printWindow"
   />

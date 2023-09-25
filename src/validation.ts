@@ -73,5 +73,4 @@ export const scheduleSchema = yup.object({
   participants: yup.number().required(t("warning.requiredField")),
   local: yup.number().required(t("warning.requiredField")),
   description,
-  others: yup.number().required(t("warning.requiredField")),
 });

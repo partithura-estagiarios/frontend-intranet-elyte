@@ -17,7 +17,7 @@ const form = reactive({
 });
 
 const group = ref([]);
-const options = [
+const options1 = [
   {
     label: t("label.support.computer"),
     value: "computer",
@@ -33,6 +33,8 @@ const options = [
     value: "flipChart",
     icon: "mdi-script",
   },
+];
+const options2 = [
   { label: t("label.support.speaker"), value: "speaker", icon: "speaker" },
   { label: t("label.support.water"), value: "water", icon: "water_drop" },
   { label: t("label.support.coffee"), value: "coffee", icon: "coffee" },
@@ -293,35 +295,52 @@ async function addEvent() {
         >
           {{ $t("label.support.index") }}
         </span>
-        <div class="row q-mt-md q-px-lg text-black">
-          <div class="row justify-around q-gutter-md">
-            <q-option-group
-              :options="options"
-              class="row col-12 justify-between q-gutter-md"
-              v-model="group"
-              type="checkbox"
-              left-label
-            >
-              <template v-slot:label="opt">
-                <div class="schedule-item-border">
-                  <q-icon
-                    :name="opt.icon"
-                    color="white"
-                    size="sm"
-                    class="bg-primary q-pa-md"
-                  />
-                  <span class="q-pa-md">{{ opt.label }}</span>
-                </div>
-              </template>
-            </q-option-group>
-            <q-input
-              class="col-12 q-px-md q-mt-md schedule-item-border"
-              borderless
-              bg-color="white"
-              label="Outros. Ex: Folha A4, caneta"
-              v-model="form.description"
-            />
-          </div>
+        <div class="q-gutter-md row q-mt-md justify-between">
+          <q-option-group
+            v-model="group"
+            type="checkbox"
+            :options="options1"
+            left-label
+            class="q-gutter-md col-5"
+          >
+            <template v-slot:label="opt">
+              <div class="schedule-item-border box-size">
+                <q-icon
+                  :name="opt.icon"
+                  color="white"
+                  size="sm"
+                  class="bg-primary q-pa-md"
+                />
+                <span class="q-pa-md">{{ opt.label }}</span>
+              </div>
+            </template>
+          </q-option-group>
+          <q-option-group
+            v-model="group"
+            type="checkbox"
+            :options="options2"
+            left-label
+            class="q-gutter-md col-5"
+          >
+            <template v-slot:label="opt">
+              <div class="schedule-item-border box-size">
+                <q-icon
+                  :name="opt.icon"
+                  color="white"
+                  size="sm"
+                  class="bg-primary q-pa-md"
+                />
+                <span class="q-pa-md">{{ opt.label }}</span>
+              </div>
+            </template>
+          </q-option-group>
+          <q-input
+            class="col-12 q-px-md q-mt-md schedule-item-border"
+            borderless
+            bg-color="white"
+            label="Outros. Ex: Folha A4, caneta"
+            v-model="form.description"
+          />
         </div>
       </div>
       <Button class="bg-transparent no-padding">
@@ -335,5 +354,8 @@ async function addEvent() {
 .schedule-item-border {
   border: 1px solid #ff0321;
   border-radius: 5px;
+}
+.box-size {
+  width: 15vw;
 }
 </style>

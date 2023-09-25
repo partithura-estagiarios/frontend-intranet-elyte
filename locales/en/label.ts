@@ -7,6 +7,7 @@ export default {
   forgetPassword: "Forgot your password",
   icon: "Icon",
   description: "Description",
+  others: "Others. E.g: Paper sheet, pens",
   system: "System",
   search: "Search",
   code: "Code",

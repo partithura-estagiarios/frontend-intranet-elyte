@@ -7,6 +7,7 @@ export default {
   forgetPassword: "Esqueci a senha",
   icon: "Icone",
   description: "Descrição",
+  others: "Outros. Ex: Folha A4, caneta",
   system: "Sistema",
   search: "Pesquisar",
   code: "Código",

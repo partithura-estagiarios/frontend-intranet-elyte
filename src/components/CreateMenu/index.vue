@@ -5,12 +5,14 @@ import { Field, Form } from "vee-validate";
 import AddMenu from "../../graphql/menu/AddMenu.gql";
 import EditMenu from "../../graphql/menu/EditMenu.gql";
 import GetMenu from "../../graphql/menu/GetMenu.gql";
+import { Ref } from "vue";
+import { onMounted, defineEmits } from "vue";
 
 onMounted(() => {
   getMenu();
 });
 
-const item = ref({});
+const item: { id?: string } = {};
 const menus = ref([]);
 const form = reactive({
   date: "",
@@ -28,7 +30,7 @@ const tableColumns = [
     name: "date",
     required: true,
     label: "Data",
-    field: (getMenu) =>
+    field: (getMenu: { date: string | number | Date }) =>
       new Date(getMenu.date).toLocaleDateString("pt-BR", {
         weekday: "long",
       }),
@@ -137,7 +139,7 @@ async function getMenu() {
     rawData.sort((a, b) => a.date - b.date);
     const last7Menus = rawData.slice(0, 7);
 
-    menus.value = last7Menus.map((item) => {
+    menus.value = last7Menus.map((item: { date: string }) => {
       return {
         ...item,
         date: new Date(parseInt(item.date)),
@@ -154,7 +156,7 @@ async function editMenu() {
       return;
     }
     const response = await runMutation(EditMenu, {
-      id: item.value.id,
+      id: item.id,
       data: form,
     });
     if (response && response.editMenu) {
@@ -163,7 +165,6 @@ async function editMenu() {
       closeAddModal();
       emits("reload");
     }
-    negativeNotify(t("notifications.fail.createMenu"));
   } catch {
     negativeNotify(t("notifications.fail.createMenu"));
   }
@@ -200,7 +201,7 @@ const emits = defineEmits(["reload", "cancel", "confirm"]);
 function openModal(modal: "add" | "edit", id: String) {
   action.value = modal;
   showAddModal.value = true;
-  item.value.id = id;
+  item.id = id;
 }
 
 function closeAddModal() {
@@ -209,7 +210,6 @@ function closeAddModal() {
   action.value = null;
 }
 </script>
-
 <template>
   <div class="col-6 row justify-center">
     <span class="text-black font text-bold q-ml-xl">
@@ -296,8 +296,7 @@ function closeAddModal() {
                 class="text-black"
                 style="position: absolute; top: 100%; left: 0; z-index: 9999"
                 @click="showCalendar = false"
-              >
-              </q-date>
+              />
             </div>
             <span v-if="item.errorMessage" class="text-red q-mb-xl">
               {{ parseErrorMessage(item.errorMessage) }}

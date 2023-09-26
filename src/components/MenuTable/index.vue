@@ -1,9 +1,12 @@
 <script setup lang="ts">
 import GetMenu from "../../graphql/menu/GetMenu.gql";
 import { Menu } from "../../entities";
+import { ref, onMounted } from "vue";
+
 onMounted(() => {
   getMenu();
 });
+
 const menus = ref<Menu[]>([]);
 const weekday = [
   t("text.days.monday"),
@@ -21,10 +24,13 @@ const menuItems = [
   { field: "protein" },
   { field: "dessert" },
 ];
+
+const TIME_SEPARATOR = "T";
+
 const groupMenusByDate = () => {
   const groupedMenus: Record<string, Menu[]> = {};
   menus.value.forEach((menu) => {
-    const date = menu.date.toISOString().split("T")[0];
+    const date = menu.date.toISOString().split(TIME_SEPARATOR)[0]; // Usando a nova variável
     const dayOfWeekIndex = new Date(date).getDay();
     const dayOfWeek = weekday[dayOfWeekIndex];
     if (!groupedMenus[date]) {
@@ -34,6 +40,7 @@ const groupMenusByDate = () => {
   });
   return groupedMenus;
 };
+
 const formatDate = (dateValue: number) => {
   const date = new Date(dateValue);
   return `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`;
@@ -45,11 +52,11 @@ async function getMenu() {
     rawData.sort((a, b) => a.date - b.date);
     const last7Menus = rawData.slice(0, 7);
 
-    menus.value = last7Menus.map((item) => {
+    menus.value = last7Menus.map((item: Menu) => {
       return {
         ...item,
         date: new Date(parseInt(item.date)),
-      };
+      } as unknown as Menu;
     });
   }
 }

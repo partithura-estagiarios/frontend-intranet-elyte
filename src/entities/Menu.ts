@@ -1,4 +1,5 @@
 export interface Menu {
+  [x: string]: any;
   id: string;
   complement: string;
   dessert: string;

@@ -1,5 +1,6 @@
 <template>
   <q-btn
+    round
     icon="print"
     class="row q-mt-md hide-print"
     color="primary"
@@ -16,19 +17,22 @@ const printWindow = function () {
 
 <style scoped>
 @page {
-  margin: 0cm;
-  padding: 0cm;
+  margin: 0 !important;
+  padding: 0 !important;
   size: landscape;
 }
 
 @media print {
-  .hide-print {
-    visibility: hidden;
+  @page {
+    size: A4 landscape;
+    margin: 0 !important;
+    padding: 0 !important;
+    print-color-adjust: exact;
   }
-}
 
-* {
-  -webkit-print-color-adjust: exact !important;
-  print-color-adjust: exact !important;
+  body {
+    width: 100%;
+    margin: 0;
+  }
 }
 </style>

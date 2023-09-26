@@ -18,6 +18,6 @@ const showTabHeader = computed(() => {
 </script>
 
 <template>
-  <TabHeader class="q-mb-xl" v-if="showTabHeader" />
+  <TabHeader v-if="showTabHeader" />
   <RouterView />
 </template>

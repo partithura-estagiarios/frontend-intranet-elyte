@@ -1,3 +1,215 @@
+<script setup lang="ts">
+import { DateTime } from "luxon";
+import * as yup from "yup";
+import { Field, Form } from "vee-validate";
+import AddMenu from "../../graphql/menu/AddMenu.gql";
+import EditMenu from "../../graphql/menu/EditMenu.gql";
+import GetMenu from "../../graphql/menu/GetMenu.gql";
+
+onMounted(() => {
+  getMenu();
+});
+
+const item = ref({});
+const menus = ref([]);
+const form = reactive({
+  date: "",
+  salad: "",
+  rice: "",
+  complement: "",
+  soup: "",
+  protein: "",
+  dessert: "",
+});
+const showCalendar = ref(false);
+const showAddModal = ref(false);
+const tableColumns = [
+  {
+    name: "date",
+    required: true,
+    label: "Data",
+    field: (getMenu) =>
+      new Date(getMenu.date).toLocaleDateString("pt-BR", {
+        weekday: "long",
+      }),
+    align: "left",
+  },
+  {
+    name: "salad",
+    required: true,
+    label: "Salada",
+    field: "salad",
+    align: "left",
+  },
+  {
+    name: "rice",
+    required: true,
+    label: "Arroz",
+    field: "rice",
+    align: "left",
+  },
+  {
+    name: "protein",
+    required: true,
+    label: "Proteína",
+    field: "protein",
+    align: "left",
+  },
+  {
+    name: "complement",
+    required: true,
+    label: "Complemento",
+    field: "complement",
+    align: "left",
+  },
+  {
+    name: "soup",
+    required: true,
+    label: "Sopa",
+    field: "soup",
+    align: "left",
+  },
+  {
+    name: "dessert",
+    required: true,
+    label: "Sobremesa",
+    field: "dessert",
+    align: "left",
+  },
+  {
+    name: "actions",
+    align: "center",
+    field: "id",
+  },
+];
+const action: Ref<"add" | "edit" | null> = ref(null);
+const opt = {
+  edit: () => editMenu(),
+  add: () => addMenu(),
+};
+
+const schema = yup.object({
+  date: makeRuleOfString(),
+  salad: makeRuleOfString(),
+  rice: makeRuleOfString(),
+  protein: makeRuleOfString(),
+  complement: makeRuleOfString(),
+  soup: makeRuleOfString(),
+  dessert: makeRuleOfString(),
+});
+
+function makeRuleOfString(message = "warning.requiredField") {
+  return yup.string().required(t(message));
+}
+
+async function changeMutation() {
+  if (action.value !== null) {
+    if (validateForm()) {
+      opt[action.value]();
+    }
+  }
+  negativeNotify(t("notifications.fail.createMenu"));
+}
+
+function validateForm() {
+  const requiredFields = [
+    "date",
+    "salad",
+    "rice",
+    "protein",
+    "complement",
+    "soup",
+    "dessert",
+  ];
+
+  for (const field of requiredFields) {
+    if (!form[field]) {
+      return false;
+    }
+  }
+
+  return true;
+}
+
+async function getMenu() {
+  const { getMenu: rawData } = await runQuery(GetMenu);
+  if (Array.isArray(rawData)) {
+    rawData.sort((a, b) => a.date - b.date);
+    const last7Menus = rawData.slice(0, 7);
+
+    menus.value = last7Menus.map((item) => {
+      return {
+        ...item,
+        date: new Date(parseInt(item.date)),
+      };
+    });
+  }
+}
+
+async function editMenu() {
+  try {
+    const isDuplicateDate = menus.value.some((menu) => menu.date === form.date);
+
+    if (isDuplicateDate) {
+      return;
+    }
+    const response = await runMutation(EditMenu, {
+      id: item.value.id,
+      data: form,
+    });
+    if (response && response.editMenu) {
+      positiveNotify(t("notifications.success.editMenu"));
+      await getMenu();
+      closeAddModal();
+      emits("reload");
+    }
+    negativeNotify(t("notifications.fail.createMenu"));
+  } catch {
+    negativeNotify(t("notifications.fail.createMenu"));
+  }
+}
+
+async function addMenu() {
+  try {
+    const isDuplicateDate = menus.value.some((menu) => menu.date === form.date);
+
+    if (isDuplicateDate) {
+      return;
+    }
+
+    const response = await runMutation(AddMenu, { data: form });
+
+    if (response && response.addMenu) {
+      positiveNotify(t("notifications.success.createMenu"));
+      await getMenu();
+      closeAddModal();
+      emits("reload");
+    }
+  } catch {
+    negativeNotify(t("notifications.fail.createMenu"));
+  }
+}
+
+function redirectToPrintRoute() {
+  router.push("menu");
+  emits("reload");
+}
+
+const emits = defineEmits(["reload", "cancel", "confirm"]);
+
+function openModal(modal: "add" | "edit", id: String) {
+  action.value = modal;
+  showAddModal.value = true;
+  item.value.id = id;
+}
+
+function closeAddModal() {
+  showAddModal.value = false;
+
+  action.value = null;
+}
+</script>
+
 <template>
   <div class="col-6 row justify-center">
     <span class="text-black font text-bold q-ml-xl">
@@ -166,219 +378,6 @@
     </q-card>
   </DynamicDialog>
 </template>
-
-<script setup lang="ts">
-import { DateTime } from "luxon";
-import * as yup from "yup";
-import { Field, Form } from "vee-validate";
-import AddMenu from "../../graphql/menu/AddMenu.gql";
-import EditMenu from "../../graphql/menu/EditMenu.gql";
-import GetMenu from "../../graphql/menu/GetMenu.gql";
-
-onMounted(() => {
-  getMenu();
-});
-
-const item = ref({});
-const menus = ref([]);
-const form = reactive({
-  date: "",
-  salad: "",
-  rice: "",
-  complement: "",
-  soup: "",
-  protein: "",
-  dessert: "",
-});
-const showCalendar = ref(false);
-const showAddModal = ref(false);
-const tableColumns = [
-  {
-    name: "date",
-    required: true,
-    label: "Data",
-    field: (getMenu) =>
-      new Date(getMenu.date).toLocaleDateString("pt-BR", {
-        weekday: "long",
-      }),
-    align: "left",
-  },
-  {
-    name: "salad",
-    required: true,
-    label: "Salada",
-    field: "salad",
-    align: "left",
-  },
-  {
-    name: "rice",
-    required: true,
-    label: "Arroz",
-    field: "rice",
-    align: "left",
-  },
-  {
-    name: "protein",
-    required: true,
-    label: "Proteína",
-    field: "protein",
-    align: "left",
-  },
-  {
-    name: "complement",
-    required: true,
-    label: "Complemento",
-    field: "complement",
-    align: "left",
-  },
-  {
-    name: "soup",
-    required: true,
-    label: "Sopa",
-    field: "soup",
-    align: "left",
-  },
-  {
-    name: "dessert",
-    required: true,
-    label: "Sobremesa",
-    field: "dessert",
-    align: "left",
-  },
-  {
-    name: "actions",
-    align: "center",
-    field: "id",
-  },
-];
-const action: Ref<"add" | "edit" | null> = ref(null);
-const opt = {
-  edit: () => editMenu(),
-  add: () => addMenu(),
-};
-
-const schema = yup.object({
-  date: makeRuleOfString(),
-  salad: makeRuleOfString(),
-  rice: makeRuleOfString(),
-  protein: makeRuleOfString(),
-  complement: makeRuleOfString(),
-  soup: makeRuleOfString(),
-  dessert: makeRuleOfString(),
-});
-
-function makeRuleOfString(message = "warning.requiredField") {
-  return yup.string().required(t(message));
-}
-
-async function changeMutation() {
-  if (action.value !== null) {
-    if (validateForm()) {
-      opt[action.value]();
-    }
-  }
-  negativeNotify(t("notifications.fail.createMenu"));
-}
-
-function validateForm() {
-  const requiredFields = [
-    "date",
-    "salad",
-    "rice",
-    "protein",
-    "complement",
-    "soup",
-    "dessert",
-  ];
-
-  for (const field of requiredFields) {
-    if (!form[field]) {
-      return false;
-    }
-  }
-
-  return true;
-}
-
-async function getMenu() {
-  const { getMenu: rawData } = await runQuery(GetMenu);
-  if (Array.isArray(rawData)) {
-    rawData.sort((a, b) => b.date - a.date);
-    const last7Menus = rawData.slice(0, 7);
-
-    menus.value = last7Menus.map((item) => {
-      return {
-        ...item,
-        date: new Date(parseInt(item.date)),
-      };
-    });
-  }
-}
-
-async function editMenu() {
-  try {
-    const isDuplicateDate = menus.value.some((menu) => menu.date === form.date);
-
-    if (isDuplicateDate) {
-      return;
-    }
-    const response = await runMutation(EditMenu, {
-      id: item.value.id,
-      data: form,
-    });
-    if (response && response.editMenu) {
-      positiveNotify(t("notifications.success.editMenu"));
-      await getMenu();
-      closeAddModal();
-      emits("reload");
-    }
-    negativeNotify(t("notifications.fail.createMenu"));
-  } catch {
-    negativeNotify(t("notifications.fail.createMenu"));
-  }
-}
-
-async function addMenu() {
-  try {
-    const isDuplicateDate = menus.value.some((menu) => menu.date === form.date);
-
-    if (isDuplicateDate) {
-      return;
-    }
-
-    const response = await runMutation(AddMenu, { data: form });
-
-    if (response && response.addMenu) {
-      positiveNotify(t("notifications.success.createMenu"));
-      await getMenu();
-      closeAddModal();
-      emits("reload");
-    }
-    negativeNotify(t("notifications.fail.createMenu"));
-  } catch {
-    negativeNotify(t("notifications.fail.createMenu"));
-  }
-}
-
-function redirectToPrintRoute() {
-  router.push("menu");
-  emits("reload");
-}
-
-const emits = defineEmits(["reload", "cancel", "confirm"]);
-
-function openModal(modal: "add" | "edit", id: String) {
-  action.value = modal;
-  showAddModal.value = true;
-  item.value.id = id;
-}
-
-function closeAddModal() {
-  showAddModal.value = false;
-
-  action.value = null;
-}
-</script>
 
 <style scoped>
 .font {

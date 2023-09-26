@@ -21,17 +21,6 @@ const menuItems = [
   { field: "protein" },
   { field: "dessert" },
 ];
-async function getMenu() {
-  const { getMenu: rawData } = await runQuery(GetMenu);
-  if (Array.isArray(rawData)) {
-    menus.value = rawData.map((item: any) => {
-      return {
-        ...item,
-        date: new Date(parseInt(item.date)),
-      };
-    });
-  }
-}
 const groupMenusByDate = () => {
   const groupedMenus: Record<string, Menu[]> = {};
   menus.value.forEach((menu) => {
@@ -49,44 +38,68 @@ const formatDate = (dateValue: number) => {
   const date = new Date(dateValue);
   return `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`;
 };
+
+async function getMenu() {
+  const { getMenu: rawData } = await runQuery(GetMenu);
+  if (Array.isArray(rawData)) {
+    rawData.sort((a, b) => a.date - b.date);
+    const last7Menus = rawData.slice(0, 7);
+
+    menus.value = last7Menus.map((item) => {
+      return {
+        ...item,
+        date: new Date(parseInt(item.date)),
+      };
+    });
+  }
+}
 </script>
 
 <template>
-  <q-img src="/menu2jpg" class="opacity fixed-full" />
-  <div class="col-6 row justify-center">
-    <span class="text-white font text-bold q-ml-xl relative">
-      {{ $t("titles.Hr.Menu") }}
-      <q-separator size="0.5rem" color="primary" class="bar-style" />
-    </span>
-  </div>
-  <div class="row justify-between">
-    <BackButton class="row q-ml-md hide-print q-mt-md" />
-    <PrintButton class="q-mr-md" />
-  </div>
+  <div>
+    <q-img src="/menu2jpg" class="absolute opacity fixed-full" />
+    <div class="row justify-center">
+      <span class="text-white font text-bold q-ml-lg relative">
+        {{ $t("titles.Hr.Menu") }}
+        <q-separator size="0.5rem" color="primary" class="bar-style" />
+      </span>
+    </div>
+    <div class="row justify-between">
+      <BackButton class="row q-ml-md hide-print q-mt-md no-print" />
+      <PrintButton class="q-mr-md no-print" />
+    </div>
 
-  <div class="row justify-center">
-    <template
-      v-for="(dayMenus, dayOfWeek) in groupMenusByDate()"
-      :key="dayOfWeek"
-    >
-      <q-card class="text-uppercase col-3 q-ma-md border">
-        <q-card-section class="bg-primary">
-          <div v-for="menu in dayMenus" :key="menu.DATE">
-            <div>
-              {{ menu.dayOfWeek }}
+    <div class="row justify-center no-print">
+      <div class="col">
+        <div class="row">
+          <template v-for="dayMenus in groupMenusByDate()" :key="dayOfWeek">
+            <div class="col-4">
+              <q-card
+                class="text-uppercase col q-ma-md border smaller-card mx-auto text-white"
+              >
+                <q-card-section class="bg-primary">
+                  <div>
+                    {{ dayMenus[0].dayOfWeek }}
+                  </div>
+                </q-card-section>
+                <q-card-section class="text-subtitle2 text-black">
+                  <div v-for="menu in dayMenus" :key="menu.DATE">
+                    <div
+                      v-for="item in menuItems"
+                      :key="item.field"
+                      class="menu-item"
+                    >
+                      <q-icon name="restaurant" class="menu-icon" />
+                      <p class="menu-text">{{ menu[item.field] }}</p>
+                    </div>
+                  </div>
+                </q-card-section>
+              </q-card>
             </div>
-          </div>
-        </q-card-section>
-        <q-card-section class="text-subtitle2 text-black">
-          <div v-for="menu in dayMenus" :key="menu.DATE">
-            <div v-for="item in menuItems" :key="item.field" class="menu-item">
-              <q-icon name="restaurant_menu" class="menu-icon" />
-              <p>{{ menu[item.field] }}</p>
-            </div>
-          </div>
-        </q-card-section>
-      </q-card>
-    </template>
+          </template>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -97,13 +110,24 @@ const formatDate = (dateValue: number) => {
 .border {
   border-radius: 16px;
 }
+
 @media print {
   .hide-print {
     display: none !important;
   }
+  * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+}
+
+@page {
+  margin: 0 !important;
+  padding: 0 !important;
+  size: landscape;
 }
 .font {
-  font-size: 2rem;
+  font-size: 1.6rem;
 }
 .bar-style {
   border-radius: 10px;
@@ -116,5 +140,14 @@ const formatDate = (dateValue: number) => {
 
 .menu-icon {
   margin-right: 8px;
+}
+
+.menu-text {
+  margin-left: 8px;
+}
+
+.smaller-card {
+  max-width: 300px;
+  margin: 10px auto;
 }
 </style>

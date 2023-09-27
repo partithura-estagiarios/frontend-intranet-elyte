@@ -18,6 +18,6 @@ const showTabHeader = computed(() => {
 </script>
 
 <template>
-  <TabHeader v-if="showTabHeader" />
+  <TabHeader v-if="!$route.fullPath.includes('/register')" />
   <RouterView />
 </template>

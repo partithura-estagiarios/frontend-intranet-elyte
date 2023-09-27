@@ -39,6 +39,7 @@ export default {
     textPasswordForm: "Recupere sua senha!",
     textLoginForm: "Digite suas credenciais",
     recoverPassword: "Entre em contato com o setor de TI",
+    register: "Cadastrar Usuário",
     emailSent: "Email enviado com sucesso, verifique seu email",
   },
 };

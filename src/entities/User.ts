@@ -17,6 +17,7 @@ export interface UserStorageConstructor {
   getters: Getters;
   actions: Actions;
 }
+
 export interface UserForm {
   username: string;
   password: string;

@@ -1,10 +1,12 @@
-query MenuBySystem($sistema: String!) {
-  menuBySystem(sistema: $sistema) {
+query GetMenu {
+  getMenu {
     id
-    icon
-    label
-    sublabel
-    link
-    sistema
+    date
+    rice
+    salad
+    soup
+    complement
+    protein
+    dessert
   }
 }

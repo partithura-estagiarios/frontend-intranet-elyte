@@ -1,0 +1,10 @@
+query MenuBySystem($sistema: String!) {
+  menuBySystem(sistema: $sistema) {
+    id
+    icon
+    label
+    sublabel
+    link
+    sistema
+  }
+}

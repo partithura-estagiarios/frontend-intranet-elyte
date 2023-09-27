@@ -53,6 +53,7 @@ declare global {
   const loga: typeof import("./helpers/index")["loga"];
   const makeDestructurable: typeof import("@vueuse/core")["makeDestructurable"];
   const markRaw: typeof import("vue")["markRaw"];
+  const menusStorage: typeof import("./stores/Menus")["menusStorage"];
   const negativeNotify: typeof import("./helpers/notify")["negativeNotify"];
   const nextTick: typeof import("vue")["nextTick"];
   const onActivated: typeof import("vue")["onActivated"];
@@ -75,6 +76,7 @@ declare global {
   const onUnmounted: typeof import("vue")["onUnmounted"];
   const onUpdated: typeof import("vue")["onUpdated"];
   const parseErrorMessage: typeof import("./helpers/index")["parseErrorMessage"];
+  const parseToPlural: typeof import("./helpers/index")["parseToPlural"];
   const pausableWatch: typeof import("@vueuse/core")["pausableWatch"];
   const positiveNotify: typeof import("./helpers/notify")["positiveNotify"];
   const preferredDark: typeof import("./composables/dark")["preferredDark"];
@@ -283,6 +285,7 @@ declare global {
   const useWindowScroll: typeof import("@vueuse/core")["useWindowScroll"];
   const useWindowSize: typeof import("@vueuse/core")["useWindowSize"];
   const userStorage: typeof import("./stores/user")["userStorage"];
+  const validateNotEmpty: typeof import("./helpers/index")["validateNotEmpty"];
   const watch: typeof import("vue")["watch"];
   const watchArray: typeof import("@vueuse/core")["watchArray"];
   const watchAtMost: typeof import("@vueuse/core")["watchAtMost"];
@@ -410,6 +413,9 @@ declare module "vue" {
       typeof import("@vueuse/core")["makeDestructurable"]
     >;
     readonly markRaw: UnwrapRef<typeof import("vue")["markRaw"]>;
+    readonly menusStorage: UnwrapRef<
+      typeof import("./stores/Menus")["menusStorage"]
+    >;
     readonly negativeNotify: UnwrapRef<
       typeof import("./helpers/notify")["negativeNotify"]
     >;
@@ -457,6 +463,9 @@ declare module "vue" {
     readonly onUpdated: UnwrapRef<typeof import("vue")["onUpdated"]>;
     readonly parseErrorMessage: UnwrapRef<
       typeof import("./helpers/index")["parseErrorMessage"]
+    >;
+    readonly parseToPlural: UnwrapRef<
+      typeof import("./helpers/index")["parseToPlural"]
     >;
     readonly pausableWatch: UnwrapRef<
       typeof import("@vueuse/core")["pausableWatch"]
@@ -945,6 +954,9 @@ declare module "vue" {
     >;
     readonly userStorage: UnwrapRef<
       typeof import("./stores/user")["userStorage"]
+    >;
+    readonly validateNotEmpty: UnwrapRef<
+      typeof import("./helpers/index")["validateNotEmpty"]
     >;
     readonly watch: UnwrapRef<typeof import("vue")["watch"]>;
     readonly watchArray: UnwrapRef<typeof import("@vueuse/core")["watchArray"]>;

@@ -1,3 +1,0 @@
-mutation DeleteSystem($id: [ID!]!) {
-  deleteSystem(id: $id)
-}

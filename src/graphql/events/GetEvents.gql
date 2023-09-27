@@ -6,6 +6,10 @@ query Event {
     description
     finalTime
     initialTime
+    ramal_number
+    total_people
+    user_registration
+    email
     support {
       computer
       projector

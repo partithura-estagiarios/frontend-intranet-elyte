@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import AddSystem from "../../../graphql/menu/AddSystem.gql";
-import { Menu } from "../../../entities";
+import AddSystem from "../../../graphql/system/AddSystem.gql";
+import { System } from "../../../entities";
 import { Field, Form } from "vee-validate";
 import { inputSchema } from "../../../validation";
 
@@ -11,7 +11,7 @@ const props = defineProps({
     default: false,
   },
   item: {
-    type: Array<Menu>,
+    type: Array<System>,
     required: true,
   },
   system: {

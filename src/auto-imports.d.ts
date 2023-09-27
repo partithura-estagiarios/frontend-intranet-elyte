@@ -53,6 +53,7 @@ declare global {
   const loga: typeof import("./helpers/index")["loga"];
   const makeDestructurable: typeof import("@vueuse/core")["makeDestructurable"];
   const markRaw: typeof import("vue")["markRaw"];
+  const menusStorage: typeof import("./stores/Menus")["menusStorage"];
   const negativeNotify: typeof import("./helpers/notify")["negativeNotify"];
   const nextTick: typeof import("vue")["nextTick"];
   const onActivated: typeof import("vue")["onActivated"];
@@ -412,6 +413,9 @@ declare module "vue" {
       typeof import("@vueuse/core")["makeDestructurable"]
     >;
     readonly markRaw: UnwrapRef<typeof import("vue")["markRaw"]>;
+    readonly menusStorage: UnwrapRef<
+      typeof import("./stores/Menus")["menusStorage"]
+    >;
     readonly negativeNotify: UnwrapRef<
       typeof import("./helpers/notify")["negativeNotify"]
     >;

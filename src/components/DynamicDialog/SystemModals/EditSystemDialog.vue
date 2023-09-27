@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { Field, Form } from "vee-validate";
-import { type Menu } from "../../../entities";
+import { type System } from "../../../entities";
 import { inputSchema } from "../../../validation";
-import UpdateSystem from "../../../graphql/menu/UpdateSystem.gql";
+import UpdateSystem from "../../../graphql/system/UpdateSystem.gql";
 
 const emits = defineEmits(["reload", "cancel"]);
 defineProps({
@@ -11,17 +11,17 @@ defineProps({
     default: false,
   },
   item: {
-    type: Array<Menu>,
+    type: Array<System>,
     required: true,
   },
 });
 const selectedSystem = ref<object>({});
 
-const getSelectedSystem = (system: Menu) => {
+const getSelectedSystem = (system: System) => {
   selectedSystem.value = system;
 };
 
-const form: Omit<Menu, "id"> = reactive({
+const form: Omit<System, "id"> = reactive({
   icon: "",
   label: "",
   link: "",
@@ -29,7 +29,7 @@ const form: Omit<Menu, "id"> = reactive({
   sublabel: "",
 });
 
-watch(selectedSystem, (newValue: Menu) => {
+watch(selectedSystem, (newValue: System) => {
   form.icon = newValue.icon;
   form.label = newValue.label;
   form.link = newValue.link;

@@ -68,9 +68,9 @@ export const scheduleSchema = yup.object({
   register: yup.number().required(t("warning.requiredField")),
   ramalOrPhone: yup.number().required(t("warning.requiredField")),
   email,
-  initialDate: yup.date().required(t("warning.requiredField")),
-  finalDate: yup.date().required(t("warning.requiredField")),
+  initialDate: yup.date(),
+  finalDate: yup.date(),
   participants: yup.number().required(t("warning.requiredField")),
-  local: yup.number().required(t("warning.requiredField")),
+  local: yup.number(),
   description,
 });

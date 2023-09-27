@@ -6,10 +6,8 @@ export interface Event {
   initialTime: string | number;
   finalTime: string | number;
   support: {
-    computer: boolean;
-    projector: boolean;
-    coffee: boolean;
-    water: boolean;
+    options1: any;
+    options2: any;
   };
 }
 

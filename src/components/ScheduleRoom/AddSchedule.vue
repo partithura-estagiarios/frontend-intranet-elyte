@@ -6,18 +6,21 @@ import { scheduleSchema } from "../../validation";
 
 import AddEvent from "../../graphql/events/AddEvent.gql";
 import GetBusyRoom from "../../graphql/rooms/GetBusyRoom.gql";
-import { group } from "console";
 
-const form = reactive({
-  userCreated: "",
-  roomId: "",
-  description: "",
-  initialTime: null as unknown as string,
-  finalTime: null as unknown as string,
+const emits = defineEmits(["reload"]);
+defineProps({
+  isActive: {
+    type: Boolean,
+    default: false,
+  },
+  rooms: {
+    type: Array,
+    required: true,
+  },
 });
 
 const group = ref([]);
-const options1 = [
+const options1: unknown = [
   {
     label: t("label.support.computer"),
     value: "computer",
@@ -34,11 +37,20 @@ const options1 = [
     icon: "mdi-script",
   },
 ];
-const options2 = [
+const options2: unknown = [
   { label: t("label.support.speaker"), value: "speaker", icon: "speaker" },
   { label: t("label.support.water"), value: "water", icon: "water_drop" },
   { label: t("label.support.coffee"), value: "coffee", icon: "coffee" },
 ];
+
+const form: Omit<Event, "id"> = reactive({
+  userCreated: "",
+  roomId: "",
+  description: "",
+  initialTime: null as unknown as string | number,
+  finalTime: null as unknown as string | number,
+  support: { options1, options2 },
+});
 
 function setDate(
   paramsDate: keyof Pick<Event, "initialTime" | "finalTime">,
@@ -47,27 +59,15 @@ function setDate(
   form[paramsDate] = time;
 }
 
+const invalidRoom: unknown = [];
 watch(form, async () => {
   const getInvalidRoom = await runQuery(GetBusyRoom, {
     initialTime: form.initialTime,
     finalTime: form.finalTime,
   });
-  invalidRoom.value = getInvalidRoom.getBusyRoom;
+  invalidRoom.push(getInvalidRoom?.getBusyRoom);
+  console.log(form.initialTime, form.finalTime);
 });
-
-const emits = defineEmits(["reload"]);
-defineProps({
-  isActive: {
-    type: Boolean,
-    default: false,
-  },
-  rooms: {
-    type: Array,
-    required: true,
-  },
-});
-
-const invalidRoom = ref([]);
 
 async function addEvent() {
   try {
@@ -86,7 +86,7 @@ async function addEvent() {
 
 <template>
   <DynamicDialog
-    :hide-controls="true"
+    hide-controls
     :open="isActive"
     :title="$t('action.scheduleEvent')"
   >
@@ -174,6 +174,7 @@ async function addEvent() {
           bg-color="white"
           borderless
           label="E-mail"
+          lazy-rules
         >
           <template #prepend>
             <q-icon
@@ -192,31 +193,31 @@ async function addEvent() {
       <Field name="initialDate" v-slot="item">
         <SelectTime
           class="schedule-item-border col-5"
-          :model-value="item.value"
+          :model-value="form.initialTime"
+          @update:model-value="item.value"
           v-bind="item.field"
           :label="$t('label.date.initial')"
           type="initial"
           @setTime="(args) => setDate('initialTime', args)"
-        >
-          <span v-if="item.errorMessage" class="text-red">
-            {{ parseErrorMessage(item.errorMessage) }}
-          </span>
-        </SelectTime>
+        />
+        <span v-if="item.errorMessage" class="text-red">
+          {{ parseErrorMessage(item.errorMessage) }}
+        </span>
       </Field>
 
       <Field name="finalDate" v-slot="item">
         <SelectTime
           class="schedule-item-border col-5"
-          :model-value="item.value"
+          :model-value="form.finalTime"
+          @update:model-value="item.value"
           v-bind="item.field"
           :label="$t('label.date.final')"
           type="final"
           @setTime="(args) => setDate('finalTime', args)"
-        >
-          <span v-if="item.errorMessage" class="text-red">
-            {{ parseErrorMessage(item.errorMessage) }}
-          </span>
-        </SelectTime>
+        />
+        <span v-if="item.errorMessage" class="text-red">
+          {{ parseErrorMessage(item.errorMessage) }}
+        </span>
       </Field>
 
       <Field name="participants" v-slot="item">
@@ -253,10 +254,11 @@ async function addEvent() {
           map-options
           emit-value
           :model-value="item.value"
+          @update:model-value="form.roomId"
           v-bind="item.field"
           :disable="form.initialTime && form.finalTime ? false : true"
-          :option-disable="(room: Room) => invalidRoom.find((invalidRoom: Room) => invalidRoom.id === room.id) ? true : false"
           :options="rooms"
+          :option-disable="(room: Room) => invalidRoom.find((invalidRoom: Room) => invalidRoom?.id === room.id) ? true : false"
           :option-label="(room: Room) => room.name"
           :option-value="(room: Room) => room.id"
         >
@@ -268,9 +270,6 @@ async function addEvent() {
               color="white"
             />
           </template>
-          <span v-if="item.errorMessage" class="text-red">
-            {{ parseErrorMessage(item.errorMessage) }}
-          </span>
         </q-select>
       </Field>
 
@@ -334,13 +333,20 @@ async function addEvent() {
               </div>
             </template>
           </q-option-group>
-          <q-input
-            class="col-12 q-px-md q-mt-md schedule-item-border"
-            borderless
-            bg-color="white"
-            label="Outros. Ex: Folha A4, caneta"
-            v-model="form.description"
-          />
+          <Field name="others" v-slot="item">
+            <q-input
+              class="col-12 q-px-md q-mt-md schedule-item-border"
+              borderless
+              bg-color="white"
+              :label="$t('label.others')"
+              :model-value="item.value"
+              v-bind="item.field"
+            >
+              <span v-if="item.errorMessage" class="text-red">
+                {{ parseErrorMessage(item.errorMessage) }}
+              </span>
+            </q-input>
+          </Field>
         </div>
       </div>
       <Button class="bg-transparent no-padding">

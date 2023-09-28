@@ -201,7 +201,6 @@ async function addEvent() {
           :label="$t('label.date.initial')"
           type="initial"
         />
-        <!-- @setTime="(args) => setDate('initialTime', args)" -->
       </Field>
 
       <Field name="finalDate" v-slot="{ field, value }">
@@ -212,7 +211,6 @@ async function addEvent() {
           :label="$t('label.date.final')"
           type="final"
         />
-        <!-- @setTime="(args) => setDate('finalTime', args)" -->
       </Field>
 
       <Field name="participants" v-slot="{ field, value }">

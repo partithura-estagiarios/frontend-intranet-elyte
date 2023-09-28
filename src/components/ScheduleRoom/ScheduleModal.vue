@@ -71,7 +71,7 @@ function parseDate(date: number) {
               size="sm"
             />
             <q-item-label class="q-pa-md">{{
-              item.user_registration
+              item.userRegistration
             }}</q-item-label>
           </div>
 

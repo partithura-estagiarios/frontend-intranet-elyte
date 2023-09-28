@@ -8,7 +8,7 @@
     <q-tabs no-caps indicator-color="transparent">
       <q-route-tab :label="$t('home')" to="/home" />
       <q-route-tab :label="$t('admin')" to="/login" />
-      <q-route-tab :label="$t('actions.scheduleEvent.')" to="/schedule" />
+      <q-route-tab :label="$t('action.scheduleEvent')" to="/schedule" />
     </q-tabs>
   </div>
 </template>

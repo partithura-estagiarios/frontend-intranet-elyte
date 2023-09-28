@@ -2,6 +2,7 @@ export interface Event {
   id: string;
   userCreated: string;
   roomId: string;
+  name: string;
   description: string;
   initialTime: string | number;
   finalTime: string | number;

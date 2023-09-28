@@ -70,7 +70,9 @@ function parseDate(date: number) {
               color="white"
               size="sm"
             />
-            <q-item-label class="q-pa-md">{{ "15550" }}</q-item-label>
+            <q-item-label class="q-pa-md">{{
+              item.user_registration
+            }}</q-item-label>
           </div>
 
           <div class="row info-item-border col-5">
@@ -80,7 +82,7 @@ function parseDate(date: number) {
               color="white"
               size="sm"
             />
-            <q-item-label class="q-pa-md">{{ "00000" }}</q-item-label>
+            <q-item-label class="q-pa-md">{{ item.ramal_number }}</q-item-label>
           </div>
 
           <div class="row info-item-border col-5">
@@ -90,7 +92,7 @@ function parseDate(date: number) {
               color="white"
               size="sm"
             />
-            <q-item-label class="q-pa-md">{{ "Sala A" }}</q-item-label>
+            <q-item-label class="q-pa-md">{{ item.room.name }}</q-item-label>
           </div>
 
           <div class="row info-item-border col-5">
@@ -100,7 +102,7 @@ function parseDate(date: number) {
               color="white"
               size="sm"
             />
-            <q-item-label class="q-pa-md">{{ "15" }}</q-item-label>
+            <q-item-label class="q-pa-md">{{ item.total_people }}</q-item-label>
           </div>
 
           <div class="row info-item-border col-5">
@@ -110,7 +112,7 @@ function parseDate(date: number) {
               color="white"
               size="sm"
             />
-            <q-item-label class="q-pa-md">{{ "email@gmail.com" }}</q-item-label>
+            <q-item-label class="q-pa-md">{{ item.email }}</q-item-label>
           </div>
 
           <div class="row info-item-border col-5">

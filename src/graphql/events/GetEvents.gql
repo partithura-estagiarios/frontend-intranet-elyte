@@ -2,6 +2,9 @@ query Event {
   event {
     id
     roomId
+    room {
+      name
+    }
     userCreated
     description
     finalTime

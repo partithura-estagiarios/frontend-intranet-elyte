@@ -100,6 +100,7 @@ function onReload() {
           <div class="row full-height items-end q-gutter-x-xs">
             <div
               class="row items-end no-padding cursor-pointer"
+              v-if="joinDates && joinDates[timestamp.date]"
               v-for="(event, index) in joinDates[timestamp.date]"
               :key="index"
               @click="

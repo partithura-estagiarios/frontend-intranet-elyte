@@ -59,6 +59,7 @@ export default {
   scheduleEvent: "Agendar Evento",
   register: {
     index: "Registrar",
+  },
   back: {
     index: "Voltar",
   },

@@ -5,14 +5,9 @@
     <q-item clickable to="/home" class="q-mx-md q-mt-sm">
       <q-img src="/images/logo.png" class="logo" />
     </q-item>
-    <q-tabs no-caps>
-      <q-route-tab :label="$t('home')" :to="'/home'" />
-      <q-route-tab :label="$t('admin')" :to="'/admin'" />
     <q-tabs no-caps indicator-color="transparent">
       <q-route-tab :label="$t('home')" to="/home" />
-      <q-route-tab :label="$t('admin')" to="/login" />
-      <q-route-tab label="Agendar Sala" to="/schedule" />
-      <q-btn flat color="white" :label="$t('admin')">
+      <q-btn flat color="white" :label="$t('admin')" to="/login">
         <q-menu v-if="userStorage.isLoggedIn">
           <q-list>
             <q-item clickable v-close-popup to="/register">

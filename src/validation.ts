@@ -17,6 +17,7 @@ export const validationSchema = yup.object({
     .matches(/[A-Z]/, t("warning.uppercase"))
     .matches(/\d/, t("warning.containDigit"))
     .matches(/[!@#$%^&*(),.?":{}|<>]/, t("warning.containSpecialChar")),
+});
 const password = yup
   .string()
   .required(t("warning.requiredField"))

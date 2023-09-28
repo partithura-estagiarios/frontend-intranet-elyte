@@ -53,6 +53,7 @@ export default {
   scheduleEvent: "Schedule Event",
   register: {
     index: "Register",
+  },
   back: {
     index: "Voltar",
   },

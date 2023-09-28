@@ -9,9 +9,9 @@ query Event {
     description
     finalTime
     initialTime
-    ramal_number
-    total_people
-    user_registration
+    ramalNumber
+    totalPeople
+    userRegistration
     email
     support {
       computer

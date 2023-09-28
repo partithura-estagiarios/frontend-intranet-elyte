@@ -25,8 +25,8 @@ const formProps: Omit<Event, "id"> = reactive({
   userCreated: "",
   roomId: "",
   description: "",
-  initialTime: null as unknown as string,
-  finalTime: null as unknown as string,
+  initialTime: "",
+  finalTime: "",
   support: {
     computer: false,
     projector: false,

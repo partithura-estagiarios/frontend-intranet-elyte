@@ -82,7 +82,7 @@ function parseDate(date: number) {
               color="white"
               size="sm"
             />
-            <q-item-label class="q-pa-md">{{ item.ramal_number }}</q-item-label>
+            <q-item-label class="q-pa-md">{{ item.ramalNumber }}</q-item-label>
           </div>
 
           <div class="row info-item-border col-5">
@@ -102,7 +102,7 @@ function parseDate(date: number) {
               color="white"
               size="sm"
             />
-            <q-item-label class="q-pa-md">{{ item.total_people }}</q-item-label>
+            <q-item-label class="q-pa-md">{{ item.totalPeople }}</q-item-label>
           </div>
 
           <div class="row info-item-border col-5">

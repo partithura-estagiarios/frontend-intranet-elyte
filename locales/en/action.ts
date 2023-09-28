@@ -52,6 +52,7 @@ export default {
   },
   register: {
     index: "Register",
+  },
   back: {
     index: "Voltar",
   },

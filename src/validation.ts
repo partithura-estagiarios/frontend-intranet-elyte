@@ -82,13 +82,13 @@ export const loginSchema = yup.object({
 });
 
 export const scheduleSchema = yup.object({
-  name: yup.string().required(t("warning.requiredField")),
-  register: yup.number().required(t("warning.requiredField")),
-  ramalOrPhone: yup.number().required(t("warning.requiredField")),
+  userCreated: yup.string().required(t("warning.requiredField")),
+  userRegistration: yup.number().required(t("warning.requiredField")),
+  ramalNumber: yup.number().required(t("warning.requiredField")),
   email,
-  initialDate: yup.date(),
-  finalDate: yup.date(),
-  participants: yup.number().required(t("warning.requiredField")),
-  local: yup.number(),
+  initialTime: yup.date(),
+  finalTime: yup.date(),
+  totalPeople: yup.number().required(t("warning.requiredField")),
+  roomId: yup.number(),
   description,
 });

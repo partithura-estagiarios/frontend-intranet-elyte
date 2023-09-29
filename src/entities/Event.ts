@@ -6,9 +6,17 @@ export interface Event {
   initialTime: string | number;
   finalTime: string | number;
   support: {
-    options1: any;
-    options2: any;
+    computer: boolean;
+    projector: boolean;
+    coffee: boolean;
+    water: boolean;
+    speaker: boolean;
+    flipChart: boolean;
   };
+  ramalNumber: number;
+  totalPeople: number;
+  userRegistration: number;
+  email: string;
 }
 
 export interface Room {
@@ -27,4 +35,24 @@ export interface EventTimes {
     value: number;
     available: boolean;
   };
+}
+
+export interface EventForm {
+  userCreated: string;
+  roomId: string;
+  description: string;
+  initialTime: string | number;
+  finalTime: string | number;
+  support: {
+    computer: boolean;
+    projector: boolean;
+    coffee: boolean;
+    water: boolean;
+    speaker: boolean;
+    flipChart: boolean;
+  };
+  ramalNumber: number;
+  totalPeople: number;
+  userRegistration: number;
+  email: string;
 }

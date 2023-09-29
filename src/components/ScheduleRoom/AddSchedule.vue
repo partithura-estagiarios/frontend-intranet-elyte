@@ -1,7 +1,6 @@
 <script setup lang="ts">
-import { QSelect } from "quasar";
 import { Form, Field } from "vee-validate";
-import { Room, Event } from "../../entities";
+import { Room, Event, EventForm } from "../../entities";
 import { scheduleSchema } from "../../validation";
 
 import AddEvent from "../../graphql/events/AddEvent.gql";
@@ -19,8 +18,21 @@ defineProps({
   },
 });
 
+const form: Omit<Event, "id"> = reactive({
+  initialTime: "",
+  finalTime: "",
+  support: {
+    computer: false,
+    projector: false,
+    coffee: false,
+    water: false,
+    speaker: false,
+    flipChart: false,
+  },
+});
+
 const group = ref([]);
-const options1: unknown = [
+const options = [
   {
     label: t("label.support.computer"),
     value: "computer",
@@ -36,21 +48,22 @@ const options1: unknown = [
     value: "flipChart",
     icon: "mdi-script",
   },
+  {
+    label: t("label.support.speaker"),
+    value: "speaker",
+    icon: "speaker",
+  },
+  {
+    label: t("label.support.water"),
+    value: "water",
+    icon: "water_drop",
+  },
+  {
+    label: t("label.support.coffee"),
+    value: "coffee",
+    icon: "coffee",
+  },
 ];
-const options2: unknown = [
-  { label: t("label.support.speaker"), value: "speaker", icon: "speaker" },
-  { label: t("label.support.water"), value: "water", icon: "water_drop" },
-  { label: t("label.support.coffee"), value: "coffee", icon: "coffee" },
-];
-
-const form: Omit<Event, "id"> = reactive({
-  userCreated: "",
-  roomId: "",
-  description: "",
-  initialTime: null as unknown as string | number,
-  finalTime: null as unknown as string | number,
-  support: { options1, options2 },
-});
 
 function setDate(
   paramsDate: keyof Pick<Event, "initialTime" | "finalTime">,
@@ -66,19 +79,25 @@ watch(form, async () => {
     finalTime: form.finalTime,
   });
   invalidRoom.push(getInvalidRoom?.getBusyRoom);
-  console.log(form.initialTime, form.finalTime);
 });
 
-async function addEvent() {
+async function addEvent(data: EventForm) {
+  data.initialTime = form.initialTime;
+  data.finalTime = form.finalTime;
+  data.support = form.support;
+  data.userRegistration = parseInt(data.userRegistration);
+  data.totalPeople = parseInt(data.totalPeople);
+  data.ramalNumber = parseInt(data.ramalNumber);
+
   try {
-    const { addEvent } = await runMutation(AddEvent, { data: form });
+    const addEvent = await runMutation(AddEvent, { data });
     if (addEvent) {
       positiveNotify(t("notifications.success.scheduleEvent"));
       emits("reload");
       return;
     }
     negativeNotify("Data inválida");
-  } catch {
+  } catch (error) {
     negativeNotify(t("notifications.fail.scheduleEvent"));
   }
 }
@@ -95,7 +114,7 @@ async function addEvent() {
       :validation-schema="scheduleSchema"
       class="row q-pa-md text-black text-body1 q-gutter-y-sm justify-around"
     >
-      <Field name="name" v-slot="item" class="">
+      <Field name="userCreated" v-slot="item" class="">
         <q-input
           :model-value="item.value"
           v-bind="item.field"
@@ -118,7 +137,7 @@ async function addEvent() {
         </q-input>
       </Field>
 
-      <Field name="register" v-slot="item">
+      <Field name="userRegistration" v-slot="item">
         <q-input
           :model-value="item.value"
           v-bind="item.field"
@@ -142,7 +161,7 @@ async function addEvent() {
         </q-input>
       </Field>
 
-      <Field name="ramalOrPhone" v-slot="item">
+      <Field name="ramalNumber" v-slot="item">
         <q-input
           :model-value="item.value"
           v-bind="item.field"
@@ -182,6 +201,7 @@ async function addEvent() {
               class="bg-primary fit q-px-xs"
               size="md"
               color="white"
+              @click="addEvent"
             />
           </template>
           <span v-if="item.errorMessage" class="text-red">
@@ -190,7 +210,7 @@ async function addEvent() {
         </q-input>
       </Field>
 
-      <Field name="initialDate" v-slot="item">
+      <Field name="initialTime" v-slot="item">
         <SelectTime
           class="schedule-item-border col-5"
           :model-value="form.initialTime"
@@ -205,7 +225,7 @@ async function addEvent() {
         </span>
       </Field>
 
-      <Field name="finalDate" v-slot="item">
+      <Field name="finalTime" v-slot="item">
         <SelectTime
           class="schedule-item-border col-5"
           :model-value="form.finalTime"
@@ -220,7 +240,7 @@ async function addEvent() {
         </span>
       </Field>
 
-      <Field name="participants" v-slot="item">
+      <Field name="totalPeople" v-slot="item">
         <q-input
           class="schedule-item-border col-5"
           mask="##"
@@ -244,7 +264,7 @@ async function addEvent() {
         </q-input>
       </Field>
 
-      <Field name="local" v-slot="item">
+      <Field name="roomId" v-slot="item">
         <q-select
           class="schedule-item-border col-5"
           bg-color="white"
@@ -258,9 +278,9 @@ async function addEvent() {
           v-bind="item.field"
           :disable="form.initialTime && form.finalTime ? false : true"
           :options="rooms"
-          :option-disable="(room: Room) => invalidRoom.find((invalidRoom: Room) => invalidRoom?.id === room.id) ? true : false"
           :option-label="(room: Room) => room.name"
           :option-value="(room: Room) => room.id"
+          :option-disable="(room: Room) => invalidRoom.find((invalidRoom: Room) => invalidRoom?.id === room.id) ? true : false"
         >
           <template #prepend>
             <q-icon
@@ -298,12 +318,12 @@ async function addEvent() {
           <q-option-group
             v-model="group"
             type="checkbox"
-            :options="options1"
+            :options="options"
             left-label
-            class="q-gutter-md col-5"
+            class="q-gutter-md col-9"
           >
             <template v-slot:label="opt">
-              <div class="schedule-item-border box-size">
+              <div class="schedule-item-border">
                 <q-icon
                   :name="opt.icon"
                   color="white"
@@ -314,39 +334,6 @@ async function addEvent() {
               </div>
             </template>
           </q-option-group>
-          <q-option-group
-            v-model="group"
-            type="checkbox"
-            :options="options2"
-            left-label
-            class="q-gutter-md col-5"
-          >
-            <template v-slot:label="opt">
-              <div class="schedule-item-border box-size">
-                <q-icon
-                  :name="opt.icon"
-                  color="white"
-                  size="sm"
-                  class="bg-primary q-pa-md"
-                />
-                <span class="q-pa-md">{{ opt.label }}</span>
-              </div>
-            </template>
-          </q-option-group>
-          <Field name="others" v-slot="item">
-            <q-input
-              class="col-12 q-px-md q-mt-md schedule-item-border"
-              borderless
-              bg-color="white"
-              :label="$t('label.others')"
-              :model-value="item.value"
-              v-bind="item.field"
-            >
-              <span v-if="item.errorMessage" class="text-red">
-                {{ parseErrorMessage(item.errorMessage) }}
-              </span>
-            </q-input>
-          </Field>
         </div>
       </div>
       <Button class="bg-transparent no-padding">
@@ -360,8 +347,5 @@ async function addEvent() {
 .schedule-item-border {
   border: 1px solid #ff0321;
   border-radius: 5px;
-}
-.box-size {
-  width: 15vw;
 }
 </style>

@@ -56,4 +56,10 @@ export default {
     index: "Excluir Sistema",
     message: "Selecione o sistema que deseja excluir:",
   },
+  register: {
+    index: "Registrar",
+  },
+  back: {
+    index: "Voltar",
+  },
 };

@@ -7,11 +7,12 @@
         >
           {{ $t("titles.ManagementSystem") }}
         </span>
-        <div class="absolute-right q-pa-md" v-if="userStorage.isLoggedIn">
+        <div class="absolute-right q-pa-md" v-if="isLogged">
           <ActionButton
             :buttons="actionButtons"
             :item="gestaoList"
             @reload="getGestaoList()"
+            system="gestão"
           />
         </div>
       </q-card-section>
@@ -52,21 +53,23 @@
 </template>
 
 <script setup lang="ts">
-import GetMenu from "../../graphql/menu/GetMenu.gql";
-import { Menu } from "../../entities";
+import GetSystem from "../../graphql/system/GetSystem.gql";
+import { System } from "../../entities";
 import { Ref } from "vue";
 import actionButtons from "./actionButtons";
 
-const gestaoList: Ref<Menu[]> = ref([]);
+const gestaoList: Ref<System[]> = ref([]);
+
+const isLogged = localStorage.getItem("token");
 
 onMounted(() => {
   getGestaoList();
 });
 
 async function getGestaoList() {
-  const { menuBySystem } = (await runMutation(GetMenu, {
+  const { menuBySystem } = (await runMutation(GetSystem, {
     sistema: "gestao",
-  })) as unknown as Record<"menuBySystem", Array<Menu>>;
+  })) as unknown as Record<"menuBySystem", Array<System>>;
 
   gestaoList.value = menuBySystem;
   return gestaoList;

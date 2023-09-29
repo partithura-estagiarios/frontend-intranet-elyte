@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { Menu } from "../../../entities";
-import DeleteSystem from "../../../graphql/menu/DeleteSystem.gql";
+import { System } from "../../../entities";
+import DeleteSystem from "../../../graphql/system/DeleteSystem.gql";
 
 const emits = defineEmits(["reload", "cancel"]);
 defineProps({
@@ -9,7 +9,7 @@ defineProps({
     default: false,
   },
   item: {
-    type: Array<Menu>,
+    type: Array<System>,
     required: true,
   },
 });

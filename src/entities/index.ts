@@ -1,4 +1,6 @@
 export * from "./Ramal";
-export * from "./Menu";
+export * from "./System";
 export * from "./User";
 export * from "./auth";
+export * from "./Column";
+export * from "./Menu";

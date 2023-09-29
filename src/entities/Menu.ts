@@ -1,8 +1,11 @@
 export interface Menu {
-  icon: string;
+  [x: string]: any;
   id: string;
-  label: string;
-  sublabel: string;
-  link: string;
-  sistema: string;
+  complement: string;
+  dessert: string;
+  protein: string;
+  salad: string;
+  rice: string;
+  soup: string;
+  date: string;
 }

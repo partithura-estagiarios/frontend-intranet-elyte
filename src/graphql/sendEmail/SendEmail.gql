@@ -1,0 +1,3 @@
+mutation SendRecoveryEmail($email: String!) {
+  sendRecoveryEmail(email: $email)
+}

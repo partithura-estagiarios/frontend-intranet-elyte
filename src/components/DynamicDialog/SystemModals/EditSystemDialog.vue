@@ -1,7 +1,8 @@
 <script setup lang="ts">
-import { type Menu } from "../../../entities";
-
-import UpdateSystem from "../../../graphql/menu/UpdateSystem.gql";
+import { Field, Form } from "vee-validate";
+import { type System } from "../../../entities";
+import { inputSchema } from "../../../validation";
+import UpdateSystem from "../../../graphql/system/UpdateSystem.gql";
 
 const emits = defineEmits(["reload", "cancel"]);
 defineProps({
@@ -10,17 +11,17 @@ defineProps({
     default: false,
   },
   item: {
-    type: Array<Menu>,
+    type: Array<System>,
     required: true,
   },
 });
 const selectedSystem = ref<object>({});
 
-const getSelectedSystem = (system: Menu) => {
+const getSelectedSystem = (system: System) => {
   selectedSystem.value = system;
 };
 
-const form: Omit<Menu, "id"> = reactive({
+const form: Omit<System, "id"> = reactive({
   icon: "",
   label: "",
   link: "",
@@ -28,7 +29,7 @@ const form: Omit<Menu, "id"> = reactive({
   sublabel: "",
 });
 
-watch(selectedSystem, (newValue: Menu) => {
+watch(selectedSystem, (newValue: System) => {
   form.icon = newValue.icon;
   form.label = newValue.label;
   form.link = newValue.link;
@@ -95,48 +96,74 @@ async function updateSystem() {
       </div>
     </div>
 
-    <div v-else class="row q-pa-xl">
-      <q-input
-        class="col-6 q-px-xs"
-        v-model="form.label"
-        :label="$t('text.title')"
-        :rules="[(val: string) => validateNotEmpty(val)]"
-      />
-      <q-input
-        class="col-6 q-px-xs"
-        v-model="form.icon"
-        label="Icone"
-        :rules="[(val: string) => validateNotEmpty(val)]"
-      >
-        <template #prepend>
-          <q-item clickable target="_blank">
-            <q-icon class="col-sm-6" name="pageview">
-              <q-tooltip anchor="top middle" self="bottom middle">
-                <span class="text-subtitle2">{{ $t("label.search") }}</span>
-              </q-tooltip>
-            </q-icon>
-          </q-item>
-        </template>
-      </q-input>
-
-      <q-input
-        class="col-6 q-px-xs"
-        v-model="form.sublabel"
-        label="Descrição"
-        :rules="[(val: string) => validateNotEmpty(val)]"
-      />
-      <q-input
-        class="col-6 q-px-xs"
-        v-model="form.sistema"
-        label="Sistema"
-        :rules="[(val: string) => validateNotEmpty(val)]"
-      />
-      <q-input
-        class="col-12 q-px-xs"
-        v-model="form.link"
-        label="Link"
-        :rules="[(val: string) => validateNotEmpty(val)]"
-      />
+    <div v-else>
+      <Form :validation-schema="inputSchema" class="row q-pa-xl">
+        <Field name="title" v-slot="item">
+          <q-input
+            class="col-6 q-px-xs"
+            :label="$t('text.title')"
+            :model-value="item.value"
+            v-bind="item.field"
+          />
+          <span v-if="item.errorMessage" class="text-red">
+            {{ parseErrorMessage(item.errorMessage) }}
+          </span>
+        </Field>
+        <Field name="icon" v-slot="item">
+          <q-input
+            class="col-6 q-px-xs"
+            :label="$t('text.icon')"
+            :model-value="item.value"
+            v-bind="item.field"
+          >
+            <template #prepend>
+              <q-item clickable target="_blank">
+                <q-icon class="col-sm-6" name="pageview">
+                  <q-tooltip anchor="top middle" self="bottom middle">
+                    <span class="text-subtitle2">{{ $t("label.search") }}</span>
+                  </q-tooltip>
+                </q-icon>
+              </q-item>
+            </template>
+          </q-input>
+          <span v-if="item.errorMessage" class="text-red">
+            {{ parseErrorMessage(item.errorMessage) }}
+          </span>
+        </Field>
+        <Field name="description" v-slot="item">
+          <q-input
+            class="col-6 q-px-xs"
+            :label="$t('text.description')"
+            :model-value="item.value"
+            v-bind="item.field"
+          />
+          <span v-if="item.errorMessage" class="text-red">
+            {{ parseErrorMessage(item.errorMessage) }}
+          </span>
+        </Field>
+        <Field name="system" v-slot="item">
+          <q-input
+            class="col-6 q-px-xs"
+            :label="$t('text.system')"
+            :model-value="item.value"
+            v-bind="item.field"
+          />
+          <span v-if="item.errorMessage" class="text-red">
+            {{ parseErrorMessage(item.errorMessage) }}
+          </span>
+        </Field>
+        <Field name="link" v-slot="item">
+          <q-input
+            class="col-12 q-px-xs"
+            :label="$t('text.link')"
+            :model-value="item.value"
+            v-bind="item.field"
+          />
+          <span v-if="item.errorMessage" class="text-red">
+            {{ parseErrorMessage(item.errorMessage) }}
+          </span>
+        </Field>
+      </Form>
     </div>
   </DynamicDialog>
 </template>

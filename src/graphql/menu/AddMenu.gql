@@ -1,0 +1,5 @@
+mutation AddMenu($data: InputAddMenu!) {
+  addMenu(data: $data) {
+    id
+  }
+}

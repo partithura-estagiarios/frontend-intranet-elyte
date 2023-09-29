@@ -7,6 +7,8 @@ export default {
     createRamal: "Ramal criado com sucesso",
     deleteRamal: "Ramal deletado com sucesso",
     editRamal: "Ramal editado com sucesso",
+    createMenu: "Cardápio criado com sucesso",
+    editMenu: "Cardápio editado com sucesso",
     createSystem: "Sistema criado com sucesso",
     deleteSystem:
       "Sistema deletado com sucesso | Sistemas deletados com sucesso",
@@ -22,6 +24,8 @@ export default {
     createRamal: "Houve um erro ao criar o ramal",
     deleteRamal: "Houve um erro ao deletar o ramal",
     editRamal: "Ramal editado com sucesso",
+    createMenu: "Houve um erro ao criar o cardápio",
+    editMenu: "There was an error editing the menu",
     createSystem: "Houve um erro ao criar o sistema",
     deleteSystem: {
       error:

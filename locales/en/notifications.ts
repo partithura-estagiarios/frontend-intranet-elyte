@@ -7,6 +7,8 @@ export default {
     createBranchLine: "Branch line created successfully",
     deleteBranchLine: "Branch line deleted successfully",
     editBranchLine: "Branch line edited successfully",
+    createMenu: "Menu created successfully",
+    editMenu: "Menu edited successfully",
     createSystem: "System created successfully",
     deleteSystem: "System deleted successfully | Systems deleted successfully",
     scheduleEvent: "Event scheduled successfully",
@@ -21,6 +23,8 @@ export default {
     createBranchLine: "An error occurred while creating the branch line",
     deleteBranchLine: "An error occurred while deleting the branch line",
     editBranchLine: "Branch line edited successfully",
+    createMenu: "There was an error creating the menu",
+    editMenu: "Menu edited successfully",
     createSystem: "An error occurred while creating the system",
     deleteSystem: {
       error:

@@ -1,5 +1,0 @@
-mutation AddSystem($data: systemInput) {
-  addSystem(data: $data) {
-    id
-  }
-}

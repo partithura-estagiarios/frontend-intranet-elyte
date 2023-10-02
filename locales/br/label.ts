@@ -14,6 +14,7 @@ export default {
   ramalNumber: "Número do ramal",
   ramalOrPhone: "Seu Ramal ou Telefone",
   sector: "Setor",
+  dayEvents: "Eventos do Dia",
   name: {
     index: "Nome",
     pronoun: "Seu nome",

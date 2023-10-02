@@ -13,6 +13,7 @@ export default {
   code: "Code",
   ramalNumber: "Branch line number",
   ramalOrPhone: "Your Branch line Or Phone",
+  dayEvents: "Events of the day",
   sector: "Sector",
   name: {
     index: "Name",

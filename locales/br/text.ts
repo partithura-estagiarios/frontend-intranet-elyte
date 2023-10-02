@@ -7,6 +7,7 @@ export default {
   sector: "Setor",
   number: "Número",
   day: "Dia",
+  date: "Data",
   week: "Semana",
   menu: {
     dessert: "Sobremesa",

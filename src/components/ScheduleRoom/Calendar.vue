@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { QCalendarMonth, today } from "@quasar/quasar-ui-qcalendar/";
 import { Event, Room } from "../../entities";
-import GetEvent from "../../graphql/events/GetEvents.gql";
+import GetEvents from "../../graphql/events/GetEvents.gql";
 import GetRooms from "../../graphql/rooms/GetRooms.gql";
 import { DateTime } from "luxon";
 
@@ -23,7 +23,7 @@ async function getRooms(): Promise<void> {
 }
 
 async function getEvents(): Promise<void> {
-  eventList.value = await runQuery(GetEvent).then((data) => data.event);
+  eventList.value = await runQuery(GetEvents).then((data) => data.event);
 }
 function getRoomByEvent(event: Event): Pick<Room, "color"> {
   return roomList.value?.find((room: Room) => room.id == +event.roomId) as Room;
@@ -130,7 +130,7 @@ function onReload() {
     <div class="grow q-py-xl">
       <q-card bordered class="text-white">
         <q-card-section class="bg-primary">
-          <div class="text-h4">{{ $t("label.") }}</div>
+          <div class="text-h4">{{ $t("label.dayEvents") }}</div>
         </q-card-section>
         <q-card-section class="row q-gutter-x-lg justify-center items-center">
           <div class="text-h6 text-black">

@@ -130,7 +130,7 @@ function onReload() {
     <div class="grow q-py-xl">
       <q-card bordered class="text-white">
         <q-card-section class="bg-primary">
-          <div class="text-h4">Eventos do Dia</div>
+          <div class="text-h4">{{ $t("label.") }}</div>
         </q-card-section>
         <q-card-section class="row q-gutter-x-lg justify-center items-center">
           <div class="text-h6 text-black">

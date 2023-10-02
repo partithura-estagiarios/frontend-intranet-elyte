@@ -1,14 +1,14 @@
 <template>
   <div
-    class="full-width row no-wrap justify-between items-center text-white bg-primary"
+    class="full-width row no-wrap justify-between items-center text-white bg-primary q-mb-xl"
   >
     <q-item clickable to="/home" class="q-mx-md q-mt-sm">
       <q-img src="/images/logo.png" class="logo" />
     </q-item>
     <q-tabs no-caps indicator-color="transparent">
       <q-route-tab :label="$t('home')" to="/home" />
-      <q-btn flat color="white" :label="$t('admin')" to="/login">
-        <q-menu v-if="userStorage.isLoggedIn">
+      <q-btn flat color="white" no-caps :label="$t('admin')" to="/login">
+        <q-menu v-if="isLogged">
           <q-list>
             <q-item clickable v-close-popup to="/register">
               <q-item-section class="text-black">{{
@@ -21,6 +21,10 @@
     </q-tabs>
   </div>
 </template>
+
+<script setup lang="ts">
+const isLogged = localStorage.getItem("token");
+</script>
 
 <style scoped>
 .logo {

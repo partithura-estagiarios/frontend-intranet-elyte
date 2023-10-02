@@ -29,7 +29,7 @@ const tableColumns = [
   {
     name: "date",
     required: true,
-    label: "Data",
+    label: t("text.date"),
     field: (getMenu: { date: string | number | Date }) =>
       new Date(getMenu.date).toLocaleDateString("pt-BR", {
         weekday: "long",
@@ -39,42 +39,42 @@ const tableColumns = [
   {
     name: "salad",
     required: true,
-    label: "Salada",
+    label: t("text.menu.salad"),
     field: "salad",
     align: "left",
   },
   {
     name: "rice",
     required: true,
-    label: "Arroz",
+    label: t("text.menu.rice"),
     field: "rice",
     align: "left",
   },
   {
     name: "protein",
     required: true,
-    label: "Proteína",
+    label: t("text.menu.protein"),
     field: "protein",
     align: "left",
   },
   {
     name: "complement",
     required: true,
-    label: "Complemento",
+    label: t("text.menu.complement"),
     field: "complement",
     align: "left",
   },
   {
     name: "soup",
     required: true,
-    label: "Sopa",
+    label: t("text.menu.soup"),
     field: "soup",
     align: "left",
   },
   {
     name: "dessert",
     required: true,
-    label: "Sobremesa",
+    label: t("text.menu.dessert"),
     field: "dessert",
     align: "left",
   },
@@ -293,8 +293,7 @@ function closeAddModal() {
                 v-if="showCalendar"
                 :label="$t('text.day')"
                 bg-color="grey-3"
-                class="text-black"
-                style="position: absolute; top: 100%; left: 0; z-index: 9999"
+                class="text-black calendar"
                 @click="showCalendar = false"
               />
             </div>
@@ -385,5 +384,11 @@ function closeAddModal() {
 
 .bar-style {
   border-radius: 10px;
+}
+.calendar {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: 9999;
 }
 </style>

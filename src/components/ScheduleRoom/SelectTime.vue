@@ -6,7 +6,7 @@ const emits = defineEmits(["setTime"]);
 const time = ref(null);
 const date = ref(null);
 const selectionStep = ref<"date" | "hour" | "minute" | null>(null);
-const dayHours = [
+const DAY_HOURS = [
   0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21,
   22, 23,
 ];
@@ -77,7 +77,7 @@ function reopenSelect() {
             <q-item
               dense
               class="item-size col-3"
-              v-for="hour in dayHours"
+              v-for="hour in DAY_HOURS"
               :key="hour"
               clickable
               @click="generateTimeList(hour)"

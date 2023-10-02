@@ -25,6 +25,7 @@ async function getRooms(): Promise<void> {
 async function getEvents(): Promise<void> {
   eventList.value = await runQuery(GetEvents).then((data) => data.event);
 }
+
 function getRoomByEvent(event: Event): Pick<Room, "color"> {
   return roomList.value?.find((room: Room) => room.id == +event.roomId) as Room;
 }
@@ -100,6 +101,7 @@ function onReload() {
           <div class="row full-height items-end q-gutter-x-xs">
             <div
               class="row items-end no-padding cursor-pointer"
+              v-if="joinDates && joinDates[timestamp.date]"
               v-for="(event, index) in joinDates[timestamp.date]"
               :key="index"
               @click="

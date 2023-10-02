@@ -5,13 +5,13 @@ export default {
     changePwd: "Sua senha foi alterada com sucesso",
     register: "Seu cadastro foi criado com sucesso",
     createRamal: "Ramal criado com sucesso",
-    deleteRamal: "Ramal deletado com sucesso",
+    deleteRamal: "Ramal excluído com sucesso",
     editRamal: "Ramal editado com sucesso",
     createMenu: "Cardápio criado com sucesso",
     editMenu: "Cardápio editado com sucesso",
     createSystem: "Sistema criado com sucesso",
     deleteSystem:
-      "Sistema deletado com sucesso | Sistemas deletados com sucesso",
+      "Sistema excluído com sucesso | Sistemas excluídos com sucesso",
   },
 
   fail: {
@@ -21,15 +21,15 @@ export default {
     changePwd: "Houve um erro ao tentar mudar sua senha",
     register: "Houve um erro ao criar seu cadastro",
     createRamal: "Houve um erro ao criar o ramal",
-    deleteRamal: "Houve um erro ao deletar o ramal",
+    deleteRamal: "Houve um erro ao excluir o ramal",
     editRamal: "Ramal editado com sucesso",
     createMenu: "Houve um erro ao criar o cardápio",
     editMenu: "There was an error editing the menu",
     createSystem: "Houve um erro ao criar o sistema",
     deleteSystem: {
       error:
-        "Houve um erro ao deletar o sistema | Houve um erro ao deletar os sistemas",
-      notSelected: "Você deve selecionar pelo menos um sistema para deletar",
+        "Houve um erro ao excluir o sistema | Houve um erro ao excluir os sistemas",
+      notSelected: "Você deve selecionar pelo menos um sistema para excluir",
     },
     emptyField: "Campo obrigatório",
     invalidEmail: "Email inválido",

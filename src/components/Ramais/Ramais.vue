@@ -16,7 +16,7 @@
     :v-bind="$attrs"
     class="q-mt-lg"
   >
-    <template #top-left v-if="isLogged">
+    <template #top-left>
       <q-btn
         class="bg-primary text-white text-bold"
         @click="activedModal = true"
@@ -30,7 +30,7 @@
       </q-btn>
     </template>
 
-    <template #configButtons="{ item }" v-if="isLogged">
+    <template #configButtons="{ item }">
       <ActionButton
         :buttons="actionButtons"
         :item="item"
@@ -48,9 +48,6 @@ import actionButtons from "./actionButtons";
 
 const ramalList: Ref<Ramal[]> = ref([]);
 const activedModal = ref(false);
-
-const isLogged = localStorage.getItem("token");
-
 onMounted(() => {
   getListRamal();
 });

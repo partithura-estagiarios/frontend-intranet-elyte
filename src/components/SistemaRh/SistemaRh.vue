@@ -7,7 +7,7 @@
         >
           {{ $t("titles.HrSystem") }}
         </span>
-        <div class="absolute-right q-pa-md" v-if="isLogged">
+        <div class="absolute-right q-pa-md">
           <ActionButton
             :buttons="actionButtons"
             :item="rhList"
@@ -58,8 +58,6 @@ import { Ref } from "vue";
 import actionButtons from "./actionButtons";
 
 const rhList: Ref<System[]> = ref([]);
-
-const isLogged = localStorage.getItem("token");
 
 onMounted(() => {
   getListRh();

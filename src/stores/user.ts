@@ -18,7 +18,10 @@ const NULL_USER = {
 };
 export const useUserStore = defineStore("useUserStore", {
   state: () => ({
-    user: buildUser(NULL_USER),
+    user: {
+      ...buildUser(NULL_USER),
+      token: localStorage.getItem("token") || "",
+    },
   }),
   getters: {
     getToken: (state) => {
@@ -40,12 +43,14 @@ export const useUserStore = defineStore("useUserStore", {
         token: value.token,
         username: value.username,
       };
+      localStorage.setItem("token", value.token);
     },
     logout() {
       this.user = buildUser(NULL_USER);
+      // Remover o token do localStorage ao fazer logout
+      localStorage.removeItem("token");
     },
   },
-  persist: true,
 }) as unknown as UserStorageConstructor;
 
 export const userStorage = useUserStore();

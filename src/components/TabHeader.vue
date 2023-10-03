@@ -8,7 +8,7 @@
     <q-tabs no-caps indicator-color="transparent">
       <q-route-tab :label="$t('home')" to="/home" />
       <q-btn flat color="white" no-caps :label="$t('admin')" to="/login">
-        <q-menu v-if="isLogged">
+        <q-menu v-if="userStorage.user.token">
           <q-list>
             <q-item clickable v-close-popup to="/register">
               <q-item-section class="text-black">{{
@@ -21,10 +21,6 @@
     </q-tabs>
   </div>
 </template>
-
-<script setup lang="ts">
-const isLogged = localStorage.getItem("token");
-</script>
 
 <style scoped>
 .logo {

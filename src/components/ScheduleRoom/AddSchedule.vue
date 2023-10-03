@@ -21,6 +21,7 @@ defineProps({
 const form: Omit<Event, "id"> = reactive({
   initialTime: "",
   finalTime: "",
+  roomId: "",
   support: {
     computer: false,
     projector: false,
@@ -29,6 +30,40 @@ const form: Omit<Event, "id"> = reactive({
     speaker: false,
     flipChart: false,
   },
+});
+
+const invalidRoom: unknown = [];
+
+watch(form, async () => {
+  const getInvalidRoom = await runQuery(GetBusyRoom, {
+    initialTime: form.initialTime,
+    finalTime: form.finalTime,
+  });
+  invalidRoom.push(getInvalidRoom?.getBusyRoom);
+});
+
+const isRoomDisabled = computed(() => {
+  return (room: Room) => {
+    return form.initialTime && form.finalTime;
+  };
+});
+
+const isRoomOptionDisabled = computed(() => {
+  return (room: Room) => {
+    return invalidRoom.some((invalidRoom: Room) => invalidRoom?.id === room.id);
+  };
+});
+
+const roomOptionLabel = computed(() => {
+  return (room: Room) => {
+    return room.name;
+  };
+});
+
+const roomOptionValue = computed(() => {
+  return (room: Room) => {
+    return room.id;
+  };
 });
 
 const group = ref([]);
@@ -72,15 +107,6 @@ function setDate(
   form[paramsDate] = time;
 }
 
-const invalidRoom: unknown = [];
-watch(form, async () => {
-  const getInvalidRoom = await runQuery(GetBusyRoom, {
-    initialTime: form.initialTime,
-    finalTime: form.finalTime,
-  });
-  invalidRoom.push(getInvalidRoom?.getBusyRoom);
-});
-
 async function addEvent(data: EventForm) {
   data.initialTime = form.initialTime;
   data.finalTime = form.finalTime;
@@ -96,7 +122,7 @@ async function addEvent(data: EventForm) {
       emits("reload");
       return;
     }
-    negativeNotify("Data inválida");
+    negativeNotify("notifications.fail.data");
   } catch (error) {
     negativeNotify(t("notifications.fail.scheduleEvent"));
   }
@@ -276,11 +302,11 @@ async function addEvent(data: EventForm) {
           :model-value="item.value"
           @update:model-value="form.roomId"
           v-bind="item.field"
-          :disable="form.initialTime && form.finalTime ? false : true"
+          :disable="isRoomDisabled"
           :options="rooms"
-          :option-label="(room: Room) => room.name"
-          :option-value="(room: Room) => room.id"
-          :option-disable="(room: Room) => invalidRoom.find((invalidRoom: Room) => invalidRoom?.id === room.id) ? true : false"
+          :option-label="roomOptionLabel"
+          :option-value="roomOptionValue"
+          :option-disable="isRoomOptionDisabled"
         >
           <template #prepend>
             <q-icon

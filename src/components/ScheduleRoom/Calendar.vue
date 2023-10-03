@@ -25,7 +25,7 @@ async function getRooms(): Promise<void> {
 async function getEvents(): Promise<void> {
   eventList.value = await runQuery(GetEvent).then((data) => data.event);
 }
-function getRoomByEvent(event: Event): Pick<Room, "color"> {
+function getRoomByEvent(event: Event) {
   return roomList.value?.find((room: Room) => room.id == +event.roomId) as Room;
 }
 
@@ -43,8 +43,8 @@ const joinDates = computed(() => {
         const dateRange = Array.from({ length: numberOfDays }, (_, index) =>
           initialDateTime.plus({ days: index })
         );
-        dateRange.forEach((dt) => {
-          const currentDate = dt.toISODate();
+        dateRange.forEach((dateTime) => {
+          const currentDate = dateTime.toISODate();
           if (currentDate) {
             acc[currentDate] = [...(acc[currentDate] || []), event];
           }

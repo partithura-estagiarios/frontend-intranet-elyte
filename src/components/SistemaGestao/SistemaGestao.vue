@@ -7,7 +7,7 @@
         >
           {{ $t("titles.ManagementSystem") }}
         </span>
-        <div class="absolute-right q-pa-md">
+        <div class="absolute-right q-pa-md" v-if="userStorage.user.token">
           <ActionButton
             :buttons="actionButtons"
             :item="gestaoList"

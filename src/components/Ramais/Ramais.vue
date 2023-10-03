@@ -16,7 +16,7 @@
     :v-bind="$attrs"
     class="q-mt-lg"
   >
-    <template #top-left>
+    <template #top-left v-if="userStorage.user.token">
       <q-btn
         class="bg-primary text-white text-bold"
         @click="activedModal = true"
@@ -30,7 +30,7 @@
       </q-btn>
     </template>
 
-    <template #configButtons="{ item }">
+    <template #configButtons="{ item }" v-if="userStorage.user.token">
       <ActionButton
         :buttons="actionButtons"
         :item="item"

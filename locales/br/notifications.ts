@@ -16,6 +16,7 @@ export default {
   },
 
   fail: {
+    data: "Data inválida",
     login: "Credenciais incorretas, tente novamente!",
     sendEmail: "Houve um erro ao tentar enviar o email",
     emailNotFound: "E-mail não encontrado",
@@ -33,7 +34,6 @@ export default {
       notSelected: "Você deve selecionar pelo menos um sistema para excluir",
     },
     scheduleEvent: "Houve um erro ao agendar o evento",
-
     emptyField: "Campo obrigatório",
     invalidEmail: "Email inválido",
     equalPassword: "As senhas não correspondem",

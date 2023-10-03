@@ -1,5 +1,6 @@
 export default {
   success: {
+    data: "Invalid data",
     login: "Access granted, welcome",
     sendEmail: "A recovery link has been sent to your email",
     changePwd: "Your password has been successfully changed",

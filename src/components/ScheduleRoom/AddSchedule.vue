@@ -85,9 +85,9 @@ async function addEvent(data: EventForm) {
   data.initialTime = form.initialTime;
   data.finalTime = form.finalTime;
   data.support = form.support;
-  data.userRegistration = parseInt(data.userRegistration);
-  data.totalPeople = parseInt(data.totalPeople);
-  data.ramalNumber = parseInt(data.ramalNumber);
+  parseInt(data.userRegistration);
+  parseInt(data.totalPeople);
+  parseInt(data.ramalNumber);
 
   try {
     const addEvent = await runMutation(AddEvent, { data });

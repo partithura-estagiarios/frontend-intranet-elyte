@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { QCalendarMonth, today } from "@quasar/quasar-ui-qcalendar/";
-import { Event, Room } from "../../entities";
+import { Event, Room } from "../../entities/Event";
 import GetEvents from "../../graphql/events/GetEvents.gql";
 import GetRooms from "../../graphql/rooms/GetRooms.gql";
 import { DateTime } from "luxon";
@@ -10,7 +10,7 @@ const selectedDate = ref(today());
 const activedModal = ref(false);
 const eventList = ref();
 const roomList = ref();
-const selectedEvent = {};
+const selectedEvent = ref();
 const currentDay = DateTime.fromISO(today()).toFormat("yyyy-MM-dd");
 
 onMounted(() => {
@@ -26,8 +26,18 @@ async function getEvents(): Promise<void> {
   eventList.value = await runQuery(GetEvents).then((data) => data.event);
 }
 
+function openModalWithEvent(event: unknown) {
+  activedModal.value = true;
+  selectedEvent.value = event;
+}
+
 function getRoomByEvent(event: Event): Pick<Room, "color"> {
   return roomList.value?.find((room: Room) => room.id == +event.roomId) as Room;
+}
+
+function getColorByEvent(event: Event): string | undefined {
+  const room = getRoomByEvent(event);
+  return room ? room.color : undefined;
 }
 
 const joinDates = computed(() => {
@@ -65,18 +75,24 @@ function parsedScheduleDate(date: number) {
 function onPrev() {
   calendar.value.prev();
 }
+
 function onNext() {
   calendar.value.next();
 }
+
 function onReload() {
   getEvents();
+}
+
+function cancel() {
+  activedModal.value = false;
 }
 </script>
 
 <template>
   <ScheduleModal
     :isActive="activedModal"
-    @cancel="activedModal = false"
+    @cancel="cancel"
     :item="selectedEvent"
   />
   <div class="row q-px-xl">
@@ -104,12 +120,9 @@ function onReload() {
               v-if="joinDates && joinDates[timestamp.date]"
               v-for="(event, index) in joinDates[timestamp.date]"
               :key="index"
-              @click="
-                activedModal = true;
-                selectedEvent = event;
-              "
+              @click="openModalWithEvent(Event)"
             >
-              <q-icon name="circle" :color="getRoomByEvent(event)?.color" />
+              <q-icon name="circle" :color="getColorByEvent(event)" />
               <q-tooltip class="bg-black text-bold">{{
                 event.userCreated
               }}</q-tooltip>

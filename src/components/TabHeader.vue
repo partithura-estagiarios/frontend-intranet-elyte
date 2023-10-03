@@ -15,6 +15,11 @@
                 $t("titles.Login.register")
               }}</q-item-section>
             </q-item>
+            <q-item @click="userStorage.logout()" v-close-popup to="/login">
+              <q-item-section class="text-black">{{
+                $t("titles.Login.logOff")
+              }}</q-item-section>
+            </q-item>
           </q-list>
         </q-menu>
       </q-btn>

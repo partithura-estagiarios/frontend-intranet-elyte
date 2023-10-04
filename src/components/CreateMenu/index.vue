@@ -7,6 +7,7 @@ import EditMenu from "../../graphql/menu/EditMenu.gql";
 import GetMenu from "../../graphql/menu/GetMenu.gql";
 import { Ref } from "vue";
 import { onMounted, defineEmits } from "vue";
+import { emit } from "process";
 
 onMounted(() => {
   getMenu();
@@ -173,19 +174,9 @@ async function editMenu() {
 async function addMenu() {
   try {
     const isDuplicateDate = menus.value.some((menu) => menu.date === form.date);
-
-    if (isDuplicateDate) {
-      return;
-    }
-
-    const response = await runMutation(AddMenu, { data: form });
-
-    if (response && response.addMenu) {
-      positiveNotify(t("notifications.success.createMenu"));
-      await getMenu();
-      closeAddModal();
-      emits("reload");
-    }
+    await runMutation(AddMenu, { data: form });
+    positiveNotify("notifications.success.createMenu");
+    emits("reload");
   } catch {
     negativeNotify(t("notifications.fail.createMenu"));
   }

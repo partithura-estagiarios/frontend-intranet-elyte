@@ -13,4 +13,5 @@ export default {
   ramalNumber: "Número do ramal",
   sector: "Setor",
   name: "Nome",
+  menu: "Cardápio",
 };

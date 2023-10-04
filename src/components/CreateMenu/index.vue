@@ -192,7 +192,7 @@ async function addMenu() {
 }
 
 function redirectToPrintRoute() {
-  router.push("menu");
+  router.push({ path: "/menu" });
   emits("reload");
 }
 

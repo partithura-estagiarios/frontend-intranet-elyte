@@ -86,7 +86,7 @@ async function getMenu() {
               >
                 <q-card-section class="bg-primary">
                   <div>
-                    {{ dayOfWeek }}
+                    {{ dayMenus[0].dayOfWeek }}
                   </div>
                 </q-card-section>
                 <q-card-section class="text-subtitle2 text-black">

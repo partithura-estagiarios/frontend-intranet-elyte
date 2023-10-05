@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { DateTime } from "luxon";
 import * as yup from "yup";
 import { Field, Form } from "vee-validate";
 import AddMenu from "../../graphql/menu/AddMenu.gql";
@@ -7,7 +6,6 @@ import EditMenu from "../../graphql/menu/EditMenu.gql";
 import GetMenu from "../../graphql/menu/GetMenu.gql";
 import { Ref } from "vue";
 import { onMounted, defineEmits } from "vue";
-import { emit } from "process";
 
 onMounted(() => {
   getMenu();
@@ -111,7 +109,6 @@ async function changeMutation() {
       opt[action.value]();
     }
   }
-  negativeNotify(t("notifications.fail.createMenu"));
 }
 
 function validateForm() {
@@ -152,6 +149,7 @@ async function getMenu() {
 async function editMenu() {
   try {
     const isDuplicateDate = menus.value.some((menu) => menu.date === form.date);
+    loga("try EDIT");
 
     if (isDuplicateDate) {
       return;
@@ -168,12 +166,12 @@ async function editMenu() {
     }
   } catch {
     negativeNotify(t("notifications.fail.createMenu"));
+    loga("CATCH EDIT");
   }
 }
 
 async function addMenu() {
   try {
-    const isDuplicateDate = menus.value.some((menu) => menu.date === form.date);
     await runMutation(AddMenu, { data: form });
     positiveNotify("notifications.success.createMenu");
     emits("reload");

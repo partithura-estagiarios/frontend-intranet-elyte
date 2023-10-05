@@ -30,7 +30,7 @@ const TIME_SEPARATOR = "T";
 const groupMenusByDate = () => {
   const groupedMenus: Record<string, Menu[]> = {};
   menus.value.forEach((menu) => {
-    const date = menu.date.toISOString().split(TIME_SEPARATOR)[0]; // Usando a nova variável
+    const date = menu.date.toISOString().split(TIME_SEPARATOR)[0];
     const dayOfWeekIndex = new Date(date).getDay();
     const dayOfWeek = weekday[dayOfWeekIndex];
     if (!groupedMenus[date]) {

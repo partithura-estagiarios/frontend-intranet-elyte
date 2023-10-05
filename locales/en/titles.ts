@@ -38,6 +38,6 @@ export default {
     recoverPassword: "Contact the IT department",
     emailSent: "Email sent with success, verify your email",
     logout: "logout",
-    contactTheDirector: "Contact of Director",
+    contactTheDirector: "Contato do Diretor",
   },
 };

@@ -42,6 +42,6 @@ export default {
     register: "Cadastrar Usuário",
     emailSent: "Email enviado com sucesso, verifique seu email",
     logout: "Sair da Conta",
-    contactTheDirector: "Contate o Diretor",
+    contactTheDirector: "Contato do Diretor",
   },
 };

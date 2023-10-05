@@ -2,12 +2,9 @@
   <div class="col-5">
     <BackButton class="justify-start row q-ml-md" />
   </div>
-  <div class="q-pa-md" style="max-width: 400px; margin: 0 auto">
+  <div class="q-pa-md">
     <div class="justify-start">
-      <span
-        class="text-black font text-bold q-ml-xl"
-        style="margin: 0; font-size: 24px"
-      >
+      <span class="text-black font text-bold q-ml-xl">
         {{ $t("titles.Login.contactTheDirector") }}
         <q-separator size="0.2rem" color="primary" class="bar-style" />
       </span>
@@ -50,3 +47,13 @@ import { email } from "@vee-validate/rules";
 import { loginForContac } from "../../validation";
 import { Field, Form } from "vee-validate";
 </script>
+<style scoped>
+.q-pa-md {
+  max-width: 400px;
+  margin: 0 auto;
+}
+span {
+  margin: 0;
+  font-size: 24px;
+}
+</style>

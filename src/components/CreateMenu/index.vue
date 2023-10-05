@@ -171,6 +171,7 @@ async function addMenu() {
   try {
     await runMutation(AddMenu, { data: form });
     positiveNotify("notifications.success.createMenu");
+    closeAddModal();
     emits("reload");
   } catch {
     negativeNotify(t("notifications.fail.createMenu"));

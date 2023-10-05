@@ -1,5 +1,7 @@
 export default {
   textIntranet: "INTRANET ELYTE",
+  home: "Início",
+  scheduler: "Agendar sala",
   ManagementSystem: "Sistema de gestão",
   HrSystem: "sistema de RH",
   OtherSystems: "Outros",

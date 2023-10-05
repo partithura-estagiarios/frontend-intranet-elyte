@@ -1,12 +1,11 @@
 <script setup lang="ts">
 import { Form, Field } from "vee-validate";
-import { Room, Event, EventForm } from "../../entities";
 import { scheduleSchema } from "../../validation";
+import { Room, Event, EventForm } from "../../entities";
 
 import AddEvent from "../../graphql/events/AddEvent.gql";
 import GetBusyRoom from "../../graphql/rooms/GetBusyRoom.gql";
 
-const emits = defineEmits(["reload"]);
 defineProps({
   isActive: {
     type: Boolean,
@@ -18,10 +17,18 @@ defineProps({
   },
 });
 
+const emits = defineEmits(["reload"]);
+
 const form: Omit<Event, "id"> = reactive({
-  initialTime: "",
-  finalTime: "",
-  roomId: "",
+  initialTime: null as unknown as string | number,
+  finalTime: null as unknown as string | number,
+  roomId: null as unknown as string,
+  userCreated: null as unknown as string,
+  description: null as unknown as string,
+  ramalNumber: null as unknown as number,
+  totalPeople: null as unknown as number,
+  userRegistration: null as unknown as number,
+  email: null as unknown as string,
   support: {
     computer: false,
     projector: false,
@@ -32,71 +39,72 @@ const form: Omit<Event, "id"> = reactive({
   },
 });
 
-const invalidRoom: unknown = [];
-
+const invalidRoom: unknown = ref([]);
 watch(form, async () => {
   const getInvalidRoom = await runQuery(GetBusyRoom, {
     initialTime: form.initialTime,
     finalTime: form.finalTime,
   });
-  invalidRoom.push(getInvalidRoom?.getBusyRoom);
+  invalidRoom.value = getInvalidRoom?.getBusyRoom;
 });
 
-const isRoomDisabled = computed(() => {
-  return (room: Room) => {
-    return form.initialTime && form.finalTime;
-  };
+const selectRoom = computed(() => !(form.initialTime && form.finalTime));
+
+function isRoomInvalid(idToCheck: number, invalidRooms: unknown) {
+  return invalidRooms.value.some(
+    (element: unknown) => element.id === idToCheck
+  );
+}
+
+const checkForInvalidRooms = computed((props) => (room = props.rooms) => {
+  const roomIdToCheck = room.id;
+  const isInvalid = isRoomInvalid(roomIdToCheck, invalidRoom);
+  return isInvalid;
 });
 
-const isRoomOptionDisabled = computed(() => {
-  return (room: Room) => {
-    return invalidRoom.some((invalidRoom: Room) => invalidRoom?.id === room.id);
-  };
-});
+const roomName = computed(
+  (props) =>
+    (room = props.rooms) =>
+      room.name
+);
 
-const roomOptionLabel = computed(() => {
-  return (room: Room) => {
-    return room.name;
-  };
-});
-
-const roomOptionValue = computed(() => {
-  return (room: Room) => {
-    return room.id;
-  };
-});
+const roomId = computed(
+  (props) =>
+    (room = props.rooms) =>
+      room.id
+);
 
 const group = ref([]);
 const options = [
   {
-    label: t("label.support.computer"),
-    value: "computer",
     icon: "computer",
+    value: "computer",
+    label: t("label.support.computer"),
   },
   {
-    label: t("label.support.projector"),
-    value: "projector",
     icon: "mdi-projector",
+    value: "projector",
+    label: t("label.support.projector"),
   },
   {
-    label: t("label.support.flipChart"),
-    value: "flipChart",
     icon: "mdi-script",
+    value: "flipChart",
+    label: t("label.support.flipChart"),
   },
   {
-    label: t("label.support.speaker"),
-    value: "speaker",
     icon: "speaker",
+    value: "speaker",
+    label: t("label.support.speaker"),
   },
   {
-    label: t("label.support.water"),
-    value: "water",
     icon: "water_drop",
+    value: "water",
+    label: t("label.support.water"),
   },
   {
-    label: t("label.support.coffee"),
-    value: "coffee",
     icon: "coffee",
+    value: "coffee",
+    label: t("label.support.coffee"),
   },
 ];
 
@@ -108,12 +116,12 @@ function setDate(
 }
 
 async function addEvent(data: EventForm) {
-  data.initialTime = form.initialTime;
-  data.finalTime = form.finalTime;
   data.support = form.support;
-  data.userRegistration = parseInt(data.userRegistration);
+  data.finalTime = form.finalTime;
+  data.initialTime = form.initialTime;
   data.totalPeople = parseInt(data.totalPeople);
   data.ramalNumber = parseInt(data.ramalNumber);
+  data.userRegistration = parseInt(data.userRegistration);
 
   try {
     const addEvent = await runMutation(AddEvent, { data });
@@ -135,12 +143,13 @@ async function addEvent(data: EventForm) {
     :open="isActive"
     :title="$t('action.scheduleEvent')"
   >
+    <!-- Criar um component para os fields -->
     <Form
       @submit="addEvent"
       :validation-schema="scheduleSchema"
       class="row q-pa-md text-black text-body1 q-gutter-y-sm justify-around"
     >
-      <Field name="userCreated" v-slot="item" class="">
+      <Field name="userCreated" v-slot="item">
         <q-input
           :model-value="item.value"
           v-bind="item.field"
@@ -297,16 +306,16 @@ async function addEvent(data: EventForm) {
           borderless
           :label="$t('label.room')"
           popup-content-class="text-black"
-          map-options
           emit-value
+          map-options
           :model-value="item.value"
           @update:model-value="form.roomId"
           v-bind="item.field"
-          :disable="isRoomDisabled"
+          :disable="selectRoom"
           :options="rooms"
-          :option-label="roomOptionLabel"
-          :option-value="roomOptionValue"
-          :option-disable="isRoomOptionDisabled"
+          :option-label="roomName"
+          :option-value="roomId"
+          :option-disable="checkForInvalidRooms"
         >
           <template #prepend>
             <q-icon

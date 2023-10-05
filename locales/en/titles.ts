@@ -37,7 +37,7 @@ export default {
     textLoginForm: "Enter your credentials",
     recoverPassword: "Contact the IT department",
     emailSent: "Email sent with success, verify your email",
-    logOff: "Log Off",
+    logout: "logout",
     contactTheDirector: "Contact of Director",
   },
 };

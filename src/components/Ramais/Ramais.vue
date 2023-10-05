@@ -19,13 +19,13 @@
     <template #top-left v-if="userStorage.user.token">
       <q-btn
         class="bg-primary text-white text-bold"
-        @click="activedModal = true"
+        @click="modifyActiveModal"
         :label="$t('action.addRamal.index')"
       >
         <AddRamal
           :isActive="activedModal"
           @reload="getListRamal()"
-          @cancel="activedModal = false"
+          @cancel="modifyActiveModal"
         />
       </q-btn>
     </template>
@@ -48,6 +48,9 @@ import actionButtons from "./actionButtons";
 
 const ramalList: Ref<Ramal[]> = ref([]);
 const activedModal = ref(false);
+function modifyActiveModal() {
+  activedModal.value = !activedModal.value;
+}
 onMounted(() => {
   getListRamal();
 });

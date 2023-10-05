@@ -17,7 +17,7 @@
             </q-item>
             <q-item @click="userStorage.logout()" v-close-popup to="/login">
               <q-item-section class="text-black">{{
-                $t("titles.Login.logOff")
+                $t("titles.Login.logout")
               }}</q-item-section>
             </q-item>
           </q-list>

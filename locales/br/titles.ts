@@ -41,7 +41,7 @@ export default {
     recoverPassword: "Entre em contato com o setor de TI",
     register: "Cadastrar Usuário",
     emailSent: "Email enviado com sucesso, verifique seu email",
-    logOff: "Sair da Conta",
+    logout: "Sair da Conta",
     contactTheDirector: "Contate o Diretor",
   },
 };

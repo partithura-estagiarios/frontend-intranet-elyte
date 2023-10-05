@@ -1,20 +1,18 @@
 <template>
-  <div
-    class="full-width row no-wrap justify-between items-center text-white bg-primary q-mb-xl"
-  >
+  <div class="row justify-between bg-primary q-mb-xl">
     <q-item clickable to="/home" class="q-mx-md q-mt-sm">
       <q-img src="/images/logo.png" class="logo" />
     </q-item>
     <q-tabs no-caps indicator-color="transparent">
-      <q-route-tab :label="$t('home')" to="/home" />
-
+      <q-route-tab :label="$t('titles.home')" to="/home" />
+      <q-route-tab :label="$t('titles.scheduler')" to="/schedule" />
       <q-btn flat color="white" no-caps :label="$t('admin')" to="/login">
         <q-menu v-if="isLogged">
           <q-list>
             <q-item clickable v-close-popup to="/register">
-              <q-item-section class="text-black">{{
-                $t("titles.Login.register")
-              }}</q-item-section>
+              <q-item-section class="text-black">
+                {{ $t("titles.Login.register") }}
+              </q-item-section>
             </q-item>
           </q-list>
         </q-menu>

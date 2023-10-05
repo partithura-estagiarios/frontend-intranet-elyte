@@ -149,8 +149,6 @@ async function getMenu() {
 async function editMenu() {
   try {
     const isDuplicateDate = menus.value.some((menu) => menu.date === form.date);
-    loga("try EDIT");
-
     if (isDuplicateDate) {
       return;
     }
@@ -166,7 +164,6 @@ async function editMenu() {
     }
   } catch {
     negativeNotify(t("notifications.fail.createMenu"));
-    loga("CATCH EDIT");
   }
 }
 

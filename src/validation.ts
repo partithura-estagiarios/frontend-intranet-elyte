@@ -37,12 +37,18 @@ const username = yup
   .required(t("warning.requiredField"))
   .min(2, t("warning.username"));
 
+const registration = yup.number().required(t("warning.requiredField"));
 const title = yup.string().required(t("warning.requiredField"));
 const icon = yup.string().required(t("warning.requiredField"));
 const description = yup.string().required(t("warning.requiredField"));
 const system = yup.string().required(t("warning.requiredField"));
 const link = yup.string().required(t("warning.requiredField"));
-
+const contact = yup.string().required(t("warning.requiredField"));
+export const loginForContac = yup.object({
+  email,
+  registration,
+  contact,
+});
 export const inputSchema = yup.object({
   title,
   icon,

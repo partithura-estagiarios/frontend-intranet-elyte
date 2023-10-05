@@ -38,5 +38,6 @@ export default {
     recoverPassword: "Contact the IT department",
     emailSent: "Email sent with success, verify your email",
     logOff: "Log Off",
+    contactTheDirector: "Contact of Director",
   },
 };

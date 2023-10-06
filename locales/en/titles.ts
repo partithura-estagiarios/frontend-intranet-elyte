@@ -1,9 +1,11 @@
 export default {
+  textIntranet: "INTRANET ELYTE",
   ManagementSystem: "Management System",
   HrSystem: "Hr System",
   OtherSystems: "OTHERS",
   Management: {
     DataSul: "DataSul",
+    DataSulPrototype: "DataSul Prototype",
     Partithura: "Partithura",
     StockQuery: "Stock Query",
     CODI: "CODI",
@@ -28,14 +30,15 @@ export default {
     Mapping: "Mapping",
     FT: "Web Technical Sheet",
     DataSulPrototype: "Exclusive for Test",
+    Stock: "Inventory management",
+    BoaIdeia: "Fill out form",
+    Reports: "ERP",
   },
   Login: {
     textLoginForm: "Enter your credentials",
+    textPasswordForm: "Recover your password!",
     recoverPassword: "Contact the IT department to recover password",
     register: "Register User",
-    textPasswordForm: "Recover your password!",
-    textLoginForm: "Enter your credentials",
-    recoverPassword: "Contact the IT department",
     emailSent: "Email sent with success, verify your email",
   },
 };

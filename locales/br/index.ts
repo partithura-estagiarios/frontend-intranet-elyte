@@ -18,4 +18,13 @@ export default {
   warning,
   notifications,
   label,
+  login: {
+    title: "Login",
+    labelInputName: "Seu nome de usuário",
+    labelInputPassword: "Sua senha",
+    hintName: "Seu número de registro",
+    hintPassword: "6 primeiros números do seu cpf",
+    submitButton: "Enviar",
+    warning: "Please type something!",
+  },
 };

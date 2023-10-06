@@ -18,11 +18,8 @@ export default {
     ed: "Reiniciado",
   },
   delete: "Excluir",
-
   edit: "Editar",
-
   add: "Adicionar",
-
   buy: {
     index: "Comprar",
     ing: "Comprando",
@@ -33,9 +30,6 @@ export default {
   },
   addRamal: {
     index: "Adicionar ramal",
-  },
-  addMenu: {
-    index: "Adicionar cardápio",
   },
   deleteRamal: {
     index: "Excluir ramal",

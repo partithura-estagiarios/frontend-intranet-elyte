@@ -4,13 +4,13 @@ export default {
     sendEmail: "A recovery link has been sent to your email",
     changePwd: "Your password has been successfully changed",
     register: "Your registration has been successfully created",
-    createBranchLine: "Branch line created successfully",
-    deleteBranchLine: "Branch line deleted successfully",
-    editBranchLine: "Branch line edited successfully",
+    createRamal: "Branch created successfully",
+    deleteRamal: "Branch deleted successfully",
+    editRamal: "Branch edited successfully",
     createMenu: "Menu created successfully",
     editMenu: "Menu edited successfully",
     createSystem: "System created successfully",
-    deleteSystem: "System deleted successfully | Systems deleted successfully",
+    deleteSystem: "System deleted successfully | Successfully deleted systems",
   },
 
   fail: {
@@ -19,11 +19,11 @@ export default {
     emailNotFound: "E-mail not found",
     changePwd: "An error occurred while trying to change your password",
     register: "An error occurred while creating your registration",
-    createBranchLine: "An error occurred while creating the branch line",
-    deleteBranchLine: "An error occurred while deleting the branch line",
-    editBranchLine: "Branch line edited successfully",
+    createRamal: "An error occurred while creating the branch line",
+    deleteRamal: "An error occurred while deleting the branch line",
+    editRamal: "Branch line edited successfully",
     createMenu: "There was an error creating the menu",
-    editMenu: "Menu edited successfully",
+    editMenu: "There was an error editing the menu",
     createSystem: "An error occurred while creating the system",
     deleteSystem: {
       error:

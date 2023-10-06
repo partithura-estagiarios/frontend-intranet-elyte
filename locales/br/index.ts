@@ -20,11 +20,10 @@ export default {
   label,
   login: {
     title: "Login",
-    labelInputName: "Seu nome de usuário",
-    labelInputPassword: "Sua senha",
-    hintName: "Seu número de registro",
+    username: "Seu nome de usuário",
+    yourPassword: "Sua senha",
+    registerNumber: "Seu número de registro",
     hintPassword: "6 primeiros números do seu cpf",
-    submitButton: "Enviar",
     warning: "Please type something!",
   },
 };

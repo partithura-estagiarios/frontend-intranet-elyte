@@ -20,9 +20,9 @@ export default {
   label,
   login: {
     title: "Login",
-    labelInputName: "Your user name",
-    labelInputPassword: "Your password",
-    hintName: "Your registration number",
+    username: "Your user name",
+    yourPassword: "Your password",
+    registerNumber: "Your registration number",
     hintPassword: "6 first number of your cpf",
     submitButton: "Submit",
     warning: "Please type something!",

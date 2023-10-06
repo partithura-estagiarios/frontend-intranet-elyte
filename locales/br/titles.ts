@@ -36,7 +36,7 @@ export default {
   },
   Login: {
     textLoginForm: "Digite suas credenciais",
-    textPasswordForm: "Recupere sua senha!",
+    typeCredentials: "Recupere sua senha!",
     recoverPassword: "Entre em contato com o setor de TI",
     register: "Cadastrar Usuário",
     emailSent: "Email enviado com sucesso, verifique seu email",

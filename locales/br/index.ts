@@ -23,7 +23,6 @@ export default {
     username: "Seu nome de usuário",
     yourPassword: "Sua senha",
     registerNumber: "Seu número de registro",
-    hintPassword: "6 primeiros números do seu cpf",
-    warning: "Please type something!",
+    warning: "Por favor, digite alguma coisa!",
   },
 };

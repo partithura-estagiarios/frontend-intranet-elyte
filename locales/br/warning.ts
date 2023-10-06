@@ -4,7 +4,7 @@ export default {
   ramalNumber: "Por favor digite um ramal",
   email: "Email inválido",
   pwd: "Senha inválida, mínimo 8 caractéres",
-  requiredField: "Campo necessário",
+  requiredField: "Campo obrigatório",
   username: "Nome de usuário inválido, mínimo 2 caractéres",
   lowercase: "Deve conter uma letra minúscula",
   uppercase: "Deve conter uma letra maiúscula",

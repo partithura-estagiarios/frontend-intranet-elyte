@@ -1,4 +1,3 @@
-import markdown from "../en/markdown";
 import titles from "./titles";
 import action from "./action";
 import text from "./text";
@@ -12,7 +11,6 @@ export default {
   home: "Home",
   tags: "Tags",
   admin: "Admin",
-  markdown,
   titles,
   text,
   warning,
@@ -23,7 +21,6 @@ export default {
     username: "Your user name",
     yourPassword: "Your password",
     registerNumber: "Your registration number",
-    hintPassword: "6 first number of your cpf",
     submitButton: "Submit",
     warning: "Please type something!",
   },

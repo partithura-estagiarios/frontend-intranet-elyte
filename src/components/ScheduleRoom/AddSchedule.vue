@@ -143,7 +143,7 @@ async function addEvent(data: EventForm) {
     :open="isActive"
     :title="$t('action.scheduleEvent')"
   >
-    <!-- Criar um component para os fields -->
+    <!--TODO: Criar um component para os fields e outras partes também-->
     <Form
       @submit="addEvent"
       :validation-schema="scheduleSchema"

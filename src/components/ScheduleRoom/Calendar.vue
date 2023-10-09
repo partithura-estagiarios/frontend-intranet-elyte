@@ -171,15 +171,3 @@ function onReload() {
     </div>
   </div>
 </template>
-
-<style>
-.q-calendar-month__day {
-  border: transparent;
-}
-.q-calendar__button {
-  font-size: 30px;
-}
-:root {
-  --calendar-border: none;
-}
-</style>

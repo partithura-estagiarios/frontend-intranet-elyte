@@ -14,4 +14,5 @@ export default {
   sector: "Sector",
   name: "Name",
   submitButton: "Send",
+  menu: "Menu",
 };

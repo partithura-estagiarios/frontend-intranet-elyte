@@ -12,4 +12,5 @@ export default {
   containSpecialChar: "Must contain a special character",
   matchingPwd: "Passwords must match",
   confirmPwd: "Confirm your password",
+  noRegistrationMenu: "There are no menu records",
 };

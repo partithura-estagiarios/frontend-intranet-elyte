@@ -107,7 +107,7 @@ async function addEvent() {
   >
     <Form
       ref="form"
-      class="row q-px-md q-py-md text-black text-body1 q-gutter-y-sm justify-around some"
+      class="row q-px-md q-py-md text-black text-body1 q-gutter-y-sm justify-around"
       :validation-schema="scheduleSchema"
       @submit="addEvent"
     >

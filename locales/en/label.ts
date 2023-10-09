@@ -43,4 +43,6 @@ export default {
     flipChart: "Flip Chart",
     speaker: "Speaker",
   },
+  name: "Name",
+  menu: "Menu",
 };

@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { DateTime } from "luxon";
 import * as yup from "yup";
 import { Field, Form } from "vee-validate";
 import AddMenu from "../../graphql/menu/AddMenu.gql";
@@ -110,7 +109,6 @@ async function changeMutation() {
       opt[action.value]();
     }
   }
-  negativeNotify(t("notifications.fail.createMenu"));
 }
 
 function validateForm() {
@@ -151,7 +149,6 @@ async function getMenu() {
 async function editMenu() {
   try {
     const isDuplicateDate = menus.value.some((menu) => menu.date === form.date);
-
     if (isDuplicateDate) {
       return;
     }
@@ -172,27 +169,17 @@ async function editMenu() {
 
 async function addMenu() {
   try {
-    const isDuplicateDate = menus.value.some((menu) => menu.date === form.date);
-
-    if (isDuplicateDate) {
-      return;
-    }
-
-    const response = await runMutation(AddMenu, { data: form });
-
-    if (response && response.addMenu) {
-      positiveNotify(t("notifications.success.createMenu"));
-      await getMenu();
-      closeAddModal();
-      emits("reload");
-    }
+    await runMutation(AddMenu, { data: form });
+    positiveNotify("notifications.success.createMenu");
+    closeAddModal();
+    emits("reload");
   } catch {
     negativeNotify(t("notifications.fail.createMenu"));
   }
 }
 
 function redirectToPrintRoute() {
-  router.push("menu");
+  router.push({ path: "/menu" });
   emits("reload");
 }
 

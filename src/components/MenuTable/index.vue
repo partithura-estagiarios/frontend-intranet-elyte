@@ -30,7 +30,7 @@ const TIME_SEPARATOR = "T";
 const groupMenusByDate = () => {
   const groupedMenus: Record<string, Menu[]> = {};
   menus.value.forEach((menu) => {
-    const date = menu.date.toISOString().split(TIME_SEPARATOR)[0]; // Usando a nova variável
+    const date = menu.date.toISOString().split(TIME_SEPARATOR)[0];
     const dayOfWeekIndex = new Date(date).getDay();
     const dayOfWeek = weekday[dayOfWeekIndex];
     if (!groupedMenus[date]) {
@@ -78,32 +78,39 @@ async function getMenu() {
 
     <div class="row justify-center no-print">
       <div class="col">
-        <div class="row">
-          <template v-for="dayMenus in groupMenusByDate()" :key="dayOfWeek">
-            <div class="col-4">
-              <q-card
-                class="text-uppercase col q-ma-md border smaller-card mx-auto text-white"
-              >
-                <q-card-section class="bg-primary">
-                  <div>
-                    {{ dayOfWeek }}
-                  </div>
-                </q-card-section>
-                <q-card-section class="text-subtitle2 text-black">
-                  <div v-for="menu in dayMenus" :key="menu.DATE">
-                    <div
-                      v-for="item in menuItems"
-                      :key="item.field"
-                      class="menu-item"
-                    >
-                      <q-icon name="restaurant" class="menu-icon" />
-                      <p class="menu-text">{{ menu[item.field] }}</p>
-                    </div>
-                  </div>
-                </q-card-section>
-              </q-card>
+        <div v-if="menus.length === 0" class="text-center relative text-h5">
+          <span>{{ $t("warning.noRegistrationMenu") }}</span>
+        </div>
+        <div v-else class="row">
+          <div class="col">
+            <div class="row">
+              <template v-for="dayMenus in groupMenusByDate()" :key="dayOfWeek">
+                <div class="col-4">
+                  <q-card
+                    class="text-uppercase col q-ma-md border smaller-card mx-auto text-white"
+                  >
+                    <q-card-section class="bg-primary">
+                      <div>
+                        {{ dayMenus[0].dayOfWeek }}
+                      </div>
+                    </q-card-section>
+                    <q-card-section class="text-subtitle2 text-black">
+                      <div v-for="menu in dayMenus" :key="menu.DATE">
+                        <div
+                          v-for="item in menuItems"
+                          :key="item.field"
+                          class="menu-item"
+                        >
+                          <q-icon name="restaurant" class="menu-icon" />
+                          <p class="menu-text">{{ menu[item.field] }}</p>
+                        </div>
+                      </div>
+                    </q-card-section>
+                  </q-card>
+                </div>
+              </template>
             </div>
-          </template>
+          </div>
         </div>
       </div>
     </div>

@@ -12,4 +12,5 @@ export default {
   containSpecialChar: "Deve conter um caractér especial",
   matchingPwd: "As senhas devem ser iguais",
   confirmPwd: "Confirme sua senha",
+  noRegistrationMenu: "Não há registros de cardápio",
 };

@@ -6,6 +6,7 @@ import { Room, Event, EventForm } from "../../entities";
 import AddEvent from "../../graphql/events/AddEvent.gql";
 import GetBusyRoom from "../../graphql/rooms/GetBusyRoom.gql";
 
+const emits = defineEmits(["reload"]);
 defineProps({
   isActive: {
     type: Boolean,
@@ -16,8 +17,6 @@ defineProps({
     required: true,
   },
 });
-
-const emits = defineEmits(["reload"]);
 
 const form: Omit<Event, "id"> = reactive({
   initialTime: null as unknown as string | number,
@@ -107,6 +106,11 @@ const options = [
     label: t("label.support.coffee"),
   },
 ];
+function closeModal() {
+  computed((props) => (toggle = (props.isActive = false)) => {
+    console.log("jhgfdfghjk", toggle);
+  });
+}
 
 function setDate(
   paramsDate: keyof Pick<Event, "initialTime" | "finalTime">,
@@ -114,7 +118,6 @@ function setDate(
 ) {
   form[paramsDate] = time;
 }
-
 async function addEvent(data: EventForm) {
   data.support = form.support;
   data.finalTime = form.finalTime;
@@ -122,7 +125,6 @@ async function addEvent(data: EventForm) {
   data.totalPeople = parseInt(data.totalPeople);
   data.ramalNumber = parseInt(data.ramalNumber);
   data.userRegistration = parseInt(data.userRegistration);
-
   try {
     const addEvent = await runMutation(AddEvent, { data });
     if (addEvent) {
@@ -139,9 +141,9 @@ async function addEvent(data: EventForm) {
 
 <template>
   <DynamicDialog
-    hide-controls
     :open="isActive"
     :title="$t('action.scheduleEvent')"
+    hide-controls
   >
     <!--TODO: Criar um component para os fields e outras partes também-->
     <Form
@@ -227,7 +229,7 @@ async function addEvent(data: EventForm) {
           class="schedule-item-border col-5"
           bg-color="white"
           borderless
-          label="E-mail"
+          :label="$t('label.email')"
           lazy-rules
         >
           <template #prepend>
@@ -245,35 +247,23 @@ async function addEvent(data: EventForm) {
         </q-input>
       </Field>
 
-      <Field name="initialTime" v-slot="item">
-        <SelectTime
-          class="schedule-item-border col-5"
-          :model-value="form.initialTime"
-          @update:model-value="item.value"
-          v-bind="item.field"
-          :label="$t('label.date.initial')"
-          type="initial"
-          @setTime="(args) => setDate('initialTime', args)"
-        />
-        <span v-if="item.errorMessage" class="text-red">
-          {{ parseErrorMessage(item.errorMessage) }}
-        </span>
-      </Field>
+      <SelectTime
+        name="initialTime"
+        class="schedule-item-border col-5"
+        :model-value="form.initialTime"
+        :label="$t('label.date.initial')"
+        type="initial"
+        @setTime="(args) => setDate('initialTime', args)"
+      />
 
-      <Field name="finalTime" v-slot="item">
-        <SelectTime
-          class="schedule-item-border col-5"
-          :model-value="form.finalTime"
-          @update:model-value="item.value"
-          v-bind="item.field"
-          :label="$t('label.date.final')"
-          type="final"
-          @setTime="(args) => setDate('finalTime', args)"
-        />
-        <span v-if="item.errorMessage" class="text-red">
-          {{ parseErrorMessage(item.errorMessage) }}
-        </span>
-      </Field>
+      <SelectTime
+        name="finalTime"
+        class="schedule-item-border col-5"
+        :model-value="form.finalTime"
+        :label="$t('label.date.final')"
+        type="final"
+        @setTime="(args) => setDate('finalTime', args)"
+      />
 
       <Field name="totalPeople" v-slot="item">
         <q-input
@@ -325,6 +315,9 @@ async function addEvent(data: EventForm) {
               color="white"
             />
           </template>
+          <span v-if="item.errorMessage" class="text-red">
+            {{ parseErrorMessage(item.errorMessage) }}
+          </span>
         </q-select>
       </Field>
 
@@ -343,19 +336,20 @@ async function addEvent(data: EventForm) {
         </q-input>
       </Field>
 
-      <div class="q-py-md q-px-lg">
+      <div class="q-ma-lg">
         <span
           class="q-py-sm q-px-xl q-ml-lg text-h6 bg-primary text-white schedule-item-border"
         >
           {{ $t("label.support.index") }}
         </span>
-        <div class="q-gutter-md row q-mt-md justify-between">
+        <div class="q-gutter-md q-mt-md row justify-around">
           <q-option-group
             v-model="group"
             type="checkbox"
             :options="options"
             left-label
-            class="q-gutter-md col-9"
+            class="q-gutter-md col-10"
+            :inline="true"
           >
             <template v-slot:label="opt">
               <div class="schedule-item-border">

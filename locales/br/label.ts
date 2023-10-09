@@ -45,6 +45,6 @@ export default {
     flipChart: "Flip Chart",
     speaker: "Som",
   },
-  name: "Nome",
-  menu: "Cardápio",
+  close: "Fechar",
+  email: "E-mail",
 };

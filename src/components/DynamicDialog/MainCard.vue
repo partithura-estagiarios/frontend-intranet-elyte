@@ -1,3 +1,11 @@
+<script setup lang="ts">
+defineProps({
+  title: String,
+  closeLabel: String,
+  close: Boolean,
+});
+</script>
+
 <template>
   <q-card class="column card-size">
     <CardHeader v-bind="$props" @cancel="() => $emit('cancel')" />
@@ -12,13 +20,6 @@
   </q-card>
 </template>
 
-<script setup lang="ts">
-defineProps({
-  title: String,
-  closeLabel: String,
-  close: Boolean,
-});
-</script>
 <style scoped>
 .card-size {
   max-width: 50vw;

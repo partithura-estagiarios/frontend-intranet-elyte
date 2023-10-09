@@ -312,7 +312,7 @@ async function addEvent() {
   </DynamicDialog>
 </template>
 
-<style>
+<style scoped>
 .q-menu:has(> div.date-menu) {
   max-width: 10% !important;
 }

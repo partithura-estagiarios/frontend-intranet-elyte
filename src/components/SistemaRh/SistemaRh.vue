@@ -1,3 +1,27 @@
+<script setup lang="ts">
+import GetSystem from "../../graphql/system/GetSystem.gql";
+import { System } from "../../entities";
+import { Ref } from "vue";
+import actionButtons from "./actionButtons";
+
+const rhList: Ref<System[]> = ref([]);
+
+const isLogged = localStorage.getItem("token");
+
+onMounted(() => {
+  getListRh();
+});
+
+async function getListRh() {
+  const { menuBySystem } = (await runMutation(GetSystem, {
+    sistema: "rh",
+  })) as unknown as Record<"menuBySystem", Array<System>>;
+
+  rhList.value = menuBySystem;
+  return rhList;
+}
+</script>
+
 <template>
   <div>
     <q-card class="q-mx-xl row justify-center shadow-7">
@@ -50,30 +74,6 @@
     </q-card>
   </div>
 </template>
-
-<script setup lang="ts">
-import GetSystem from "../../graphql/system/GetSystem.gql";
-import { System } from "../../entities";
-import { Ref } from "vue";
-import actionButtons from "./actionButtons";
-
-const rhList: Ref<System[]> = ref([]);
-
-const isLogged = localStorage.getItem("token");
-
-onMounted(() => {
-  getListRh();
-});
-
-async function getListRh() {
-  const { menuBySystem } = (await runMutation(GetSystem, {
-    sistema: "rh",
-  })) as unknown as Record<"menuBySystem", Array<System>>;
-
-  rhList.value = menuBySystem;
-  return rhList;
-}
-</script>
 
 <style scoped>
 .border {

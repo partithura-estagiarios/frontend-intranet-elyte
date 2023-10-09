@@ -1,3 +1,7 @@
+<script setup lang="ts">
+const isLogged = localStorage.getItem("token");
+</script>
+
 <template>
   <div
     class="full-width row no-wrap justify-between items-center text-white bg-primary q-mb-xl"
@@ -6,8 +10,7 @@
       <q-img src="/images/logo.png" class="logo" />
     </q-item>
     <q-tabs no-caps indicator-color="transparent">
-
-<q-route-tab :label="$t('admin')" to="/login" />
+      <q-route-tab :label="$t('admin')" to="/login" />
       <q-route-tab :label="$t('action.scheduleEvent')" to="/schedule" />
       <q-btn flat color="white" no-caps :label="$t('admin')" to="/login">
         <q-menu v-if="isLogged">
@@ -23,10 +26,6 @@
     </q-tabs>
   </div>
 </template>
-
-<script setup lang="ts">
-const isLogged = localStorage.getItem("token");
-</script>
 
 <style scoped>
 .logo {

@@ -75,30 +75,6 @@ async function getListRh() {
   </div>
 </template>
 
-<script setup lang="ts">
-import GetSystem from "../../graphql/system/GetSystem.gql";
-import { System } from "../../entities";
-import { Ref } from "vue";
-import actionButtons from "./actionButtons";
-
-const rhList: Ref<System[]> = ref([]);
-
-const isLogged = localStorage.getItem("token");
-
-onMounted(() => {
-  getListRh();
-});
-
-async function getListRh() {
-  const getSystem = (await runMutation(GetSystem, {
-    sistema: "rh",
-  })) as unknown as Record<"getSystem", Array<System>>;
-
-  rhList.value = getSystem;
-  return rhList;
-}
-</script>
-
 <style scoped>
 .border {
   border: 8px solid;

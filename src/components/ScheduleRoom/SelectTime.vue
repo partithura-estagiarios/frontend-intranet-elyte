@@ -1,9 +1,32 @@
 <script setup lang="ts">
 import { DateTime } from "luxon";
-
+import { useField } from "vee-validate";
 const emits = defineEmits(["setTime"]);
 
-const time = ref(null);
+const props = defineProps({
+  type: {
+    type: String,
+    default: "text",
+  },
+  value: {
+    type: String,
+    default: undefined,
+  },
+  name: {
+    type: String,
+    required: true,
+  },
+});
+const name = toRef(props, "name");
+const {
+  value: inputValue,
+  errorMessage,
+  meta,
+} = useField(name, undefined, {
+  initialValue: props.value,
+});
+
+const time = ref();
 const date = ref(null);
 const selectionStep = ref<"date" | "hour" | "minute" | null>(null);
 const DAY_HOURS = [
@@ -17,9 +40,9 @@ function generateTimeList(selectedHour: number): void {
 
   const hour = new Date(date.value as unknown as number);
   hour.setHours(selectedHour);
-  const hoursPlus30 = new Date(hour);
-  hoursPlus30.setMinutes(30);
-  times.push(hour.getTime(), hoursPlus30.getTime());
+  const hoursPlus30min = new Date(hour);
+  hoursPlus30min.setMinutes(30);
+  times.push(hour.getTime(), hoursPlus30min.getTime());
 
   minutes.value = times;
   selectionStep.value = "minute";
@@ -41,16 +64,19 @@ function reopenSelect() {
 
 <template>
   <q-select
-    class="col-5 row select"
-    bg-color="white"
-    borderless
-    v-model="time"
-    ref="initialSelect"
-    @popup-show="reopenSelect"
-    map-options
+    :name="name"
+    :id="name"
+    :type="type"
+    :value="inputValue"
     emit-value
-    :option-label="(date: number) => DateTime.fromMillis(+date).setLocale('pt-BR').toFormat('dd/MM/yyyy HH:mm')"
+    borderless
+    map-options
+    v-model="time"
+    bg-color="white"
+    class="col-5 row select"
+    @popup-show="reopenSelect"
     :option-value="(date: number) => date"
+    :option-label="(date: number) => DateTime.fromMillis(+date).setLocale('pt-BR').toFormat('dd/MM/yyyy HH:mm')"
   >
     <template #prepend>
       <q-icon
@@ -64,22 +90,22 @@ function reopenSelect() {
     <template #no-option>
       <div class="row justify-center date-menu">
         <q-date
-          v-if="!selectionStep || selectionStep === 'date'"
-          class="text-black"
-          v-model="date"
-          minimal
           flat
+          minimal
+          v-model="date"
+          class="text-black"
           mask="YYYY-MM-DD HH:mm"
           @update:model-value="selectionStep = 'hour'"
+          v-if="!selectionStep || selectionStep === 'date'"
         />
         <div v-else-if="selectionStep === 'hour'" class="text-black row">
           <div class="row q-pa-md">
             <q-item
               dense
-              class="item-size col-3"
-              v-for="hour in DAY_HOURS"
               :key="hour"
               clickable
+              class="item-size col-3"
+              v-for="hour in DAY_HOURS"
               @click="generateTimeList(hour)"
             >
               {{ DateTime.fromObject({ hour }).toFormat("HH:mm") }}
@@ -90,11 +116,11 @@ function reopenSelect() {
           <div class="row q-pa-md">
             <q-item
               dense
+              clickable
               class="item-size col-6"
+              @click="finishSelector(minute)"
               v-for="(minute, index) in minutes"
               :key="index"
-              clickable
-              @click="finishSelector(minute)"
             >
               {{ DateTime.fromMillis(minute).toFormat("HH:mm") }}
             </q-item>
@@ -102,5 +128,8 @@ function reopenSelect() {
         </div>
       </div>
     </template>
+    <p class="help-message" v-show="errorMessage || meta.valid">
+      {{ errorMessage }}
+    </p>
   </q-select>
 </template>

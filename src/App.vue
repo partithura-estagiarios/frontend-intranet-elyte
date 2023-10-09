@@ -9,7 +9,13 @@ useHead({
     },
   ],
 });
-const exceptionRoutes = ["/login", "/recover", "/changePassword", "/emailSent"];
+const exceptionRoutes = [
+  "/login",
+  "/recover",
+  "/changePassword",
+  "/emailSent",
+  "/register",
+];
 const showTabHeader = computed(() => {
   return !exceptionRoutes.some((route) =>
     window.location.pathname.includes(route)
@@ -18,6 +24,6 @@ const showTabHeader = computed(() => {
 </script>
 
 <template>
-  <TabHeader v-if="!$route.fullPath.includes('/register')" />
+  <TabHeader v-if="showTabHeader" />
   <RouterView />
 </template>

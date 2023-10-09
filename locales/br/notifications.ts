@@ -13,7 +13,6 @@ export default {
     deleteSystem:
       "Sistema deletado com sucesso | Sistemas deletados com sucesso",
     scheduleEvent: "Evento agendado com sucesso",
-      "Sistema excluído com sucesso | Sistemas excluídos com sucesso",
   },
 
   fail: {
@@ -34,7 +33,6 @@ export default {
       notSelected: "Você deve selecionar pelo menos um sistema para excluir",
     },
     scheduleEvent: "Houve um erro ao agendar o evento",
-
     emptyField: "Campo obrigatório",
     invalidEmail: "Email inválido",
     equalPassword: "As senhas não correspondem",

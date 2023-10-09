@@ -23,6 +23,7 @@ const isLogged = localStorage.getItem("token");
           </q-list>
         </q-menu>
       </q-btn>
+      <q-route-tab :label="$t('label.menu')" to="/menu" />
     </q-tabs>
   </div>
 </template>

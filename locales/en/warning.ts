@@ -12,4 +12,5 @@ export default {
   requiredField: "Field is required",
   matchingPwd: "Passwords must match",
   confirmPwd: "Confirm your password",
+  noRegistrationMenu: "There are no menu records",
 };

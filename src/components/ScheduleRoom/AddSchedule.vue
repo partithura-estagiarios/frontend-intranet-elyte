@@ -313,7 +313,7 @@ async function addEvent() {
 </template>
 
 <style>
-gp -f .q-menu:has(> div.date-menu) {
+.q-menu:has(> div.date-menu) {
   max-width: 10% !important;
 }
 

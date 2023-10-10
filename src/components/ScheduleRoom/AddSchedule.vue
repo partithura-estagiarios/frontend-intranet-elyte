@@ -177,7 +177,7 @@ async function addEvent() {
           class="schedule-item-border col-5"
           bg-color="white"
           borderless
-          label="E-mail"
+          :label="$t('label.email')"
         >
           <template #prepend>
             <q-icon

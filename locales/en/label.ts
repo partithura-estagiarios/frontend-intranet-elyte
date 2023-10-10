@@ -12,6 +12,7 @@ export default {
   code: "Code",
   ramalNumber: "Branch line number",
   sector: "Sector",
+  email: "email",
   name: {
     index: "Name",
     pronoun: "Your name",

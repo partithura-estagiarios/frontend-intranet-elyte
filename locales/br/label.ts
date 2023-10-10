@@ -14,4 +14,5 @@ export default {
   sector: "Setor",
   name: "Nome",
   menu: "Cardápio",
+  email: "E-mail",
 };

@@ -12,6 +12,9 @@ export default {
   code: "Code",
   ramalNumber: "Branch line number",
   sector: "Sector",
+  name: "Name",
+  submitButton: "Send",
+  menu: "Menu",
   email: "email",
   name: {
     index: "Name",

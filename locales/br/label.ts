@@ -13,6 +13,7 @@ export default {
   ramalNumber: "Número do ramal",
   sector: "Setor",
   name: "Nome",
+  submitButton: "Enviar",
   menu: "Cardápio",
   email: "E-mail",
 };

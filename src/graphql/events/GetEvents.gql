@@ -1,11 +1,15 @@
-query Event {
-  event {
+query GetEvents {
+  getEvents {
     id
     roomId
     userCreated
     description
     finalTime
     initialTime
+    ramalNumber
+    totalPeople
+    userRegistration
+    email
     support {
       computer
       projector

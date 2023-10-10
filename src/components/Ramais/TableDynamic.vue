@@ -1,3 +1,23 @@
+<script setup lang="ts">
+const emit = defineEmits(["add"]);
+
+const icon = computed((): any => {
+  search.value ? "close" : "search";
+});
+
+const search = ref();
+defineProps({
+  columns: {
+    default: () => [],
+    type: Array,
+  },
+  rows: {
+    default: () => [],
+    type: Array,
+  },
+});
+</script>
+
 <template>
   <div class="q-ma-md">
     <q-table
@@ -35,23 +55,3 @@
     </q-table>
   </div>
 </template>
-
-<script setup lang="ts">
-const emit = defineEmits(["add"]);
-
-const icon = computed((): any => {
-  search.value ? "close" : "search";
-});
-
-const search = ref();
-defineProps({
-  columns: {
-    default: () => [],
-    type: Array,
-  },
-  rows: {
-    default: () => [],
-    type: Array,
-  },
-});
-</script>

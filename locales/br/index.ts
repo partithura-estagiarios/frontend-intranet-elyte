@@ -18,4 +18,11 @@ export default {
   warning,
   notifications,
   label,
+  login: {
+    title: "Login",
+    username: "Seu nome de usuário",
+    yourPassword: "Sua senha",
+    registerNumber: "Seu número de registro",
+    warning: "Por favor, digite alguma coisa!",
+  },
 };

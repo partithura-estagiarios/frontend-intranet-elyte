@@ -46,5 +46,7 @@ export default {
     speaker: "Som",
   },
   close: "Fechar",
+  submitButton: "Enviar",
+  menu: "Cardápio",
   email: "E-mail",
 };

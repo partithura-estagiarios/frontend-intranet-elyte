@@ -5,7 +5,6 @@ export default {
   ManagementSystem: "Sistema de gestão",
   HrSystem: "sistema de RH",
   OtherSystems: "Outros",
-  menu: "Cardápio",
   Management: {
     DataSul: "DataSul",
     DataSulPrototype: "DataSul Protótipo",
@@ -38,8 +37,8 @@ export default {
     Reports: "ERP",
   },
   Login: {
-    textPasswordForm: "Recupere sua senha!",
     textLoginForm: "Digite suas credenciais",
+    typeCredentials: "Recupere sua senha!",
     recoverPassword: "Entre em contato com o setor de TI",
     register: "Cadastrar Usuário",
     emailSent: "Email enviado com sucesso, verifique seu email",

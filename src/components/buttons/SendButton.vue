@@ -22,6 +22,7 @@ const label = computed(() =>
     : "action.submit.index"
 );
 </script>
+
 <template>
   <button @click="handleClick" :class="btnClass">
     <i class="material-icons icon">{{ icon }}</i>
@@ -30,6 +31,7 @@ const label = computed(() =>
     </span>
   </button>
 </template>
+
 <style scoped>
 button {
   position: relative;

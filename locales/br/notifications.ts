@@ -26,7 +26,7 @@ export default {
     deleteRamal: "Houve um erro ao excluir o ramal",
     editRamal: "Ramal editado com sucesso",
     createMenu: "Houve um erro ao criar o cardápio",
-    editMenu: "There was an error editing the menu",
+    editMenu: "Ocorreu um erro ao editar o menu",
     createSystem: "Houve um erro ao criar o sistema",
     deleteSystem: {
       error:

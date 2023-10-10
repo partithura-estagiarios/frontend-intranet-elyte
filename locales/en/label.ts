@@ -15,6 +15,8 @@ export default {
   ramalOrPhone: "Your Branch line Or Phone",
   dayEvents: "Events of the day",
   sector: "Sector",
+  submitButton: "Send",
+  menu: "Menu",
   name: {
     index: "Name",
     pronoun: "Your name",

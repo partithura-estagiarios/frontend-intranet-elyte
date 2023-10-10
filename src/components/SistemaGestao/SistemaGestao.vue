@@ -1,3 +1,27 @@
+<script setup lang="ts">
+import GetSystem from "../../graphql/system/GetSystem.gql";
+import { System } from "../../entities";
+import { Ref } from "vue";
+import actionButtons from "./actionButtons";
+
+const gestaoList: Ref<System[]> = ref([]);
+
+const isLogged = localStorage.getItem("token");
+
+onMounted(() => {
+  getGestaoList();
+});
+
+async function getGestaoList() {
+  const { menuBySystem } = (await runMutation(GetSystem, {
+    sistema: "gestao",
+  })) as unknown as Record<"menuBySystem", Array<System>>;
+
+  gestaoList.value = menuBySystem;
+  return gestaoList;
+}
+</script>
+
 <template>
   <div>
     <q-card class="q-mx-xl row justify-center shadow-7">
@@ -51,30 +75,6 @@
     </q-card>
   </div>
 </template>
-
-<script setup lang="ts">
-import GetSystem from "../../graphql/system/GetSystem.gql";
-import { System } from "../../entities";
-import { Ref } from "vue";
-import actionButtons from "./actionButtons";
-
-const gestaoList: Ref<System[]> = ref([]);
-
-const isLogged = localStorage.getItem("token");
-
-onMounted(() => {
-  getGestaoList();
-});
-
-async function getGestaoList() {
-  const getSystem = (await runMutation(GetSystem, {
-    sistema: "gestao",
-  })) as unknown as Record<"getSystem", Array<System>>;
-
-  gestaoList.value = getSystem;
-  return gestaoList;
-}
-</script>
 
 <style scoped>
 .border {

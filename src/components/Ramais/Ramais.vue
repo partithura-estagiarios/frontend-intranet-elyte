@@ -1,45 +1,3 @@
-<template>
-  <q-item class="row">
-    <div class="col-5">
-      <BackButton class="justify-start row q-ml-md" />
-    </div>
-    <div class="col-6 row justify-start">
-      <span class="text-black font text-bold q-ml-xl">
-        {{ $t("titles.Hr.Fones") }}
-        <q-separator size="0.5rem" color="primary" class="bar-style" />
-      </span>
-    </div>
-  </q-item>
-  <table-dynamic
-    :columns="columns"
-    :rows="(ramalList as Array<Ramal>)"
-    :v-bind="$attrs"
-    class="q-mt-lg"
-  >
-    <template #top-left v-if="isLogged">
-      <q-btn
-        class="bg-primary text-white text-bold"
-        @click="activedModal = true"
-        :label="$t('action.addRamal.index')"
-      >
-        <AddRamal
-          :isActive="activedModal"
-          @reload="getListRamal()"
-          @cancel="activedModal = false"
-        />
-      </q-btn>
-    </template>
-
-    <template #configButtons="{ item }" v-if="isLogged">
-      <ActionButton
-        :buttons="actionButtons"
-        :item="item"
-        @reload="getListRamal()"
-      />
-    </template>
-  </table-dynamic>
-</template>
-
 <script setup lang="ts">
 import GetRamais from "../../graphql/ramais/getRamais.gql";
 import { Ramal } from "../../entities";
@@ -93,6 +51,48 @@ const columns = [
   },
 ];
 </script>
+
+<template>
+  <q-item class="row">
+    <div class="col-5">
+      <BackButton class="justify-start row q-ml-md" />
+    </div>
+    <div class="col-6 row justify-start">
+      <span class="text-black font text-bold q-ml-xl">
+        {{ $t("titles.Hr.Fones") }}
+        <q-separator size="0.5rem" color="primary" class="bar-style" />
+      </span>
+    </div>
+  </q-item>
+  <table-dynamic
+    :columns="columns"
+    :rows="(ramalList as Array<Ramal>)"
+    :v-bind="$attrs"
+    class="q-mt-lg"
+  >
+    <template #top-left v-if="isLogged">
+      <q-btn
+        class="bg-primary text-white text-bold"
+        @click="activedModal = true"
+        :label="$t('action.addRamal.index')"
+      >
+        <AddRamal
+          :isActive="activedModal"
+          @reload="getListRamal()"
+          @cancel="activedModal = false"
+        />
+      </q-btn>
+    </template>
+
+    <template #configButtons="{ item }" v-if="isLogged">
+      <ActionButton
+        :buttons="actionButtons"
+        :item="item"
+        @reload="getListRamal()"
+      />
+    </template>
+  </table-dynamic>
+</template>
 
 <style scoped>
 .font {

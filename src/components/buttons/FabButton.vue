@@ -1,3 +1,8 @@
+<script setup lang="ts">
+const isOpen = ref(false);
+const openClass = computed(() => (isOpen.value ? "open" : ""));
+</script>
+
 <template>
   <div class="fab" :class="openClass">
     <button @click="isOpen = !isOpen">
@@ -16,10 +21,7 @@
     </div>
   </div>
 </template>
-<script setup lang="ts">
-const isOpen = ref(false);
-const openClass = computed(() => (isOpen.value ? "open" : ""));
-</script>
+
 <style scoped>
 .fab {
   position: fixed;

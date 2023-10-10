@@ -1,9 +1,20 @@
 import * as yup from "yup";
 
+//Nessa seção ficam as variáveis
+const icon = yup.string().required(t("warning.requiredField"));
+
+const title = yup.string().required(t("warning.requiredField"));
+
+const link = yup.string().required(t("warning.requiredField"));
+
+const system = yup.string().required(t("warning.requiredField"));
+
+const description = yup.string().required(t("warning.requiredField"));
+
 const password = yup
   .string()
-  .required(t("warning.requiredField"))
   .min(8, t("warning.pwd"))
+  .required(t("warning.requiredField"))
   .matches(/[a-z]/, t("warning.lowercase"))
   .matches(/[A-Z]/, t("warning.uppercase"))
   .matches(/\d/, t("warning.containDigit"))
@@ -16,29 +27,10 @@ const email = yup
 
 const username = yup
   .string()
-  .required(t("warning.requiredField"))
-  .min(2, t("warning.username"));
+  .min(2, t("warning.username"))
+  .required(t("warning.requiredField"));
 
-const title = yup.string().required(t("warning.requiredField"));
-const icon = yup.string().required(t("warning.requiredField"));
-const description = yup.string().required(t("warning.requiredField"));
-const system = yup.string().required(t("warning.requiredField"));
-const link = yup.string().required(t("warning.requiredField"));
-
-export const validationSchema = yup.object({
-  email,
-  username,
-  password,
-});
-
-export const inputSchema = yup.object({
-  title,
-  icon,
-  description,
-  system,
-  link,
-});
-
+//E nessa seção ficam os schemas que serão exportados
 export const usernameSchema = yup.object({
   username,
 });
@@ -51,17 +43,25 @@ export const passwordSchema = yup.object({
   password,
 });
 
+export const userSchema = yup.object({
+  email,
+  username,
+  password,
+});
+
+export const systemSchema = yup.object({
+  icon,
+  link,
+  title,
+  system,
+  description,
+});
+
 export const confirmPwdSchema = yup.object({
   password,
   confirmPassword: yup
     .string()
     .oneOf([yup.ref("password")], t("warning.matchingPwd")),
-});
-
-export const userSchema = yup.object({
-  username,
-  email,
-  password,
 });
 
 export const loginSchema = yup.object({
@@ -70,13 +70,13 @@ export const loginSchema = yup.object({
 });
 
 export const scheduleSchema = yup.object({
-  userCreated: yup.string().required(t("warning.requiredField")),
-  userRegistration: yup.number().required(t("warning.requiredField")),
-  ramalNumber: yup.number().required(t("warning.requiredField")),
   email,
-  initialTime: yup.date().required(t("warning.requiredField")),
-  finalTime: yup.date().required(t("warning.requiredField")),
-  totalPeople: yup.number().required(t("warning.requiredField")),
-  roomId: yup.number().required(t("warning.requiredField")),
   description,
+  roomId: yup.number().required(t("warning.requiredField")),
+  finalTime: yup.date().required(t("warning.requiredField")),
+  initialTime: yup.date().required(t("warning.requiredField")),
+  userCreated: yup.string().required(t("warning.requiredField")),
+  ramalNumber: yup.number().required(t("warning.requiredField")),
+  totalPeople: yup.number().required(t("warning.requiredField")),
+  userRegistration: yup.number().required(t("warning.requiredField")),
 });

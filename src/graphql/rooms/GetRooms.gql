@@ -1,0 +1,7 @@
+query GetRooms {
+  room {
+    color
+    id
+    name
+  }
+}

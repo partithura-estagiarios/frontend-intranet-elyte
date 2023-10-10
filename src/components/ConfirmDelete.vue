@@ -1,3 +1,14 @@
+<script setup lang="ts">
+const emit = defineEmits(["cancel", "confirm"]);
+
+defineProps({
+  ramalItem: {
+    type: Object,
+    required: true,
+  },
+});
+</script>
+
 <template>
   <DynamicDialog v-bind="$props">
     <slot name="text" />
@@ -17,14 +28,3 @@
     </q-card-actions>
   </DynamicDialog>
 </template>
-
-<script setup lang="ts">
-const emit = defineEmits(["cancel", "confirm"]);
-
-defineProps({
-  ramalItem: {
-    type: Object,
-    required: true,
-  },
-});
-</script>

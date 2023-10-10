@@ -11,6 +11,7 @@ export default {
     editMenu: "Menu edited successfully",
     createSystem: "System created successfully",
     deleteSystem: "System deleted successfully | Systems deleted successfully",
+    scheduleEvent: "Event scheduled successfully",
   },
 
   fail: {
@@ -30,6 +31,7 @@ export default {
         "An error occurred while deleting the system | An error occurred while deleting the systems",
       notSelected: "You must select at least one system to delete",
     },
+    scheduleEvent: "An error occurred while scheduling the event",
     emptyField: "Required field",
     invalidEmail: "Invalid email",
     equalPassword: "Passwords do not match",

@@ -1,13 +1,3 @@
-<template>
-  <button :disabled="isPaying || isPaid" @click="handleClick">
-    <span class="rail"></span>
-    <span class="icon"></span>
-    <span class="text">
-      {{ $t(label) }}
-    </span>
-  </button>
-</template>
-
 <script setup lang="ts">
 const isPaying = ref(false);
 const isPaid = ref(false);
@@ -30,6 +20,17 @@ const label = computed(() =>
     : "action.buy.index"
 );
 </script>
+
+<template>
+  <button :disabled="isPaying || isPaid" @click="handleClick">
+    <span class="rail"></span>
+    <span class="icon"></span>
+    <span class="text">
+      {{ $t(label) }}
+    </span>
+  </button>
+</template>
+
 <style scoped>
 button {
   position: relative;

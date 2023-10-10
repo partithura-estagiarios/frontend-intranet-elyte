@@ -1,9 +1,3 @@
-<template>
-  <button @click="handleClick" class="button" :class="classBtn">
-    <img src="./settings.svg" />
-    <span>Create User</span>
-  </button>
-</template>
 <script setup lang="ts">
 const isLoading = ref(false);
 const classBtn = computed(() => (isLoading.value ? "loading" : ""));
@@ -15,6 +9,14 @@ function handleClick() {
   }, 4000);
 }
 </script>
+
+<template>
+  <button @click="handleClick" class="button" :class="classBtn">
+    <img src="./settings.svg" />
+    <span>Create User</span>
+  </button>
+</template>
+
 <style scoped>
 .button {
   position: relative;

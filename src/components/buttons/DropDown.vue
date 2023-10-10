@@ -1,16 +1,3 @@
-<template>
-  <div class="dropdown">
-    <div :class="dropClass" class="menu">
-      <button v-for="btn in menu" class="menu-button">
-        <span class="menu-button-text">{{ $t(btn.name) }}</span>
-        <i class="material-icons">{{ btn.icon }}</i>
-      </button>
-    </div>
-    <button @click="handleClick">
-      <i class="material-icons">{{ menuIcon }}</i>
-    </button>
-  </div>
-</template>
 <script setup lang="ts">
 const isOpen = ref(false);
 const dropClass = computed(() => (isOpen.value ? "open" : ""));
@@ -44,6 +31,21 @@ const menu = [
   // },
 ];
 </script>
+
+<template>
+  <div class="dropdown">
+    <div :class="dropClass" class="menu">
+      <button v-for="btn in menu" class="menu-button">
+        <span class="menu-button-text">{{ $t(btn.name) }}</span>
+        <i class="material-icons">{{ btn.icon }}</i>
+      </button>
+    </div>
+    <button @click="handleClick">
+      <i class="material-icons">{{ menuIcon }}</i>
+    </button>
+  </div>
+</template>
+
 <style scoped>
 .dropdown-button-1 {
   display: flex;

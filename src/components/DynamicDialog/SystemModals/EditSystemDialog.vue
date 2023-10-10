@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { Field, Form } from "vee-validate";
 import { type System } from "../../../entities";
-import { inputSchema } from "../../../validation";
+import { systemSchema } from "../../../validation";
 import UpdateSystem from "../../../graphql/system/UpdateSystem.gql";
 
 const emits = defineEmits(["reload", "cancel"]);
@@ -97,7 +97,7 @@ async function updateSystem() {
     </div>
 
     <div v-else>
-      <Form :validation-schema="inputSchema" class="row q-pa-xl">
+      <Form :validation-schema="systemSchema" class="row q-pa-xl">
         <Field name="title" v-slot="item">
           <q-input
             class="col-6 q-px-xs"

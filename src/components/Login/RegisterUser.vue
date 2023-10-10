@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import CreateUser from "../../graphql/registerUser/registeruser.gql";
 import { Field, Form } from "vee-validate";
-import { validationSchema } from "../../validation";
+import { userSchema } from "../../validation";
 import { UserForm } from "../../entities/User";
 
 const marginBtn = computed(() =>
@@ -24,7 +24,7 @@ const createUser = async (data: UserForm) => {
   <span class="q-mb-lg">{{ $t("titles.Login.textLoginForm") }}</span>
   <Form
     @submit="createUser"
-    :validation-schema="validationSchema"
+    :validation-schema="userSchema"
     class="q-gutter-md"
   >
     <Field name="username" v-slot="item">

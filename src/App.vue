@@ -1,4 +1,8 @@
 <script setup lang="ts">
+import { boolean } from "yup";
+import ValidateToken from "./graphql/verifyUser/ValidateToken.gql";
+const $q = useQuasar();
+
 useHead({
   title: "titulo",
   meta: [
@@ -15,6 +19,17 @@ const showTabHeader = computed(() => {
     window.location.pathname.includes(route)
   );
 });
+async function getLoggedUser() {
+  const data = await runQuery(ValidateToken, { token: userStorage.getToken });
+  if (!data?.validateToken) {
+    userStorage.logout();
+    $q.notify({
+      color: "negative",
+      message: "Sessão expirada, por favor faça seu login novamente",
+    });
+  }
+}
+getLoggedUser();
 </script>
 
 <template>

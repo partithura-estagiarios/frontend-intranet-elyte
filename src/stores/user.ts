@@ -47,7 +47,6 @@ export const useUserStore = defineStore("useUserStore", {
     },
     logout() {
       this.user = buildUser(NULL_USER);
-      // Remover o token do localStorage ao fazer logout
       localStorage.removeItem("token");
     },
   },

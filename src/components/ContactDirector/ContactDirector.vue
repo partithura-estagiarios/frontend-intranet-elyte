@@ -1,18 +1,13 @@
 <template>
-  <div class="col-5">
-    <BackButton class="justify-start row q-ml-md" />
+  <BackButton class="justify-between row q-ml-md" />
+  <div class="text-h4 col-6 row justify-center q-mr-md">
+    <span class="text-black font text-bold">
+      {{ $t("titles.Login.contactTheDirector") }}
+      <q-separator size="0.5rem" color="primary" class="bar-style" />
+    </span>
   </div>
-  <div class="q-pa-md" style="max-width: 400px; margin: 0 auto">
-    <div class="justify-start">
-      <span
-        class="text-black font text-bold q-ml-xl"
-        style="margin: 0; font-size: 24px"
-      >
-        {{ $t("titles.Login.contactTheDirector") }}
-        <q-separator size="0.2rem" color="primary" class="bar-style" />
-      </span>
-    </div>
-    <Form class="q-gutter-md" ::validation-schema="loginForContac">
+  <div class="q-pa-xl">
+    <Form class="q-gutter-md" :validation-schema="loginForContac">
       <Field name="email" v-slot="item">
         <q-input
           :model-value="item.value"
@@ -20,6 +15,9 @@
           v-bind="item.field"
           lazy-rules
         />
+        <span v-if="item.errorMessage" class="text-red">
+          {{ parseErrorMessage(item.errorMessage) }}
+        </span>
       </Field>
       <Field name="registration" v-slot="item">
         <q-input
@@ -29,6 +27,9 @@
           label="Sua Matrícula *"
           lazy-rules
         />
+        <span v-if="item.errorMessage" class="text-red">
+          {{ parseErrorMessage(item.errorMessage) }}
+        </span>
       </Field>
       <Field name="contact" v-slot="item">
         <q-input
@@ -37,10 +38,15 @@
           type="textarea"
           label="Seu Contato *"
         />
+        <span v-if="item.errorMessage" class="text-red">
+          {{ parseErrorMessage(item.errorMessage) }}
+        </span>
       </Field>
-      <Button class="bg-transparent">
-        <q-btn label="Enviar" type="submit" color="primary" />
-      </Button>
+      <div>
+        <button class="bg-transparent">
+          <q-btn label="Enviar" type="submit" color="primary" />
+        </button>
+      </div>
     </Form>
   </div>
 </template>

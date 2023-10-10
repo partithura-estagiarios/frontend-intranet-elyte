@@ -7,7 +7,7 @@
         >
           {{ $t("titles.HrSystem") }}
         </span>
-        <div class="absolute-right q-pa-md" v-if="userStorage.user.token">
+        <div class="absolute-right q-pa-md" v-if="userStorage.getToken">
           <ActionButton
             :buttons="actionButtons"
             :item="rhList"

@@ -8,7 +8,7 @@
     <q-tabs no-caps indicator-color="transparent">
       <q-route-tab :label="$t('home')" to="/home" />
       <q-btn flat color="white" no-caps :label="$t('admin')" to="/login">
-        <q-menu v-if="userStorage.user.token">
+        <q-menu v-if="userStorage.getToken">
           <q-list>
             <q-item clickable v-close-popup to="/register">
               <q-item-section class="text-black">{{
@@ -17,7 +17,7 @@
             </q-item>
             <q-item @click="userStorage.logout()" v-close-popup to="/login">
               <q-item-section class="text-black">{{
-                $t("titles.Login.logOff")
+                $t("titles.Login.logOutOfAccount")
               }}</q-item-section>
             </q-item>
           </q-list>

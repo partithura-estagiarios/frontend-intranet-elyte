@@ -86,12 +86,9 @@ watch(formProps, async () => {
 async function addEvent() {
   try {
     const { addEvent } = await runMutation(AddEvent, { data: formProps });
-    if (addEvent) {
-      positiveNotify(t("notifications.success.scheduleEvent"));
-      emits("reload");
-      return;
-    }
-    negativeNotify("Data inválida");
+    positiveNotify(t("notifications.success.scheduleEvent"));
+    emits("reload");
+    return;
   } catch {
     negativeNotify(t("notifications.fail.scheduleEvent"));
   }

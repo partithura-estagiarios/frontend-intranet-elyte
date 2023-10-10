@@ -15,4 +15,5 @@ export default {
   name: "Nome",
   submitButton: "Enviar",
   menu: "Cardápio",
+  email: "E-mail",
 };

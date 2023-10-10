@@ -15,4 +15,31 @@ export default {
   name: "Name",
   submitButton: "Send",
   menu: "Menu",
+  email: "email",
+  name: {
+    index: "Name",
+    pronoun: "Your name",
+  },
+  register: {
+    index: "Register",
+    pronoun: "Your register",
+  },
+  numberParticipants: "Number of participants",
+  date: {
+    year: "Year",
+    month: "Month",
+    day: "Day",
+    week: "Week",
+    today: "Today",
+    initial: "Initial date",
+    final: "Final date",
+  },
+  room: "Room",
+  suport: {
+    index: "Suports Material",
+    computer: "Computer",
+    water: "Water",
+    coffee: "Coffee",
+    projector: "Projector",
+  },
 };

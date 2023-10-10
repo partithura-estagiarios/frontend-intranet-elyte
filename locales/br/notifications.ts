@@ -11,7 +11,8 @@ export default {
     editMenu: "Cardápio editado com sucesso",
     createSystem: "Sistema criado com sucesso",
     deleteSystem:
-      "Sistema excluído com sucesso | Sistemas excluídos com sucesso",
+      "Sistema deletado com sucesso | Sistemas deletados com sucesso",
+    scheduleEvent: "Evento agendado com sucesso",
   },
 
   fail: {
@@ -31,6 +32,7 @@ export default {
         "Houve um erro ao excluir o sistema | Houve um erro ao excluir os sistemas",
       notSelected: "Você deve selecionar pelo menos um sistema para excluir",
     },
+    scheduleEvent: "Houve um erro ao agendar o evento",
     emptyField: "Campo obrigatório",
     invalidEmail: "Email inválido",
     equalPassword: "As senhas não correspondem",

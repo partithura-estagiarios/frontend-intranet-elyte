@@ -16,6 +16,10 @@ const props = defineProps({
     type: String,
     required: true,
   },
+  validationFn: {
+    type: Function,
+    default: true,
+  },
 });
 const name = toRef(props, "name");
 const {
@@ -64,19 +68,24 @@ function reopenSelect() {
 
 <template>
   <q-select
-    :name="name"
     :id="name"
+    :name="name"
     :type="type"
+    v-model="time"
     :value="inputValue"
     emit-value
     borderless
     map-options
-    v-model="time"
     bg-color="white"
     class="col-5 row select"
     @popup-show="reopenSelect"
     :option-value="(date: number) => date"
-    :option-label="(date: number) => DateTime.fromMillis(+date).setLocale('pt-BR').toFormat('dd/MM/yyyy HH:mm')"
+    :option-label="
+      (date) =>
+        DateTime.fromMillis(date)
+          .setLocale('pt-BR')
+          .toFormat('dd/MM/yyyy HH:mm')
+    "
   >
     <template #prepend>
       <q-icon

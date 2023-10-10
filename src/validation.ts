@@ -26,9 +26,9 @@ const system = yup.string().required(t("warning.requiredField"));
 const link = yup.string().required(t("warning.requiredField"));
 
 export const validationSchema = yup.object({
-  username: username,
-  email: email,
-  password: password,
+  email,
+  username,
+  password,
 });
 
 export const inputSchema = yup.object({

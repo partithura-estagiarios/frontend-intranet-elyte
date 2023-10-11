@@ -44,6 +44,7 @@ export default {
     projector: "Projector",
     flipChart: "Flip Chart",
     speaker: "Speaker",
+    others: "Others. Ex: A4 sheet, pen",
   },
   close: "Close",
   email: "E-mail",

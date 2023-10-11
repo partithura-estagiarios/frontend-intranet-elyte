@@ -15,14 +15,6 @@ export default {
   ramalOrPhone: "Seu Ramal ou Telefone",
   sector: "Setor",
   dayEvents: "Eventos do Dia",
-  name: {
-    index: "Nome",
-    pronoun: "Seu nome",
-  },
-  register: {
-    index: "Matrícula",
-    pronoun: "Sua matrícula",
-  },
   numberParticipants: "Número de participantes",
   date: {
     year: "Ano",
@@ -49,4 +41,12 @@ export default {
   submitButton: "Enviar",
   menu: "Cardápio",
   email: "E-mail",
+  name: {
+    index: "Nome",
+    pronoun: "Seu nome",
+  },
+  register: {
+    index: "Registrar",
+    pronoun: "Seu registro",
+  },
 };

@@ -2,6 +2,8 @@ import { defineStore, acceptHMRUpdate } from "pinia";
 
 import { UserStorage, UserStorageConstructor } from "../entities/User";
 
+import ValidateToken from "../graphql/verifyUser/ValidateToken.gql";
+
 function buildUser({ username, id, email, token }: UserStorage): UserStorage {
   return {
     username,
@@ -35,6 +37,9 @@ export const useUserStore = defineStore("useUserStore", {
     setToken(value: string) {
       this.user.token = value;
       localStorage.setItem("token", value);
+    },
+    async getLoggedUser() {
+      return await runQuery(ValidateToken, { token: userStorage.getToken });
     },
     setUser(value: UserStorage) {
       this.user = {

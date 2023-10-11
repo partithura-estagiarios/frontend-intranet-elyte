@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { boolean } from "yup";
-import ValidateToken from "./graphql/verifyUser/ValidateToken.gql";
 const $q = useQuasar();
 
 useHead({
@@ -20,8 +18,7 @@ const showTabHeader = computed(() => {
   );
 });
 async function getLoggedUser() {
-  const data = await runQuery(ValidateToken, { token: userStorage.getToken });
-  if (!data?.validateToken) {
+  if (!userStorage.user.getLoggedUser) {
     userStorage.logout();
     $q.notify({
       color: "negative",

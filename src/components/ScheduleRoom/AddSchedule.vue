@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { Form, Field } from "vee-validate";
 import { scheduleSchema } from "../../validation";
-import { Room, Event, EventForm } from "../../entities";
+import { Room, Events, EventForm } from "../../entities/Event";
 
 import AddEvent from "../../graphql/events/AddEvent.gql";
 import GetBusyRoom from "../../graphql/rooms/GetBusyRoom.gql";
@@ -18,7 +18,7 @@ defineProps({
   },
 });
 
-const form: Omit<Event, "id"> = reactive({
+const form: Events = reactive({
   initialTime: null as unknown as string | number,
   finalTime: null as unknown as string | number,
   roomId: null as unknown as string,

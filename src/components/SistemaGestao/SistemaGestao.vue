@@ -13,11 +13,11 @@ onMounted(() => {
 });
 
 async function getGestaoList() {
-  const { menuBySystem } = (await runMutation(GetSystem, {
+  const { getSystem } = (await runMutation(GetSystem, {
     sistema: "gestao",
-  })) as unknown as Record<"menuBySystem", Array<System>>;
+  })) as unknown as Record<"getSystem", Array<System>>;
 
-  gestaoList.value = menuBySystem;
+  gestaoList.value = getSystem;
   return gestaoList;
 }
 </script>

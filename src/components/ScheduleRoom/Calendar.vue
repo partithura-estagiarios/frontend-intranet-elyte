@@ -1,6 +1,6 @@
 <script setup lang="ts">
+import { Events, Room } from "../../entities/Event";
 import { QCalendarMonth, today } from "@quasar/quasar-ui-qcalendar/";
-import { Event, Room } from "../../entities/Event";
 import { DateTime } from "luxon";
 
 import GetEvents from "../../graphql/events/GetEvents.gql";
@@ -32,19 +32,14 @@ async function getEvents(): Promise<void> {
   eventList.value = await runQuery(GetEvents).then((data) => data.getEvents);
 }
 
-function getRoomByEvent(event: Event) {
+function getRoomByEvent(event: Events) {
   return roomList.value?.find((room: Room) => room.id == +event.roomId) as Room;
-}
-
-function getColorByEvent(event: Event): string | undefined {
-  const room = getRoomByEvent(event);
-  return room ? room.color : undefined;
 }
 
 const joinedDates = computed(() => {
   if (eventList.value) {
     const joinedDatesResult = eventList.value.reduce(
-      (acc: Record<string, Event[]>, event: Event) => {
+      (acc: Record<string, Events[]>, event: Events) => {
         const initialDateTime = DateTime.fromMillis(
           event.initialTime as number
         );

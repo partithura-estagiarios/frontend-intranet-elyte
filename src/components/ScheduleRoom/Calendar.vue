@@ -1,23 +1,28 @@
 <script setup lang="ts">
-import { DateTime } from "luxon";
-import { Event, Room } from "../../entities";
 import { QCalendarMonth, today } from "@quasar/quasar-ui-qcalendar/";
+import { Event, Room } from "../../entities/Event";
+import { DateTime } from "luxon";
 
 import GetEvents from "../../graphql/events/GetEvents.gql";
 import GetRooms from "../../graphql/rooms/GetRooms.gql";
 
 const calendar = ref();
 const roomList = ref();
-const eventList = ref();
-const selectedEvent = {};
-const activedModal = ref(false);
 const selectedDate = ref(today());
+const activedModal = ref(false);
+const eventList = ref();
+const selectedEvent = ref();
 const currentDay = DateTime.fromISO(today()).toFormat("yyyy-MM-dd");
 
 onMounted(() => {
   getEvents();
   getRooms();
 });
+
+function openModalWithEvent(event: unknown) {
+  activedModal.value = true;
+  selectedEvent.value = event;
+}
 
 async function getRooms(): Promise<void> {
   roomList.value = await runQuery(GetRooms).then((data) => data.getRooms);
@@ -31,7 +36,12 @@ function getRoomByEvent(event: Event) {
   return roomList.value?.find((room: Room) => room.id == +event.roomId) as Room;
 }
 
-const joinDates = computed(() => {
+function getColorByEvent(event: Event): string | undefined {
+  const room = getRoomByEvent(event);
+  return room ? room.color : undefined;
+}
+
+const joinedDates = computed(() => {
   if (eventList.value) {
     const joinedDatesResult = eventList.value.reduce(
       (acc: Record<string, Event[]>, event: Event) => {
@@ -66,11 +76,17 @@ function parsedScheduleDate(date: number) {
 function onPrev() {
   calendar.value.prev();
 }
+
 function onNext() {
   calendar.value.next();
 }
+
 function onReload() {
   getEvents();
+}
+
+function cancel() {
+  activedModal.value = false;
 }
 </script>
 
@@ -78,7 +94,7 @@ function onReload() {
   <!-- TODO: componentizar esse grande componente -->
   <ScheduleModal
     :isActive="activedModal"
-    @cancel="activedModal = false"
+    @cancel="cancel"
     :item="selectedEvent"
   />
   <div class="row q-px-xl">
@@ -103,13 +119,10 @@ function onReload() {
           <div class="full-height q-gutter-x-xs">
             <div
               class="row items-end no-padding cursor-pointer"
-              v-if="joinDates"
-              v-for="(event, index) in joinDates[timestamp.date]"
+              v-if="joinedDates && joinedDates[timestamp.date]"
+              v-for="(event, index) in joinedDates[timestamp.date]"
               :key="index"
-              @click="
-                activedModal = true;
-                selectedEvent = event;
-              "
+              @click="openModalWithEvent(Event)"
             >
               <q-icon name="circle" :color="getRoomByEvent(event)?.color" />
               <q-tooltip class="bg-black text-bold">
@@ -148,7 +161,7 @@ function onReload() {
 
         <div
           class="row q-pa-md items-start q-gutter-x-sm"
-          v-for="(events, index) in joinDates[currentDay]"
+          v-for="(events, index) in joinedDates[currentDay]"
           :key="index"
           v-if="eventList"
         >

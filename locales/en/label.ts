@@ -37,7 +37,7 @@ export default {
   },
   room: "Room",
   support: {
-    index: "Suports Material",
+    index: "Support Materials",
     computer: "Computer",
     water: "Water",
     coffee: "Coffee",

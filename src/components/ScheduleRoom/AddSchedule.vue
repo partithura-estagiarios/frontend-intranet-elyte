@@ -35,7 +35,7 @@ const formProps: Omit<Event, "id"> = reactive({
   },
 });
 
-const suportsMaterial = [
+const supportsMaterial = [
   {
     model: formProps.support.computer,
     icon: "computer",
@@ -280,7 +280,7 @@ async function addEvent() {
       <div class="row q-mt-md q-px-lg text-black">
         <q-list class="row justify-between q-gutter-md">
           <q-checkbox
-            v-for="(suport, index) in suportsMaterial"
+            v-for="(support, index) in supportsMaterial"
             :key="index"
             class="row col-5 justify-between schedule-item-border"
             v-model="formProps.support.computer"
@@ -288,12 +288,12 @@ async function addEvent() {
           >
             <div class="row">
               <q-icon
-                :name="suport.icon"
+                :name="support.icon"
                 class="bg-primary q-pa-md"
                 color="white"
                 size="sm"
               />
-              <q-item-label class="q-pa-md">{{ suport.label }}</q-item-label>
+              <q-item-label class="q-pa-md">{{ support.label }}</q-item-label>
             </div>
           </q-checkbox>
           <q-input

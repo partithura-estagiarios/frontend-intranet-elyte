@@ -40,7 +40,7 @@ function getColorByEvent(event: Event): string | undefined {
   return room ? room.color : undefined;
 }
 
-const joinDates = computed(() => {
+const joinedDates = computed(() => {
   if (eventList.value) {
     const joinedDatesResult = eventList.value.reduce(
       (acc: Record<string, Event[]>, event: Event) => {
@@ -117,8 +117,8 @@ function cancel() {
           <div class="row full-height items-end q-gutter-x-xs">
             <div
               class="row items-end no-padding cursor-pointer"
-              v-if="joinDates && joinDates[timestamp.date]"
-              v-for="(event, index) in joinDates[timestamp.date]"
+              v-if="joinedDates && joinedDates[timestamp.date]"
+              v-for="(event, index) in joinedDates[timestamp.date]"
               :key="index"
               @click="openModalWithEvent(Event)"
             >
@@ -160,7 +160,7 @@ function cancel() {
         <div
           v-if="eventList"
           class="text-h6 text-black row q-pa-md items-start q-gutter-x-sm"
-          v-for="(event, index) in joinDates[currentDay]"
+          v-for="(event, index) in joinedDates[currentDay]"
           :key="index"
         >
           <div class="row q-gutter-x-sm">

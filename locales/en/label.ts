@@ -12,7 +12,6 @@ export default {
   code: "Code",
   ramalNumber: "Branch line number",
   sector: "Sector",
-  name: "Name",
   submitButton: "Send",
   menu: "Menu",
   email: "email",
@@ -35,11 +34,12 @@ export default {
     final: "Final date",
   },
   room: "Room",
-  suport: {
-    index: "Suports Material",
+  support: {
+    index: "Supports Material",
     computer: "Computer",
     water: "Water",
     coffee: "Coffee",
     projector: "Projector",
+    others: "Others. Ex: A4 sheet, pen",
   },
 };

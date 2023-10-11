@@ -35,16 +35,16 @@ const formProps: Omit<Event, "id"> = reactive({
   },
 });
 
-const suportsMaterial = [
+const supportsMaterial = [
   {
     model: formProps.support.computer,
     icon: "computer",
-    label: t("label.suport.computer"),
+    label: t("label.support.computer"),
   },
   {
     model: formProps.support.projector,
     icon: "mdi-projector",
-    label: t("label.suport.projector"),
+    label: t("label.support.projector"),
   },
   {
     model: formProps.support.computer,
@@ -59,12 +59,12 @@ const suportsMaterial = [
   {
     model: formProps.support.water,
     icon: "water_drop",
-    label: t("label.suport.water"),
+    label: t("label.support.water"),
   },
   {
     model: formProps.support.coffee,
     icon: "coffee",
-    label: t("label.suport.coffee"),
+    label: t("label.support.coffee"),
   },
 ];
 
@@ -275,12 +275,12 @@ async function addEvent() {
       <span
         class="q-py-sm q-px-xl q-ml-lg text-h6 bg-primary text-white schedule-item-border"
       >
-        {{ $t("label.suport.index") }}
+        {{ $t("label.support.index") }}
       </span>
       <div class="row q-mt-md q-px-lg text-black">
         <q-list class="row justify-between q-gutter-md">
           <q-checkbox
-            v-for="(suport, index) in suportsMaterial"
+            v-for="(support, index) in supportsMaterial"
             :key="index"
             class="row col-5 justify-between schedule-item-border"
             v-model="formProps.support.computer"
@@ -288,19 +288,19 @@ async function addEvent() {
           >
             <div class="row">
               <q-icon
-                :name="suport.icon"
+                :name="support.icon"
                 class="bg-primary q-pa-md"
                 color="white"
                 size="sm"
               />
-              <q-item-label class="q-pa-md">{{ suport.label }}</q-item-label>
+              <q-item-label class="q-pa-md">{{ support.label }}</q-item-label>
             </div>
           </q-checkbox>
           <q-input
             class="col-12 q-px-md q-mt-md schedule-item-border"
             borderless
             bg-color="white"
-            :label="'Outros. Ex: Folha A4, caneta'"
+            :label="$t('label.support.others')"
             v-model="formProps.description"
           />
         </q-list>

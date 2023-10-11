@@ -1,5 +1,5 @@
-export interface Event {
-  id: string;
+export interface Events {
+  id?: string;
   userCreated: string;
   roomId: string;
   description: string;

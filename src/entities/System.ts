@@ -6,3 +6,8 @@ export interface System {
   link: string;
   sistema: string;
 }
+export interface UserEmail {
+  email: string;
+  registration: number;
+  contact: string;
+}

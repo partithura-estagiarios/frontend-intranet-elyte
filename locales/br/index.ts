@@ -5,7 +5,7 @@ import text from "./text";
 import warning from "./warning";
 import notifications from "./notifications";
 import label from "./label";
-
+import email from "./email";
 export default {
   about: "Sobre",
   action,
@@ -18,4 +18,5 @@ export default {
   warning,
   notifications,
   label,
+  email,
 };

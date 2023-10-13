@@ -23,6 +23,7 @@ declare module "@vue/runtime-core" {
     ChangePassword: typeof import("./components/Login/ChangePassword.vue")["default"];
     ConfigMenu: typeof import("./components/buttons/ConfigMenu.vue")["default"];
     ConfirmDelete: typeof import("./components/ConfirmDelete.vue")["default"];
+    ContactDirector: typeof import("./components/ContactDirector/ContactDirector.vue")["default"];
     CreateMenu: typeof import("./components/CreateMenu/index.vue")["default"];
     DeleteButton: typeof import("./components/buttons/DeleteButton.vue")["default"];
     DeleteRamal: typeof import("./components/Ramais/modais/DeleteRamal.vue")["default"];

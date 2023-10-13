@@ -8,7 +8,7 @@ import { scheduleSchema } from "../../validation";
 import { Form, Field } from "vee-validate";
 const form = ref(null);
 
-const emits = defineEmits(["reload"]);
+const emits = defineEmits(["reload", "cancel"]);
 defineProps({
   isActive: {
     type: Boolean,
@@ -19,14 +19,14 @@ defineProps({
     required: true,
   },
 });
-const invalidRoom = ref([]);
+const invalidRoom = ref();
 
-const formProps: Omit<Event, "id"> = reactive({
+const formProps = reactive({
   userCreated: "",
-  roomId: "",
+  roomId: null as null | string,
   description: "",
-  initialTime: "",
-  finalTime: "",
+  initialTime: null as unknown as Record<string, string>,
+  finalTime: null as unknown as Record<string, string>,
   support: {
     computer: false,
     projector: false,
@@ -67,12 +67,11 @@ const suportsMaterial = [
     label: t("label.suport.coffee"),
   },
 ];
-
 function setDate(
   paramsDate: keyof Pick<Event, "initialTime" | "finalTime">,
   time: number
 ) {
-  formProps[paramsDate] = time;
+  (form as unknown as { [key: string]: number })[paramsDate] = time;
 }
 
 watch(formProps, async () => {
@@ -81,6 +80,7 @@ watch(formProps, async () => {
     finalTime: formProps.finalTime,
   });
   invalidRoom.value = getInvalidRoom.getBusyRoom;
+  console.log(invalidRoom.value);
 });
 
 async function addEvent() {

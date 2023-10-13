@@ -10,7 +10,6 @@ declare module "@vue/runtime-core" {
     ActionButton: typeof import("./components/buttons/ActionButton.vue")["default"];
     AddRamal: typeof import("./components/Ramais/modais/AddRamal.vue")["default"];
     AddSchedule: typeof import("./components/ScheduleRoom/AddSchedule.vue")["default"];
-    AddSchedulecopy: typeof import("./components/ScheduleRoom/AddSchedulecopy.vue")["default"];
     AddSystemDialog: typeof import("./components/DynamicDialog/SystemModals/AddSystemDialog.vue")["default"];
     AntDesignTextBox: typeof import("./components/controls/AntDesignTextBox.vue")["default"];
     BackButton: typeof import("./components/buttons/BackButton.vue")["default"];

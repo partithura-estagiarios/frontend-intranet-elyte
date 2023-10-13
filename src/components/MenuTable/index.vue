@@ -30,13 +30,19 @@ const TIME_SEPARATOR = "T";
 const groupMenusByDate = () => {
   const groupedMenus: Record<string, Menu[]> = {};
   menus.value.forEach((menu) => {
-    const date = menu.date.toISOString().split(TIME_SEPARATOR)[0];
-    const dayOfWeekIndex = new Date(date).getDay();
-    const dayOfWeek = weekday[dayOfWeekIndex];
-    if (!groupedMenus[date]) {
-      groupedMenus[date] = [];
+    if (
+      menu.date &&
+      typeof menu.date === "object" &&
+      (menu.date as Date).getDate
+    ) {
+      const date = (menu.date as Date).toDateString().split(TIME_SEPARATOR)[0];
+      const dayOfWeekIndex = new Date(date).getDay();
+      const dayOfWeek = weekday[dayOfWeekIndex];
+      if (!groupedMenus[date]) {
+        groupedMenus[date] = [];
+      }
+      groupedMenus[date].push({ ...menu, dayOfWeek });
     }
-    groupedMenus[date].push({ ...menu, dayOfWeek });
   });
   return groupedMenus;
 };
@@ -52,12 +58,14 @@ async function getMenu() {
     rawData.sort((a, b) => a.date - b.date);
     const last7Menus = rawData.slice(0, 7);
 
-    menus.value = last7Menus.map((item: Menu) => {
-      return {
-        ...item,
-        date: new Date(parseInt(item.date)),
-      } as unknown as Menu;
-    });
+    if (Array.isArray(menus.value)) {
+      const transformedMenus = [];
+      for (const item of last7Menus) {
+        const date = new Date(parseInt(item.date));
+        transformedMenus.push({ ...item, date });
+      }
+      menus.value = transformedMenus;
+    }
   }
 }
 </script>

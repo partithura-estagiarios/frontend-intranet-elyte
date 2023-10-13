@@ -15,7 +15,8 @@ defineProps({
     required: true,
   },
 });
-const selectedSystem = ref<object>({});
+
+const selectedSystem = ref();
 
 const getSelectedSystem = (system: System) => {
   selectedSystem.value = system;
@@ -53,7 +54,7 @@ async function updateSystem() {
 
 <template>
   <DynamicDialog
-    @cancel="() => [$emit('cancel'), (selectedSystem = {})]"
+    @cancel="() => [$emit('cancel'), selectedSystem]"
     @confirm="updateSystem"
     :open="isActive"
     :title="$t('action.editSystem.index')"

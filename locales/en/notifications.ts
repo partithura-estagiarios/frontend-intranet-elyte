@@ -11,7 +11,6 @@ export default {
     editMenu: "Menu edited successfully",
     createSystem: "System created successfully",
     deleteSystem: "System deleted successfully | Successfully deleted systems",
-    deleteSystem: "System deleted successfully | Systems deleted successfully",
     scheduleEvent: "Event scheduled successfully",
   },
 

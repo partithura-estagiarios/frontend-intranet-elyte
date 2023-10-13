@@ -14,7 +14,7 @@ onMounted(() => {
 
 const item: { id?: string } = {};
 const menus: Ref<Menu[]> = ref([]);
-const form = reactive<any>({
+const form = reactive<Menu>({
   date: "",
   salad: "",
   rice: "",
@@ -124,7 +124,7 @@ function validateForm() {
   ];
 
   for (const field of requiredFields) {
-    if (!form[field]) {
+    if (!requiredFields) {
       return false;
     }
   }

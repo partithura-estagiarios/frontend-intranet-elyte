@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Events, Room } from "../../entities/Event";
+import type { Event, Room } from "../../entities/Event";
 import { QCalendarMonth, today } from "@quasar/quasar-ui-qcalendar/";
 import { DateTime } from "luxon";
 
@@ -32,14 +32,14 @@ async function getEvents(): Promise<void> {
   eventList.value = await runQuery(GetEvents).then((data) => data.getEvents);
 }
 
-function getRoomByEvent(event: Events) {
+function getRoomByEvent(event: Event) {
   return roomList.value?.find((room: Room) => room.id == +event.roomId) as Room;
 }
 
 const joinedDates = computed(() => {
   if (eventList.value) {
     const joinedDatesResult = eventList.value.reduce(
-      (acc: Record<string, Events[]>, event: Events) => {
+      (acc: Record<string, Event[]>, event: Event) => {
         const initialDateTime = DateTime.fromMillis(
           event.initialTime as number
         );

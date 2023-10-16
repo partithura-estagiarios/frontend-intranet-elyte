@@ -1,36 +1,25 @@
 <script setup lang="ts">
 import { DateTime } from "luxon";
-import { useField } from "vee-validate";
+import { Field } from "vee-validate";
+
+defineProps({
+  fieldName: {
+    type: String,
+    default: "",
+  },
+  fieldLabel: {
+    type: String,
+    default: "",
+  },
+  timeValue: {
+    type: String,
+    default: "",
+  },
+});
+
 const emits = defineEmits(["setTime"]);
 
-const props = defineProps({
-  type: {
-    type: String,
-    default: "text",
-  },
-  value: {
-    type: String,
-    default: undefined,
-  },
-  name: {
-    type: String,
-    required: true,
-  },
-  validationFn: {
-    type: Function,
-    default: true,
-  },
-});
-const name = toRef(props, "name");
-const {
-  value: inputValue,
-  errorMessage,
-  meta,
-} = useField(name, undefined, {
-  initialValue: props.value,
-});
-
-const time = ref();
+const time = ref(null);
 const date = ref(null);
 const selectionStep = ref<"date" | "hour" | "minute" | null>(null);
 const DAY_HOURS = [
@@ -41,13 +30,11 @@ const minutes = ref<Array<number>>([]);
 
 function generateTimeList(selectedHour: number): void {
   const times = [];
-
   const hour = new Date(date.value as unknown as number);
   hour.setHours(selectedHour);
   const hoursPlus30min = new Date(hour);
   hoursPlus30min.setMinutes(30);
   times.push(hour.getTime(), hoursPlus30min.getTime());
-
   minutes.value = times;
   selectionStep.value = "minute";
 }
@@ -67,78 +54,81 @@ function reopenSelect() {
 </script>
 
 <template>
-  <q-select
-    :id="name"
-    :name="name"
-    :type="type"
-    v-model="time"
-    :value="inputValue"
-    emit-value
-    borderless
-    map-options
-    bg-color="white"
-    class="col-5 row select"
-    @popup-show="reopenSelect"
-    :option-value="(date: number) => date"
-    :option-label="
-      (date) =>
-        DateTime.fromMillis(date)
-          .setLocale('pt-BR')
-          .toFormat('dd/MM/yyyy HH:mm')
-    "
-  >
-    <template #prepend>
-      <q-icon
-        name="mdi-calendar-clock"
-        class="bg-primary fit q-px-xs"
-        size="md"
-        color="white"
-      />
-    </template>
+  <div>
+    <Field :name="fieldName" v-slot="item">
+      <q-select
+        emit-value
+        borderless
+        map-options
+        lazy-rules
+        bg-color="white"
+        :label="fieldLabel"
+        v-bind="item.field"
+        class="col-5 row select"
+        :model-value="item.value"
+        @popup-show="reopenSelect"
+        :option-value="(date) => date"
+        :option-label="
+          (date) =>
+            DateTime.fromMillis(date)
+              .setLocale('pt-BR')
+              .toFormat('dd/MM/yyyy HH:mm')
+        "
+      >
+        <template #prepend>
+          <q-icon
+            name="mdi-calendar-clock"
+            class="bg-primary fit q-px-xs"
+            size="md"
+            color="white"
+          />
+        </template>
 
-    <template #no-option>
-      <div class="row justify-center date-menu">
-        <q-date
-          flat
-          minimal
-          v-model="date"
-          class="text-black"
-          mask="YYYY-MM-DD HH:mm"
-          @update:model-value="selectionStep = 'hour'"
-          v-if="!selectionStep || selectionStep === 'date'"
-        />
-        <div v-else-if="selectionStep === 'hour'" class="text-black row">
-          <div class="row q-pa-md">
-            <q-item
-              dense
-              :key="hour"
-              clickable
-              class="item-size col-3"
-              v-for="hour in DAY_HOURS"
-              @click="generateTimeList(hour)"
-            >
-              {{ DateTime.fromObject({ hour }).toFormat("HH:mm") }}
-            </q-item>
+        <template #no-option>
+          <div class="row justify-center date-menu">
+            <q-date
+              flat
+              minimal
+              v-model="date"
+              class="text-black"
+              mask="YYYY-MM-DD HH:mm"
+              @update:model-value="selectionStep = 'hour'"
+              v-if="!selectionStep || selectionStep === 'date'"
+            />
+            <div v-else-if="selectionStep === 'hour'" class="text-black row">
+              <div class="row q-pa-md">
+                <q-item
+                  dense
+                  :key="hour"
+                  clickable
+                  class="item-size col-3"
+                  v-for="hour in DAY_HOURS"
+                  @click="generateTimeList(hour)"
+                >
+                  {{ DateTime.fromObject({ hour }).toFormat("HH:mm") }}
+                </q-item>
+              </div>
+            </div>
+            <div v-else class="text-black row">
+              <div class="row q-pa-md">
+                <q-item
+                  dense
+                  clickable
+                  class="item-size col-6"
+                  @click="finishSelector(minute)"
+                  v-for="(minute, index) in minutes"
+                  :key="index"
+                >
+                  {{ DateTime.fromMillis(minute).toFormat("HH:mm") }}
+                </q-item>
+              </div>
+            </div>
           </div>
-        </div>
-        <div v-else class="text-black row">
-          <div class="row q-pa-md">
-            <q-item
-              dense
-              clickable
-              class="item-size col-6"
-              @click="finishSelector(minute)"
-              v-for="(minute, index) in minutes"
-              :key="index"
-            >
-              {{ DateTime.fromMillis(minute).toFormat("HH:mm") }}
-            </q-item>
-          </div>
-        </div>
-      </div>
-    </template>
-    <p class="help-message" v-show="errorMessage || meta.valid">
-      {{ errorMessage }}
-    </p>
-  </q-select>
+        </template>
+      </q-select>
+      <span v-if="item.errorMessage" class="text-red">
+        {{ parseErrorMessage(item.errorMessage) }}
+      </span>
+    </Field>
+  </div>
 </template>

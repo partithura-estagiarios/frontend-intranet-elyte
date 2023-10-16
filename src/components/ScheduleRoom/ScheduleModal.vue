@@ -46,7 +46,7 @@ function parseDate(date: number) {
   <DynamicDialog
     @cancel="() => $emit('cancel')"
     :open="isActive"
-    :title="item.description"
+    title="item.description"
     closeLabel="Fechar"
     close
   >

@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { Form, Field } from "vee-validate";
+import { Form } from "vee-validate";
 import { scheduleSchema } from "../../validation";
-import { Room, Events, EventForm } from "../../entities/Event";
+import type { Event, EventForm, Room } from "../../entities/Event";
 
 import AddEvent from "../../graphql/events/AddEvent.gql";
 import GetBusyRoom from "../../graphql/rooms/GetBusyRoom.gql";
@@ -18,16 +18,16 @@ defineProps({
   },
 });
 
-const form: Events = reactive({
-  initialTime: null as unknown as string | number,
-  finalTime: null as unknown as string | number,
-  roomId: null as unknown as string,
-  userCreated: null as unknown as string,
-  description: null as unknown as string,
-  ramalNumber: null as unknown as number,
-  totalPeople: null as unknown as number,
-  userRegistration: null as unknown as number,
-  email: null as unknown as string,
+const form: Event = reactive({
+  initialTime: 0,
+  finalTime: 0,
+  roomId: "",
+  userCreated: "",
+  description: "",
+  ramalNumber: 0,
+  totalPeople: 0,
+  userRegistration: 0,
+  email: "",
   support: {
     computer: false,
     projector: false,
@@ -55,21 +55,24 @@ function isRoomInvalid(idToCheck: number, invalidRooms: unknown) {
   );
 }
 
-const checkForInvalidRooms = computed((props) => (room = props.rooms) => {
-  const roomIdToCheck = room.id;
-  const isInvalid = isRoomInvalid(roomIdToCheck, invalidRoom);
-  return isInvalid;
-});
+const checkForInvalidRooms = computed(
+  (props) =>
+    (room = props.rooms): Record<number, Room> => {
+      const roomIdToCheck = room.id;
+      const isInvalid = isRoomInvalid(roomIdToCheck, invalidRoom);
+      return isInvalid;
+    }
+);
 
 const roomName = computed(
   (props) =>
-    (room = props.rooms) =>
+    (room = props.rooms as Room) =>
       room.name
 );
 
 const roomId = computed(
   (props) =>
-    (room = props.rooms) =>
+    (room = props.rooms as Room) =>
       room.id
 );
 
@@ -106,11 +109,6 @@ const options = [
     label: t("label.support.coffee"),
   },
 ];
-function closeModal() {
-  computed((props) => (toggle = (props.isActive = false)) => {
-    console.log("jhgfdfghjk", toggle);
-  });
-}
 
 function setDate(
   paramsDate: keyof Pick<Event, "initialTime" | "finalTime">,
@@ -118,21 +116,31 @@ function setDate(
 ) {
   form[paramsDate] = time;
 }
-async function addEvent(data: EventForm) {
-  data.support = form.support;
-  data.finalTime = form.finalTime;
-  data.initialTime = form.initialTime;
-  data.totalPeople = parseInt(data.totalPeople);
-  data.ramalNumber = parseInt(data.ramalNumber);
-  data.userRegistration = parseInt(data.userRegistration);
+function safeParseInt(value: string | number): number {
+  if (typeof value === "string") {
+    return parseInt(value);
+  }
+  return value;
+}
+
+function parse(data: EventForm) {
+  return {
+    ...data,
+    support: form.support,
+    finalTime: form.finalTime,
+    initialTime: form.initialTime,
+    totalPeople: safeParseInt(data.totalPeople),
+    ramalNumber: safeParseInt(data.ramalNumber),
+    userRegistration: safeParseInt(data.userRegistration),
+  };
+}
+
+async function addEvent(formData: EventForm) {
   try {
-    const addEvent = await runMutation(AddEvent, { data });
-    if (addEvent) {
-      positiveNotify(t("notifications.success.scheduleEvent"));
-      emits("reload");
-      return;
-    }
-    negativeNotify("notifications.fail.data");
+    await runMutation(AddEvent, { data: parse(formData) });
+    positiveNotify(t("notifications.success.scheduleEvent"));
+    emits("reload");
+    return;
   } catch (error) {
     negativeNotify(t("notifications.fail.scheduleEvent"));
   }
@@ -145,196 +153,123 @@ async function addEvent(data: EventForm) {
     :title="$t('action.scheduleEvent')"
     hide-controls
   >
-    <!--TODO: Criar um component para os fields e outras partes também-->
     <Form
       @submit="addEvent"
       :validation-schema="scheduleSchema"
       class="row q-pa-md text-black text-body1 q-gutter-y-sm justify-around"
     >
-      <Field name="userCreated" v-slot="item">
-        <q-input
-          :model-value="item.value"
-          v-bind="item.field"
-          borderless
-          bg-color="white"
-          class="schedule-item-border col-5"
-          :label="$t('label.name.pronoun')"
-        >
-          <template #prepend>
-            <q-icon
-              name="person"
-              class="bg-primary fit q-px-xs"
-              size="md"
-              color="white"
-            />
-          </template>
-          <span v-if="item.errorMessage" class="text-red">
-            {{ parseErrorMessage(item.errorMessage) }}
-          </span>
-        </q-input>
-      </Field>
+      <StandardInput
+        field-name="userCreated"
+        field-color="white"
+        class="schedule-item-border col-5"
+        :field-label="$t('label.name.pronoun')"
+        borderless
+        icon-name="person"
+        icon-class="bg-primary fit q-px-xs"
+        icon-size="md"
+        icon-color="white"
+      />
 
-      <Field name="userRegistration" v-slot="item">
-        <q-input
-          :model-value="item.value"
-          v-bind="item.field"
-          borderless
-          bg-color="white"
-          type="number"
-          class="schedule-item-border col-5"
-          :label="$t('label.register.pronoun')"
-        >
-          <template #prepend>
-            <q-icon
-              name="mdi-card-account-details-outline"
-              class="bg-primary fit q-px-xs"
-              size="md"
-              color="white"
-            />
-          </template>
-          <span v-if="item.errorMessage" class="text-red">
-            {{ parseErrorMessage(item.errorMessage) }}
-          </span>
-        </q-input>
-      </Field>
+      <StandardInput
+        field-name="userRegistration"
+        field-color="white"
+        class="schedule-item-border col-5"
+        :field-label="$t('label.register.pronoun')"
+        fieldType="number"
+        borderless
+        icon-name="mdi-card-account-details-outline"
+        icon-class="bg-primary fit q-px-xs"
+        icon-size="md"
+        icon-color="white"
+      />
 
-      <Field name="ramalNumber" v-slot="item">
-        <q-input
-          :model-value="item.value"
-          v-bind="item.field"
-          borderless
-          mask="###########"
-          bg-color="white"
-          class="schedule-item-border col-5"
-          :label="$t('label.ramalOrPhone')"
-        >
-          <template #prepend>
-            <q-icon
-              name="mdi-phone-in-talk"
-              class="bg-primary fit q-px-xs"
-              size="md"
-              color="white"
-            />
-          </template>
-          <span v-if="item.errorMessage" class="text-red">
-            {{ parseErrorMessage(item.errorMessage) }}
-          </span>
-        </q-input>
-      </Field>
+      <StandardInput
+        field-name="ramalNumber"
+        field-color="white"
+        class="schedule-item-border col-5"
+        :field-label="$t('label.ramalOrPhone')"
+        fieldMask="###########"
+        field-type="number"
+        borderless
+        icon-name="mdi-phone-in-talk"
+        icon-class="bg-primary fit q-px-xs"
+        icon-size="md"
+        icon-color="white"
+      />
 
-      <Field name="email" v-slot="item">
-        <q-input
-          :model-value="item.value"
-          v-bind="item.field"
-          class="schedule-item-border col-5"
-          bg-color="white"
-          borderless
-          :label="$t('label.email')"
-          lazy-rules
-        >
-          <template #prepend>
-            <q-icon
-              name="email"
-              class="bg-primary fit q-px-xs"
-              size="md"
-              color="white"
-              @click="addEvent"
-            />
-          </template>
-          <span v-if="item.errorMessage" class="text-red">
-            {{ parseErrorMessage(item.errorMessage) }}
-          </span>
-        </q-input>
-      </Field>
+      <StandardInput
+        field-name="email"
+        field-color="white"
+        class="schedule-item-border col-5"
+        :field-label="$t('label.email')"
+        borderless
+        icon-name="email"
+        icon-class="bg-primary fit q-px-xs"
+        icon-size="md"
+        icon-color="white"
+      />
 
       <SelectTime
-        name="initialTime"
-        class="schedule-item-border col-5"
-        :model-value="form.initialTime"
-        :label="$t('label.date.initial')"
         type="initial"
+        field-name="initialTime"
+        :time-value="form.initialTime"
+        class="schedule-item-border col-5"
+        :field-label="$t('label.date.initial')"
         @setTime="(args) => setDate('initialTime', args)"
       />
 
       <SelectTime
-        name="finalTime"
-        class="schedule-item-border col-5"
-        :model-value="form.finalTime"
-        :label="$t('label.date.final')"
         type="final"
+        field-name="finalTime"
+        :time-value="form.finalTime"
+        class="schedule-item-border col-5"
+        :field-label="$t('label.date.final')"
         @setTime="(args) => setDate('finalTime', args)"
       />
 
-      <Field name="totalPeople" v-slot="item">
-        <q-input
-          class="schedule-item-border col-5"
-          mask="##"
-          borderless
-          bg-color="white"
-          :label="$t('label.numberParticipants')"
-          :model-value="item.value"
-          v-bind="item.field"
-        >
-          <template #prepend>
-            <q-icon
-              name="groups"
-              class="bg-primary fit q-px-xs"
-              size="md"
-              color="white"
-            />
-          </template>
-          <span v-if="item.errorMessage" class="text-red">
-            {{ parseErrorMessage(item.errorMessage) }}
-          </span>
-        </q-input>
-      </Field>
+      <StandardInput
+        field-name="totalPeople"
+        field-color="white"
+        class="schedule-item-border col-5"
+        :field-label="$t('label.numberParticipants')"
+        field-mask="##"
+        field-type="number"
+        borderless
+        icon-name="groups"
+        icon-class="bg-primary fit q-px-xs"
+        icon-size="md"
+        icon-color="white"
+      />
 
-      <Field name="roomId" v-slot="item">
-        <q-select
-          class="schedule-item-border col-5"
-          bg-color="white"
-          borderless
-          :label="$t('label.room')"
-          popup-content-class="text-black"
-          emit-value
-          map-options
-          :model-value="item.value"
-          @update:model-value="form.roomId"
-          v-bind="item.field"
-          :disable="selectRoom"
-          :options="rooms"
-          :option-label="roomName"
-          :option-value="roomId"
-          :option-disable="checkForInvalidRooms"
-        >
-          <template #prepend>
-            <q-icon
-              name="mdi-map-marker-radius"
-              class="bg-primary fit q-px-xs"
-              size="md"
-              color="white"
-            />
-          </template>
-          <span v-if="item.errorMessage" class="text-red">
-            {{ parseErrorMessage(item.errorMessage) }}
-          </span>
-        </q-select>
-      </Field>
+      <StandardSelect
+        :option-label="roomName"
+        :option-value="roomId"
+        :options-to-disable="checkForInvalidRooms"
+        :options-to-select="rooms"
+        :disableSelect="selectRoom"
+        field-name="roomId"
+        field-color="white"
+        class="schedule-item-border col-5"
+        :field-label="$t('label.room')"
+        borderless
+        icon-name="mdi-map-marker-radius"
+        icon-class="bg-primary fit q-px-xs"
+        icon-size="md"
+        icon-color="white"
+        popup-content-class="text-black"
+      />
 
-      <Field name="description" class="col-11" v-slot="item">
-        <q-input
-          class="q-px-md q-mt-md schedule-item-border col-11"
-          borderless
-          bg-color="white"
-          :label="$t('label.description')"
-          :model-value="item.value"
-          v-bind="item.field"
-        >
-          <span v-if="item.errorMessage" class="text-red">
-            {{ parseErrorMessage(item.errorMessage) }}
-          </span>
-        </q-input>
-      </Field>
+      <StandardInput
+        field-name="description"
+        field-color="white"
+        class="q-px-md q-mt-md schedule-item-border col-11"
+        :field-label="$t('label.description')"
+        borderless
+        icon-name="person"
+        icon-class="bg-primary fit q-px-xs"
+        icon-size="md"
+        icon-color="white"
+      />
 
       <div class="q-ma-lg">
         <span

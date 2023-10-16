@@ -9,7 +9,10 @@ type Getters = {
   getToken(): string;
 };
 type Actions = {
-  setUser(): void;
+  setUser(value: UserStorage): void;
+  getLoggedUser(): Promise<boolean>;
+  logout(): void;
+  setToken(value: string): void;
 };
 
 export interface UserStorageConstructor {

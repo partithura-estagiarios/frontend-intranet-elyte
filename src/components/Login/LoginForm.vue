@@ -14,18 +14,24 @@ const isPwdvisible = ref(true);
 async function auth(data: UserForm) {
   try {
     const { auth } = (await runMutation(Auth, data)) as unknown as AuthQuery;
+    console.log(auth);
     const { token, user } = auth;
+    console.log(token, user);
     if (token) {
+      console.log("entreo");
       userStorage.setUser({
-        username: user.username,
-        id: user.id,
         email: user.email,
+        id: user.id,
+        token: user.token,
+        username: user.username,
       });
-      userStorage.setToken(token);
+      userStorage.actions.setToken(token);
+
       positiveNotify(t("notifications.success.login"));
       router.push("/");
     }
-  } catch {
+  } catch (err) {
+    console.log(err);
     negativeNotify(t("notifications.fail.login"));
   }
 }

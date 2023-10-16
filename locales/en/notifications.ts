@@ -34,5 +34,6 @@ export default {
     invalidEmail: "Invalid email",
     equalPassword: "Passwords do not match",
     invalidPassword: "Invalid password",
+    timeExpired: "Time expired",
   },
 };

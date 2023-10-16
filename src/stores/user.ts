@@ -39,9 +39,13 @@ export const useUserStore = defineStore("useUserStore", {
       localStorage.setItem("token", value);
     },
     async getLoggedUser() {
-      return await runQuery(ValidateToken, { token: userStorage.getToken });
+      console.log({ token: userStorage.getters.getToken });
+      // const result = await runQuery(ValidateToken, { token:userStorage.getters.getToken })
+
+      // return result.validateToken;
     },
     setUser(value: UserStorage) {
+      console.log("SetUser");
       this.user = {
         email: value.email,
         id: value.id,
@@ -57,4 +61,4 @@ export const useUserStore = defineStore("useUserStore", {
   },
 }) as unknown as UserStorageConstructor;
 
-export const userStorage = useUserStore();
+export const userStorage = useUserStore;

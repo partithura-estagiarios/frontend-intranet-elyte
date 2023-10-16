@@ -1,6 +1,4 @@
 <script setup lang="ts">
-const $q = useQuasar();
-
 useHead({
   title: "titulo",
   meta: [
@@ -17,16 +15,13 @@ const showTabHeader = computed(() => {
     window.location.pathname.includes(route)
   );
 });
-async function getLoggedUser() {
-  if (!userStorage.user.getLoggedUser) {
-    userStorage.logout();
-    $q.notify({
-      color: "negative",
-      message: "Sessão expirada, por favor faça seu login novamente",
-    });
+async function userIsLogged() {
+  if (!(await userStorage.actions.getLoggedUser())) {
+    negativeNotify(t("notifications.fail.timeExpired"));
+    userStorage.actions.logout();
   }
 }
-getLoggedUser();
+userIsLogged();
 </script>
 
 <template>

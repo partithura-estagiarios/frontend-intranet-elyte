@@ -10,10 +10,6 @@ defineProps({
     type: String,
     default: "",
   },
-  fieldClass: {
-    type: String,
-    default: "",
-  },
   fieldLabel: {
     type: String,
     default: "",
@@ -54,20 +50,20 @@ defineProps({
     <Field :name="fieldName" v-slot="item">
       <div>
         <q-input
-          :model-value="item.value"
-          v-bind="item.field"
-          :borderless="borderless"
-          :bg-color="fieldColor"
-          :label="fieldLabel"
-          :type="fieldType"
           :mask="fieldMask"
+          :type="fieldType"
+          v-bind="item.field"
+          :label="fieldLabel"
+          :bg-color="fieldColor"
+          :borderless="borderless"
+          :model-value="item.value"
         >
           <template #prepend>
             <q-icon
               :name="iconName"
-              :class="iconClass"
               :size="iconSize"
               :color="iconColor"
+              :class="iconClass"
             />
           </template>
           <span v-if="item.errorMessage" class="text-red">

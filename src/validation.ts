@@ -1,6 +1,6 @@
 import * as yup from "yup";
 
-//Nessa seção ficam as variáveis
+//*Nessa seção ficam as variáveis
 const icon = yup.string().required(t("warning.requiredField"));
 
 const title = yup.string().required(t("warning.requiredField"));
@@ -30,7 +30,7 @@ const username = yup
   .min(2, t("warning.username"))
   .required(t("warning.requiredField"));
 
-//E nessa seção ficam os schemas que serão exportados
+//*E nessa seção ficam os schemas que serão exportados
 export const usernameSchema = yup.object({
   username,
 });

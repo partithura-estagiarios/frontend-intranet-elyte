@@ -80,7 +80,6 @@ watch(formProps, async () => {
     finalTime: formProps.finalTime,
   });
   invalidRoom.value = getInvalidRoom.getBusyRoom;
-  console.log(invalidRoom.value);
 });
 
 async function addEvent() {

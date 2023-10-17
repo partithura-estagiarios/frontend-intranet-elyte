@@ -27,16 +27,22 @@ const menuItems = [
 
 const TIME_SEPARATOR = "T";
 
+function isDateValid(date: Date | string | number) {
+  return (
+    date &&
+    typeof date === "object" &&
+    date instanceof Date &&
+    !isNaN(date as unknown as number)
+  );
+}
+
 const groupMenusByDate = () => {
   const groupedMenus: Record<string, Menu[]> = {};
   menus.value.forEach((menu) => {
-    if (
-      menu.date &&
-      typeof menu.date === "object" &&
-      (menu.date as Date).getDate
-    ) {
-      const date = (menu.date as Date).toDateString().split(TIME_SEPARATOR)[0];
-      const dayOfWeekIndex = new Date(date).getDay();
+    if (isDateValid(menu.date)) {
+      const dateObject = new Date(menu.date);
+      const [date] = dateObject.toDateString().split(TIME_SEPARATOR);
+      const dayOfWeekIndex = dateObject.getDay();
       const dayOfWeek = weekday[dayOfWeekIndex];
       if (!groupedMenus[date]) {
         groupedMenus[date] = [];

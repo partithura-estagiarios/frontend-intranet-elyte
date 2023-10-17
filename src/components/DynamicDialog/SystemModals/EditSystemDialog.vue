@@ -54,7 +54,7 @@ async function updateSystem() {
 
 <template>
   <DynamicDialog
-    @cancel="() => [$emit('cancel'), selectedSystem]"
+    @cancel="() => [$emit('cancel'), (selectedSystem = {})]"
     @confirm="updateSystem"
     :open="isActive"
     :title="$t('action.editSystem.index')"

@@ -19,8 +19,8 @@ defineProps({
 });
 
 const form: Event = reactive({
-  initialTime: 0,
-  finalTime: 0,
+  initialTime: null,
+  finalTime: null,
   roomId: "",
   userCreated: "",
   description: "",

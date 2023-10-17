@@ -12,7 +12,7 @@ defineProps({
     default: "",
   },
   timeValue: {
-    type: String,
+    type: Number,
     default: "",
   },
 });
@@ -38,17 +38,18 @@ function generateTimeList(selectedHour: number): void {
   minutes.value = times;
   selectionStep.value = "minute";
 }
-
-function finishSelector(minute: number) {
-  emits("setTime", minute);
+function resetValues() {
   time.value = null;
   date.value = null;
+}
+function finishSelector(minute: number) {
+  emits("setTime", minute);
+  resetValues;
   selectionStep.value = null;
 }
 
 function reopenSelect() {
-  time.value = null;
-  date.value = null;
+  resetValues;
   selectionStep.value = "date";
 }
 </script>
@@ -65,7 +66,6 @@ function reopenSelect() {
         :label="fieldLabel"
         class="col-5 row select"
         :model-value="timeValue"
-        @update:model-value="item.value"
         @popup-show="reopenSelect"
         :option-value="(date) => date"
         :option-label="

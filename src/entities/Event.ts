@@ -3,8 +3,8 @@ export interface Event {
   userCreated: string;
   roomId: string;
   description: string;
-  initialTime: string | number;
-  finalTime: string | number;
+  initialTime: string | number | null;
+  finalTime: string | number | null;
   support: {
     computer: boolean;
     projector: boolean;

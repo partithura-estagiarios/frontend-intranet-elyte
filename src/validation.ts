@@ -69,11 +69,6 @@ export const loginSchema = yup.object({
   password: yup.string().required(t("warning.requiredField")),
 });
 
-export const a = yup.object({
-  finalTime: yup.date().required(t("warning.requiredField")),
-  initialTime: yup.date().required(t("warning.requiredField")),
-});
-
 export const scheduleSchema = yup.object({
   email,
   description,

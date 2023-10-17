@@ -32,20 +32,20 @@ export const useUserStore = defineStore("useUserStore", {
     isLoggedIn: (state) => {
       return Boolean(state.user.token);
     },
+    async getLoggedUser(): Promise<boolean> {
+      const result = await runQuery(ValidateToken, {
+        token: userStorage.getToken,
+      });
+      return !!result.validateToken;
+    },
   },
   actions: {
     setToken(value: string) {
       this.user.token = value;
       localStorage.setItem("token", value);
     },
-    async getLoggedUser() {
-      console.log({ token: userStorage.getters.getToken });
-      // const result = await runQuery(ValidateToken, { token:userStorage.getters.getToken })
 
-      // return result.validateToken;
-    },
     setUser(value: UserStorage) {
-      console.log("SetUser");
       this.user = {
         email: value.email,
         id: value.id,
@@ -59,6 +59,5 @@ export const useUserStore = defineStore("useUserStore", {
       localStorage.removeItem("token");
     },
   },
-}) as unknown as UserStorageConstructor;
-
-export const userStorage = useUserStore;
+});
+export const userStorage = useUserStore();

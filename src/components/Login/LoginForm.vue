@@ -25,7 +25,7 @@ async function auth(data: UserForm) {
         token: user.token,
         username: user.username,
       });
-      userStorage.actions.setToken(token);
+      userStorage.setToken(token);
 
       positiveNotify(t("notifications.success.login"));
       router.push("/");

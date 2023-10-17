@@ -69,6 +69,9 @@
 </template>
 
 <script setup lang="ts">
+import SendEmail from "../../graphql/sendEmail/SendEmail.gql";
+import { loginForContact } from "../../validation";
+import { Field, Form } from "vee-validate";
 const $q = useQuasar();
 const isLoading = ref(false);
 
@@ -131,8 +134,4 @@ async function saveForm() {
     message: "Email contém erros",
   });
 }
-
-import { SendEmail } from "../../graphql/sendEmail/SendEmail.gql";
-import { loginForContact } from "../../validation";
-import { Field, Form } from "vee-validate";
 </script>

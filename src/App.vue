@@ -16,9 +16,9 @@ const showTabHeader = computed(() => {
   );
 });
 async function userIsLogged() {
-  if (!(await userStorage.actions.getLoggedUser())) {
+  if (!(await userStorage.getLoggedUser)) {
     negativeNotify(t("notifications.fail.timeExpired"));
-    userStorage.actions.logout();
+    userStorage.logout();
   }
 }
 userIsLogged();

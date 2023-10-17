@@ -21,9 +21,10 @@ defineProps({
 });
 const activedModal: Ref<number | null> = ref(null);
 function activateModal(index: number) {
-  if (!userStorage.user.getLoggedUser) {
+  if (!userStorage.getLoggedUser) {
     location.reload();
   }
+  activedModal.value = index;
 }
 function deactivateModal() {
   activedModal.value = null;

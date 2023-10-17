@@ -69,12 +69,17 @@ export const loginSchema = yup.object({
   password: yup.string().required(t("warning.requiredField")),
 });
 
+export const a = yup.object({
+  finalTime: yup.date().required(t("warning.requiredField")),
+  initialTime: yup.date().required(t("warning.requiredField")),
+});
+
 export const scheduleSchema = yup.object({
   email,
   description,
+  finalTime: yup.date(),
+  initialTime: yup.date(),
   roomId: yup.number().required(t("warning.requiredField")),
-  finalTime: yup.date().required(t("warning.requiredField")),
-  initialTime: yup.date().required(t("warning.requiredField")),
   userCreated: yup.string().required(t("warning.requiredField")),
   ramalNumber: yup.number().required(t("warning.requiredField")),
   totalPeople: yup.number().required(t("warning.requiredField")),

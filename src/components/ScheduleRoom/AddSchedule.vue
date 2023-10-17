@@ -116,6 +116,13 @@ function setDate(
 ) {
   form[paramsDate] = time;
 }
+
+function triggerwarning() {
+  if (selectRoom.value) {
+    negativeNotify(t("warning.dateFieldEmpty"));
+  }
+}
+
 function safeParseInt(value: string | number): number {
   if (typeof value === "string") {
     return parseInt(value);
@@ -211,7 +218,6 @@ async function addEvent(formData: EventForm) {
 
       <SelectTime
         type="initial"
-        field-name="initialTime"
         :time-value="form.initialTime"
         class="schedule-item-border col-5"
         :field-label="$t('label.date.initial')"
@@ -220,7 +226,6 @@ async function addEvent(formData: EventForm) {
 
       <SelectTime
         type="final"
-        field-name="finalTime"
         :time-value="form.finalTime"
         class="schedule-item-border col-5"
         :field-label="$t('label.date.final')"
@@ -257,6 +262,7 @@ async function addEvent(formData: EventForm) {
         icon-size="md"
         icon-color="white"
         popup-content-class="text-black"
+        @click="triggerwarning"
       />
 
       <StandardInput
@@ -301,7 +307,12 @@ async function addEvent(formData: EventForm) {
         </div>
       </div>
       <Button class="bg-transparent no-padding">
-        <q-btn flat :label="$t('action.confirm.index')" color="primary" />
+        <q-btn
+          flat
+          :label="$t('action.confirm.index')"
+          color="primary"
+          @click="triggerwarning"
+        />
       </Button>
     </Form>
   </DynamicDialog>

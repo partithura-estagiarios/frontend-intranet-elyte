@@ -3,11 +3,11 @@ import { DateTime } from "luxon";
 import { Field } from "vee-validate";
 
 defineProps({
-  fieldName: {
+  fieldLabel: {
     type: String,
     default: "",
   },
-  fieldLabel: {
+  fieldName: {
     type: String,
     default: "",
   },
@@ -57,15 +57,15 @@ function reopenSelect() {
   <div>
     <Field :name="fieldName" v-slot="item">
       <q-select
-        emit-value
         borderless
         map-options
-        lazy-rules
+        emit-value
+        v-bind="item.field"
         bg-color="white"
         :label="fieldLabel"
-        v-bind="item.field"
         class="col-5 row select"
-        :model-value="item.value"
+        :model-value="timeValue"
+        @update:model-value="item.value"
         @popup-show="reopenSelect"
         :option-value="(date) => date"
         :option-label="
@@ -126,9 +126,6 @@ function reopenSelect() {
           </div>
         </template>
       </q-select>
-      <span v-if="item.errorMessage" class="text-red">
-        {{ parseErrorMessage(item.errorMessage) }}
-      </span>
     </Field>
   </div>
 </template>

@@ -14,7 +14,7 @@ onMounted(() => {
 
 const item: { id?: string } = {};
 const menus: Ref<Menu[]> = ref([]);
-const form = reactive<Menu>({
+const form: Omit<Menu, "id"> = reactive({
   date: "",
   salad: "",
   rice: "",
@@ -124,7 +124,7 @@ function validateForm() {
   ];
 
   for (const field of requiredFields) {
-    if (!requiredFields) {
+    if (!form[field]) {
       return false;
     }
   }

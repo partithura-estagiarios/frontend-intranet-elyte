@@ -11,26 +11,27 @@ const props = defineProps({
     required: true,
   },
 });
+console.log(props.item);
 
-const supports = computed(() => {
+const suports = computed(() => {
   return [
     {
-      label: t("label.support.computer"),
+      label: t("label.suport.computer"),
       icon: "computer",
       value: props.item.support["computer"],
     },
     {
-      label: t("label.support.projector"),
+      label: t("label.suport.projector"),
       icon: "mdi-projector",
       value: props.item.support["projector"],
     },
     {
-      label: t("label.support.water"),
+      label: t("label.suport.water"),
       icon: "water_drop",
       value: props.item.support["water"],
     },
     {
-      label: t("label.support.coffee"),
+      label: t("label.suport.coffee"),
       icon: "coffee",
       value: props.item.support["coffee"],
     },
@@ -46,7 +47,7 @@ function parseDate(date: number) {
   <DynamicDialog
     @cancel="() => $emit('cancel')"
     :open="isActive"
-    title="item.description"
+    :title="item.description"
     closeLabel="Fechar"
     close
   >
@@ -70,7 +71,9 @@ function parseDate(date: number) {
               color="white"
               size="sm"
             />
-            <q-item-label class="q-pa-md">{{ "15550" }}</q-item-label>
+            <q-item-label class="q-pa-md">{{
+              item.userRegistration
+            }}</q-item-label>
           </div>
 
           <div class="row info-item-border col-5">
@@ -80,7 +83,7 @@ function parseDate(date: number) {
               color="white"
               size="sm"
             />
-            <q-item-label class="q-pa-md">{{ "00000" }}</q-item-label>
+            <q-item-label class="q-pa-md">{{ item.ramalNumber }}</q-item-label>
           </div>
 
           <div class="row info-item-border col-5">
@@ -90,7 +93,7 @@ function parseDate(date: number) {
               color="white"
               size="sm"
             />
-            <q-item-label class="q-pa-md">{{ "Sala A" }}</q-item-label>
+            <q-item-label class="q-pa-md">{{ item.room.name }}</q-item-label>
           </div>
 
           <div class="row info-item-border col-5">
@@ -100,7 +103,7 @@ function parseDate(date: number) {
               color="white"
               size="sm"
             />
-            <q-item-label class="q-pa-md">{{ "15" }}</q-item-label>
+            <q-item-label class="q-pa-md">{{ item.totalPeople }}</q-item-label>
           </div>
 
           <div class="row info-item-border col-5">
@@ -110,7 +113,7 @@ function parseDate(date: number) {
               color="white"
               size="sm"
             />
-            <q-item-label class="q-pa-md">{{ "email@gmail.com" }}</q-item-label>
+            <q-item-label class="q-pa-md">{{ item.email }}</q-item-label>
           </div>
 
           <div class="row info-item-border col-5">
@@ -139,17 +142,17 @@ function parseDate(date: number) {
 
           <div
             class="row info-item-border col-5"
-            v-for="(support, index) in supports"
+            v-for="(suport, index) in suports"
             :key="index"
-            v-show="support.value"
+            v-show="suport.value"
           >
             <q-icon
-              :name="support.icon"
+              :name="suport.icon"
               class="bg-primary q-pa-md"
               color="white"
               size="sm"
             />
-            <q-item-label class="q-pa-md">{{ support.label }}</q-item-label>
+            <q-item-label class="q-pa-md">{{ suport.label }}</q-item-label>
           </div>
         </q-list>
       </div>

@@ -1,7 +1,10 @@
-query GetEvents {
+query getEvents {
   getEvents {
     id
     roomId
+    room {
+      name
+    }
     userCreated
     description
     finalTime
@@ -15,8 +18,6 @@ query GetEvents {
       projector
       coffee
       water
-      flipChart
-      speaker
     }
   }
 }

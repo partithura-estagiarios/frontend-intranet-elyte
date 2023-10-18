@@ -11,7 +11,7 @@ const roomList = ref();
 const selectedDate = ref(today());
 const activedModal = ref(false);
 const eventList = ref();
-const selectedEvent = ref();
+const selectedEvent = ref({});
 const currentDay = DateTime.fromISO(today()).toFormat("yyyy-MM-dd");
 
 onMounted(() => {
@@ -19,10 +19,10 @@ onMounted(() => {
   getRooms();
 });
 
-function openModalWithEvent(event: unknown) {
-  activedModal.value = true;
-  selectedEvent.value = event;
-}
+// function openModalWithEvent(event: unknown) {
+//   activedModal.value = true;
+//   selectedEvent.value = event;
+// }
 
 async function getRooms(): Promise<void> {
   roomList.value = await runQuery(GetRooms).then((data) => data.getRooms);
@@ -117,7 +117,10 @@ function cancel() {
               v-if="joinedDates && joinedDates[timestamp.date]"
               v-for="(event, index) in joinedDates[timestamp.date]"
               :key="index"
-              @click="openModalWithEvent(Event)"
+              @click="
+                activedModal = true;
+                selectedEvent = event;
+              "
             >
               <q-icon name="circle" :color="getRoomByEvent(event)?.color" />
               <q-tooltip class="bg-black text-bold">

@@ -19,11 +19,6 @@ onMounted(() => {
   getRooms();
 });
 
-// function openModalWithEvent(event: unknown) {
-//   activedModal.value = true;
-//   selectedEvent.value = event;
-// }
-
 async function getRooms(): Promise<void> {
   roomList.value = await runQuery(GetRooms).then((data) => data.getRooms);
 }

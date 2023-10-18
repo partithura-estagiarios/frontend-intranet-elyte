@@ -11,27 +11,26 @@ const props = defineProps({
     required: true,
   },
 });
-console.log(props.item);
 
-const suports = computed(() => {
+const supports = computed(() => {
   return [
     {
-      label: t("label.suport.computer"),
+      label: t("label.support.computer"),
       icon: "computer",
       value: props.item.support["computer"],
     },
     {
-      label: t("label.suport.projector"),
+      label: t("label.support.projector"),
       icon: "mdi-projector",
       value: props.item.support["projector"],
     },
     {
-      label: t("label.suport.water"),
+      label: t("label.support.water"),
       icon: "water_drop",
       value: props.item.support["water"],
     },
     {
-      label: t("label.suport.coffee"),
+      label: t("label.support.coffee"),
       icon: "coffee",
       value: props.item.support["coffee"],
     },
@@ -142,17 +141,17 @@ function parseDate(date: number) {
 
           <div
             class="row info-item-border col-5"
-            v-for="(suport, index) in suports"
+            v-for="(support, index) in supports"
             :key="index"
-            v-show="suport.value"
+            v-show="support.value"
           >
             <q-icon
-              :name="suport.icon"
+              :name="support.icon"
               class="bg-primary q-pa-md"
               color="white"
               size="sm"
             />
-            <q-item-label class="q-pa-md">{{ suport.label }}</q-item-label>
+            <q-item-label class="q-pa-md">{{ support.label }}</q-item-label>
           </div>
         </q-list>
       </div>

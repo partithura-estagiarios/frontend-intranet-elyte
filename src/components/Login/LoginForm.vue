@@ -20,6 +20,7 @@ async function auth(data: UserForm) {
         username: user.username,
         id: user.id,
         email: user.email,
+        token: "",
       });
       userStorage.setToken(token);
       positiveNotify(t("notifications.success.login"));

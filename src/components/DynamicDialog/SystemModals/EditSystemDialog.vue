@@ -15,7 +15,8 @@ defineProps({
     required: true,
   },
 });
-const selectedSystem = ref<object>({});
+
+const selectedSystem = ref();
 
 const getSelectedSystem = (system: System) => {
   selectedSystem.value = system;

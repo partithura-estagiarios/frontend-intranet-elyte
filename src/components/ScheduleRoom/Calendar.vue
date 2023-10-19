@@ -19,12 +19,15 @@ onMounted(() => {
 });
 
 async function getRooms(): Promise<void> {
-  roomList.value = await runQuery(GetRooms).then((data) => data.room);
+  const data = await runQuery(GetRooms);
+  roomList.value = data ? data.room : [];
 }
 
 async function getEvents(): Promise<void> {
-  eventList.value = await runQuery(GetEvent).then((data) => data.event);
+  const data = await runQuery(GetEvent);
+  eventList.value = data ? data.event : [];
 }
+
 function getRoomByEvent(event: Event): Pick<Room, "color"> {
   return roomList.value?.find((room: Room) => room.id == +event.roomId) as Room;
 }

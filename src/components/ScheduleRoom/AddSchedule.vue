@@ -6,7 +6,7 @@ import type { Event, EventForm, Room } from "../../entities/Event";
 import AddEvent from "../../graphql/events/AddEvent.gql";
 import GetBusyRoom from "../../graphql/rooms/GetBusyRoom.gql";
 
-const emits = defineEmits(["reload"]);
+const emits = defineEmits(["reload", "cancel"]);
 defineProps({
   isActive: {
     type: Boolean,
@@ -109,7 +109,6 @@ const options = [
     label: t("label.support.coffee"),
   },
 ];
-
 function setDate(
   paramsDate: keyof Pick<Event, "initialTime" | "finalTime">,
   time: number

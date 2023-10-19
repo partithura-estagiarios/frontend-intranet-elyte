@@ -46,6 +46,6 @@ export const useUserStore = defineStore("useUserStore", {
     },
   },
   persist: true,
-}) as unknown as UserStorageConstructor;
+});
 
 export const userStorage = useUserStore();

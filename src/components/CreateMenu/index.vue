@@ -4,6 +4,7 @@ import { Field, Form } from "vee-validate";
 import AddMenu from "../../graphql/menu/AddMenu.gql";
 import EditMenu from "../../graphql/menu/EditMenu.gql";
 import GetMenu from "../../graphql/menu/GetMenu.gql";
+import { Menu } from "../../entities";
 import { Ref } from "vue";
 import { onMounted, defineEmits } from "vue";
 
@@ -12,8 +13,8 @@ onMounted(() => {
 });
 
 const item: { id?: string } = {};
-const menus = ref([]);
-const form = reactive({
+const menus: Ref<Menu[]> = ref([]);
+const form: Omit<Menu, "id"> = reactive({
   date: "",
   salad: "",
   rice: "",
@@ -137,12 +138,14 @@ async function getMenu() {
     rawData.sort((a, b) => a.date - b.date);
     const last7Menus = rawData.slice(0, 7);
 
-    menus.value = last7Menus.map((item: { date: string }) => {
-      return {
-        ...item,
-        date: new Date(parseInt(item.date)),
-      };
-    });
+    if (Array.isArray(menus.value)) {
+      const transformedMenus = [];
+      for (const item of last7Menus) {
+        const date = new Date(parseInt(item.date));
+        transformedMenus.push({ ...item, date });
+      }
+      menus.value = transformedMenus;
+    }
   }
 }
 
@@ -179,13 +182,13 @@ async function addMenu() {
 }
 
 function redirectToPrintRoute() {
-  router.push({ path: "/menu" });
+  router.replace("/menu");
   emits("reload");
 }
 
 const emits = defineEmits(["reload", "cancel", "confirm"]);
 
-function openModal(modal: "add" | "edit", id: String) {
+function openModal(modal: "add" | "edit", id?: string) {
   action.value = modal;
   showAddModal.value = true;
   item.id = id;

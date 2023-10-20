@@ -1,5 +1,6 @@
 export default {
   success: {
+    data: "Invalid data",
     login: "Access granted, welcome",
     sendEmail: "A recovery link has been sent to your email",
     changePwd: "Your password has been successfully changed",
@@ -10,7 +11,7 @@ export default {
     createMenu: "Menu created successfully",
     editMenu: "Menu edited successfully",
     createSystem: "System created successfully",
-    deleteSystem: "System deleted successfully | Successfully deleted systems",
+    deleteSystem: "System deleted successfully | Systems deleted successfully",
     scheduleEvent: "Event scheduled successfully",
   },
 

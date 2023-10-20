@@ -1,5 +1,5 @@
 query GetRooms {
-  room {
+  getRooms {
     color
     id
     name

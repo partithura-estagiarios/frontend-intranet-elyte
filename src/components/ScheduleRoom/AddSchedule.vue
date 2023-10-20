@@ -1,12 +1,10 @@
 <script setup lang="ts">
-import { QSelect } from "quasar";
-import { Room, Event } from "../../entities";
+import { Form } from "vee-validate";
+import { scheduleSchema } from "../../validation";
+import type { Event, EventForm, Room } from "../../entities/Event";
+
 import AddEvent from "../../graphql/events/AddEvent.gql";
 import GetBusyRoom from "../../graphql/rooms/GetBusyRoom.gql";
-import { scheduleSchema } from "../../validation";
-
-import { Form, Field } from "vee-validate";
-const form = ref(null);
 
 const emits = defineEmits(["reload", "cancel"]);
 defineProps({
@@ -19,51 +17,95 @@ defineProps({
     required: true,
   },
 });
-const invalidRoom = ref();
 
-const formProps = reactive({
+const form: Event = reactive({
+  initialTime: null,
+  finalTime: null,
+  roomId: "",
   userCreated: "",
-  roomId: null as null | string,
   description: "",
-  initialTime: null as unknown as Record<string, string>,
-  finalTime: null as unknown as Record<string, string>,
+  ramalNumber: 0,
+  totalPeople: 0,
+  userRegistration: 0,
+  email: "",
   support: {
     computer: false,
     projector: false,
     coffee: false,
     water: false,
+    speaker: false,
+    flipChart: false,
   },
 });
 
-const supportsMaterial = [
+const invalidRoom: unknown = ref([]);
+watch(form, async () => {
+  const getInvalidRoom = await runQuery(GetBusyRoom, {
+    initialTime: form.initialTime,
+    finalTime: form.finalTime,
+  });
+  invalidRoom.value = getInvalidRoom?.getBusyRoom;
+});
+
+const selectRoom = computed(() => !(form.initialTime && form.finalTime));
+
+function isRoomInvalid(idToCheck: number, invalidRooms: unknown) {
+  return invalidRooms.value.some(
+    (element: unknown) => element.id === idToCheck
+  );
+}
+
+const checkForInvalidRooms = computed(
+  (props) =>
+    (room = props.rooms): Record<number, Room> => {
+      const roomIdToCheck = room.id;
+      const isInvalid = isRoomInvalid(roomIdToCheck, invalidRoom);
+      return isInvalid;
+    }
+);
+
+const roomName = computed(
+  (props) =>
+    (room = props.rooms as Room) =>
+      room.name
+);
+
+const roomId = computed(
+  (props) =>
+    (room = props.rooms as Room) =>
+      room.id
+);
+
+const group = ref([]);
+const options = [
   {
-    model: formProps.support.computer,
     icon: "computer",
+    value: "computer",
     label: t("label.support.computer"),
   },
   {
-    model: formProps.support.projector,
     icon: "mdi-projector",
+    value: "projector",
     label: t("label.support.projector"),
   },
   {
-    model: formProps.support.computer,
     icon: "mdi-script",
-    label: "Flip-Chart", // adicionar model
+    value: "flipChart",
+    label: t("label.support.flipChart"),
   },
   {
-    model: formProps.support.computer,
     icon: "speaker",
-    label: "Equipamento de Som", // adicionar model
+    value: "speaker",
+    label: t("label.support.speaker"),
   },
   {
-    model: formProps.support.water,
     icon: "water_drop",
+    value: "water",
     label: t("label.support.water"),
   },
   {
-    model: formProps.support.coffee,
     icon: "coffee",
+    value: "coffee",
     label: t("label.support.coffee"),
   },
 ];
@@ -71,24 +113,41 @@ function setDate(
   paramsDate: keyof Pick<Event, "initialTime" | "finalTime">,
   time: number
 ) {
-  (form as unknown as { [key: string]: number })[paramsDate] = time;
+  form[paramsDate] = time;
 }
 
-watch(formProps, async () => {
-  const getInvalidRoom = await runQuery(GetBusyRoom, {
-    initialTime: formProps.initialTime,
-    finalTime: formProps.finalTime,
-  });
-  invalidRoom.value = getInvalidRoom.getBusyRoom;
-});
+function triggerwarning() {
+  if (selectRoom.value) {
+    negativeNotify(t("warning.dateFieldEmpty"));
+  }
+}
 
-async function addEvent() {
+function safeParseInt(value: string | number): number {
+  if (typeof value === "string") {
+    return parseInt(value);
+  }
+  return value;
+}
+
+function parse(data: EventForm) {
+  return {
+    ...data,
+    support: form.support,
+    finalTime: form.finalTime,
+    initialTime: form.initialTime,
+    totalPeople: safeParseInt(data.totalPeople),
+    ramalNumber: safeParseInt(data.ramalNumber),
+    userRegistration: safeParseInt(data.userRegistration),
+  };
+}
+
+async function addEvent(formData: EventForm) {
   try {
-    const { addEvent } = await runMutation(AddEvent, { data: formProps });
+    await runMutation(AddEvent, { data: parse(formData) });
     positiveNotify(t("notifications.success.scheduleEvent"));
     emits("reload");
     return;
-  } catch {
+  } catch (error) {
     negativeNotify(t("notifications.fail.scheduleEvent"));
   }
 }
@@ -96,223 +155,169 @@ async function addEvent() {
 
 <template>
   <DynamicDialog
-    @cancel="() => $emit('cancel')"
     :open="isActive"
     :title="$t('action.scheduleEvent')"
-    @confirm="addEvent"
+    hide-controls
   >
     <Form
-      ref="form"
-      class="row q-px-md q-py-md text-black text-body1 q-gutter-y-sm justify-around"
-      :validation-schema="scheduleSchema"
       @submit="addEvent"
+      :validation-schema="scheduleSchema"
+      class="row q-pa-md text-black text-body1 q-gutter-y-sm justify-around"
     >
-      <Field name="name" v-slot="{ field, value }">
-        <q-input
-          :model-value="value"
-          v-bind="field"
-          borderless
-          bg-color="white"
-          class="schedule-item-border col-5"
-          :label="$t('label.name.pronoun')"
+      <StandardInput
+        field-name="userCreated"
+        field-color="white"
+        class="schedule-item-border col-5"
+        :field-label="$t('label.name.pronoun')"
+        borderless
+        icon-name="person"
+        icon-class="bg-primary fit q-px-xs"
+        icon-size="md"
+        icon-color="white"
+      />
+
+      <StandardInput
+        field-name="userRegistration"
+        field-color="white"
+        class="schedule-item-border col-5"
+        :field-label="$t('label.register.pronoun')"
+        fieldType="number"
+        borderless
+        icon-name="mdi-card-account-details-outline"
+        icon-class="bg-primary fit q-px-xs"
+        icon-size="md"
+        icon-color="white"
+      />
+
+      <StandardInput
+        field-name="ramalNumber"
+        field-color="white"
+        class="schedule-item-border col-5"
+        :field-label="$t('label.ramalOrPhone')"
+        fieldMask="###########"
+        field-type="number"
+        borderless
+        icon-name="mdi-phone-in-talk"
+        icon-class="bg-primary fit q-px-xs"
+        icon-size="md"
+        icon-color="white"
+      />
+
+      <StandardInput
+        field-name="email"
+        field-color="white"
+        class="schedule-item-border col-5"
+        :field-label="$t('label.email')"
+        borderless
+        icon-name="email"
+        icon-class="bg-primary fit q-px-xs"
+        icon-size="md"
+        icon-color="white"
+      />
+
+      <SelectTime
+        type="initial"
+        :time-value="form.initialTime"
+        class="schedule-item-border col-5"
+        :field-label="$t('label.date.initial')"
+        @setTime="(args) => setDate('initialTime', args)"
+      />
+
+      <SelectTime
+        type="final"
+        :time-value="form.finalTime"
+        class="schedule-item-border col-5"
+        :field-label="$t('label.date.final')"
+        @setTime="(args) => setDate('finalTime', args)"
+      />
+
+      <StandardInput
+        field-name="totalPeople"
+        field-color="white"
+        class="schedule-item-border col-5"
+        :field-label="$t('label.numberParticipants')"
+        field-mask="##"
+        field-type="number"
+        borderless
+        icon-name="groups"
+        icon-class="bg-primary fit q-px-xs"
+        icon-size="md"
+        icon-color="white"
+      />
+
+      <StandardSelect
+        :option-label="roomName"
+        :option-value="roomId"
+        :options-to-disable="checkForInvalidRooms"
+        :options-to-select="rooms"
+        :disableSelect="selectRoom"
+        field-name="roomId"
+        field-color="white"
+        class="schedule-item-border col-5"
+        :field-label="$t('label.room')"
+        borderless
+        icon-name="mdi-map-marker-radius"
+        icon-class="bg-primary fit q-px-xs"
+        icon-size="md"
+        icon-color="white"
+        popup-content-class="text-black"
+        @click="triggerwarning"
+      />
+
+      <StandardInput
+        field-name="description"
+        field-color="white"
+        class="q-px-md q-mt-md schedule-item-border col-11"
+        :field-label="$t('label.description')"
+        borderless
+        icon-name="person"
+        icon-class="bg-primary fit q-px-xs"
+        icon-size="md"
+        icon-color="white"
+      />
+
+      <div class="q-ma-lg">
+        <span
+          class="q-py-sm q-px-xl q-ml-lg text-h6 bg-primary text-white schedule-item-border"
         >
-          <template #prepend>
-            <q-icon
-              name="person"
-              class="bg-primary fit q-px-xs"
-              size="md"
-              color="white"
-            />
-          </template>
-        </q-input>
-      </Field>
-
-      <Field name="register" v-slot="{ field, value }">
-        <q-input
-          :model-value="value"
-          v-bind="field"
-          borderless
-          bg-color="white"
-          type="number"
-          class="schedule-item-border col-5"
-          :label="$t('label.register.pronoun')"
-        >
-          <template #prepend>
-            <q-icon
-              name="mdi-card-account-details-outline"
-              class="bg-primary fit q-px-xs"
-              size="md"
-              color="white"
-            />
-          </template>
-        </q-input>
-      </Field>
-
-      <Field name="ramal" v-slot="{ field, value }">
-        <q-input
-          :model-value="value"
-          v-bind="field"
-          borderless
-          mask="###########"
-          bg-color="white"
-          class="schedule-item-border col-5"
-          :label="$t('label.ramalNumber')"
-        >
-          <template #prepend>
-            <q-icon
-              name="mdi-phone-in-talk"
-              class="bg-primary fit q-px-xs"
-              size="md"
-              color="white"
-            />
-          </template>
-        </q-input>
-      </Field>
-
-      <Field name="email" v-slot="{ field, value }">
-        <q-input
-          :model-value="value"
-          v-bind="field"
-          class="schedule-item-border col-5"
-          bg-color="white"
-          borderless
-          :label="$t('label.email')"
-        >
-          <template #prepend>
-            <q-icon
-              name="email"
-              class="bg-primary fit q-px-xs"
-              size="md"
-              color="white"
-            />
-          </template>
-        </q-input>
-      </Field>
-
-      <Field name="initialDate" v-slot="{ field, value }">
-        <SelectTime
-          class="schedule-item-border col-5"
-          :model-value="value"
-          v-bind="field"
-          :label="$t('label.date.initial')"
-          type="initial"
-        />
-      </Field>
-
-      <Field name="finalDate" v-slot="{ field, value }">
-        <SelectTime
-          class="schedule-item-border col-5"
-          :model-value="value"
-          v-bind="field"
-          :label="$t('label.date.final')"
-          type="final"
-        />
-      </Field>
-
-      <Field name="participants" v-slot="{ field, value }">
-        <q-input
-          class="schedule-item-border col-5"
-          mask="##"
-          borderless
-          bg-color="white"
-          :label="$t('label.numberParticipants')"
-          :model-value="value"
-          v-bind="field"
-        >
-          <template #prepend>
-            <q-icon
-              name="groups"
-              class="bg-primary fit q-px-xs"
-              size="md"
-              color="white"
-            />
-          </template>
-        </q-input>
-      </Field>
-
-      <Field name="local" v-slot="{ field, value }">
-        <q-select
-          class="schedule-item-border col-5"
-          bg-color="white"
-          borderless
-          :label="$t('label.room')"
-          popup-content-class="text-black"
-          map-options
-          emit-value
-          :model-value="value"
-          v-bind="field"
-          :disable="formProps.initialTime && formProps.finalTime ? false : true"
-          :option-disable="(room: Room) => invalidRoom.find((invalidRoom: Room) => invalidRoom.id === room.id) ? true : false"
-          :options="rooms"
-          :option-label="(room: Room) => room.name"
-          :option-value="(room: Room) => room.id"
-        >
-          <template #prepend>
-            <q-icon
-              name="mdi-map-marker-radius"
-              class="bg_primary fit q-px-xs"
-              size="md"
-              color="white"
-            />
-          </template>
-        </q-select>
-      </Field>
-
-      <Field name="description" class="col-11" v-slot="{ field, value }">
-        <q-input
-          class="q-px-md q-mt-md schedule-item-border col-11"
-          borderless
-          bg-color="white"
-          :label="$t('label.description')"
-          :model-value="value"
-          v-bind="field"
-        />
-      </Field>
-    </Form>
-
-    <div class="q-py-md q-px-lg">
-      <span
-        class="q-py-sm q-px-xl q-ml-lg text-h6 bg-primary text-white schedule-item-border"
-      >
-        {{ $t("label.support.index") }}
-      </span>
-      <div class="row q-mt-md q-px-lg text-black">
-        <q-list class="row justify-between q-gutter-md">
-          <q-checkbox
-            v-for="(support, index) in supportsMaterial"
-            :key="index"
-            class="row col-5 justify-between schedule-item-border"
-            v-model="formProps.support.computer"
+          {{ $t("label.support.index") }}
+        </span>
+        <div class="q-gutter-md q-mt-md row justify-around">
+          <q-option-group
+            v-model="group"
+            type="checkbox"
+            :options="options"
             left-label
+            class="q-gutter-md col-10"
+            :inline="true"
           >
-            <div class="row">
-              <q-icon
-                :name="support.icon"
-                class="bg-primary q-pa-md"
-                color="white"
-                size="sm"
-              />
-              <q-item-label class="q-pa-md">{{ support.label }}</q-item-label>
-            </div>
-          </q-checkbox>
-          <q-input
-            class="col-12 q-px-md q-mt-md schedule-item-border"
-            borderless
-            bg-color="white"
-            :label="$t('label.support.others')"
-            v-model="formProps.description"
-          />
-        </q-list>
+            <template v-slot:label="opt">
+              <div class="schedule-item-border">
+                <q-icon
+                  :name="opt.icon"
+                  color="white"
+                  size="sm"
+                  class="bg-primary q-pa-md"
+                />
+                <span class="q-pa-md">{{ opt.label }}</span>
+              </div>
+            </template>
+          </q-option-group>
+        </div>
       </div>
-    </div>
+      <Button class="bg-transparent no-padding">
+        <q-btn
+          flat
+          :label="$t('action.confirm.index')"
+          color="primary"
+          @click="triggerwarning"
+        />
+      </Button>
+    </Form>
   </DynamicDialog>
 </template>
 
-<style>
-.q-menu:has(> div.date-menu) {
-  max-width: 10% !important;
-}
-
+<style scoped>
 .schedule-item-border {
   border: 1px solid #ff0321;
   border-radius: 5px;

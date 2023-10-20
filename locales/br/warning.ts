@@ -13,4 +13,6 @@ export default {
   matchingPwd: "As senhas devem ser iguais",
   confirmPwd: "Confirme sua senha",
   noRegistrationMenu: "Não há registros de cardápio",
+  dateFieldEmpty:
+    "Os campos de seleção de data e horário não foram preenchidos",
 };

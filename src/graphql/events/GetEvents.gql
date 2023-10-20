@@ -1,5 +1,5 @@
-query Event {
-  event {
+query getEvents {
+  getEvents {
     id
     roomId
     room {

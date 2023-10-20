@@ -1,16 +1,17 @@
 <script setup lang="ts">
+import type { Event, Room } from "../../entities/Event";
 import { QCalendarMonth, today } from "@quasar/quasar-ui-qcalendar/";
-import { Event, Room } from "../../entities";
-import GetEvent from "../../graphql/events/GetEvents.gql";
-import GetRooms from "../../graphql/rooms/GetRooms.gql";
 import { DateTime } from "luxon";
 
+import GetEvents from "../../graphql/events/GetEvents.gql";
+import GetRooms from "../../graphql/rooms/GetRooms.gql";
+
 const calendar = ref();
+const roomList = ref();
 const selectedDate = ref(today());
 const activedModal = ref(false);
 const eventList = ref();
-const roomList = ref();
-const selectedEvent = {};
+const selectedEvent = ref({});
 const currentDay = DateTime.fromISO(today()).toFormat("yyyy-MM-dd");
 
 onMounted(() => {
@@ -19,20 +20,18 @@ onMounted(() => {
 });
 
 async function getRooms(): Promise<void> {
-  const data = await runQuery(GetRooms);
-  roomList.value = data ? data.room : [];
+  roomList.value = await runQuery(GetRooms).then((data) => data.getRooms);
 }
 
 async function getEvents(): Promise<void> {
-  const data = await runQuery(GetEvent);
-  eventList.value = data ? data.event : [];
+  eventList.value = await runQuery(GetEvents).then((data) => data.getEvents);
 }
 
-function getRoomByEvent(event: Event): Pick<Room, "color"> {
+function getRoomByEvent(event: Event) {
   return roomList.value?.find((room: Room) => room.id == +event.roomId) as Room;
 }
 
-const joinDates = computed(() => {
+const joinedDates = computed(() => {
   if (eventList.value) {
     const joinedDatesResult = eventList.value.reduce(
       (acc: Record<string, Event[]>, event: Event) => {
@@ -46,8 +45,8 @@ const joinDates = computed(() => {
         const dateRange = Array.from({ length: numberOfDays }, (_, index) =>
           initialDateTime.plus({ days: index })
         );
-        dateRange.forEach((dt) => {
-          const currentDate = dt.toISODate();
+        dateRange.forEach((dateTime) => {
+          const currentDate = dateTime.toISODate();
           if (currentDate) {
             acc[currentDate] = [...(acc[currentDate] || []), event];
           }
@@ -67,44 +66,51 @@ function parsedScheduleDate(date: number) {
 function onPrev() {
   calendar.value.prev();
 }
+
 function onNext() {
   calendar.value.next();
 }
+
 function onReload() {
   getEvents();
+}
+
+function cancel() {
+  activedModal.value = false;
 }
 </script>
 
 <template>
+  <!-- TODO: componentizar esse grande componente -->
   <ScheduleModal
     :isActive="activedModal"
-    @cancel="activedModal = false"
+    @cancel="cancel"
     :item="selectedEvent"
   />
   <div class="row q-px-xl">
-    <div class="column items-start text-black q-gutter-y-md q-pa-xl col-9">
+    <div class="q-gutter-y-md q-pa-xl col-9">
       <ScheduleNavigation
+        :rooms="roomList"
         :date="selectedDate"
         @prev="onPrev"
         @next="onNext"
         @reload="() => onReload"
-        :rooms="roomList"
       />
       <q-calendar-month
+        animated
         ref="calendar"
-        v-model="selectedDate"
-        use-navigation
         locale="pt-br"
+        use-navigation
         :focus-type="['day']"
         :day-min-height="100"
-        animated
+        v-model="selectedDate"
       >
         <template #day="{ scope: { timestamp } }">
-          <div class="row full-height items-end q-gutter-x-xs">
+          <div class="full-height q-gutter-x-xs">
             <div
               class="row items-end no-padding cursor-pointer"
-              v-if="joinDates && joinDates[timestamp.date]"
-              v-for="(event, index) in joinDates[timestamp.date]"
+              v-if="joinedDates && joinedDates[timestamp.date]"
+              v-for="(event, index) in joinedDates[timestamp.date]"
               :key="index"
               @click="
                 activedModal = true;
@@ -112,9 +118,9 @@ function onReload() {
               "
             >
               <q-icon name="circle" :color="getRoomByEvent(event)?.color" />
-              <q-tooltip class="bg-black text-bold">{{
-                event.userCreated
-              }}</q-tooltip>
+              <q-tooltip class="bg-black text-bold">
+                {{ event.userCreated }}
+              </q-tooltip>
             </div>
           </div>
         </template>
@@ -124,7 +130,7 @@ function onReload() {
         <span
           :class="`text-${room.color}`"
           v-for="room in roomList"
-          :key="room.name"
+          :key="room.id"
         >
           <q-icon name="circle" />
           {{ $t("label.room") + " " + room.name }}
@@ -132,38 +138,38 @@ function onReload() {
       </div>
     </div>
     <div class="grow q-py-xl">
-      <q-card bordered class="text-white">
+      <q-card bordered class="text-black text-h6">
         <q-card-section class="bg-primary">
-          <div class="text-h4">Eventos do Dia</div>
+          <div class="text-h4 text-white">{{ $t("label.dayEvents") }}</div>
         </q-card-section>
         <q-card-section class="row q-gutter-x-lg justify-center items-center">
-          <div class="text-h6 text-black">
+          <div>
             {{ DateTime.now().setLocale("pt-br").weekdayLong }}
           </div>
-          <div class="text-h2 text-black">{{ DateTime.now().day }}</div>
-          <div class="text-h6 text-black">
+          <div class="text-h2">{{ DateTime.now().day }}</div>
+          <div>
             {{ DateTime.now().setLocale("pt-br").monthLong }}
           </div>
         </q-card-section>
 
         <div
-          v-if="eventList"
-          class="text-h6 text-black row q-pa-md items-start q-gutter-x-sm"
-          v-for="(event, index) in joinDates[currentDay]"
+          class="row q-pa-md items-start q-gutter-x-sm"
+          v-for="(events, index) in joinedDates[currentDay]"
           :key="index"
+          v-if="eventList"
         >
           <div class="row q-gutter-x-sm">
             <q-icon
               class="q-py-sm"
               name="circle"
-              :color="getRoomByEvent(event)?.color"
+              :color="getRoomByEvent(events)?.color"
             />
             <q-item class="column items-start no-padding">
-              <span> {{ event.userCreated }} - {{ event.description }} </span>
-              <span class="text-secondary"
-                >{{ parsedScheduleDate(event.initialTime) }} -
-                {{ parsedScheduleDate(event.finalTime) }}</span
-              >
+              <span> {{ events.userCreated }} - {{ events.description }} </span>
+              <span class="text-secondary">
+                {{ parsedScheduleDate(events.initialTime) }} -
+                {{ parsedScheduleDate(events.finalTime) }}
+              </span>
             </q-item>
           </div>
         </div>
@@ -171,15 +177,3 @@ function onReload() {
     </div>
   </div>
 </template>
-
-<style>
-.q-calendar-month__day {
-  border: transparent;
-}
-.q-calendar__button {
-  font-size: 30px;
-}
-:root {
-  --calendar-border: none;
-}
-</style>

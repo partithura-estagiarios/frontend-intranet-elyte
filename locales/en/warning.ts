@@ -13,4 +13,5 @@ export default {
   matchingPwd: "Passwords must match",
   confirmPwd: "Confirm your password",
   noRegistrationMenu: "There are no menu records",
+  dateFieldEmpty: "The date and time selection fields weren't filed",
 };

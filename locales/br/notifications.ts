@@ -16,6 +16,7 @@ export default {
   },
 
   fail: {
+    data: "Data inválida",
     login: "Credenciais incorretas, tente novamente!",
     sendEmail: "Houve um erro ao tentar enviar o email",
     emailNotFound: "E-mail não encontrado",

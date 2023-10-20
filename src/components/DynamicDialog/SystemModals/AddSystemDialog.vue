@@ -2,7 +2,7 @@
 import AddSystem from "../../../graphql/system/AddSystem.gql";
 import { System } from "../../../entities";
 import { Field, Form } from "vee-validate";
-import { inputSchema } from "../../../validation";
+import { systemSchema } from "../../../validation";
 
 const emits = defineEmits(["reload", "cancel"]);
 const props = defineProps({
@@ -46,7 +46,7 @@ async function createSystem() {
     :open="isActive"
     :title="$t('action.addSystem.index')"
   >
-    <Form :validation-schema="inputSchema" class="row q-pa-xl">
+    <Form :validation-schema="systemSchema" class="row q-pa-xl">
       <Field name="title" v-slot="item">
         <q-input
           class="col-6 q-px-xs"

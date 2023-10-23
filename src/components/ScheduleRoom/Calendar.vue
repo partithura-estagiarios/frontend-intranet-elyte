@@ -177,3 +177,9 @@ function cancel() {
     </div>
   </div>
 </template>
+
+<style>
+.q-calendar__button {
+  font-size: 30px;
+}
+</style>

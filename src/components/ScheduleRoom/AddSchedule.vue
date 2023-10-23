@@ -313,7 +313,10 @@ async function addEvent(formData: EventForm) {
   </DynamicDialog>
 </template>
 
-<style scoped>
+<style>
+.q-menu:has(> div.date-menu) {
+  max-width: 10% !important;
+}
 .schedule-item-border {
   border: 1px solid #ff0321;
   border-radius: 5px;

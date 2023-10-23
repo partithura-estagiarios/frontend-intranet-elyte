@@ -38,14 +38,18 @@ function generateTimeList(selectedHour: number): void {
   minutes.value = times;
   selectionStep.value = "minute";
 }
+
 function resetValues() {
   time.value = null;
   date.value = null;
 }
-function finishSelector(minute: number) {
+
+function finishSelector(minute: number, select) {
   emits("setTime", minute);
   resetValues;
   selectionStep.value = null;
+  console.log(select);
+  select.hidePopup();
 }
 
 function reopenSelect() {
@@ -58,6 +62,7 @@ function reopenSelect() {
   <div>
     <Field :name="fieldName" v-slot="item">
       <q-select
+        ref="selectDate"
         borderless
         map-options
         emit-value
@@ -115,7 +120,7 @@ function reopenSelect() {
                   dense
                   clickable
                   class="item-size col-6"
-                  @click="finishSelector(minute)"
+                  @click="finishSelector(minute, $refs.selectDate)"
                   v-for="(minute, index) in minutes"
                   :key="index"
                 >

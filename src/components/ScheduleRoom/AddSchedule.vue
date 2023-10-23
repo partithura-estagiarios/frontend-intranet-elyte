@@ -270,10 +270,6 @@ async function addEvent(formData: EventForm) {
         class="q-px-md q-mt-md schedule-item-border col-11"
         :field-label="$t('label.description')"
         borderless
-        icon-name="person"
-        icon-class="bg-primary fit q-px-xs"
-        icon-size="md"
-        icon-color="white"
       />
 
       <div class="q-ma-lg">

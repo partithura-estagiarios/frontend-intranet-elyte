@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { DateTime } from "luxon";
 
-defineEmits(["reload", "prev", "next"]);
+const emits = defineEmits(["reload", "prev", "next"]);
 
 const props = defineProps({
   rooms: {
@@ -40,6 +40,11 @@ const month = ref(
 );
 
 const activedModal = ref(false);
+
+function reload() {
+  activedModal.value = false;
+  emits("reload");
+}
 </script>
 
 <template>
@@ -47,7 +52,7 @@ const activedModal = ref(false);
     :is-active="activedModal"
     :rooms="rooms"
     @cancel="activedModal = false"
-    @reload="$emit('reload', (activedModal = false))"
+    @reload="reload"
   />
 
   <div class="row justify-between full-width">
@@ -61,7 +66,11 @@ const activedModal = ref(false);
           <q-list v-for="(month, index) in months" :key="index">
             <q-item clickable v-close-popup>
               <q-item-section class="text-black text-subtitle1">
-                {{ month }}
+                {{
+                  DateTime.fromFormat(props.date, "yyyy-MM-dd").setLocale(
+                    "pt-br"
+                  ).monthLong
+                }}
               </q-item-section>
             </q-item>
           </q-list>

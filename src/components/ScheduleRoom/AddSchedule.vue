@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Form } from "vee-validate";
+import { Form, Field } from "vee-validate";
 import { scheduleSchema } from "../../validation";
 import type { Event, EventForm, Room } from "../../entities/Event";
 
@@ -7,6 +7,7 @@ import AddEvent from "../../graphql/events/AddEvent.gql";
 import GetBusyRoom from "../../graphql/rooms/GetBusyRoom.gql";
 
 const emits = defineEmits(["reload", "cancel"]);
+
 defineProps({
   isActive: {
     type: Boolean,
@@ -109,6 +110,7 @@ const options = [
     label: t("label.support.coffee"),
   },
 ];
+
 function setDate(
   paramsDate: keyof Pick<Event, "initialTime" | "finalTime">,
   time: number
@@ -119,6 +121,8 @@ function setDate(
 function triggerwarning() {
   if (selectRoom.value) {
     negativeNotify(t("warning.dateFieldEmpty"));
+  } else if (form.initialTime > form.finalTime) {
+    negativeNotify(t("warning.dateFieldInvalid"));
   }
 }
 
@@ -155,6 +159,7 @@ async function addEvent(formData: EventForm) {
 
 <template>
   <DynamicDialog
+    @cancel="() => $emit('cancel')"
     :open="isActive"
     :title="$t('action.scheduleEvent')"
     hide-controls
@@ -162,7 +167,7 @@ async function addEvent(formData: EventForm) {
     <Form
       @submit="addEvent"
       :validation-schema="scheduleSchema"
-      class="row q-pa-md text-black text-body1 q-gutter-y-sm justify-around"
+      class="row q-pa-md text-black text-body1 q-gutter-sm justify-evenly"
     >
       <StandardInput
         field-name="userCreated"
@@ -264,49 +269,57 @@ async function addEvent(formData: EventForm) {
         @click="triggerwarning"
       />
 
-      <StandardInput
-        field-name="description"
-        field-color="white"
-        class="q-px-md q-mt-md schedule-item-border col-11"
-        :field-label="$t('label.description')"
-        borderless
-      />
-
-      <div class="q-ma-lg">
-        <span
-          class="q-py-sm q-px-xl q-ml-lg text-h6 bg-primary text-white schedule-item-border"
+      <Field name="description" v-slot="item">
+        <q-input
+          v-bind="item.field"
+          :label="$t('label.description')"
+          bg-color="white"
+          borderless
+          class="q-px-md q-mt-md schedule-item-border col-11"
+          :model-value="item.value"
         >
-          {{ $t("label.support.index") }}
-        </span>
-        <div class="q-gutter-md q-mt-md row justify-around">
-          <q-option-group
-            v-model="group"
-            type="checkbox"
-            :options="options"
-            left-label
-            class="q-gutter-md col-10"
-            :inline="true"
-          >
-            <template v-slot:label="opt">
-              <div class="schedule-item-border">
-                <q-icon
-                  :name="opt.icon"
-                  color="white"
-                  size="sm"
-                  class="bg-primary q-pa-md"
-                />
-                <span class="q-pa-md">{{ opt.label }}</span>
-              </div>
-            </template>
-          </q-option-group>
+          <span v-if="item.errorMessage" class="text-red">
+            {{ parseErrorMessage(item.errorMessage) }}
+          </span>
+        </q-input>
+      </Field>
+
+      <q-card class="q-py-md q-mx-xl">
+        <div class="text-grey-10">
+          <span class="q-py-sm q-px-xl q-ml-lg text-h6 schedule-item-border">
+            {{ $t("label.support.index") }}
+          </span>
+          <div class="q-gutter-md q-mt-md row justify-between">
+            <q-option-group
+              v-model="group"
+              type="checkbox"
+              :options="options"
+              left-label
+              class="q-gutter-md col-8"
+              :inline="true"
+            >
+              <template v-slot:label="opt">
+                <div class="schedule-item-border row">
+                  <q-icon
+                    :name="opt.icon"
+                    color="white"
+                    size="sm"
+                    class="bg-primary q-pa-md"
+                  />
+                  <span class="q-pa-md">{{ opt.label }}</span>
+                </div>
+              </template>
+            </q-option-group>
+          </div>
         </div>
-      </div>
+      </q-card>
       <Button class="bg-transparent no-padding">
         <q-btn
           flat
           :label="$t('action.confirm.index')"
-          color="primary"
+          color="white"
           @click="triggerwarning"
+          class="bg-primary schedule-item-border text-h6"
         />
       </Button>
     </Form>

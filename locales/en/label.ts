@@ -48,4 +48,14 @@ export default {
   },
   close: "Close",
   email: "E-mail",
+  tootips: {
+    user: "User",
+    userRegistration: "Registration",
+    ramalOrPhone: "Branchline or Phone",
+    roomName: "Room name",
+    numberOfPeople: "Participants",
+    email: "E-mail",
+    initialTime: "Initial time",
+    finalTime: "Final time",
+  },
 };

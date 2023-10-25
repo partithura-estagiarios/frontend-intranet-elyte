@@ -49,4 +49,14 @@ export default {
     index: "Registrar",
     pronoun: "Seu registro",
   },
+  tootips: {
+    user: "Usuário",
+    userRegistration: "Matrícula",
+    ramalOrPhone: "Ramal Ou telefone",
+    roomName: "Nome da sala",
+    numberOfPeople: "Participantes",
+    email: "E-mail",
+    initialTime: "Hora inicial",
+    finalTime: "Hora final",
+  },
 };

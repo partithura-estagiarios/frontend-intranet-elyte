@@ -14,4 +14,6 @@ export default {
   confirmPwd: "Confirm your password",
   noRegistrationMenu: "There are no menu records",
   dateFieldEmpty: "The date and time selection fields weren't filed",
+  dateFieldInvalid:
+    "You can not schedule an event if the final date comes before the initial date",
 };

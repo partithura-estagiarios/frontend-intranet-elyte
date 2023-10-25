@@ -67,12 +67,12 @@ function onPrev() {
   calendar.value.prev();
 }
 
-function onNext() {
-  calendar.value.next();
-}
-
 function onReload() {
   getEvents();
+}
+
+function onNext() {
+  calendar.value.next();
 }
 
 function cancel() {
@@ -94,7 +94,7 @@ function cancel() {
         :date="selectedDate"
         @prev="onPrev"
         @next="onNext"
-        @reload="() => onReload"
+        @reload="onReload"
       />
       <q-calendar-month
         animated
@@ -118,7 +118,7 @@ function cancel() {
               "
             >
               <q-icon name="circle" :color="getRoomByEvent(event)?.color" />
-              <q-tooltip class="bg-black text-bold">
+              <q-tooltip class="bg-primary text-bold">
                 {{ event.userCreated }}
               </q-tooltip>
             </div>
@@ -181,5 +181,8 @@ function cancel() {
 <style>
 .q-calendar__button {
   font-size: 30px;
+}
+.q-calendar__ellipsis {
+  font-size: larger;
 }
 </style>

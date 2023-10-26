@@ -67,7 +67,6 @@ function reopenSelect() {
         map-options
         emit-value
         v-bind="item.field"
-        bg-color="white"
         :label="fieldLabel"
         class="col-5 row select"
         :model-value="timeValue"
@@ -83,9 +82,9 @@ function reopenSelect() {
         <template #prepend>
           <q-icon
             name="mdi-calendar-clock"
-            class="bg-primary fit q-px-xs"
+            class="fit q-px-xs"
             size="md"
-            color="white"
+            color="primary"
           />
         </template>
 

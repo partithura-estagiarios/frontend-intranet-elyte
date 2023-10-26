@@ -67,7 +67,7 @@ function reload() {
             <q-item clickable v-close-popup>
               <q-item-section class="text-black text-subtitle1">
                 {{
-                  DateTime.fromFormat(props.date, "yyyy-MM-dd").setLocale(
+                  DateTime.fromFormat(date as string, "yyyy-MM-dd").setLocale(
                     "pt-br"
                   ).monthLong
                 }}

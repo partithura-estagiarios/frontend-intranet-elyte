@@ -133,7 +133,7 @@ function safeParseInt(value: string | number): number {
   return value;
 }
 
-function parse(data: EventForm) {
+function parseFormData(data: EventForm) {
   return {
     ...data,
     support: form.support,
@@ -147,7 +147,7 @@ function parse(data: EventForm) {
 
 async function addEvent(formData: EventForm) {
   try {
-    await runMutation(AddEvent, { data: parse(formData) });
+    await runMutation(AddEvent, { data: parseFormData(formData) });
     positiveNotify(t("notifications.success.scheduleEvent"));
     emits("reload");
     return;
@@ -171,53 +171,49 @@ async function addEvent(formData: EventForm) {
     >
       <StandardInput
         field-name="userCreated"
-        field-color="white"
         class="schedule-item-border col-5"
         :field-label="$t('label.name.pronoun')"
         borderless
         icon-name="person"
-        icon-class="bg-primary fit q-px-xs"
+        icon-class=" fit q-px-xs"
         icon-size="md"
-        icon-color="white"
+        icon-color="primary"
       />
 
       <StandardInput
         field-name="userRegistration"
-        field-color="white"
         class="schedule-item-border col-5"
         :field-label="$t('label.register.pronoun')"
         fieldType="number"
         borderless
         icon-name="mdi-card-account-details-outline"
-        icon-class="bg-primary fit q-px-xs"
+        icon-class=" fit q-px-xs"
         icon-size="md"
-        icon-color="white"
+        icon-color="primary"
       />
 
       <StandardInput
         field-name="ramalNumber"
-        field-color="white"
         class="schedule-item-border col-5"
         :field-label="$t('label.ramalOrPhone')"
         fieldMask="###########"
         field-type="number"
         borderless
         icon-name="mdi-phone-in-talk"
-        icon-class="bg-primary fit q-px-xs"
+        icon-class="fit q-px-xs"
         icon-size="md"
-        icon-color="white"
+        icon-color="primary"
       />
 
       <StandardInput
         field-name="email"
-        field-color="white"
         class="schedule-item-border col-5"
         :field-label="$t('label.email')"
         borderless
         icon-name="email"
-        icon-class="bg-primary fit q-px-xs"
+        icon-class=" fit q-px-xs"
         icon-size="md"
-        icon-color="white"
+        icon-color="primary"
       />
 
       <SelectTime
@@ -238,16 +234,15 @@ async function addEvent(formData: EventForm) {
 
       <StandardInput
         field-name="totalPeople"
-        field-color="white"
         class="schedule-item-border col-5"
         :field-label="$t('label.numberParticipants')"
         field-mask="##"
         field-type="number"
         borderless
         icon-name="groups"
-        icon-class="bg-primary fit q-px-xs"
+        icon-class=" fit q-px-xs"
         icon-size="md"
-        icon-color="white"
+        icon-color="primary"
       />
 
       <StandardSelect
@@ -257,14 +252,13 @@ async function addEvent(formData: EventForm) {
         :options-to-select="rooms"
         :disableSelect="selectRoom"
         field-name="roomId"
-        field-color="white"
         class="schedule-item-border col-5"
         :field-label="$t('label.room')"
         borderless
         icon-name="mdi-map-marker-radius"
-        icon-class="bg-primary fit q-px-xs"
+        icon-class=" fit q-px-xs"
         icon-size="md"
-        icon-color="white"
+        icon-color="primary"
         popup-content-class="text-black"
         @click="triggerwarning"
       />
@@ -284,8 +278,8 @@ async function addEvent(formData: EventForm) {
         </q-input>
       </Field>
 
-      <q-card class="q-py-md q-mx-xl">
-        <div class="text-grey-10">
+      <q-card class="q-py-md q-mx-xl no-shadow">
+        <div class="text-grey-9">
           <span class="q-py-sm q-px-xl q-ml-lg text-h6 schedule-item-border">
             {{ $t("label.support.index") }}
           </span>
@@ -302,9 +296,9 @@ async function addEvent(formData: EventForm) {
                 <div class="schedule-item-border row">
                   <q-icon
                     :name="opt.icon"
-                    color="white"
+                    color="primary"
                     size="sm"
-                    class="bg-primary q-pa-md"
+                    class="q-pa-md"
                   />
                   <span class="q-pa-md">{{ opt.label }}</span>
                 </div>

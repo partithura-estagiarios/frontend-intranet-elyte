@@ -8,7 +8,6 @@ import { menuSchema } from "../../validation";
 import { Menu } from "../../entities";
 import { Ref } from "vue";
 import { onMounted, defineEmits } from "vue";
-import { emit } from "process";
 
 onMounted(() => {
   getMenu();
@@ -265,6 +264,7 @@ function triggerwarning() {
         :label="$t('text.day')"
         bg-color="grey-3"
         class="text-black calendar"
+        format="DD/MM/YYYY"
         @click="showCalendar = false"
       />
       <StandardInput

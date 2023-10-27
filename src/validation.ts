@@ -80,3 +80,13 @@ export const scheduleSchema = yup.object({
   totalPeople: yup.number().required(t("warning.requiredField")),
   userRegistration: yup.number().required(t("warning.requiredField")),
 });
+
+export const menuSchema = yup.object({
+  // date: yup.date().required(t("warning.requiredField")),
+  salad: yup.string().required(t("warning.requiredField")),
+  rice: yup.string().required(t("warning.requiredField")),
+  protein: yup.string().required(t("warning.requiredField")),
+  complement: yup.string().required(t("warning.requiredField")),
+  soup: yup.string().required(t("warning.requiredField")),
+  dessert: yup.string().required(t("warning.requiredField")),
+});

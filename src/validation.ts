@@ -82,7 +82,6 @@ export const scheduleSchema = yup.object({
 });
 
 export const menuSchema = yup.object({
-  // date: yup.date().required(t("warning.requiredField")),
   salad: yup.string().required(t("warning.requiredField")),
   rice: yup.string().required(t("warning.requiredField")),
   protein: yup.string().required(t("warning.requiredField")),

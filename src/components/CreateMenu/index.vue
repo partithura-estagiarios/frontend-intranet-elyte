@@ -171,7 +171,7 @@ function closeAddModal() {
 
 function triggerwarning() {
   if (!form.date) {
-    negativeNotify(t("warning.dateFieldEmpty"));
+    negativeNotify(t("warning.emptyFields"));
   }
 }
 </script>
@@ -341,6 +341,7 @@ function triggerwarning() {
       <Button class="bg-transparent no-padding">
         <q-btn
           flat
+          class="text-h6"
           :label="$t('action.confirm.index')"
           color="primary"
           @click="triggerwarning"
@@ -353,10 +354,6 @@ function triggerwarning() {
 <style scoped>
 .font {
   font-size: 2rem;
-}
-.btn {
-  display: flex;
-  justify-content: flex-end;
 }
 
 .calendar {

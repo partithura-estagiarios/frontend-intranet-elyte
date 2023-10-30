@@ -30,7 +30,7 @@ const tableColumns = [
   {
     name: "date",
     required: true,
-    label: t("text.date"),
+    label: t("text.day"),
     field: (getMenu: { date: string | number | Date }) =>
       new Date(getMenu.date).toLocaleDateString("pt-BR", {
         weekday: "long",
@@ -251,7 +251,7 @@ function triggerwarning() {
     >
       <q-input
         v-model="form.date"
-        :label="$t('text.day')"
+        :label="$t('text.date')"
         filled
         @click="showCalendar = true"
         class="col-12"

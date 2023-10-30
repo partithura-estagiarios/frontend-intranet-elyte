@@ -15,8 +15,8 @@ const selectedEvent = ref({});
 const currentDay = DateTime.fromISO(today()).toFormat("yyyy-MM-dd");
 
 onMounted(() => {
-  getEvents();
   getRooms();
+  getEvents();
 });
 
 async function getRooms(): Promise<void> {
@@ -67,10 +67,6 @@ function onPrev() {
   calendar.value.prev();
 }
 
-function onReload() {
-  getEvents();
-}
-
 function onNext() {
   calendar.value.next();
 }
@@ -94,7 +90,7 @@ function cancel() {
         :date="selectedDate"
         @prev="onPrev"
         @next="onNext"
-        @reload="onReload"
+        @reload="getEvents"
       />
       <q-calendar-month
         animated
@@ -138,7 +134,7 @@ function cancel() {
       </div>
     </div>
     <div class="grow q-py-xl">
-      <q-card bordered class="text-black text-h6">
+      <q-card class="text-black text-h6">
         <q-card-section class="bg-primary">
           <div class="text-h4 text-white">{{ $t("label.dayEvents") }}</div>
         </q-card-section>
@@ -184,5 +180,9 @@ function cancel() {
 }
 .q-calendar__ellipsis {
   font-size: larger;
+}
+.schedule-item-border {
+  border: 1px solid #b33636;
+  border-radius: 5px;
 }
 </style>

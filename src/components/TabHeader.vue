@@ -6,18 +6,19 @@
     <q-tabs no-caps indicator-color="transparent">
       <q-route-tab :label="$t('titles.home')" to="/home" />
       <q-route-tab :label="$t('titles.scheduler')" to="/schedule" />
-      <q-btn flat color="white" no-caps :label="$t('admin')" to="/login">
-        <q-menu v-if="isLogged">
-          <q-list>
-            <q-item clickable v-close-popup to="/register">
-              <q-item-section class="text-black">
-                {{ $t("titles.Login.register") }}
-              </q-item-section>
-            </q-item>
-          </q-list>
-        </q-menu>
-      </q-btn>
+      <q-menu v-if="isLogged">
+        <q-list>
+          <q-item clickable v-close-popup to="/register">
+            <q-item-section class="text-black">
+              {{ $t("titles.Login.register") }}
+            </q-item-section>
+          </q-item>
+        </q-list>
+      </q-menu>
+      <q-route-tab :label="$t('titles.addMenu')" to="/menu/create" />
       <q-route-tab :label="$t('label.menu')" to="/menu" />
+      <q-btn flat color="white" no-caps :label="$t('admin')" to="/login">
+      </q-btn>
     </q-tabs>
   </div>
 </template>

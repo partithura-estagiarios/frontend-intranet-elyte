@@ -285,6 +285,7 @@ function closeAddModal() {
                 bg-color="grey-3"
                 class="text-black calendar"
                 @click="showCalendar = false"
+                mask="DD/MM/YYYY"
               />
             </div>
             <span v-if="item.errorMessage" class="text-red q-mb-xl">

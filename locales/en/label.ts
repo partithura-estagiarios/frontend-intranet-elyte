@@ -58,4 +58,18 @@ export default {
     initialTime: "Initial time",
     finalTime: "Final time",
   },
+  months: {
+    january: "January",
+    febuary: "Febuary",
+    march: "March",
+    april: "April",
+    may: "May",
+    june: "June",
+    july: "July",
+    august: "August",
+    september: "September",
+    october: "October",
+    november: "November",
+    dezember: "Dezember",
+  },
 };

@@ -16,5 +16,13 @@ defineProps({
 </script>
 
 <template>
-  <q-btn no-caps flat class="rounded" dense :icon="icon" :label="label" />
+  <q-btn
+    no-caps
+    flat
+    class="rounded"
+    dense
+    :icon="icon"
+    text-color="primary"
+    :label="label"
+  />
 </template>

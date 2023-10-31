@@ -76,44 +76,38 @@ const roomId = computed(
       room.id
 );
 
-const group = ref([]);
-const options = [
+const supportMaterials = ref([
   {
     icon: "computer",
-    value: "computer",
+    value: form.support.computer,
     label: t("label.support.computer"),
   },
   {
     icon: "mdi-projector",
-    value: "projector",
+    value: form.support.projector,
     label: t("label.support.projector"),
   },
   {
     icon: "mdi-script",
-    value: "flipChart",
+    value: form.support.flipChart,
     label: t("label.support.flipChart"),
   },
   {
     icon: "speaker",
-    value: "speaker",
+    value: form.support.speaker,
     label: t("label.support.speaker"),
   },
   {
     icon: "water_drop",
-    value: "water",
+    value: form.support.water,
     label: t("label.support.water"),
   },
   {
     icon: "coffee",
-    value: "coffee",
+    value: form.support.coffee,
     label: t("label.support.coffee"),
   },
-];
-
-function clearDateInput() {
-  form.initialTime = null;
-  form.finalTime = null;
-}
+]);
 
 function setDate(
   paramsDate: keyof Pick<Event, "initialTime" | "finalTime">,
@@ -137,6 +131,12 @@ function safeParseInt(value: string | number): number {
   return value;
 }
 
+function clearInput() {
+  form.initialTime = null;
+  form.finalTime = null;
+  supportMaterials.value.forEach((material) => (material.value = false));
+}
+
 function parseFormData(data: EventForm) {
   return {
     ...data,
@@ -153,7 +153,7 @@ async function addEvent(formData: EventForm) {
   try {
     await runMutation(AddEvent, { data: parseFormData(formData) });
     positiveNotify(t("notifications.success.scheduleEvent"));
-    clearDateInput();
+    clearInput();
     emits("reload");
     return;
   } catch (error) {
@@ -291,26 +291,23 @@ async function addEvent(formData: EventForm) {
               {{ $t("label.support.index") }}
             </span>
             <div class="q-gutter-md q-mt-md row">
-              <q-option-group
-                v-model="group"
-                type="checkbox"
-                :options="options"
+              <q-checkbox
+                v-for="(material, index) in supportMaterials"
+                :key="index"
+                v-model="material.value"
+                class="q-pl-sm"
                 left-label
-                class="row justify-between"
-                :inline="true"
               >
-                <template v-slot:label="opt">
-                  <div class="schedule-item-border options-materials q-ma-sm">
-                    <q-icon
-                      :name="opt.icon"
-                      color="primary"
-                      size="sm"
-                      class="q-pa-md"
-                    />
-                    <span class="q-pa-md">{{ opt.label }}</span>
-                  </div>
-                </template>
-              </q-option-group>
+                <div class="schedule-item-border options-materials q-ma-sm">
+                  <q-icon
+                    :name="material.icon"
+                    color="primary"
+                    size="sm"
+                    class="q-pa-md"
+                  />
+                  <span class="q-pa-md">{{ material.label }}</span>
+                </div>
+              </q-checkbox>
             </div>
           </div>
         </q-card>
@@ -337,6 +334,6 @@ async function addEvent(formData: EventForm) {
   border-radius: 5px;
 }
 .options-materials {
-  width: 320px;
+  width: 318px;
 }
 </style>

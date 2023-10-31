@@ -216,7 +216,7 @@ function closeAddModal() {
           color="primary"
           size="1.2rem"
           class="justify-start row q-ml-md"
-          @click="router.back"
+          @click="$router.replace('/home')"
         />
       </div>
     </q-item-section>

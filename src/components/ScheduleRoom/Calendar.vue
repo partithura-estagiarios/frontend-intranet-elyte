@@ -74,6 +74,12 @@ function onNext() {
 function cancel() {
   activedModal.value = false;
 }
+
+function changeMonth(month: number) {
+  selectedDate.value = DateTime.now()
+    .set({ month: month })
+    .toFormat("yyyy-MM-dd");
+}
 </script>
 
 <template>
@@ -88,6 +94,7 @@ function cancel() {
       <ScheduleNavigation
         :rooms="roomList"
         :date="selectedDate"
+        @select-month="(month) => changeMonth(month)"
         @prev="onPrev"
         @next="onNext"
         @reload="getEvents"
@@ -104,7 +111,7 @@ function cancel() {
         <template #day="{ scope: { timestamp } }">
           <div class="full-height q-gutter-x-xs">
             <div
-              class="row items-end no-padding cursor-pointer"
+              class="column no-padding cursor-pointer"
               v-if="joinedDates && joinedDates[timestamp.date]"
               v-for="(event, index) in joinedDates[timestamp.date]"
               :key="index"
@@ -133,7 +140,7 @@ function cancel() {
         </span>
       </div>
     </div>
-    <div class="grow q-py-xl">
+    <div class="grow q-py-xl" ref="daysEvent">
       <q-card class="text-black text-h6">
         <q-card-section class="bg-primary">
           <div class="text-h4 text-white">{{ $t("label.dayEvents") }}</div>

@@ -34,6 +34,7 @@ export default {
     Stock: "Gerenciamento de estoque",
     BoaIdeia: "Preencha Formulário",
     Reports: "ERP",
+    IconPreview: "Previsualização do Icone",
   },
   Login: {
     textPasswordForm: "Recupere sua senha!",

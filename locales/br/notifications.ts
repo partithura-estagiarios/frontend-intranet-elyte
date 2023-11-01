@@ -12,8 +12,6 @@ export default {
     createSystem: "Sistema criado com sucesso",
     deleteSystem:
       "Sistema excluído com sucesso | Sistemas excluídos com sucesso",
-    emailSentSuccessfully: "Email enviado com sucesso",
-    editSystem: "Sistema editado com sucesso",
   },
 
   fail: {
@@ -39,7 +37,5 @@ export default {
     equalPassword: "As senhas não correspondem",
     invalidPassword: "Senha inválida",
     timeExpired: "Tempo Expirado",
-    errorSendingToEmail: "Ocorreu algum erro no envio do  email",
-    failFields: "Há campos não preenchidos corretamente no formulário",
   },
 };

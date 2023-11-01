@@ -14,11 +14,8 @@ const isPwdvisible = ref(true);
 async function auth(data: UserForm) {
   try {
     const { auth } = (await runMutation(Auth, data)) as unknown as AuthQuery;
-    console.log(auth);
     const { token, user } = auth;
-    console.log(token, user);
     if (token) {
-      console.log("entreo");
       userStorage.setUser({
         email: user.email,
         id: user.id,
@@ -83,7 +80,7 @@ async function auth(data: UserForm) {
       </div>
     </Field>
     <q-item class="size" to="/recover">
-      <q-item-section align="left">
+      <q-item-section clas="row justify-end q-mr-md">
         {{ $t("label.forgetPassword") }}
       </q-item-section>
     </q-item>

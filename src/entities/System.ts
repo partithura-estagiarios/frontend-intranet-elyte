@@ -1,6 +1,6 @@
 export interface System {
   icon: string;
-  id: string;
+  id?: string;
   label: string;
   sublabel: string;
   link: string;

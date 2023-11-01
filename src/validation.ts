@@ -1,5 +1,4 @@
 import * as yup from "yup";
-
 export const validationSchema = yup.object({
   username: yup
     .string()
@@ -38,10 +37,10 @@ const username = yup
   .min(2, t("warning.username"));
 
 const registration = yup.number().required(t("warning.requiredField"));
-const title = yup.string().required(t("warning.requiredField"));
+const label = yup.string().required(t("warning.requiredField"));
 const icon = yup.string().required(t("warning.requiredField"));
-const description = yup.string().required(t("warning.requiredField"));
-const system = yup.string().required(t("warning.requiredField"));
+const sublabel = yup.string().required(t("warning.requiredField"));
+const sistema = yup.string().required(t("warning.requiredField"));
 const link = yup.string().required(t("warning.requiredField"));
 const message = yup.string().required(t("warning.requiredField"));
 export const loginForContact = yup.object({
@@ -51,10 +50,16 @@ export const loginForContact = yup.object({
   message,
 });
 export const inputSchema = yup.object({
-  title,
+  label,
   icon,
-  description,
-  system,
+  sublabel,
+  sistema,
+  link,
+});
+export const formSystem = yup.object({
+  label,
+  icon,
+  sublabel,
   link,
 });
 

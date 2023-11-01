@@ -5,6 +5,7 @@
       <slot />
     </q-card-section>
     <CardFooter
+      v-bind="$props"
       @cancel="() => $emit('cancel')"
       @confirm="() => $emit('confirm')"
     />
@@ -14,11 +15,14 @@
 <script setup lang="ts">
 defineProps({
   title: String,
+  closeLabel: String,
+  close: Boolean,
+  hideControls: Boolean,
 });
 </script>
 <style scoped>
 .card-size {
   max-width: 50vw;
-  min-width: 30vw;
+  min-width: 20vw;
 }
 </style>

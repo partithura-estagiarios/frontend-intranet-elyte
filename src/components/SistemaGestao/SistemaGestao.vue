@@ -12,7 +12,7 @@
             :buttons="actionButtons"
             :item="gestaoList"
             @reload="getGestaoList()"
-            system="gestão"
+            system="gestao"
           />
         </div>
       </q-card-section>

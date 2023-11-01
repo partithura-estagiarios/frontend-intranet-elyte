@@ -28,6 +28,7 @@ export default {
     Mapping: "Mapping",
     FT: "Web Technical Sheet",
     DataSulPrototype: "Exclusive for Test",
+    IconPreview: "Icon Preview",
   },
   Login: {
     textLoginForm: "Enter your credentials",

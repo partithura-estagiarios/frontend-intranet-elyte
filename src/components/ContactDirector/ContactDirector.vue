@@ -19,13 +19,7 @@
           label="Seu Nome Completo*"
           v-bind="item.field"
           lazy-rules
-        >
-          <template #append v-if="item.errorMessage">
-            <span class="text-subtitle2 text-red">
-              {{ parseErrorMessage(item.errorMessage) }}
-            </span>
-          </template>
-        </q-input>
+        />
       </Field>
       <Field name="email" v-slot="item">
         <q-input
@@ -33,13 +27,10 @@
           label="Seu Email*"
           v-bind="item.field"
           lazy-rules
-        >
-          <template #append v-if="item.errorMessage">
-            <span class="text-subtitle2 text-red">
-              {{ parseErrorMessage(item.errorMessage) }}
-            </span>
-          </template>
-        </q-input>
+        />
+        <span v-if="item.errorMessage" class="text-red">
+          {{ parseErrorMessage(item.errorMessage) }}
+        </span>
       </Field>
       <Field name="registration" v-slot="item">
         <q-input
@@ -48,13 +39,10 @@
           v-bind="item.field"
           label="Sua Matrícula *"
           lazy-rules
-        >
-          <template #append v-if="item.errorMessage">
-            <span class="text-subtitle2 text-red">
-              {{ parseErrorMessage(item.errorMessage) }}
-            </span>
-          </template>
-        </q-input>
+        />
+        <span v-if="item.errorMessage" class="text-red">
+          {{ parseErrorMessage(item.errorMessage) }}
+        </span>
       </Field>
       <Field name="message" v-slot="item">
         <q-input
@@ -62,13 +50,10 @@
           v-bind="item.field"
           type="textarea"
           label="Seu Contato *"
-        >
-          <template #append v-if="item.errorMessage">
-            <span class="text-subtitle2 text-red">
-              {{ parseErrorMessage(item.errorMessage) }}
-            </span>
-          </template>
-        </q-input>
+        />
+        <span v-if="item.errorMessage" class="text-red">
+          {{ parseErrorMessage(item.errorMessage) }}
+        </span>
       </Field>
       <div>
         <q-btn label="Enviar" type="submit" color="primary" />

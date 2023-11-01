@@ -1,6 +1,6 @@
 export default {
   profile: "Profile",
-  title: "Title",
+  label: "Title",
   settings: "Settings",
   name: "Name",
   sector: "Sector",
@@ -9,6 +9,11 @@ export default {
   day: "Day",
   date: "Date",
   week: "Week",
+  icon: "Icon",
+  sublabel: "description",
+  system: "system",
+  link: "Link",
+
   menu: {
     dessert: "Dessert",
     rice: "Rice",

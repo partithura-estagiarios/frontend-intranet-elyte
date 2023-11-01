@@ -1,7 +1,7 @@
 export default {
   rows_per_page: "Registros por página",
   profile: "Perfil",
-  title: "Título",
+  label: "Título",
   settings: "Configurações",
   name: "Nome",
   sector: "Setor",
@@ -9,6 +9,10 @@ export default {
   day: "Dia",
   date: "Data",
   week: "Semana",
+  icon: "Icone",
+  sublabel: "Descrição",
+  system: "Sistema",
+  link: "Link",
   menu: {
     dessert: "Sobremesa",
     rice: "Arroz",

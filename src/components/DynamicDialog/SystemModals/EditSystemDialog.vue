@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import { Field, Form } from "vee-validate";
-import { type System } from "../../../entities";
+import { System } from "../../../entities";
 import { inputSchema } from "../../../validation";
+
 import UpdateSystem from "../../../graphql/system/UpdateSystem.gql";
 
 const emits = defineEmits(["reload", "cancel"]);
@@ -14,13 +15,26 @@ defineProps({
     type: Array<System>,
     required: true,
   },
+  system: {
+    type: String,
+    default: "",
+  },
 });
-const selectedSystem = ref<object>({});
+const selectedSystem = ref<System>(buildForm());
 
 const getSelectedSystem = (system: System) => {
   selectedSystem.value = system;
 };
-
+function buildForm() {
+  return {
+    id: "",
+    icon: "",
+    label: "",
+    link: "",
+    sistema: "",
+    sublabel: "",
+  };
+}
 const form: Omit<System, "id"> = reactive({
   icon: "",
   label: "",
@@ -37,31 +51,28 @@ watch(selectedSystem, (newValue: System) => {
   form.sublabel = newValue.sublabel;
 });
 
-async function updateSystem() {
-  try {
-    await runMutation(UpdateSystem, {
-      id: selectedSystem.value.id,
-      data: form,
-    });
+async function updateSystem(form: System) {
+  const response = await runMutation(UpdateSystem, {
+    id: selectedSystem.value.id,
+    data: form,
+  });
+  if (response.updateSystem) {
     positiveNotify(t("notifications.success.editSystem"));
-    emits("reload");
-  } catch (err) {
-    negativeNotify(t("notifications.fail.editSystem"));
+    selectedSystem.value = buildForm();
+    return emits("reload");
   }
+  negativeNotify(t("notifications.fail.failEditSystem"));
 }
 </script>
 
 <template>
   <DynamicDialog
-    @cancel="() => [$emit('cancel'), (selectedSystem = {})]"
-    @confirm="updateSystem"
+    @cancel="() => [$emit('cancel'), (selectedSystem = buildForm())]"
+    hide-controls
     :open="isActive"
     :title="$t('action.editSystem.index')"
   >
-    <div
-      v-if="Object.keys(selectedSystem).length < 1"
-      class="row q-gutter-md q-pa-md"
-    >
+    <div v-if="selectedSystem.id == ''" class="row q-gutter-md q-pa-md">
       <span class="text-secondary text-h6 q-pl-sm">{{
         $t("action.editSystem.message")
       }}</span>
@@ -97,73 +108,13 @@ async function updateSystem() {
     </div>
 
     <div v-else>
-      <Form :validation-schema="inputSchema" class="row q-pa-xl">
-        <Field name="title" v-slot="item">
-          <q-input
-            class="col-6 q-px-xs"
-            :label="$t('text.title')"
-            :model-value="item.value"
-            v-bind="item.field"
-          />
-          <span v-if="item.errorMessage" class="text-red">
-            {{ parseErrorMessage(item.errorMessage) }}
-          </span>
-        </Field>
-        <Field name="icon" v-slot="item">
-          <q-input
-            class="col-6 q-px-xs"
-            :label="$t('text.icon')"
-            :model-value="item.value"
-            v-bind="item.field"
-          >
-            <template #prepend>
-              <q-item clickable target="_blank">
-                <q-icon class="col-sm-6" name="pageview">
-                  <q-tooltip anchor="top middle" self="bottom middle">
-                    <span class="text-subtitle2">{{ $t("label.search") }}</span>
-                  </q-tooltip>
-                </q-icon>
-              </q-item>
-            </template>
-          </q-input>
-          <span v-if="item.errorMessage" class="text-red">
-            {{ parseErrorMessage(item.errorMessage) }}
-          </span>
-        </Field>
-        <Field name="description" v-slot="item">
-          <q-input
-            class="col-6 q-px-xs"
-            :label="$t('text.description')"
-            :model-value="item.value"
-            v-bind="item.field"
-          />
-          <span v-if="item.errorMessage" class="text-red">
-            {{ parseErrorMessage(item.errorMessage) }}
-          </span>
-        </Field>
-        <Field name="system" v-slot="item">
-          <q-input
-            class="col-6 q-px-xs"
-            :label="$t('text.system')"
-            :model-value="item.value"
-            v-bind="item.field"
-          />
-          <span v-if="item.errorMessage" class="text-red">
-            {{ parseErrorMessage(item.errorMessage) }}
-          </span>
-        </Field>
-        <Field name="link" v-slot="item">
-          <q-input
-            class="col-12 q-px-xs"
-            :label="$t('text.link')"
-            :model-value="item.value"
-            v-bind="item.field"
-          />
-          <span v-if="item.errorMessage" class="text-red">
-            {{ parseErrorMessage(item.errorMessage) }}
-          </span>
-        </Field>
-      </Form>
+      <FormSystemDialog
+        :isActive="true"
+        :item="selectedSystem"
+        :system="system"
+        @some-form="(form) => updateSystem(form)"
+      >
+      </FormSystemDialog>
     </div>
   </DynamicDialog>
 </template>

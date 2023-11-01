@@ -21,5 +21,8 @@ watchEffect(() => {
 const props = defineProps({
   open: Boolean,
   title: String,
+  closeLabel: String,
+  close: Boolean,
+  hideControls: Boolean,
 });
 </script>

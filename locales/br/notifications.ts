@@ -12,6 +12,8 @@ export default {
     createSystem: "Sistema criado com sucesso",
     deleteSystem:
       "Sistema excluído com sucesso | Sistemas excluídos com sucesso",
+    emailSentSuccessfully: "Email enviado com sucesso",
+    editSystem: "Sistema editado com sucesso",
   },
 
   fail: {
@@ -31,10 +33,13 @@ export default {
         "Houve um erro ao excluir o sistema | Houve um erro ao excluir os sistemas",
       notSelected: "Você deve selecionar pelo menos um sistema para excluir",
     },
+    failEditSystem: "Sistema não editado",
     emptyField: "Campo obrigatório",
     invalidEmail: "Email inválido",
     equalPassword: "As senhas não correspondem",
     invalidPassword: "Senha inválida",
     timeExpired: "Tempo Expirado",
+    errorSendingToEmail: "Ocorreu algum erro no envio do  email",
+    failFields: "Há campos não preenchidos corretamente no formulário",
   },
 };

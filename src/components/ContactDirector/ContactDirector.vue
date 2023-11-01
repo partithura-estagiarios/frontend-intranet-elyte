@@ -19,7 +19,13 @@
           label="Seu Nome Completo*"
           v-bind="item.field"
           lazy-rules
-        />
+        >
+          <template #append v-if="item.errorMessage">
+            <span class="text-subtitle2 text-red">
+              {{ parseErrorMessage(item.errorMessage) }}
+            </span>
+          </template>
+        </q-input>
       </Field>
       <Field name="email" v-slot="item">
         <q-input
@@ -27,10 +33,13 @@
           label="Seu Email*"
           v-bind="item.field"
           lazy-rules
-        />
-        <span v-if="item.errorMessage" class="text-red">
-          {{ parseErrorMessage(item.errorMessage) }}
-        </span>
+        >
+          <template #append v-if="item.errorMessage">
+            <span class="text-subtitle2 text-red">
+              {{ parseErrorMessage(item.errorMessage) }}
+            </span>
+          </template>
+        </q-input>
       </Field>
       <Field name="registration" v-slot="item">
         <q-input
@@ -39,10 +48,13 @@
           v-bind="item.field"
           label="Sua Matrícula *"
           lazy-rules
-        />
-        <span v-if="item.errorMessage" class="text-red">
-          {{ parseErrorMessage(item.errorMessage) }}
-        </span>
+        >
+          <template #append v-if="item.errorMessage">
+            <span class="text-subtitle2 text-red">
+              {{ parseErrorMessage(item.errorMessage) }}
+            </span>
+          </template>
+        </q-input>
       </Field>
       <Field name="message" v-slot="item">
         <q-input
@@ -50,33 +62,28 @@
           v-bind="item.field"
           type="textarea"
           label="Seu Contato *"
-        />
-        <span v-if="item.errorMessage" class="text-red">
-          {{ parseErrorMessage(item.errorMessage) }}
-        </span>
+        >
+          <template #append v-if="item.errorMessage">
+            <span class="text-subtitle2 text-red">
+              {{ parseErrorMessage(item.errorMessage) }}
+            </span>
+          </template>
+        </q-input>
       </Field>
-
       <div>
-        <q-btn
-          label="Enviar"
-          type="submit"
-          color="primary"
-          :loading="isLoading"
-        />
+        <q-btn label="Enviar" type="submit" color="primary" />
       </div>
     </Form>
   </div>
 </template>
 
 <script setup lang="ts">
+import { parse } from "path";
 import SendEmail from "../../graphql/sendEmail/SendEmail.gql";
 import { loginForContact } from "../../validation";
 import { Field, Form } from "vee-validate";
-const $q = useQuasar();
-const isLoading = ref(false);
 
 const form = reactive(buildForm());
-
 function buildForm() {
   return {
     fullname: null,
@@ -111,27 +118,10 @@ function constructBodyEmail(name: string, email: string) {
 }
 
 async function saveForm() {
-  if (!form.message) {
-    $q.notify({
-      color: "negative",
-      message: "Email contém erros",
-    });
-    return;
-  }
-  isLoading.value = true;
   const response = await runMutation(SendEmail, setMessage());
-  isLoading.value = false;
-
   if (response?.sendMail) {
-    $q.notify({
-      color: "positive",
-      message: "Email enviado com sucesso",
-    });
-    return;
+    return positiveNotify(t("notifications.success.emailSentSuccessfully"));
   }
-  $q.notify({
-    color: "negative",
-    message: "Email contém erros",
-  });
+  return negativeNotify(t("notifications.fail.errorSendingToEmail"));
 }
 </script>

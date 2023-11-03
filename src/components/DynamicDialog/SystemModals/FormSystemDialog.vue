@@ -1,11 +1,10 @@
 <template>
-  <TestForm />
   <Form :validation-schema="formSystem" class="row q-pa-md">
     <Field name="label" v-slot="item">
       <q-input
         class="col-6 q-px-xs"
         :label="$t('text.label')"
-        v-model="form.label"
+        v-model.lazy="form.label"
         v-bind="item.field"
       >
       </q-input>
@@ -14,11 +13,11 @@
       <q-input
         class="col-6 q-px-xs"
         :label="$t('text.icon')"
-        v-model="form.icon"
+        v-model.lazy="form.icon"
         v-bind="item.field"
       >
         <template #append>
-          <div class="q-pa-md"></div>
+          <IconsForSystemDialog @some-icon="(icon) => (form.icon = icon)" />
         </template>
       </q-input>
     </Field>
@@ -26,7 +25,7 @@
       <q-input
         class="col-6 q-px-xs"
         :label="$t('text.sublabel')"
-        v-model="form.sublabel"
+        v-model.lazy="form.sublabel"
         v-bind="item.field"
       >
       </q-input>
@@ -35,14 +34,14 @@
       disable
       class="col-6 q-px-xs"
       :label="$t('text.system')"
-      v-model="props.item.sistema"
+      v-model.lazy="props.system"
     >
     </q-input>
     <Field name="link" v-slot="item">
       <q-input
         class="col-12 q-px-xs q-mb-xl"
         :label="$t('text.link')"
-        v-model="form.link"
+        v-model.lazy="form.link"
         v-bind="item.field"
       >
       </q-input>
@@ -72,7 +71,7 @@
 <script setup lang="ts">
 import { formSystem } from "../../../validation";
 import { System } from "../../../entities";
-import { Field, Form } from "vee-validate";
+import { Field, Form, useForm } from "vee-validate";
 import { PropType } from "vue";
 const emit = defineEmits(["some-form"]);
 const props = defineProps({
@@ -94,7 +93,7 @@ const props = defineProps({
 const form = reactive({
   label: "",
   icon: "",
-  sistema: "",
+  sistema: props.system,
   sublabel: "",
   link: "",
 });
@@ -102,7 +101,6 @@ const form = reactive({
 onMounted(() => {
   form.label = props.item.label;
   form.icon = props.item.icon;
-  form.sistema = props.item.sistema;
   form.sublabel = props.item.sublabel;
   form.link = props.item.link;
 });
@@ -115,19 +113,20 @@ const missingFields = computed(() => {
   const missing: { [key: string]: any } = {};
   for (const [key, value] of Object.entries(form)) {
     if (!value) {
+      activeConfirm.value = false;
       missing[key] = value;
     }
   }
   return missing;
 });
-watch(isFormFilled, (isFilled) => {
-  if (isFilled) {
-    activeConfirm.value = true;
+watch(isFormFilled, (newIsFormFilled) => {
+  if (newIsFormFilled) {
+    return (activeConfirm.value = true);
   }
+  return (activeConfirm.value = false);
 });
 
 function emitForm() {
-  console.log(props.item.sistema);
   emit("some-form", form);
 }
 </script>

@@ -12,6 +12,7 @@ export default {
     createSystem: "Sistema criado com sucesso",
     deleteSystem:
       "Sistema excluído com sucesso | Sistemas excluídos com sucesso",
+    editSystem: "Sistema editado com sucesso",
   },
 
   fail: {

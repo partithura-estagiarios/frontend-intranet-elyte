@@ -1,5 +1,7 @@
 export default {
   ManagementSystem: "Management System",
+  FieldsFilled: "Fields that need to be filled in",
+  IconPreview: "Icon Preview",
   HrSystem: "Hr System",
   OtherSystems: "OTHERS",
   Management: {

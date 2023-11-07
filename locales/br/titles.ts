@@ -1,6 +1,8 @@
 export default {
   textIntranet: "INTRANET ELYTE",
   ManagementSystem: "Sistema de gestão",
+  FieldsFilled: "Campos que faltam ser preenchidos",
+  IconPreview: "Visualização do ícone",
   HrSystem: "sistema de RH",
   OtherSystems: "Outros",
   menu: "Cardápio",

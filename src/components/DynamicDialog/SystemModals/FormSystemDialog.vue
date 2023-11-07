@@ -46,7 +46,9 @@
       >
       </q-input>
     </Field>
-
+    <div class="fit row justify-center">
+      <PreviewSystemDialog :formData="form" />
+    </div>
     <div class="q-ml-auto">
       <q-btn
         @click.prevent="emitForm"
@@ -56,8 +58,8 @@
         type="submit"
         :disabled="!activeConfirm"
       >
-        <q-tooltip anchor="top end" self="top end" v-if="!activeConfirm">
-          <strong>Campos que faltam ser preenchidos</strong>
+        <q-tooltip anchor="top left" v-if="!activeConfirm">
+          <strong>{{ t("titles.FieldsFilled") }}</strong>
           <ul>
             <li v-for="(value, key) in missingFields" :key="key">
               {{ $t(`text.${key}`) }}
@@ -130,3 +132,8 @@ function emitForm() {
   emit("some-form", form);
 }
 </script>
+<style scoped>
+.fit {
+  margin-top: -80px;
+}
+</style>

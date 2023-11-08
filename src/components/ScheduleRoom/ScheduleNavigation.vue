@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { DateTime } from "luxon";
-
 const emits = defineEmits(["reload", "prev", "next", "select-month"]);
 
 const props = defineProps({
@@ -12,6 +10,10 @@ const props = defineProps({
   date: {
     type: String,
     required: true,
+    default: "",
+  },
+  month: {
+    type: String,
     default: "",
   },
 });
@@ -35,10 +37,6 @@ function selectMonth(month: number) {
   emits("select-month", month);
 }
 
-const year = ref(
-  DateTime.fromFormat(props.date, "yyyy-MM-dd").setLocale("pt-br").year
-);
-
 const activedModal = ref(false);
 
 function reload() {
@@ -55,19 +53,18 @@ function reload() {
     @reload="reload"
   />
 
-  <div class="row justify-between full-width">
-    <div class="column q-pa-md text-white col-2">
-      <q-btn-group flat class="schedule-item-border row justify-center">
+  <div class="row justify-between q-mx-lg">
+    <div class="column q-pa-md">
+      <q-btn-group class="row justify-center q-px-xs">
         <NavigationButton icon="arrow_left" @click="$emit('prev')" />
         <q-btn-dropdown
           transition-show="scale"
           transition-hide="scale"
           no-caps
-          flat
-          text-color="primary q-ml-xs"
-          class="text-h6"
+          text-color="primary"
+          class="text-h6 q-ml-lg"
           dropdown-icon="false"
-          :label="date"
+          :label="month"
         >
           <q-list v-for="(month, index) in months" :key="index">
             <q-item
@@ -86,21 +83,18 @@ function reload() {
         <NavigationButton icon="arrow_right" @click="$emit('next')" />
       </q-btn-group>
     </div>
-    <span class="text-primary text-h2 q-ma-sm">
-      {{ year }}
-    </span>
-    <!-- TODO código comentado pois essas funcionalidades não serão aplicadas agora
-    <div class="row q-py-md text-black col-4">
-      <q-btn-group class="rounded col-12">
+    <!-- TODO esses botões vão ganhar funcionalidades futuramente -->
+    <div class="row q-py-md col-4">
+      <q-btn-group class="rounded col-10">
         <NavigationButton class="col-4" :label="t('label.date.month')" />
         <NavigationButton class="col-4" :label="t('label.date.week')" />
         <NavigationButton class="col-4" :label="t('label.date.day')" />
       </q-btn-group>
-    </div> -->
+    </div>
 
     <div class="column justify-center col-2">
       <q-btn
-        class="full-width text-h6 col-6 bg-primary rounded"
+        class="full-width text-h6 col-7 text-primary rounded"
         no-caps
         :label="$t('action.scheduleEvent')"
         @click="activedModal = true"

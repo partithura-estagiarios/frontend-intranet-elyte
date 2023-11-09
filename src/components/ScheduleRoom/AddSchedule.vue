@@ -119,7 +119,8 @@ function setDate(
 function triggerwarning() {
   if (selectRoom.value) {
     negativeNotify(t("warning.dateFieldEmpty"));
-  } else if (form.initialTime > form.finalTime) {
+  }
+  if (form.initialTime > form.finalTime) {
     negativeNotify(t("warning.dateFieldInvalid"));
   }
 }

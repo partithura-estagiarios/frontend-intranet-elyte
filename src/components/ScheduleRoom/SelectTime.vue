@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { DateTime } from "luxon";
 import { Field } from "vee-validate";
+import { QSelect } from "quasar";
 
 defineProps({
   fieldLabel: {
@@ -44,11 +45,10 @@ function resetValues() {
   date.value = null;
 }
 
-function finishSelector(minute: number, select) {
+function finishSelector(minute: number, select: QSelect) {
   emits("setTime", minute);
   resetValues;
   selectionStep.value = null;
-  console.log(select);
   select.hidePopup();
 }
 

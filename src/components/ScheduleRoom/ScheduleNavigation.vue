@@ -30,7 +30,7 @@ const months = [
   { label: t("label.months.september"), value: 9 },
   { label: t("label.months.october"), value: 10 },
   { label: t("label.months.november"), value: 11 },
-  { label: t("label.months.dezember"), value: 12 },
+  { label: t("label.months.december"), value: 12 },
 ];
 
 function selectMonth(month: number) {
@@ -83,14 +83,14 @@ function reload() {
         <NavigationButton icon="arrow_right" @click="$emit('next')" />
       </q-btn-group>
     </div>
-    <!-- TODO esses botões vão ganhar funcionalidades futuramente -->
+    <!-- TODO esses botões vão ganhar funcionalidades futuramente
     <div class="row q-py-md col-4">
       <q-btn-group class="rounded col-10">
         <NavigationButton class="col-4" :label="t('label.date.month')" />
         <NavigationButton class="col-4" :label="t('label.date.week')" />
         <NavigationButton class="col-4" :label="t('label.date.day')" />
       </q-btn-group>
-    </div>
+    </div> -->
 
     <div class="column justify-center col-2">
       <q-btn

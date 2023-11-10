@@ -12,6 +12,8 @@ onMounted(() => {
   getMenu();
 });
 
+const paginationFilter: Ref<Number> = ref({ page: 0, limit: null });
+const paginationData = ref({});
 const item: { id?: string } = {};
 const menus: Ref<Menu[]> = ref([]);
 const form: Omit<Menu, "id"> = reactive({
@@ -30,12 +32,10 @@ const tableColumns = [
     name: "date",
     required: true,
     label: t("text.date"),
-    field: (getMenu: { date: string | number | Date }) =>
-      new Date(getMenu.date).toLocaleDateString("pt-BR", {
-        weekday: "long",
-      }),
+    field: "dayOfWeek",
     align: "left",
   },
+
   {
     name: "salad",
     required: true,
@@ -133,20 +133,37 @@ function validateForm() {
 }
 
 async function getMenu() {
-  const { getMenu: rawData } = await runQuery(GetMenu);
-  if (Array.isArray(rawData)) {
-    rawData.sort((a, b) => a.date - b.date);
-    const last7Menus = rawData.slice(0, 7);
-
-    if (Array.isArray(menus.value)) {
-      const transformedMenus = [];
-      for (const item of last7Menus) {
-        const date = new Date(parseInt(item.date));
-        transformedMenus.push({ ...item, date });
-      }
-      menus.value = transformedMenus;
-    }
+  try {
+    await runQuery(GetMenu, {
+      pagination: { ...paginationFilter.value },
+    }).then(({ getMenu }) => {
+      const menuItems = getMenu.nodes.map((menu: Menu) => ({
+        ...menu,
+        dayOfWeek: getDayOfWeek(menu.date),
+      }));
+      menus.value = menuItems;
+      paginationData.value = getMenu.pagination;
+    });
+  } catch (error) {
+    console.error("Erro ao buscar dados do menu:", error);
   }
+}
+
+function getDayOfWeek(timestamp: string) {
+  if (timestamp) {
+    const daysOfWeek = [
+      t("text.days.monday"),
+      t("text.days.tuesday"),
+      t("text.days.wednesday"),
+      t("text.days.thursday"),
+      t("text.days.friday"),
+      t("text.days.saturday"),
+    ];
+    const date = new Date(parseInt(timestamp));
+    const dayOfWeek = date.getDay();
+    return daysOfWeek[dayOfWeek];
+  }
+  return "";
 }
 
 async function editMenu() {
@@ -200,6 +217,7 @@ function closeAddModal() {
   action.value = null;
 }
 </script>
+
 <template>
   <div class="col-6 row justify-center">
     <span class="text-black font text-bold q-ml-xl">
@@ -245,11 +263,11 @@ function closeAddModal() {
     <div v-if="menus">
       <table-dynamic
         class="q-pt-md"
-        :rows-per-page-options="[10]"
         :grid="$q.screen.xs"
         :rows="menus"
         :columns="tableColumns"
         row-key="id"
+        :rows-per-page="[6]"
       >
         <template #configButtons="props">
           <q-btn

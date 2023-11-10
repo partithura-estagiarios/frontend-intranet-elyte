@@ -15,6 +15,10 @@ defineProps({
     default: () => [],
     type: Array,
   },
+  rowsPerPage: {
+    type: Number,
+    default: 0,
+  },
 });
 </script>
 
@@ -23,7 +27,7 @@ defineProps({
     <q-table
       class="q-px-xl"
       :rows-per-page-label="t('text.rows_per_page')"
-      :rows-per-page-options="[rows.length]"
+      :rows-per-page-options="rowsPerPage"
       :grid="$q.screen.xs"
       :rows="rows"
       :columns="columns as any"

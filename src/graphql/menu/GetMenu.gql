@@ -1,12 +1,19 @@
-query GetMenu {
-  getMenu {
-    id
-    date
-    rice
-    salad
-    soup
-    complement
-    protein
-    dessert
+query GetMenu($pagination: PaginationFilter!) {
+  getMenu(pagination: $pagination) {
+    pagination {
+      total
+      limit
+      currentPage
+    }
+    nodes {
+      id
+      date
+      rice
+      salad
+      soup
+      complement
+      protein
+      dessert
+    }
   }
 }

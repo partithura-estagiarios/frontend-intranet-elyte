@@ -45,6 +45,7 @@ import GetRamais from "../../graphql/ramais/getRamais.gql";
 import { Ramal } from "../../entities";
 import { Ref } from "vue";
 import actionButtons from "./actionButtons";
+const emits = defineEmits(["reload", "cancel"]);
 
 const ramalList: Ref<Ramal[]> = ref([]);
 const activedModal = ref(false);
@@ -53,11 +54,11 @@ onMounted(() => {
 });
 
 async function getListRamal() {
+  activedModal.value = false;
   const { ramais } = (await runMutation(GetRamais, {})) as unknown as Record<
     "ramais",
     Array<Ramal>
   >;
-
   ramalList.value = ramais;
   return ramalList;
 }

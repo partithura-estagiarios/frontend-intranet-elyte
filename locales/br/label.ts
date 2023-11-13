@@ -13,4 +13,9 @@ export default {
   ramalNumber: "Número do ramal",
   sector: "Setor",
   name: "Nome",
+  sectorUser: "Nome do Setor",
+  ramalUser: "Integrante do Setor",
+  sublabel: "Descrição",
+  link: "Link",
+  label: "Título",
 };

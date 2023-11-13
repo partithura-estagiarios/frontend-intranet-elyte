@@ -20,6 +20,9 @@
           v-bind="item.field"
           lazy-rules
         />
+        <span v-if="item.errorMessage" class="text-red">
+          {{ parseErrorMessage(item.errorMessage) }}
+        </span>
       </Field>
       <Field name="email" v-slot="item">
         <q-input

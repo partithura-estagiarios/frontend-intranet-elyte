@@ -13,4 +13,9 @@ export default {
   ramalNumber: "Branch line number",
   sector: "Sector",
   name: "Name",
+  sectorUser: "Name of Sector",
+  ramalUser: "Sector Member ",
+  sublabel: "description",
+  link: "Link",
+  label: "Title",
 };

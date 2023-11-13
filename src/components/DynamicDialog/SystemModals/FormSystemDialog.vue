@@ -3,7 +3,7 @@
     <Field name="label" v-slot="item">
       <q-input
         class="col-6 q-px-xs"
-        :label="$t('text.label')"
+        :label="$t('label.label')"
         v-model.lazy="form.label"
         v-bind="item.field"
       >
@@ -12,7 +12,7 @@
     <Field name="icon" v-slot="item">
       <q-input
         class="col-6 q-px-xs"
-        :label="$t('text.icon')"
+        :label="$t('label.icon')"
         v-model.lazy="form.icon"
         v-bind="item.field"
       >
@@ -24,7 +24,7 @@
     <Field name="sublabel" v-slot="item">
       <q-input
         class="col-6 q-px-xs"
-        :label="$t('text.sublabel')"
+        :label="$t('label.sublabel')"
         v-model.lazy="form.sublabel"
         v-bind="item.field"
       >
@@ -33,14 +33,14 @@
     <q-input
       disable
       class="col-6 q-px-xs"
-      :label="$t('text.system')"
+      :label="$t('label.system')"
       v-model.lazy="props.system"
     >
     </q-input>
     <Field name="link" v-slot="item">
       <q-input
         class="col-12 q-px-xs q-mb-xl"
-        :label="$t('text.link')"
+        :label="$t('label.link')"
         v-model.lazy="form.link"
         v-bind="item.field"
       >
@@ -58,14 +58,11 @@
         type="submit"
         :disabled="!activeConfirm"
       >
-        <q-tooltip anchor="top left" v-if="!activeConfirm">
-          <strong>{{ t("titles.FieldsFilled") }}</strong>
-          <ul>
-            <li v-for="(value, key) in missingFields" :key="key">
-              {{ $t(`text.${key}`) }}
-            </li>
-          </ul>
-        </q-tooltip>
+        <TooltipField
+          :item="form"
+          @release-button="(enable) => (enableConfirmation = enable)"
+        >
+        </TooltipField>
       </q-btn>
     </div>
   </Form>
@@ -77,7 +74,6 @@ import { Field, Form, useForm } from "vee-validate";
 import { PropType } from "vue";
 const emit = defineEmits(["some-form"]);
 const props = defineProps({
-  submitForm: Function,
   isActive: {
     type: Boolean,
     default: false,
@@ -91,12 +87,16 @@ const props = defineProps({
     default: "",
   },
 });
-
+const enableConfirmation = ref(false);
+const activeConfirm = computed(() => {
+  console.log(enableConfirmation.value);
+  return enableConfirmation.value;
+});
 const form = reactive({
-  label: "",
+  label: t("label.label"),
   icon: "",
   sistema: props.system,
-  sublabel: "",
+  sublabel: t("label.sublabel"),
   link: "",
 });
 
@@ -105,27 +105,6 @@ onMounted(() => {
   form.icon = props.item.icon;
   form.sublabel = props.item.sublabel;
   form.link = props.item.link;
-});
-
-const activeConfirm = ref(false);
-const isFormFilled = computed(() => {
-  return Object.values(form).every((value) => !!value);
-});
-const missingFields = computed(() => {
-  const missing: { [key: string]: any } = {};
-  for (const [key, value] of Object.entries(form)) {
-    if (!value) {
-      activeConfirm.value = false;
-      missing[key] = value;
-    }
-  }
-  return missing;
-});
-watch(isFormFilled, (newIsFormFilled) => {
-  if (newIsFormFilled) {
-    return (activeConfirm.value = true);
-  }
-  return (activeConfirm.value = false);
 });
 
 function emitForm() {

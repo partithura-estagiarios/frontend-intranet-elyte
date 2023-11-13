@@ -23,7 +23,7 @@
           :key="icon.id"
           class="column col-4 q-my-md items-center color-grey"
           clickable
-          :href="icon.link"
+          :to="icon.link"
           target="_blank"
         >
           <q-item-section wrap class="relative">

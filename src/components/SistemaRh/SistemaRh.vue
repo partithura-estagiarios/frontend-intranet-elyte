@@ -23,7 +23,7 @@
           :key="icon.id"
           class="column col-4 q-my-md items-center"
           clickable
-          :href="icon.link"
+          :to="icon.link"
         >
           <q-item-section wrap>
             <q-avatar size="7rem">

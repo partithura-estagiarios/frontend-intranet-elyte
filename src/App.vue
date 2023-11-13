@@ -25,6 +25,6 @@ userIsLogged();
 </script>
 
 <template>
-  <TabHeader v-if="!$route.fullPath.includes('/register')" />
+  <TabHeader />
   <RouterView />
 </template>

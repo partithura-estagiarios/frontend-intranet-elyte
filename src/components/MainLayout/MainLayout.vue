@@ -9,7 +9,9 @@
 .font {
   font-size: 2rem;
 }
-
+div {
+  padding: 30px;
+}
 .bar-style {
   border-radius: 10px;
 }

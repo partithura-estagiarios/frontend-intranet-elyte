@@ -14,4 +14,5 @@ export default {
   confirmPwd: "Confirm your password",
   noRegistrationMenu: "There are no menu records",
   dateFieldEmpty: "The date and time selection fields weren't filed",
+  emptyFields: "To confirm you need to fill in all the fields",
 };

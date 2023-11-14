@@ -29,6 +29,6 @@ async function addRamal(form: Object) {
     :open="isActive"
     :title="$t('action.addRamal.index')"
   >
-    <FormRamal :is-active="true" :item="item" @some-form="addRamal" />
+    <FormRamal is-active :item="item" @some-form="addRamal" />
   </DynamicDialog>
 </template>

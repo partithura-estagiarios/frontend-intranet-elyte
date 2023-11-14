@@ -9,6 +9,7 @@ export default {
   day: "Day",
   date: "Date",
   week: "Week",
+  emptyTable: "No data available",
   menu: {
     dessert: "Dessert",
     rice: "Rice",

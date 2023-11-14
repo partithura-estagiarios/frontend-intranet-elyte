@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { Ref } from "vue";
 import type { Event, Room } from "../../entities/Event";
 import { DateTime } from "luxon";
 import { QCalendarMonth, today } from "@quasar/quasar-ui-qcalendar/";
@@ -9,6 +10,7 @@ import GetEvents from "../../graphql/events/GetEvents.gql";
 const calendar = ref();
 const roomList = ref();
 const eventList = ref();
+const showEvents = ref(false);
 const selectedEvent = ref({});
 const activedModal = ref(false);
 const selectedDate = ref(today());
@@ -18,6 +20,21 @@ onMounted(() => {
   getRooms();
   getEvents();
 });
+
+const months = [
+  { label: t("label.months.january"), value: 1 },
+  { label: t("label.months.february"), value: 2 },
+  { label: t("label.months.march"), value: 3 },
+  { label: t("label.months.april"), value: 4 },
+  { label: t("label.months.may"), value: 5 },
+  { label: t("label.months.june"), value: 6 },
+  { label: t("label.months.july"), value: 7 },
+  { label: t("label.months.august"), value: 8 },
+  { label: t("label.months.september"), value: 9 },
+  { label: t("label.months.october"), value: 10 },
+  { label: t("label.months.november"), value: 11 },
+  { label: t("label.months.december"), value: 12 },
+];
 
 async function getRooms(): Promise<void> {
   roomList.value = await runQuery(GetRooms).then((data) => data.getRooms);
@@ -63,38 +80,52 @@ function parseScheduleDate(date: number) {
   return DateTime.fromMillis(date).toFormat("HH:mm");
 }
 
-function onPrev() {
-  calendar.value.prev();
-}
-
-function onNext() {
-  calendar.value.next();
-}
-
-function cancel() {
-  activedModal.value = false;
-}
-
 const dateFormat = DateTime.now().setLocale("pt-br");
 
 const day = ref(dateFormat.day);
 const month = ref(dateFormat.monthLong);
 const weekDay = ref(dateFormat.weekdayLong);
 
-const monthLabel = ref(month.value);
-
 function parseWeekDay(weekday: number) {
-  return dateFormat.set({ weekday }).toFormat("cccc");
+  return dateFormat.set({ weekday }).toFormat("cccc").toUpperCase();
 }
 
 function parseMonth(month: number) {
-  return dateFormat.set({ month }).toFormat("LLLL");
+  return dateFormat.set({ month }).toFormat("LLLL").toUpperCase();
 }
 
-function changeMonth(month: number) {
+const currentMonth: Ref<string | null> = ref(month.value);
+
+function updateMonth(month: number) {
   selectedDate.value = dateFormat.set({ month }).toFormat("yyyy-MM-dd");
-  monthLabel.value = dateFormat.set({ month }).toFormat("LLLL");
+  currentMonth.value = dateFormat.set({ month }).toFormat("LLLL");
 }
+
+const onNext = () => {
+  calendar.value.next();
+  const currentIndex = months.findIndex(
+    (m) => m.label.toLowerCase() === currentMonth.value.toLowerCase()
+  );
+  const nextIndex = (currentIndex + 1) % months.length;
+  currentMonth.value = months[nextIndex].label;
+};
+
+const onPrev = () => {
+  calendar.value.prev();
+  const currentIndex = months.findIndex(
+    (m) => m.label.toLowerCase() === currentMonth.value.toLowerCase()
+  );
+  const prevIndex = (currentIndex - 1 + months.length) % months.length;
+  currentMonth.value = months[prevIndex].label;
+};
+
+function cancel() {
+  activedModal.value = false;
+}
+
+const eventsExist = computed(() => {
+  return showEvents.value && joinedDates.value[currentDay.value]?.length > 0;
+});
 
 function changeDayEvent(date: any) {
   const accessScope = date.scope;
@@ -109,6 +140,14 @@ function changeDayEvent(date: any) {
     month.value = parseMonth(monthValue);
     weekDay.value = parseWeekDay(weekDayValue);
   }
+  showEvents.value = false;
+
+  setTimeout(() => {
+    if (!showEvents.value) {
+      showEvents.value = true;
+    }
+  }, 300);
+  showEvents.value = true;
 }
 </script>
 
@@ -124,11 +163,12 @@ function changeDayEvent(date: any) {
       <ScheduleNavigation
         :rooms="roomList"
         :date="selectedDate"
-        :month="monthLabel"
-        @select-month="(month) => changeMonth(month)"
+        :dropdownLabel="currentMonth?.toLocaleUpperCase()"
+        @select-month="(month) => updateMonth(month)"
         @prev="onPrev"
         @next="onNext"
         @reload="getEvents"
+        :months="months"
       />
       <q-calendar-month
         animated
@@ -182,14 +222,15 @@ function changeDayEvent(date: any) {
 
         <q-card-section class="row q-gutter-x-lg justify-center items-center">
           <span>
-            {{ weekDay }}
+            {{ weekDay?.toUpperCase() }}
           </span>
-          <span class="text-h2">{{ day }}</span>
+          <span class="text-h3">{{ day }}</span>
           <span>
-            {{ month }}
+            {{ month?.toUpperCase() }}
           </span>
         </q-card-section>
-        <div v-if="eventList">
+        <!-- <div v-if="showEvents"> -->
+        <div v-if="eventsExist">
           <div
             class="row q-pa-md items-start q-gutter-x-sm"
             v-for="(events, index) in joinedDates[currentDay]"
@@ -213,6 +254,7 @@ function changeDayEvent(date: any) {
             </div>
           </div>
         </div>
+        <span v-else> {{ $t("warning.noEvents") }} </span>
       </q-card>
     </div>
   </div>

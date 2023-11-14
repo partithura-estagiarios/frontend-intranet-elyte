@@ -12,26 +12,17 @@ const props = defineProps({
     required: true,
     default: "",
   },
-  month: {
+  dropdownLabel: {
     type: String,
     default: "",
   },
+  months: {
+    type: Array,
+    default: () => [],
+  },
 });
 
-const months = [
-  { label: t("label.months.january"), value: 1 },
-  { label: t("label.months.febuary"), value: 2 },
-  { label: t("label.months.march"), value: 3 },
-  { label: t("label.months.april"), value: 4 },
-  { label: t("label.months.may"), value: 5 },
-  { label: t("label.months.june"), value: 6 },
-  { label: t("label.months.july"), value: 7 },
-  { label: t("label.months.august"), value: 8 },
-  { label: t("label.months.september"), value: 9 },
-  { label: t("label.months.october"), value: 10 },
-  { label: t("label.months.november"), value: 11 },
-  { label: t("label.months.december"), value: 12 },
-];
+const months = ref(props.months);
 
 function selectMonth(month: number) {
   emits("select-month", month);
@@ -64,7 +55,7 @@ function reload() {
           text-color="primary"
           class="text-h6 q-ml-lg"
           dropdown-icon="false"
-          :label="month"
+          :label="dropdownLabel"
         >
           <q-list v-for="(month, index) in months" :key="index">
             <q-item

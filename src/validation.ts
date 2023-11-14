@@ -18,8 +18,6 @@ export const validationSchema = yup.object({
     .matches(/[!@#$%^&*(),.?":{}|<>]/, t("warning.containSpecialChar")),
 });
 
-//*Nessa seção ficam as variáveis
-
 const title = yup.string().required(t("warning.requiredField"));
 
 const system = yup.string().required(t("warning.requiredField"));

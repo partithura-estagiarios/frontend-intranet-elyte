@@ -29,7 +29,4 @@ const size = computed(() => (useQuasar().screen.gt.md ? "6rem" : "5rem"));
 .titulo {
   font-size: 1.5rem;
 }
-body {
-  overflow: hidden;
-}
 </style>

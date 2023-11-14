@@ -12,7 +12,7 @@
   </q-item>
   <table-dynamic
     :columns="columns"
-    :rows="(ramalList as Array<Ramal>)"
+    :rows="ramalList"
     :v-bind="$attrs"
     class="q-mt-lg"
   >
@@ -45,7 +45,6 @@ import GetRamais from "../../graphql/ramais/getRamais.gql";
 import { Ramal } from "../../entities";
 import { Ref } from "vue";
 import actionButtons from "./actionButtons";
-const emits = defineEmits(["reload", "cancel"]);
 
 const ramalList: Ref<Ramal[]> = ref([]);
 const activedModal = ref(false);

@@ -22,7 +22,7 @@
       color="primary"
       label="Confirmar"
       type="submit"
-      :disabled="!activeConfirm"
+      :disabled="!enableConfirmation"
     >
       <TooltipField
         :item="form"
@@ -35,9 +35,6 @@
 const emit = defineEmits(["some-form"]);
 const enableConfirmation = ref(false);
 
-const activeConfirm = computed(() => {
-  return enableConfirmation.value;
-});
 const props = defineProps({
   isActive: {
     type: Boolean,

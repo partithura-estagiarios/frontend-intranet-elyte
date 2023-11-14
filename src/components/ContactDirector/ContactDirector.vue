@@ -1,5 +1,9 @@
 <template>
-  <BackButton class="justify-between row q-ml-md" />
+  <q-item class="row">
+    <div class="col-5">
+      <BackButton class="justify-between row q-ml-md" />
+    </div>
+  </q-item>
   <div class="text-h4 col-6 row justify-center q-mr-md">
     <span class="text-black font text-bold">
       {{ $t("titles.Login.contactTheDirector") }}

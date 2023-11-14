@@ -36,10 +36,6 @@ async function updateRamal(form: Object) {
     :open="isActive"
     :title="$t('action.editRamal.index')"
   >
-    <FormRamal
-      :isActive="true"
-      :item="form"
-      @some-form="(form) => updateRamal(form)"
-    />
+    <FormRamal :is-active="true" :item="form" @some-form="updateRamal" />
   </DynamicDialog>
 </template>

@@ -1,3 +1,7 @@
+<script setup lang="ts">
+const value = ref(false);
+</script>
+
 <template>
   <q-toggle
     v-model="value"
@@ -7,6 +11,3 @@
     @click="toggleDark()"
   />
 </template>
-<script setup lang="ts">
-const value = ref(false);
-</script>

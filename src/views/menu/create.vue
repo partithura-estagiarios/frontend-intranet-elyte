@@ -1,7 +1,7 @@
 <script setup lang="ts">
 onMounted(() => {
   if (!userStorage.isLoggedIn) {
-    router.push("login");
+    router.replace("/login");
   }
 });
 </script>

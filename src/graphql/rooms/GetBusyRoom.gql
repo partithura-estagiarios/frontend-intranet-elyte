@@ -1,0 +1,5 @@
+query GetBusyRoom($initialTime: Timestamp!, $finalTime: Timestamp!) {
+  getBusyRoom(initialTime: $initialTime, finalTime: $finalTime) {
+    id
+  }
+}

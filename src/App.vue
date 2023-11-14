@@ -9,7 +9,13 @@ useHead({
     },
   ],
 });
-const exceptionRoutes = ["/login", "/recover", "/changePassword", "/emailSent"];
+const exceptionRoutes = [
+  "/login",
+  "/recover",
+  "/changePassword",
+  "/emailSent",
+  "/register",
+];
 const showTabHeader = computed(() => {
   return !exceptionRoutes.some((route) =>
     window.location.pathname.includes(route)
@@ -26,5 +32,6 @@ userIsLogged();
 
 <template>
   <TabHeader />
+
   <RouterView />
 </template>

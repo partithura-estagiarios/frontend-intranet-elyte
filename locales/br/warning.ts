@@ -2,9 +2,9 @@ export default {
   ramalName: "Por favor digite um nome",
   ramalSector: "Por favor digite um setor",
   ramalNumber: "Por favor digite um ramal",
-  requiredField: "Campo necessário",
   email: "Email inválido",
   pwd: "Senha inválida, mínimo 8 caractéres",
+  requiredField: "Campo obrigatório",
   username: "Nome de usuário inválido, mínimo 2 caractéres",
   lowercase: "Deve conter uma letra minúscula",
   uppercase: "Deve conter uma letra maiúscula",
@@ -12,4 +12,8 @@ export default {
   containSpecialChar: "Deve conter um caractér especial",
   matchingPwd: "As senhas devem ser iguais",
   confirmPwd: "Confirme sua senha",
+  noRegistrationMenu: "Não há registros de cardápio",
+  dateFieldEmpty:
+    "Os campos de seleção de data e horário não foram preenchidos",
+  emptyFields: "Para confirmar você precisa preencher todos os campos",
 };

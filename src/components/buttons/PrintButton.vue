@@ -1,3 +1,9 @@
+<script lang="ts" setup>
+const printWindow = function () {
+  window.print();
+};
+</script>
+
 <template>
   <q-btn
     round
@@ -8,12 +14,6 @@
     @click="printWindow"
   />
 </template>
-
-<script lang="ts" setup>
-const printWindow = function () {
-  window.print();
-};
-</script>
 
 <style scoped>
 @page {

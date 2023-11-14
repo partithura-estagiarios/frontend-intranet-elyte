@@ -1,5 +1,5 @@
-query MenuBySystem($sistema: String!) {
-  menuBySystem(sistema: $sistema) {
+query GetSystem($sistema: String!) {
+  getSystem(sistema: $sistema) {
     id
     icon
     label

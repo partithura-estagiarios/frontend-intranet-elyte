@@ -13,6 +13,7 @@ const label = computed(() =>
   isDeleting.value ? "action.delete.ing" : "action.delete.index"
 );
 </script>
+
 <template>
   <button @click="handleClick" :class="btnClass" :disabled="isDeleting">
     <span class="button-text">
@@ -32,6 +33,7 @@ const label = computed(() =>
     </span>
   </button>
 </template>
+
 <style scoped>
 button {
   display: flex;

@@ -1,3 +1,7 @@
+<script setup lang="ts">
+const size = computed(() => (useQuasar().screen.gt.md ? "6rem" : "5rem"));
+</script>
+
 <template>
   <q-img
     class="background-image"
@@ -21,11 +25,7 @@
   </q-img>
 </template>
 
-<script setup lang="ts">
-const size = computed(() => (useQuasar().screen.gt.md ? "6rem" : "5rem"));
-</script>
-
-<style>
+<style scoped>
 .titulo {
   font-size: 1.5rem;
 }

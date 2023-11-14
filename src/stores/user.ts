@@ -60,4 +60,5 @@ export const useUserStore = defineStore("useUserStore", {
     },
   },
 });
+
 export const userStorage = useUserStore();

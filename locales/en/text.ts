@@ -1,14 +1,15 @@
 export default {
+  rows_per_page: "Records per page",
   profile: "Profile",
   settings: "Settings",
   name: "Name",
   sector: "Sector",
   number: "Number",
-  rows_per_page: "Records per page",
   day: "Day",
   date: "Date",
   week: "Week",
 
+  emptyTable: "No data available",
   menu: {
     dessert: "Dessert",
     rice: "Rice",

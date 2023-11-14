@@ -7,7 +7,7 @@ function buildMenus(menus: Menu[]): { menus: Menu[] } {
   };
 }
 const Menus = defineStore("Menus", {
-  state: () => buildMenus(null),
+  state: () => buildMenus([]),
   getters: {
     getMenus: (state) => {
       return state.menus;
@@ -22,4 +22,3 @@ const Menus = defineStore("Menus", {
   },
   persist: true,
 });
-export const menusStorage = Menus();

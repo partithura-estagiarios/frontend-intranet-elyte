@@ -18,4 +18,5 @@ export default {
   dateFieldInvalid:
     "Você não pode agendar um evento se a data final for antes da data inicial",
   noEvents: "Não há eventos agendados neste dia",
+  emptyFields: "Para confirmar você precisa preencher todos os campos",
 };

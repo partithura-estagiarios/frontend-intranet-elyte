@@ -49,7 +49,7 @@ export default {
     index: "Registrar",
     pronoun: "Seu registro",
   },
-  tootips: {
+  eventsTooltips: {
     user: "Usuário",
     userRegistration: "Matrícula",
     ramalOrPhone: "Ramal Ou telefone",

@@ -48,7 +48,7 @@ export default {
   },
   close: "Close",
   email: "E-mail",
-  tootips: {
+  eventsTooltips: {
     user: "User",
     userRegistration: "Registration",
     ramalOrPhone: "Branchline or Phone",

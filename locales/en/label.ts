@@ -60,7 +60,7 @@ export default {
   },
   months: {
     january: "January",
-    febuary: "Febuary",
+    february: "February",
     march: "March",
     april: "April",
     may: "May",

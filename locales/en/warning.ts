@@ -16,4 +16,5 @@ export default {
   dateFieldEmpty: "The date and time selection fields weren't filed",
   dateFieldInvalid:
     "You can not schedule an event if the final date comes before the initial date",
+  noEvents: "There are no events scheduled on this day",
 };

@@ -61,7 +61,7 @@ export default {
   },
   months: {
     january: "Janeiro",
-    febuary: "Fevereiro",
+    february: "Fevereiro",
     march: "Março",
     april: "Abril",
     may: "Maio",

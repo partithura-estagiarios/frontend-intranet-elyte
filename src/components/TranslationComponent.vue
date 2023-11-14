@@ -9,6 +9,7 @@ function toggleLocale() {
   console.warn(fromLocale, " -> ", t.locale.value);
 }
 </script>
+
 <template>
   <i class="material-icons" @click="toggleLocale">translate</i>
 </template>

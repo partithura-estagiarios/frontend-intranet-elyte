@@ -1,11 +1,12 @@
 export default {
   textIntranet: "INTRANET ELYTE",
+  home: "Início",
+  scheduler: "Agendar sala",
   ManagementSystem: "Sistema de gestão",
   FieldsFilled: "Campos que faltam ser preenchidos",
   IconPreview: "Visualização do ícone",
   HrSystem: "sistema de RH",
   OtherSystems: "Outros",
-  menu: "Cardápio",
   Management: {
     DataSul: "DataSul",
     DataSulPrototype: "DataSul Protótipo",
@@ -39,8 +40,8 @@ export default {
     IconPreview: "Previsualização do Icone",
   },
   Login: {
-    textPasswordForm: "Recupere sua senha!",
     textLoginForm: "Digite suas credenciais",
+    typeCredentials: "Recupere sua senha!",
     recoverPassword: "Entre em contato com o setor de TI",
     register: "Cadastrar Usuário",
     emailSent: "Email enviado com sucesso, verifique seu email",

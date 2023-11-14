@@ -1,6 +1,8 @@
 <template>
-  <q-card-actions class="row justify-end q-mr-md" v-if="!hideControls">
-    <div>
+  <q-card-actions align="right" class="q-pa-lg">
+    <div v-if="!hideControls">
+      <q-btn flat :label="closeLabel" color="primary" @click="emit('cancel')" />
+      >>>>>>> develop
       <q-btn
         v-if="!close"
         flat

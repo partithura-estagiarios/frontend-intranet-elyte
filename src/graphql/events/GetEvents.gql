@@ -1,0 +1,23 @@
+query getEvents {
+  getEvents {
+    id
+    roomId
+    room {
+      name
+    }
+    userCreated
+    description
+    finalTime
+    initialTime
+    ramalNumber
+    totalPeople
+    userRegistration
+    email
+    support {
+      computer
+      projector
+      coffee
+      water
+    }
+  }
+}

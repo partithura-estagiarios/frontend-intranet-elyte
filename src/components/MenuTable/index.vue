@@ -27,16 +27,28 @@ const menuItems = [
 
 const TIME_SEPARATOR = "T";
 
+function isDateValid(date: Date | string | number) {
+  return (
+    date &&
+    typeof date === "object" &&
+    date instanceof Date &&
+    !isNaN(date as unknown as number)
+  );
+}
+
 const groupMenusByDate = () => {
   const groupedMenus: Record<string, Menu[]> = {};
   menus.value.forEach((menu) => {
-    const date = menu.date.toISOString().split(TIME_SEPARATOR)[0]; // Usando a nova variável
-    const dayOfWeekIndex = new Date(date).getDay();
-    const dayOfWeek = weekday[dayOfWeekIndex];
-    if (!groupedMenus[date]) {
-      groupedMenus[date] = [];
+    if (isDateValid(menu.date)) {
+      const dateObject = new Date(menu.date);
+      const [date] = dateObject.toDateString().split(TIME_SEPARATOR);
+      const dayOfWeekIndex = dateObject.getDay();
+      const dayOfWeek = weekday[dayOfWeekIndex];
+      if (!groupedMenus[date]) {
+        groupedMenus[date] = [];
+      }
+      groupedMenus[date].push({ ...menu, dayOfWeek });
     }
-    groupedMenus[date].push({ ...menu, dayOfWeek });
   });
   return groupedMenus;
 };
@@ -52,12 +64,14 @@ async function getMenu() {
     rawData.sort((a, b) => a.date - b.date);
     const last7Menus = rawData.slice(0, 7);
 
-    menus.value = last7Menus.map((item: Menu) => {
-      return {
-        ...item,
-        date: new Date(parseInt(item.date)),
-      } as unknown as Menu;
-    });
+    if (Array.isArray(menus.value)) {
+      const transformedMenus = [];
+      for (const item of last7Menus) {
+        const date = new Date(parseInt(item.date));
+        transformedMenus.push({ ...item, date });
+      }
+      menus.value = transformedMenus;
+    }
   }
 }
 </script>
@@ -78,32 +92,39 @@ async function getMenu() {
 
     <div class="row justify-center no-print">
       <div class="col">
-        <div class="row">
-          <template v-for="dayMenus in groupMenusByDate()" :key="dayOfWeek">
-            <div class="col-4">
-              <q-card
-                class="text-uppercase col q-ma-md border smaller-card mx-auto text-white"
-              >
-                <q-card-section class="bg-primary">
-                  <div>
-                    {{ dayOfWeek }}
-                  </div>
-                </q-card-section>
-                <q-card-section class="text-subtitle2 text-black">
-                  <div v-for="menu in dayMenus" :key="menu.DATE">
-                    <div
-                      v-for="item in menuItems"
-                      :key="item.field"
-                      class="menu-item"
-                    >
-                      <q-icon name="restaurant" class="menu-icon" />
-                      <p class="menu-text">{{ menu[item.field] }}</p>
-                    </div>
-                  </div>
-                </q-card-section>
-              </q-card>
+        <div v-if="menus.length === 0" class="text-center relative text-h5">
+          <span>{{ $t("warning.noRegistrationMenu") }}</span>
+        </div>
+        <div v-else class="row">
+          <div class="col">
+            <div class="row">
+              <template v-for="dayMenus in groupMenusByDate()" :key="dayOfWeek">
+                <div class="col-4">
+                  <q-card
+                    class="text-uppercase col q-ma-md border smaller-card mx-auto text-white"
+                  >
+                    <q-card-section class="bg-primary">
+                      <div>
+                        {{ dayMenus[0].dayOfWeek }}
+                      </div>
+                    </q-card-section>
+                    <q-card-section class="text-subtitle2 text-black">
+                      <div v-for="menu in dayMenus" :key="menu.DATE">
+                        <div
+                          v-for="item in menuItems"
+                          :key="item.field"
+                          class="menu-item"
+                        >
+                          <q-icon name="restaurant" class="menu-icon" />
+                          <p class="menu-text">{{ menu[item.field] }}</p>
+                        </div>
+                      </div>
+                    </q-card-section>
+                  </q-card>
+                </div>
+              </template>
             </div>
-          </template>
+          </div>
         </div>
       </div>
     </div>

@@ -50,6 +50,7 @@ export default {
     index: "Delete System",
     message: "Select the system that you wish to delete:",
   },
+  scheduleEvent: "Schedule Event",
   register: {
     index: "Register",
   },

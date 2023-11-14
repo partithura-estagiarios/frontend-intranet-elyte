@@ -107,15 +107,7 @@ async function updateSystem(form: System) {
       </div>
     </div>
 
-    <div v-else>
-      <FormSystemDialog
-        :isActive="true"
-        :item="selectedSystem"
-        :system="system"
-        @some-form="(form) => updateSystem(form)"
-      >
-      </FormSystemDialog>
-    </div>
+    <div v-else></div>
   </DynamicDialog>
 </template>
 

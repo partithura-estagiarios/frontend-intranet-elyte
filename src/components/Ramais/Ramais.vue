@@ -12,7 +12,7 @@
   </q-item>
   <table-dynamic
     :columns="columns"
-    :rows="(ramalList as Array<Ramal>)"
+    :rows="ramalList"
     :v-bind="$attrs"
     class="q-mt-lg"
   >

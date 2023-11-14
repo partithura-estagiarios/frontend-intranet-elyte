@@ -1,7 +1,3 @@
-<script setup lang="ts">
-const title = ref("INTRANET ELYTE");
-</script>
-
 <template>
   <q-item class="row items-center backgroundHeader">
     <q-toolbar-section class="q-ma-md row" clickable>
@@ -10,7 +6,7 @@ const title = ref("INTRANET ELYTE");
     <q-toolbar class="justify-center text-white">
       <q-toobar-section class="row">
         <span class="titleStyle q-mr-md row text-weight-bolder">{{
-          title
+          $t("titles.textIntranet")
         }}</span>
         <q-icon size="2rem" class="border" name="house" />
       </q-toobar-section>

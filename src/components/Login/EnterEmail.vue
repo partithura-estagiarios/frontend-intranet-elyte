@@ -24,7 +24,7 @@ const sendRecoveryEmail = async (email: UserForm) => {
 </script>
 
 <template>
-  <span class="titulo q-mb-lg">{{ $t("titles.Login.textPasswordForm") }}</span>
+  <span class="titulo q-mb-lg">{{ $t("titles.Login.typeCredentials") }}</span>
   <Form
     @submit="sendRecoveryEmail"
     :validation-schema="emailSchema"

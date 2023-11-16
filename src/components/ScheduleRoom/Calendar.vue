@@ -101,22 +101,22 @@ function updateMonth(month: number) {
   currentMonth.value = dateFormat.set({ month }).toFormat("LLLL");
 }
 
+function changeMonths(direction: number) {
+  const currentIndex = months.findIndex(
+    (month) => month.label.toLowerCase() === currentMonth.value.toLowerCase()
+  );
+  const index = (currentIndex + direction + months.length) % months.length;
+  currentMonth.value = months[index].label;
+}
+
 const onNext = () => {
   calendar.value.next();
-  const currentIndex = months.findIndex(
-    (m) => m.label.toLowerCase() === currentMonth.value.toLowerCase()
-  );
-  const nextIndex = (currentIndex + 1) % months.length;
-  currentMonth.value = months[nextIndex].label;
+  changeMonths(1);
 };
 
 const onPrev = () => {
   calendar.value.prev();
-  const currentIndex = months.findIndex(
-    (m) => m.label.toLowerCase() === currentMonth.value.toLowerCase()
-  );
-  const prevIndex = (currentIndex - 1 + months.length) % months.length;
-  currentMonth.value = months[prevIndex].label;
+  changeMonths(-1);
 };
 
 function cancel() {

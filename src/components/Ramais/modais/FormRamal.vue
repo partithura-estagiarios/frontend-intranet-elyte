@@ -3,7 +3,7 @@
     <q-input
       class="col-12 q-px-sm"
       v-model.lazy="form.ramalUser"
-      :label="$t('label.name')"
+      :label="$t('label.nameRamal')"
     />
     <q-input
       mask="#####"
@@ -20,10 +20,10 @@
       @click.prevent="emitForm"
       flat
       color="primary"
-      label="Confirmar"
       type="submit"
       :disabled="!enableConfirmation"
     >
+      {{ $t("action.confirm.index") }}
       <TooltipField
         :item="form"
         @release-button="(enable) => (enableConfirmation = enable)"

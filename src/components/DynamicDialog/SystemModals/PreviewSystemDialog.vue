@@ -5,7 +5,7 @@ const props = defineProps(["formData"]);
 <template>
   <div class="column col-4 q-pa-sm items-center">
     <h6>{{ t("titles.IconPreview") }}</h6>
-    <q-item-section class="vb">
+    <q-item-section>
       <q-avatar size="7rem">
         <q-icon
           class="border icon border-radius-inherit q-pa-md"

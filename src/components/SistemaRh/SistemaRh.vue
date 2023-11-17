@@ -15,38 +15,14 @@
             system="rh"
           />
         </div>
+        <div class="absolute-left" v-if="userStorage.getToken">
+          <BarSearch
+            :system="'rh'"
+            @some-system="(resultsSystem) => (rhList = resultsSystem)"
+          />
+        </div>
       </q-card-section>
-
-      <q-card-section class="row col-12 justify-around">
-        <q-item
-          v-for="icon in rhList"
-          :key="icon.id"
-          class="column col-4 q-my-md items-center"
-          clickable
-          :to="icon.link"
-        >
-          <q-item-section wrap>
-            <q-avatar size="7rem">
-              <q-icon
-                class="border icon border-radius-inherit q-pa-md"
-                size="4rem"
-                :name="icon.icon"
-              />
-            </q-avatar>
-          </q-item-section>
-
-          <q-item-section class="q-mt-md">
-            <q-item-label
-              class="text-grey-8 text-h6 text-weight-bolder text-no-wrap"
-            >
-              {{ $t(icon.label) }}
-            </q-item-label>
-            <q-item-label class="text-grey text-weight-bolder text-no-wrap">
-              {{ $t(icon.sublabel) }}
-            </q-item-label>
-          </q-item-section>
-        </q-item>
-      </q-card-section>
+      <Card :iconsForSystem="rhList" />
     </q-card>
   </div>
 </template>
@@ -64,31 +40,17 @@ onMounted(() => {
 });
 
 async function getListRh() {
-  const { menuBySystem } = (await runMutation(GetSystem, {
+  const { getSystem } = (await runMutation(GetSystem, {
     sistema: "rh",
-  })) as unknown as Record<"menuBySystem", Array<System>>;
+  })) as unknown as Record<"getSystem", Array<System>>;
 
-  rhList.value = menuBySystem;
+  rhList.value = getSystem;
   return rhList;
 }
 </script>
-
 <style scoped>
-.border {
-  border: 8px solid;
-  border-color: rgb(164, 164, 164, 0.4);
-}
 .border-title {
   border-bottom: 5px solid;
-  border-color: var(--q-primary);
-}
-.icon {
-  color: rgb(164, 164, 164, 0.4);
-}
-.icon:hover {
-  color: var(--q-primary);
-}
-.border:hover {
   border-color: var(--q-primary);
 }
 </style>

@@ -13,6 +13,7 @@
             :item="gestaoList"
             @reload="getGestaoList()"
             system="gestao"
+            :attSystem="getGestaoList()"
           />
         </div>
         <div class="absolute-left" v-if="userStorage.getToken">

@@ -39,7 +39,6 @@ const props = defineProps({
     @cancel="() => $emit('cancel')"
   >
     <FormSystemDialog
-      :isActive="true"
       :item="item"
       :system="system"
       @some-form="(form) => handleFormSubmission(form)"

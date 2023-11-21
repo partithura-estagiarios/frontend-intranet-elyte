@@ -1,4 +1,5 @@
 <template>
+  <q-btn v-if="item.icon" flat icon="arrow_back" @click="backModal" />
   <Form :validation-schema="formSystem" class="row q-pa-md">
     <Field name="label" v-slot="item">
       <q-input
@@ -74,12 +75,8 @@ import { formSystem } from "../../../validation";
 import { System } from "../../../entities";
 import { Field, Form, useForm } from "vee-validate";
 import { PropType } from "vue";
-const emit = defineEmits(["some-form"]);
+const emit = defineEmits(["some-form", "back-modal"]);
 const props = defineProps({
-  isActive: {
-    type: Boolean,
-    default: false,
-  },
   item: {
     type: Object as PropType<System>,
     required: true,
@@ -108,6 +105,9 @@ onMounted(() => {
 
 function emitForm() {
   emit("some-form", form);
+}
+function backModal() {
+  emit("back-modal");
 }
 </script>
 <style scoped>

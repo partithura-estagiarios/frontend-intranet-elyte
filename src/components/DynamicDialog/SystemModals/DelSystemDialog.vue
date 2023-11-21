@@ -5,7 +5,7 @@ import { useI18n } from "vue-i18n";
 
 const { t } = useI18n();
 const emits = defineEmits(["reload", "cancel"]);
-defineProps({
+const props = defineProps({
   isActive: {
     type: Boolean,
     default: false,
@@ -13,6 +13,9 @@ defineProps({
   item: {
     type: Array<System>,
     required: true,
+  },
+  attSystem: {
+    type: Function,
   },
 });
 const storageSystemExclusion = ref([]);
@@ -26,7 +29,7 @@ async function deleteSystem() {
           parseToPlural(storageSystemExclusion.value)
         )
       );
-      emits("reload");
+      props.attSystem;
     } catch (err) {
       negativeNotify(
         t(

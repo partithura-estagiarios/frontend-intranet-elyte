@@ -6,7 +6,7 @@ import { inputSchema } from "../../../validation";
 import UpdateSystem from "../../../graphql/system/UpdateSystem.gql";
 
 const emits = defineEmits(["reload", "cancel"]);
-defineProps({
+const props = defineProps({
   isActive: {
     type: Boolean,
     default: false,
@@ -18,6 +18,9 @@ defineProps({
   system: {
     type: String,
     default: "",
+  },
+  attSystem: {
+    type: Function,
   },
 });
 const selectedSystem = ref<System>(buildForm());
@@ -58,8 +61,8 @@ async function updateSystem(form: System) {
   });
   if (response.updateSystem) {
     positiveNotify(t("notifications.success.editSystem"));
-    selectedSystem.value = buildForm();
-    return emits("reload");
+    props.attSystem;
+    return (selectedSystem.value = buildForm());
   }
   negativeNotify(t("notifications.fail.failEditSystem"));
 }
@@ -78,7 +81,7 @@ async function updateSystem(form: System) {
       }}</span>
       <div class="row max-size-list scroll fit">
         <q-item
-          v-for="sys in item"
+          v-for="sys in props.item"
           :key="sys.id"
           clickable
           target="_blank"
@@ -109,10 +112,10 @@ async function updateSystem(form: System) {
 
     <div v-else>
       <FormSystemDialog
-        :isActive="true"
         :item="selectedSystem"
         :system="system"
         @some-form="(form) => updateSystem(form)"
+        @back-modal="() => (selectedSystem = buildForm())"
       >
       </FormSystemDialog>
     </div>

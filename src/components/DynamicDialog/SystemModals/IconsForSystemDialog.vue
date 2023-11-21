@@ -4,34 +4,47 @@ const options = [
   ["search", "home", "copyright"],
   ["https", "restore", "source"],
 ];
+const showListOfIcons = ref(false);
+const labelIcons = ref("Icones");
+function handleMouseOver() {
+  showListOfIcons.value = true;
+  labelIcons.value = "";
+}
+
+function handleMouseLeave() {
+  showListOfIcons.value = false;
+  labelIcons.value = "Ícones";
+}
 function getIcon(icon: string) {
   emit("some-icon", icon);
 }
-const dialog = ref(false);
 </script>
 
 <template>
-  <q-btn round color="primary" icon="pageview" @click="dialog = true">
-    <q-dialog v-model="dialog" :position="'right'">
-      <q-card-section
-        class="row items-center q-gutter-sm bg-primary color-white"
-      >
-        <div
-          v-for="(option, index) in options"
-          :key="index"
+  <q-btn
+    class="btn"
+    :label="labelIcons"
+    @mouseover="handleMouseOver"
+    @mouseleave="handleMouseLeave"
+  >
+    <q-card-section v-if="showListOfIcons" @click="showListOfIcons = false">
+      <div class="color-red-6" v-for="(option, index) in options" :key="index">
+        <q-icon
+          class="cursor-pointer q-pa-sm"
+          v-for="icon in option"
+          :key="icon"
+          size="2.3rem"
+          :name="icon"
+          @click="getIcon(icon)"
           clickable
-          v-close-popup
-        >
-          <q-icon
-            class="cursor-pointer q-pa-sm"
-            v-for="icon in option"
-            :key="icon"
-            size="2.3rem"
-            :name="icon"
-            @click="getIcon(icon)"
-          />
-        </div>
-      </q-card-section>
-    </q-dialog>
+        />
+      </div>
+    </q-card-section>
   </q-btn>
 </template>
+<style scoped>
+.btn {
+  background: white;
+  padding: 0%;
+}
+</style>

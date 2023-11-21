@@ -17,7 +17,9 @@
         v-bind="item.field"
       >
         <template #append>
-          <IconsForSystemDialog @some-icon="(icon) => (form.icon = icon)" />
+          <div class="q-pt-none bg-white">
+            <IconsForSystemDialog @some-icon="(icon) => (form.icon = icon)" />
+          </div>
         </template>
       </q-input>
     </Field>
@@ -111,5 +113,10 @@ function emitForm() {
 <style scoped>
 .fit {
   margin-top: -80px;
+}
+.q-pt-none {
+  max-height: 79%;
+  position: relative;
+  z-index: 2;
 }
 </style>

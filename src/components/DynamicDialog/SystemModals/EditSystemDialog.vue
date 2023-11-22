@@ -5,7 +5,7 @@ import { inputSchema } from "../../../validation";
 
 import UpdateSystem from "../../../graphql/system/UpdateSystem.gql";
 
-const emits = defineEmits(["reload", "cancel"]);
+const emits = defineEmits(["reload", "cancel", "attSystem"]);
 const props = defineProps({
   isActive: {
     type: Boolean,
@@ -18,9 +18,6 @@ const props = defineProps({
   system: {
     type: String,
     default: "",
-  },
-  attSystem: {
-    type: Function,
   },
 });
 const selectedSystem = ref<System>(buildForm());
@@ -61,7 +58,7 @@ async function updateSystem(form: System) {
   });
   if (response.updateSystem) {
     positiveNotify(t("notifications.success.editSystem"));
-    props.attSystem;
+    emits("attSystem");
     return (selectedSystem.value = buildForm());
   }
   negativeNotify(t("notifications.fail.failEditSystem"));

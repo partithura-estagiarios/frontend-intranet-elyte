@@ -3,7 +3,7 @@ import { Action } from "../../entities/Action";
 import { type Ref } from "vue";
 import { number } from "yup";
 
-defineEmits(["reload"]);
+defineEmits(["reload", "attSystem"]);
 
 defineProps({
   item: {
@@ -53,6 +53,7 @@ function deactivateModal() {
           :is="button.component"
           :item="item"
           :system="system"
+          @attSystem="() => $emit('attSystem')"
         />
         <q-icon :name="button.icon" color="primary" size="xs" />
         <span class="text-subtitle1">{{ button.label }}</span>

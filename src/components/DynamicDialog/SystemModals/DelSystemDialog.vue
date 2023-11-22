@@ -4,7 +4,7 @@ import DeleteSystem from "../../../graphql/system/DeleteSystem.gql";
 import { useI18n } from "vue-i18n";
 
 const { t } = useI18n();
-const emits = defineEmits(["reload", "cancel"]);
+const emits = defineEmits(["reload", "cancel", "attSystem"]);
 const props = defineProps({
   isActive: {
     type: Boolean,
@@ -13,9 +13,6 @@ const props = defineProps({
   item: {
     type: Array<System>,
     required: true,
-  },
-  attSystem: {
-    type: Function,
   },
 });
 const storageSystemExclusion = ref([]);
@@ -29,7 +26,7 @@ async function deleteSystem() {
           parseToPlural(storageSystemExclusion.value)
         )
       );
-      props.attSystem;
+      emits("attSystem");
     } catch (err) {
       negativeNotify(
         t(

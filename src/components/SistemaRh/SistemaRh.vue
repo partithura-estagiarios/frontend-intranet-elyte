@@ -13,7 +13,7 @@
             :item="rhList"
             @reload="getListRh()"
             system="rh"
-            :attSystem="getListRh()"
+            @attSystem="getListRh()"
           />
         </div>
         <div class="absolute-left" v-if="userStorage.getToken">

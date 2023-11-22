@@ -8,7 +8,6 @@ export default {
   day: "Dia",
   date: "Data",
   week: "Semana",
-
   emptyTable: "Não há dados disponíveis",
   menu: {
     dessert: "Sobremesa",

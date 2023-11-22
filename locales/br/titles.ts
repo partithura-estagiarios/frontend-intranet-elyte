@@ -37,7 +37,7 @@ export default {
     Stock: "Gerenciamento de estoque",
     BoaIdeia: "Preencha Formulário",
     Reports: "ERP",
-    IconPreview: "Previsualização do Icone",
+    IconPreview: "Pré Visualização do Icone",
   },
   Login: {
     textLoginForm: "Digite suas credenciais",

@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { Action } from "../../entities/Action";
 import { type Ref } from "vue";
-import { number } from "yup";
 
 defineEmits(["reload"]);
 

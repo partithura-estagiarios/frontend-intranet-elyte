@@ -15,7 +15,7 @@ export default {
   ramalOrPhone: "Your Branch line Or Phone",
   dayEvents: "Events of the day",
   departament: "Departamento",
-  nameRamal: "Name",
+  nameRamal: "Name of ramal",
   sectorUser: "Sector User",
   ramalUser: "Ramal User ",
   sublabel: "description",

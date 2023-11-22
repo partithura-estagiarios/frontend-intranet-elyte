@@ -14,7 +14,7 @@ export default {
   ramalNumber: "Número do ramal",
   ramalOrPhone: "Seu Ramal ou Telefone",
   departament: "Setor",
-  nameRamal: "Nome",
+  nameRamal: "Nome do ramal",
   sectorUser: "Usuário do setor",
   ramalUser: "Usuário ramal",
   link: "Link",

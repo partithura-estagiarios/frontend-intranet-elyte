@@ -1,9 +1,8 @@
 <template>
-  <div class="q-pa-md">
+  <div class="some q-pa-md">
     <div class="q-gutter-md">
       <q-input
         v-model="search"
-        debounce="500"
         filled
         :placeholder="t('label.enterSystem')"
         @keyup.enter="searchSystem(search)"
@@ -38,11 +37,10 @@ async function searchSystem(search: string) {
   if (Array.isArray(result.searchSystem)) {
     getSearchSystem(result.searchSystem as Array<System>);
   }
-  return console.log("searchSystem result is not an array:");
 }
 </script>
 <style scoped>
-.q-pa-md {
+.some {
   max-width: 210px;
 }
 </style>

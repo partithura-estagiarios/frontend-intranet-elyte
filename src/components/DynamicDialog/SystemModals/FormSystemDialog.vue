@@ -45,7 +45,7 @@
         @click.prevent="emitForm"
         flat
         color="primary"
-        label="Confirmar"
+        :label="t('action.confirm.index')"
         type="submit"
         :disabled="!enableConfirmation"
       >
@@ -97,10 +97,10 @@ function backModal() {
 }
 </script>
 <style scoped>
-.fit {
+.preview {
   margin-top: -80px;
 }
-.q-pt-none {
+.icons {
   max-height: 79%;
   position: relative;
   z-index: 2;

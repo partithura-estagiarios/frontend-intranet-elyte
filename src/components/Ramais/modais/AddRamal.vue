@@ -24,7 +24,7 @@ async function addRamal(form: Object) {
 
 <template>
   <DynamicDialog
-    hideControls
+    hide-controls
     @cancel="() => $emit('cancel')"
     :open="isActive"
     :title="$t('action.addRamal.index')"

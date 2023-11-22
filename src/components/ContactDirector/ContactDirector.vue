@@ -20,7 +20,7 @@
       <Field name="username" v-slot="item">
         <q-input
           v-model="form.fullname"
-          label="Seu Nome Completo*"
+          :label="t('label.name.index')"
           v-bind="item.field"
           lazy-rules
         />
@@ -31,7 +31,7 @@
       <Field name="email" v-slot="item">
         <q-input
           v-model="form.email"
-          label="Seu Email*"
+          :label="t('label.email')"
           v-bind="item.field"
           lazy-rules
         />
@@ -44,7 +44,7 @@
           type="number"
           v-model="form.registration"
           v-bind="item.field"
-          label="Sua Matrícula *"
+          :label="t('label.code')"
           lazy-rules
         />
         <span v-if="item.errorMessage" class="text-red">
@@ -56,14 +56,18 @@
           v-model="form.message"
           v-bind="item.field"
           type="textarea"
-          label="Seu Contato *"
+          :label="t('about')"
         />
         <span v-if="item.errorMessage" class="text-red">
           {{ parseErrorMessage(item.errorMessage) }}
         </span>
       </Field>
       <div>
-        <q-btn label="Enviar" type="submit" color="primary" />
+        <q-btn
+          :label="t('action.submit.index')"
+          type="submit"
+          color="primary"
+        />
       </div>
     </Form>
   </div>
@@ -74,6 +78,8 @@ import { parse } from "path";
 import SendEmail from "../../graphql/sendEmail/SendEmail.gql";
 import { loginForContact } from "../../validation";
 import { Field, Form } from "vee-validate";
+import label from "../../../locales/br/label";
+import action from "../../../locales/br/action";
 
 const form = reactive(buildForm());
 function buildForm() {
@@ -92,7 +98,7 @@ function setMessage() {
   return {
     type: "contact",
     data: {
-      to: "hr",
+      to: t("titles.Management.Hr"),
       subject: t("email.form.subjectContactTheDirector"),
       name,
       from,

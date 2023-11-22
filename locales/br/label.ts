@@ -13,7 +13,7 @@ export default {
   code: "Código",
   ramalNumber: "Número do ramal",
   ramalOrPhone: "Seu Ramal ou Telefone",
-  departament: "Setor",
+  departament: "Departamento",
   nameRamal: "Nome do ramal",
   sectorUser: "Usuário do setor",
   ramalUser: "Usuário ramal",

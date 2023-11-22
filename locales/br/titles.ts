@@ -5,7 +5,7 @@ export default {
   ManagementSystem: "Sistema de gestão",
   FieldsFilled: "Campos que faltam ser preenchidos",
   IconPreview: "Visualização do ícone",
-  HrSystem: "sistema de RH",
+  HrSystem: "Sistema de RH",
   OtherSystems: "Outros",
   Management: {
     DataSul: "DataSul",
@@ -37,7 +37,7 @@ export default {
     Stock: "Gerenciamento de estoque",
     BoaIdeia: "Preencha Formulário",
     Reports: "ERP",
-    IconPreview: "Pré Visualização do Icone",
+    IconPreview: "Pré-Visualização do Icone",
   },
   Login: {
     textLoginForm: "Digite suas credenciais",

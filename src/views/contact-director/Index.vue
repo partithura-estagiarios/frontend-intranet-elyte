@@ -1,0 +1,3 @@
+<template>
+  <ContactDirector />
+</template>

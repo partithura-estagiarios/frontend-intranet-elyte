@@ -12,6 +12,8 @@ export default {
     editMenu: "Menu edited successfully",
     createSystem: "System created successfully",
     deleteSystem: "System deleted successfully | Systems deleted successfully",
+    emailSentSuccessfully: "Email sent successfully",
+    editSystem: "System edited successfully",
     scheduleEvent: "Event scheduled successfully",
   },
 
@@ -32,10 +34,14 @@ export default {
         "An error occurred while deleting the system | An error occurred while deleting the systems",
       notSelected: "You must select at least one system to delete",
     },
+    failEditSystem: "System not edited",
     scheduleEvent: "An error occurred while scheduling the event",
     emptyField: "Required field",
     invalidEmail: "Invalid email",
     equalPassword: "Passwords do not match",
     invalidPassword: "Invalid password",
+    timeExpired: "Time expired",
+    errorSendingToEmail: "An error occurred while sending the email",
+    failFields: "There are empty and required fields",
   },
 };

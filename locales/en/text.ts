@@ -1,7 +1,6 @@
 export default {
   rows_per_page: "Records per page",
   profile: "Profile",
-  title: "Title",
   settings: "Settings",
   name: "Name",
   sector: "Sector",

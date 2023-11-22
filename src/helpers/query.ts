@@ -3,8 +3,8 @@ import { useQuery, useMutation } from "villus";
 
 export async function runQuery(
   query: MaybeRef<Document>,
-  variables: Record<string, Record<string, string>> | null = null
-): Promise<Record<string, string | number>> {
+  variables: Record<string, string> | null = null
+): Promise<Record<string, string | number | boolean>> {
   const { data } = (await useQuery({
     query,
     variables,

@@ -1,19 +1,24 @@
 import { createClient, defaultPlugins } from "villus";
 import { getEnvironmentVariable } from "../helpers";
 
-// Creates a villus client instance
 const hostMeta = <HTMLMetaElement>(
   document.querySelector('meta[name="config-backend_host"]')
 );
 const content = hostMeta?.content;
-
+interface FetchOptions extends RequestInit {
+  url?: string;
+  headers: NonNullable<Record<string, string>>;
+}
 const backendHost =
   content && content !== "@unknown-host"
     ? content
     : getEnvironmentVariable("VITE_APP_ENDPOINT");
 
+function authPlugin({ opContext }: { opContext: FetchOptions }) {
+  opContext.headers.Authorization = userStorage.getToken;
+}
 const url = backendHost;
 export const villus = createClient({
-  use: [...defaultPlugins()],
+  use: [authPlugin, ...defaultPlugins()],
   url,
 });

@@ -17,7 +17,7 @@
         v-bind="item.field"
       >
         <template #append>
-          <div class="q-pt-none bg-white">
+          <div class="q-pt-none icons bg-white">
             <IconsForSystemDialog @some-icon="(icon) => (form.icon = icon)" />
           </div>
         </template>
@@ -48,7 +48,7 @@
       >
       </q-input>
     </Field>
-    <div class="fit row justify-center">
+    <div class="fit preview row justify-center">
       <PreviewSystemDialog :formData="form" />
     </div>
     <div class="q-ml-auto">
@@ -56,7 +56,7 @@
         @click.prevent="emitForm"
         flat
         color="primary"
-        label="Confirmar"
+        :label="t('action.confirm.index')"
         type="submit"
         :disabled="!enableConfirmation"
       >
@@ -111,10 +111,10 @@ function emitForm() {
 }
 </script>
 <style scoped>
-.fit {
+.preview {
   margin-top: -80px;
 }
-.q-pt-none {
+.icons {
   max-height: 79%;
   position: relative;
   z-index: 2;

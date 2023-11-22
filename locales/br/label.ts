@@ -20,6 +20,7 @@ export default {
   link: "Link",
   label: "Título",
   dayEvents: "Eventos do Dia",
+  enterSystem: "Digite um sistema",
   numberParticipants: "Número de participantes",
   date: {
     year: "Ano",

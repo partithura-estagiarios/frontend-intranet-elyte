@@ -5,7 +5,7 @@
         v-model="search"
         debounce="500"
         filled
-        placeholder="Digite um Sistema"
+        :placeholder="t('label.enterSystem')"
         @keyup.enter="searchSystem(search)"
       >
         <template v-slot:before>
@@ -38,7 +38,7 @@ async function searchSystem(search: string) {
   if (Array.isArray(result.searchSystem)) {
     getSearchSystem(result.searchSystem as Array<System>);
   }
-  return console.error("searchSystem result is not an array:");
+  return console.log("searchSystem result is not an array:");
 }
 </script>
 <style scoped>

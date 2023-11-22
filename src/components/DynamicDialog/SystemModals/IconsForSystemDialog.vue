@@ -5,7 +5,7 @@ const options = [
   ["https", "restore", "source"],
 ];
 const showListOfIcons = ref(false);
-const labelIcons = ref("Icones");
+const labelIcons = ref(t("label.icon"));
 function handleMouseOver() {
   showListOfIcons.value = true;
   labelIcons.value = "";
@@ -13,7 +13,7 @@ function handleMouseOver() {
 
 function handleMouseLeave() {
   showListOfIcons.value = false;
-  labelIcons.value = "Ícones";
+  labelIcons.value = t("label.icon");
 }
 function getIcon(icon: string) {
   emit("some-icon", icon);

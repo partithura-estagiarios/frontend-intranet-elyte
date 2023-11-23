@@ -1,4 +1,4 @@
-mutation AddSystem($data: systemInput) {
+mutation AddSystem($data: SystemInput!) {
   addSystem(data: $data) {
     id
   }

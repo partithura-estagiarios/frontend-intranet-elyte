@@ -8,6 +8,7 @@ interface AuthenticateType {
 }
 
 interface User {
+  token: string;
   username: string;
   id: string;
   email: string;

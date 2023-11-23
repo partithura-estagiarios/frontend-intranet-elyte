@@ -3,7 +3,9 @@ export default {
   home: "Início",
   scheduler: "Agendar sala",
   ManagementSystem: "Sistema de gestão",
-  HrSystem: "sistema de RH",
+  FieldsFilled: "Campos que faltam ser preenchidos",
+  IconPreview: "Visualização do ícone",
+  HrSystem: "Sistema de RH",
   OtherSystems: "Outros",
   Management: {
     DataSul: "DataSul",
@@ -15,6 +17,7 @@ export default {
     Reports: "Relatórios",
     ProcessMapping: "Mapeamento de Processos",
     FtWeb: "FT Web",
+    Hr: "Hr",
   },
   Hr: {
     HRDiscloses: "RH Divulga",
@@ -35,6 +38,7 @@ export default {
     Stock: "Gerenciamento de estoque",
     BoaIdeia: "Preencha Formulário",
     Reports: "ERP",
+    IconPreview: "Pré-Visualização do Icone",
   },
   Login: {
     textLoginForm: "Digite suas credenciais",
@@ -42,5 +46,7 @@ export default {
     recoverPassword: "Entre em contato com o setor de TI",
     register: "Cadastrar Usuário",
     emailSent: "Email enviado com sucesso, verifique seu email",
+    logOutOfAccount: "Sair da Conta",
+    contactTheDirector: "Contate o Diretor",
   },
 };

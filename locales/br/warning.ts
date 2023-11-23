@@ -15,4 +15,5 @@ export default {
   noRegistrationMenu: "Não há registros de cardápio",
   dateFieldEmpty:
     "Os campos de seleção de data e horário não foram preenchidos",
+  emptyFields: "Para confirmar você precisa preencher todos os campos",
 };

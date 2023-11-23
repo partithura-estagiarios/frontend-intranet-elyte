@@ -4,7 +4,7 @@ import text from "./text";
 import warning from "./warning";
 import notifications from "./notifications";
 import label from "./label";
-import email from "../br/email";
+import email from "./email";
 
 export default {
   about: "About",

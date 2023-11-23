@@ -9,7 +9,7 @@ const props = defineProps({
   },
   item: {
     type: Object,
-    default: () => {},
+    required: true,
   },
 });
 const form = reactive({
@@ -18,7 +18,7 @@ const form = reactive({
   ramalNumber: props.item.ramalNumber,
 });
 
-async function updateRamal() {
+async function updateRamal(form: Object) {
   try {
     await runMutation(UpdateRamal, { id: props.item.id, data: form });
     positiveNotify(t("notifications.success.deleteRamal"));
@@ -31,31 +31,11 @@ async function updateRamal() {
 
 <template>
   <DynamicDialog
+    hide-controls
     @cancel="() => $emit('cancel')"
-    @confirm="updateRamal"
     :open="isActive"
     :title="$t('action.editRamal.index')"
   >
-    <div class="row q-pa-md">
-      <q-input
-        class="col-12 q-px-sm"
-        v-model="form.ramalUser"
-        :label="$t('label.name')"
-        :rules="[(val: string) => validateNotEmpty(val)]"
-      />
-      <q-input
-        class="col-6 q-px-sm"
-        mask="######"
-        v-model="form.ramalNumber"
-        :label="$t('label.ramalNumber')"
-        :rules="[(val: string) => validateNotEmpty(val)]"
-      />
-      <q-input
-        class="col-6 q-px-sm"
-        v-model="form.sectorUser"
-        :label="$t('label.sector')"
-        :rules="[(val: string) => validateNotEmpty(val)]"
-      />
-    </div>
+    <FormRamal is-active :item="form" @some-form="updateRamal" />
   </DynamicDialog>
 </template>

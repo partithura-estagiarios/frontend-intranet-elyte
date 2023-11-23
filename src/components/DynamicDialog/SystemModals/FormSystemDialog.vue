@@ -1,51 +1,42 @@
 <template>
-  <Form :validation-schema="formSystem" class="row q-pa-md">
-    <Field name="label" v-slot="item">
-      <q-input
-        class="col-6 q-px-xs"
-        :label="$t('text.label')"
-        v-model.lazy="form.label"
-        v-bind="item.field"
-      >
-      </q-input>
-    </Field>
-    <Field name="icon" v-slot="item">
-      <q-input
-        class="col-6 q-px-xs"
-        :label="$t('text.icon')"
-        v-model.lazy="form.icon"
-        v-bind="item.field"
-      >
-        <template #append>
+  <q-btn v-if="item.icon" flat icon="arrow_back" @click="backModal" />
+  <q-form class="row q-pa-md">
+    <q-input
+      class="col-6 q-px-xs"
+      :label="$t('label.label')"
+      v-model.lazy="form.label"
+    >
+    </q-input>
+    <q-input
+      class="col-6 q-px-xs"
+      :label="$t('label.icon')"
+      v-model.lazy="form.icon"
+    >
+      <template #append>
+        <div class="q-pt-none bg-white">
           <IconsForSystemDialog @some-icon="(icon) => (form.icon = icon)" />
-        </template>
-      </q-input>
-    </Field>
-    <Field name="sublabel" v-slot="item">
-      <q-input
-        class="col-6 q-px-xs"
-        :label="$t('text.sublabel')"
-        v-model.lazy="form.sublabel"
-        v-bind="item.field"
-      >
-      </q-input>
-    </Field>
+        </div>
+      </template>
+    </q-input>
+    <q-input
+      class="col-6 q-px-xs"
+      :label="$t('label.sublabel')"
+      v-model.lazy="form.sublabel"
+    >
+    </q-input>
     <q-input
       disable
       class="col-6 q-px-xs"
-      :label="$t('text.system')"
+      :label="$t('label.system')"
       v-model.lazy="props.system"
     >
     </q-input>
-    <Field name="link" v-slot="item">
-      <q-input
-        class="col-12 q-px-xs q-mb-xl"
-        :label="$t('text.link')"
-        v-model.lazy="form.link"
-        v-bind="item.field"
-      >
-      </q-input>
-    </Field>
+    <q-input
+      class="col-12 q-px-xs q-mb-xl"
+      :label="$t('label.link')"
+      v-model.lazy="form.link"
+    >
+    </q-input>
     <div class="fit row justify-center">
       <PreviewSystemDialog :formData="form" />
     </div>
@@ -54,34 +45,24 @@
         @click.prevent="emitForm"
         flat
         color="primary"
-        label="Confirmar"
+        :label="t('action.confirm.index')"
         type="submit"
-        :disabled="!activeConfirm"
+        :disabled="!enableConfirmation"
       >
-        <q-tooltip anchor="top left" v-if="!activeConfirm">
-          <strong>{{ t("titles.FieldsFilled") }}</strong>
-          <ul>
-            <li v-for="(value, key) in missingFields" :key="key">
-              {{ $t(`text.${key}`) }}
-            </li>
-          </ul>
-        </q-tooltip>
+        <TooltipField
+          :item="form"
+          @release-button="(enable) => (enableConfirmation = enable)"
+        >
+        </TooltipField>
       </q-btn>
     </div>
-  </Form>
+  </q-form>
 </template>
 <script setup lang="ts">
-import { formSystem } from "../../../validation";
 import { System } from "../../../entities";
-import { Field, Form, useForm } from "vee-validate";
 import { PropType } from "vue";
-const emit = defineEmits(["some-form"]);
+const emit = defineEmits(["some-form", "back-modal"]);
 const props = defineProps({
-  submitForm: Function,
-  isActive: {
-    type: Boolean,
-    default: false,
-  },
   item: {
     type: Object as PropType<System>,
     required: true,
@@ -91,12 +72,13 @@ const props = defineProps({
     default: "",
   },
 });
+const enableConfirmation = ref(false);
 
 const form = reactive({
-  label: "",
+  label: t("label.label"),
   icon: "",
   sistema: props.system,
-  sublabel: "",
+  sublabel: t("label.sublabel"),
   link: "",
 });
 
@@ -107,33 +89,20 @@ onMounted(() => {
   form.link = props.item.link;
 });
 
-const activeConfirm = ref(false);
-const isFormFilled = computed(() => {
-  return Object.values(form).every((value) => !!value);
-});
-const missingFields = computed(() => {
-  const missing: { [key: string]: any } = {};
-  for (const [key, value] of Object.entries(form)) {
-    if (!value) {
-      activeConfirm.value = false;
-      missing[key] = value;
-    }
-  }
-  return missing;
-});
-watch(isFormFilled, (newIsFormFilled) => {
-  if (newIsFormFilled) {
-    return (activeConfirm.value = true);
-  }
-  return (activeConfirm.value = false);
-});
-
 function emitForm() {
   emit("some-form", form);
 }
+function backModal() {
+  emit("back-modal");
+}
 </script>
 <style scoped>
-.fit {
+.preview {
   margin-top: -80px;
+}
+.icons {
+  max-height: 79%;
+  position: relative;
+  z-index: 2;
 }
 </style>

@@ -17,6 +17,7 @@ export default {
     Reports: "Reports",
     ProcessMapping: "Process Mapping",
     FtWeb: "FT Web",
+    Hr: "Hr",
   },
   Hr: {
     HRDiscloses: "HR Discloses",

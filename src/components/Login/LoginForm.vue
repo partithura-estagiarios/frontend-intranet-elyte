@@ -28,7 +28,6 @@ async function auth(data: UserForm) {
       router.push("/");
     }
   } catch (err) {
-    console.log(err);
     negativeNotify(t("notifications.fail.login"));
   }
 }

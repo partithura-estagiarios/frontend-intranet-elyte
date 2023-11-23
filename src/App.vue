@@ -31,6 +31,7 @@ userIsLogged();
 </script>
 
 <template>
-  <TabHeader v-if="showTabHeader" />
+  <TabHeader />
+
   <RouterView />
 </template>

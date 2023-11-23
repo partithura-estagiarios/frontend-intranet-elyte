@@ -7,51 +7,28 @@ defineProps({
     type: Boolean,
     default: false,
   },
+  item: {
+    type: Object,
+    default: () => ({}),
+  },
 });
-const form = reactive({
-  ramalUser: "",
-  sectorUser: "",
-  ramalNumber: "",
-});
-
-async function addRamal() {
-  try {
-    await runMutation(AddRamal, { data: form });
+async function addRamal(form: Object) {
+  const result = await runMutation(AddRamal, { data: form });
+  if (result !== undefined) {
     positiveNotify(t("notifications.success.createRamal"));
-    emits("reload");
-  } catch {
-    negativeNotify(t("notifications.fail.createRamal"));
+    return emits("reload");
   }
+  negativeNotify(t("notifications.fail.createRamal"));
 }
 </script>
 
 <template>
   <DynamicDialog
+    hide-controls
     @cancel="() => $emit('cancel')"
-    @confirm="addRamal"
     :open="isActive"
     :title="$t('action.addRamal.index')"
   >
-    <div class="row q-pa-md">
-      <q-input
-        class="col-12 q-px-sm"
-        v-model="form.ramalUser"
-        :label="$t('label.name')"
-        :rules="[(val: string) => validateNotEmpty(val)]"
-      />
-      <q-input
-        mask="#####"
-        class="col-6 q-px-sm"
-        v-model="form.ramalNumber"
-        :label="$t('label.ramalNumber')"
-        :rules="[(val: string) => validateNotEmpty(val)]"
-      />
-      <q-input
-        class="col-6 q-px-sm"
-        v-model="form.sectorUser"
-        :label="$t('label.sector')"
-        :rules="[(val: string) => validateNotEmpty(val)]"
-      />
-    </div>
+    <FormRamal is-active :item="item" @some-form="addRamal" />
   </DynamicDialog>
 </template>

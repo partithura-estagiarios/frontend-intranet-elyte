@@ -31,16 +31,14 @@ async function deleteRamal(id: object) {
     :open="isActive"
     :title="$t('action.deleteRamal.index')"
   >
-    <div class="row text-black">
-      <span class="text-secondary text-h6 q-pl-lg">
-        {{
-          $t("action.deleteRamal.message", {
-            numero: item.ramalNumber,
-            nome: item.ramalUser,
-            setor: item.sectorUser,
-          })
-        }}
-      </span>
-    </div>
+    <span class="text-secondary text-h6">
+      {{
+        $t("action.deleteRamal.message", {
+          numero: item.ramalNumber,
+          nome: item.ramalUser,
+          setor: item.sectorUser,
+        })
+      }}
+    </span>
   </DynamicDialog>
 </template>

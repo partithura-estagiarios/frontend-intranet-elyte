@@ -1,4 +1,4 @@
-import { createClient, defaultPlugins, definePlugin } from "villus";
+import { createClient, defaultPlugins } from "villus";
 import { getEnvironmentVariable } from "../helpers";
 
 const hostMeta = <HTMLMetaElement>(

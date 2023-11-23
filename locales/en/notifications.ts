@@ -35,7 +35,6 @@ export default {
       notSelected: "You must select at least one system to delete",
     },
     failEditSystem: "System not edited",
-
     scheduleEvent: "An error occurred while scheduling the event",
     emptyField: "Required field",
     invalidEmail: "Invalid email",

@@ -53,11 +53,11 @@ onMounted(() => {
 });
 
 async function getListRamal() {
+  activedModal.value = false;
   const { ramais } = (await runMutation(GetRamais, {})) as unknown as Record<
     "ramais",
     Array<Ramal>
   >;
-
   ramalList.value = ramais;
   return ramalList;
 }

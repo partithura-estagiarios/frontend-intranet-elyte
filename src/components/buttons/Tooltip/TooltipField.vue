@@ -1,6 +1,6 @@
 <template>
   <q-tooltip anchor="top left" v-if="!activeConfirm">
-    <strong>{{ t("titles.FieldsFilled") }}</strong>
+    <strong>{{ $t("titles.FieldsFilled") }}</strong>
     <ul>
       <li v-for="(value, key) in missingFields" :key="key">
         {{ $t(`label.${key}`) }}

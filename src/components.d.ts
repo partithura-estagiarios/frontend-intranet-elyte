@@ -10,7 +10,6 @@ declare module "@vue/runtime-core" {
     ActionButton: typeof import("./components/buttons/ActionButton.vue")["default"];
     Add: typeof import("./components/SistemaGestao/Modais/Add.vue")["default"];
     AddRamal: typeof import("./components/Ramais/modais/AddRamal.vue")["default"];
-    AddSchedule: typeof import("./components/ScheduleRoom/AddSchedule.vue")["default"];
     AddSys: typeof import("./components/Modais/AddSys.vue")["default"];
     AddSystemDialog: typeof import("./components/DynamicDialog/SystemModals/AddSystemDialog.vue")["default"];
     AddSystemManage: typeof import("./components/Modais/AddSystemManage.vue")["default"];
@@ -68,9 +67,6 @@ declare module "@vue/runtime-core" {
     RegisterUser: typeof import("./components/Login/RegisterUser.vue")["default"];
     RouterLink: typeof import("vue-router")["RouterLink"];
     RouterView: typeof import("vue-router")["RouterView"];
-    ScheduleModal: typeof import("./components/ScheduleRoom/ScheduleModal.vue")["default"];
-    ScheduleNavigation: typeof import("./components/ScheduleRoom/ScheduleNavigation.vue")["default"];
-    SelectTime: typeof import("./components/ScheduleRoom/SelectTime.vue")["default"];
     SendButton: typeof import("./components/buttons/SendButton.vue")["default"];
     SimpleForm: typeof import("./components/SimpleForm.vue")["default"];
     SimpleModal: typeof import("./components/Modais/SimpleModal.vue")["default"];

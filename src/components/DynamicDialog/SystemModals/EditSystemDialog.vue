@@ -112,7 +112,7 @@ async function updateSystem(form: System) {
         :item="selectedSystem"
         :system="system"
         @some-form="(form) => updateSystem(form)"
-        @back-modal="() => (selectedSystem = buildForm())"
+        @back-modal="selectedSystem = buildForm()"
       >
       </FormSystemDialog>
     </div>

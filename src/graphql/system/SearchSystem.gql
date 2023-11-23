@@ -1,0 +1,10 @@
+query SearchSystem($word: String!, $tableSystem: String!) {
+  searchSystem(word: $word, tableSystem: $tableSystem) {
+    id
+    icon
+    label
+    sublabel
+    link
+    sistema
+  }
+}

@@ -1,5 +1,5 @@
 <template>
-  <div class="row">
+  <div class="row q-pa-xl">
     <SistemaGestao class="col-6" />
     <SistemaRh class="col-6" />
   </div>

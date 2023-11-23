@@ -1,15 +1,12 @@
 <template>
   <q-card-actions align="right" class="q-pa-lg">
-    <div v-if="!hideControls">
-      <q-btn flat :label="closeLabel" color="primary" @click="emit('cancel')" />
-      <q-btn
-        v-if="!close"
-        flat
-        :label="$t('action.confirm.index')"
-        color="primary"
-        @click="emit('confirm')"
-      />
-    </div>
+    <q-btn
+      v-if="!close && !hideControls"
+      flat
+      :label="$t('action.confirm.index')"
+      color="primary"
+      @click="emit('confirm')"
+    />
   </q-card-actions>
 </template>
 <script setup lang="ts">

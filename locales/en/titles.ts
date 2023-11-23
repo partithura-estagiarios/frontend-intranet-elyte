@@ -1,6 +1,8 @@
 export default {
   textIntranet: "INTRANET ELYTE",
   ManagementSystem: "Management System",
+  FieldsFilled: "Fields that need to be filled in",
+  IconPreview: "Icon Preview",
   home: "Home",
   scheduler: "Schedule room",
   HrSystem: "Hr System",
@@ -16,6 +18,7 @@ export default {
     Reports: "Reports",
     ProcessMapping: "Process Mapping",
     FtWeb: "FT Web",
+    Hr: "Hr",
   },
   Hr: {
     HRDiscloses: "HR Discloses",
@@ -33,6 +36,7 @@ export default {
     Mapping: "Mapping",
     FT: "Web Technical Sheet",
     DataSulPrototype: "Exclusive for Test",
+    IconPreview: "Icon Preview",
     Stock: "Inventory management",
     BoaIdeia: "Fill out form",
     Reports: "ERP",
@@ -43,5 +47,8 @@ export default {
     recoverPassword: "Contact the IT department to recover password",
     register: "Register User",
     textPasswordForm: "Recover your password!",
+    emailSent: "Email sent with success, verify your email",
+    logOutOfAccount: "Log out of account",
+    contactTheDirector: "Contact the Director",
   },
 };

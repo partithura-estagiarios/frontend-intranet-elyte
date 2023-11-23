@@ -1,7 +1,6 @@
 export default {
   rows_per_page: "Records per page",
   profile: "Profile",
-  title: "Title",
   settings: "Settings",
   name: "Name",
   sector: "Sector",
@@ -9,6 +8,7 @@ export default {
   day: "Day",
   date: "Date",
   week: "Week",
+  emptyTable: "No data available",
   menu: {
     dessert: "Dessert",
     rice: "Rice",

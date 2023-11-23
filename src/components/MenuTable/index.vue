@@ -86,7 +86,14 @@ async function getMenu() {
       </span>
     </div>
     <div class="row justify-between">
-      <BackButton class="row q-ml-md hide-print q-mt-md no-print" />
+      <q-btn
+        round
+        icon="arrow_back"
+        class="row q-mt-md"
+        color="primary"
+        size="1.2rem"
+        @click="$router.replace('/menu/create')"
+      />
       <PrintButton class="q-mr-md no-print" />
     </div>
 

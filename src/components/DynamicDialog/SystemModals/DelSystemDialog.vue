@@ -4,8 +4,8 @@ import DeleteSystem from "../../../graphql/system/DeleteSystem.gql";
 import { useI18n } from "vue-i18n";
 
 const { t } = useI18n();
-const emits = defineEmits(["reload", "cancel"]);
-defineProps({
+const emits = defineEmits(["reload", "cancel", "attSystem"]);
+const props = defineProps({
   isActive: {
     type: Boolean,
     default: false,
@@ -15,25 +15,23 @@ defineProps({
     required: true,
   },
 });
-
-const selectedSystems = ref([]);
-
+const storageSystemExclusion = ref([]);
 async function deleteSystem() {
-  if (selectedSystems.value.length >= 1) {
+  if (storageSystemExclusion.value.length > 0) {
     try {
-      await runMutation(DeleteSystem, { id: selectedSystems.value });
+      await runMutation(DeleteSystem, { id: storageSystemExclusion.value });
       positiveNotify(
         t(
           "notifications.success.deleteSystem",
-          parseToPlural(selectedSystems.value)
+          parseToPlural(storageSystemExclusion.value)
         )
       );
-      emits("reload");
+      emits("attSystem");
     } catch (err) {
       negativeNotify(
         t(
           "notifications.fail.deleteSystem.error",
-          parseToPlural(selectedSystems.value)
+          parseToPlural(storageSystemExclusion.value)
         )
       );
     }
@@ -50,41 +48,10 @@ async function deleteSystem() {
     :open="isActive"
     :title="$t('action.delSystem.index')"
   >
-    <div class="row q-gutter-md q-pa-md">
-      <span class="text-secondary text-h6 q-pl-lg">{{
-        $t("action.delSystem.message")
-      }}</span>
-      <div class="row max-size-list scroll fit">
-        <q-item
-          v-for="sys in item"
-          :key="sys.id"
-          clickable
-          target="_blank"
-          class="row q-py-lg no-scroll col-4 q-gutter-x-sm"
-        >
-          <q-checkbox v-model="selectedSystems" :val="sys.id">
-            <div class="row q-gutter-x-sm">
-              <q-avatar size="4rem">
-                <q-icon class="fit" :name="sys.icon" color="secondary" />
-              </q-avatar>
-
-              <q-item-section class="q-mt-md">
-                <q-item-label
-                  class="text-secondary text-body1 text-weight-bolder text-no-wrap"
-                >
-                  {{ $t(sys.label) }}
-                </q-item-label>
-                <q-item-label
-                  class="text-grey text-subtitle text-weight-bolder text-no-wrap"
-                >
-                  {{ $t(sys.sublabel) }}
-                </q-item-label>
-              </q-item-section>
-            </div>
-          </q-checkbox>
-        </q-item>
-      </div>
-    </div>
+    <CheckBoxDeleteSystem
+      :iconsForExclusion="$props.item"
+      @some-exclusion="(systems) => (storageSystemExclusion = systems)"
+    />
   </DynamicDialog>
 </template>
 

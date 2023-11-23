@@ -1,3 +1,7 @@
 mutation SendRecoveryEmail($email: String!) {
   sendRecoveryEmail(email: $email)
 }
+
+mutation SendEmail($type: String!, $data: Email!) {
+  sendMail(type: $type, data: $data)
+}

@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import * as yup from "yup";
 import { Form } from "vee-validate";
 import AddMenu from "../../graphql/menu/AddMenu.gql";
 import EditMenu from "../../graphql/menu/EditMenu.gql";
@@ -13,28 +12,42 @@ onMounted(() => {
   getMenu();
 });
 
-const item: { id?: string } = {};
-const menus: Ref<Menu[]> = ref([]);
-const form: Omit<Menu, "id"> = reactive({
-  date: "",
+const item: Ref<Menu> = ref({
+  id: "",
+  complement: "",
+  dessert: "",
+  protein: "",
   salad: "",
   rice: "",
-  complement: "",
   soup: "",
-  protein: "",
-  dessert: "",
+  date: "",
 });
+
+const menus: Ref<Menu[]> = ref([]);
+const form: Omit<Menu, "id"> = reactive({
+  date: item.value.date,
+  salad: item.value.salad,
+  rice: item.value.rice,
+  complement: item.value.complement,
+  soup: item.value.soup,
+  protein: item.value.protein,
+  dessert: item.value.dessert,
+});
+
 const showCalendar = ref(false);
 const showAddModal = ref(false);
+
+const date = (getMenu: { date: string | number | Date }) =>
+  new Date(getMenu.date).toLocaleDateString("pt-BR", {
+    weekday: "long",
+  });
+
 const tableColumns = [
   {
     name: "date",
     required: true,
     label: t("text.day"),
-    field: (getMenu: { date: string | number | Date }) =>
-      new Date(getMenu.date).toLocaleDateString("pt-BR", {
-        weekday: "long",
-      }),
+    field: date,
     align: "left",
   },
   {
@@ -125,9 +138,10 @@ async function editMenu(data) {
       return;
     }
     const response = await runMutation(EditMenu, {
-      id: item.id,
+      id: item.value.id,
       data,
     });
+
     if (response && response.editMenu) {
       positiveNotify(t("notifications.success.editMenu"));
       await getMenu();
@@ -175,6 +189,7 @@ function triggerwarning() {
   }
 }
 </script>
+
 <template>
   <div class="col-6 row justify-center">
     <span class="text-black font text-bold q-ml-xl">
@@ -226,12 +241,12 @@ function triggerwarning() {
         :columns="tableColumns"
         row-key="id"
       >
-        <template #configButtons="props">
+        <template #configButtons="{ item }">
           <q-btn
             flat
             size="sm"
             icon="edit"
-            @click="openModal('edit', props.item.id)"
+            @click="openModal('edit', item.value.id)"
           />
         </template>
       </table-dynamic>

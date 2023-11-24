@@ -4,37 +4,38 @@
     <q-input
       class="col-6 q-px-xs"
       :label="$t('label.label')"
-      v-model.lazy="form.label"
+      v-model="form.label"
     >
     </q-input>
     <q-input
       class="col-6 q-px-xs"
       :label="$t('label.icon')"
-      v-model.lazy="form.icon"
+      v-model="form.icon"
     >
       <template #append>
-        <div class="q-pt-none bg-white">
-          <IconsForSystemDialog @some-icon="(icon) => (form.icon = icon)" />
-        </div>
+        <IconsForSystemDialog
+          class="icons justify-end"
+          @some-icon="(icon) => (form.icon = icon)"
+        />
       </template>
     </q-input>
     <q-input
       class="col-6 q-px-xs"
       :label="$t('label.sublabel')"
-      v-model.lazy="form.sublabel"
+      v-model="form.sublabel"
     >
     </q-input>
     <q-input
       disable
       class="col-6 q-px-xs"
       :label="$t('label.system')"
-      v-model.lazy="props.system"
+      v-model="props.system"
     >
     </q-input>
     <q-input
       class="col-12 q-px-xs q-mb-xl"
       :label="$t('label.link')"
-      v-model.lazy="form.link"
+      v-model="form.link"
     >
     </q-input>
     <div class="fit row justify-center">
@@ -96,13 +97,3 @@ function backModal() {
   emit("back-modal");
 }
 </script>
-<style scoped>
-.preview {
-  margin-top: -80px;
-}
-.icons {
-  max-height: 79%;
-  position: relative;
-  z-index: 2;
-}
-</style>

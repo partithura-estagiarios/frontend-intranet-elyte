@@ -7,12 +7,29 @@ import GetMenu from "../../graphql/menu/GetMenu.gql";
 import { Menu } from "../../entities";
 import { Ref } from "vue";
 import { onMounted, defineEmits } from "vue";
+import { QTableColumn } from "quasar";
 
 onMounted(() => {
   getMenu();
+  refreshPagination();
 });
 
-const paginationFilter: Ref<Number> = ref({ page: 0, limit: null });
+const props = defineProps({
+  rowsPerPage: {
+    type: Number,
+    default: 0,
+  },
+  pagination: {
+    type: Object,
+    default: null,
+  },
+});
+const emit = defineEmits(["reload", "cancel", "confirm", "update:pagination"]);
+const currentPage = ref(0);
+const max = ref(0);
+const pages = ref(0);
+const total = ref(0);
+const paginationFilter = ref({ page: 0, limit: 6 });
 const paginationData = ref({});
 const item: { id?: string } = {};
 const menus: Ref<Menu[]> = ref([]);
@@ -27,7 +44,7 @@ const form: Omit<Menu, "id"> = reactive({
 });
 const showCalendar = ref(false);
 const showAddModal = ref(false);
-const tableColumns = [
+const tableColumns: Ref<QTableColumn[]> = [
   {
     name: "date",
     required: true,
@@ -89,7 +106,7 @@ const opt = {
   edit: () => editMenu(),
   add: () => addMenu(),
 };
-
+const { pagination } = toRefs(props);
 const schema = yup.object({
   date: makeRuleOfString(),
   salad: makeRuleOfString(),
@@ -102,6 +119,27 @@ const schema = yup.object({
 
 function makeRuleOfString(message = "warning.requiredField") {
   return yup.string().required(t(message));
+}
+
+function calculatePages(total: number, limit: number): number {
+  return Math.ceil(total / limit);
+}
+
+function refreshPagination(): void {
+  if (props.pagination && props.pagination.currentPage !== undefined) {
+    currentPage.value = props.pagination.currentPage + 1;
+    max.value = props.pagination.limit || 0;
+    total.value = props.pagination.total || 0;
+    pages.value = calculatePages(total.value, max.value);
+    console.log({ currentPage });
+  }
+}
+
+function updatePage(): void {
+  emit("update:pagination", {
+    page: currentPage.value,
+    limit: max.value,
+  });
 }
 
 async function changeMutation() {
@@ -134,21 +172,29 @@ function validateForm() {
 
 async function getMenu() {
   try {
-    await runQuery(GetMenu, {
+    const response = await runQuery(GetMenu, {
       pagination: { ...paginationFilter.value },
-    }).then(({ getMenu }) => {
-      const menuItems = getMenu.nodes.map((menu: Menu) => ({
+    });
+
+    if (response && response.getMenu) {
+      const menuItems = response.getMenu.nodes.map((menu: Menu) => ({
         ...menu,
         dayOfWeek: getDayOfWeek(menu.date),
       }));
+
       menus.value = menuItems;
-      paginationData.value = getMenu.pagination;
-    });
+      paginationData.value = response.getMenu.pagination;
+
+      console.log(paginationData);
+    }
   } catch (error) {
-    console.error("Erro ao buscar dados do menu:", error);
+    console.error("Error fetching menu data:", error);
   }
 }
-
+function applyPagination(pagination: any): void {
+  paginationFilter.value = { ...pagination };
+  getMenu();
+}
 function getDayOfWeek(timestamp: string) {
   if (timestamp) {
     const daysOfWeek = [
@@ -180,7 +226,7 @@ async function editMenu() {
       positiveNotify(t("notifications.success.editMenu"));
       await getMenu();
       closeAddModal();
-      emits("reload");
+      emit("reload");
     }
   } catch {
     negativeNotify(t("notifications.fail.createMenu"));
@@ -192,7 +238,7 @@ async function addMenu() {
     await runMutation(AddMenu, { data: form });
     positiveNotify("notifications.success.createMenu");
     closeAddModal();
-    emits("reload");
+    emit("reload");
   } catch {
     negativeNotify(t("notifications.fail.createMenu"));
   }
@@ -200,10 +246,8 @@ async function addMenu() {
 
 function redirectToPrintRoute() {
   router.replace("/menu");
-  emits("reload");
+  emit("reload");
 }
-
-const emits = defineEmits(["reload", "cancel", "confirm"]);
 
 function openModal(modal: "add" | "edit", id?: string) {
   action.value = modal;
@@ -216,6 +260,15 @@ function closeAddModal() {
 
   action.value = null;
 }
+
+watch(
+  pagination,
+  (newVal, oldVal) => {
+    console.log("Pagination changed", newVal, oldVal);
+    refreshPagination();
+  },
+  { deep: true }
+);
 </script>
 
 <template>
@@ -238,7 +291,6 @@ function closeAddModal() {
         />
       </div>
     </q-item-section>
-
     <q-item-label class="q-item-label justify-end">
       <div>
         <q-btn
@@ -261,13 +313,13 @@ function closeAddModal() {
   </q-item>
   <div class="full-width">
     <div v-if="menus">
-      <table-dynamic
-        class="q-pt-md"
-        :grid="$q.screen.xs"
+      <SimpleTable
         :rows="menus"
         :columns="tableColumns"
-        row-key="id"
-        :rows-per-page="[6]"
+        is-flat
+        :pagination="paginationData"
+        dynamic-pagination
+        @update:pagination="applyPagination"
       >
         <template #configButtons="props">
           <q-btn
@@ -277,7 +329,23 @@ function closeAddModal() {
             @click="openModal('edit', props.item.id)"
           />
         </template>
-      </table-dynamic>
+        <template #bottom>
+          <div class="full-width row justify-end">
+            <q-pagination
+              color="grey"
+              v-model="currentPage"
+              :max="pages"
+              input
+              @update:model-value="updatePage"
+            />
+            <tr v-if="$slots['append']">
+              <td :colspan="columns.length" class="cell">
+                <slot name="append" />
+              </td>
+            </tr>
+          </div>
+        </template>
+      </SimpleTable>
     </div>
   </div>
   <DynamicDialog

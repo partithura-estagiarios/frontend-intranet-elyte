@@ -16,6 +16,7 @@ export default {
   sector: "Setor",
   dayEvents: "Eventos do Dia",
   numberParticipants: "Número de participantes",
+  menuCreate: "Adicionar cardápio",
   date: {
     year: "Ano",
     month: "Mês",

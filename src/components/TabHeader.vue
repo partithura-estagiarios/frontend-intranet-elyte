@@ -1,5 +1,5 @@
 <template>
-  <div class="row justify-between bg-primary q-mb-xl">
+  <div class="row justify-between bg-primary q-mb-sm">
     <q-item clickable to="/home" class="q-mx-md q-mt-sm">
       <q-img src="/images/logo.png" class="logo" />
     </q-item>
@@ -18,6 +18,7 @@
         </q-menu>
       </q-btn>
       <q-route-tab :label="$t('label.menu')" to="/menu" />
+      <q-route-tab :label="$t('label.menuCreate')" to="/menu/create" />
     </q-tabs>
   </div>
 </template>

@@ -44,10 +44,9 @@ export default defineComponent({
 </script>
 
 <template>
-  <div class="text-center">
-    <span class="text-primary text-h6" v-if="title">{{ title }}</span>
+  <div class="q-ma-md">
     <q-table
-      class="q-pt-md"
+      class="q-px-xl"
       :grid="$q.screen.xs"
       :columns="columns"
       :rows="rows"

@@ -29,7 +29,7 @@ export default {
     editRamal: "Branch line edited successfully",
     createMenu: "There was an error creating the menu",
     editMenu: "There was an error editing the menu",
-    showMenu: "An error occurred loading the menu",
+    showMenu: "An error occurred while loading the menu",
     createSystem: "An error occurred while creating the system",
     deleteSystem: {
       error:

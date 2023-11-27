@@ -7,9 +7,13 @@ export interface UserStorage {
 
 type Getters = {
   getToken(): string;
+  isLoggedIn(): boolean;
+  getLoggedUser(): boolean;
 };
 type Actions = {
-  setUser(): void;
+  setToken(value: string): void;
+  setUser(value: UserStorage): void;
+  logout(): void;
 };
 
 export interface UserStorageConstructor {

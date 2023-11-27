@@ -17,16 +17,17 @@ async function auth(data: UserForm) {
     const { token, user } = auth;
     if (token) {
       userStorage.setUser({
-        username: user.username,
-        id: user.id,
         email: user.email,
-        token: "",
+        id: user.id,
+        token: user.token,
+        username: user.username,
       });
       userStorage.setToken(token);
+
       positiveNotify(t("notifications.success.login"));
       router.push("/");
     }
-  } catch {
+  } catch (err) {
     negativeNotify(t("notifications.fail.login"));
   }
 }
@@ -78,7 +79,7 @@ async function auth(data: UserForm) {
       </div>
     </Field>
     <q-item class="size" to="/recover">
-      <q-item-section align="left">
+      <q-item-section clas="row justify-end q-mr-md">
         {{ $t("label.forgetPassword") }}
       </q-item-section>
     </q-item>

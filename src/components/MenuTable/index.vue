@@ -58,7 +58,7 @@ onMounted(() => {
     <q-btn
       round
       icon="arrow_back"
-      class="row q-ml-md hide-print q-mt-md no-print"
+      class="row q-mt-md"
       color="primary"
       size="1.2rem"
       @click="$router.replace('/menu/create')"

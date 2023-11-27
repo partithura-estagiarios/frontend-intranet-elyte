@@ -4,6 +4,7 @@ import text from "./text";
 import warning from "./warning";
 import notifications from "./notifications";
 import label from "./label";
+import email from "./email";
 
 export default {
   about: "About",
@@ -11,6 +12,7 @@ export default {
   home: "Home",
   tags: "Tags",
   admin: "Admin",
+  email,
   titles,
   text,
   warning,

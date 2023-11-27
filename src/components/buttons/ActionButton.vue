@@ -2,7 +2,7 @@
 import { Action } from "../../entities/Action";
 import { type Ref } from "vue";
 
-defineEmits(["reload"]);
+defineEmits(["reload", "attSystem"]);
 
 defineProps({
   item: {
@@ -19,8 +19,10 @@ defineProps({
   },
 });
 const activedModal: Ref<number | null> = ref(null);
-
 function activateModal(index: number) {
+  if (!userStorage.getLoggedUser) {
+    location.reload();
+  }
   activedModal.value = index;
 }
 function deactivateModal() {
@@ -50,6 +52,7 @@ function deactivateModal() {
           :is="button.component"
           :item="item"
           :system="system"
+          @attSystem="() => $emit('attSystem')"
         />
         <q-icon :name="button.icon" color="primary" size="xs" />
         <span class="text-subtitle1">{{ button.label }}</span>

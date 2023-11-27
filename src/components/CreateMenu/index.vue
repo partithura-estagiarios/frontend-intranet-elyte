@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import * as yup from "yup";
 import { Field, Form } from "vee-validate";
+import { menuSchema } from "../../validation";
 import AddMenu from "../../graphql/menu/AddMenu.gql";
 import EditMenu from "../../graphql/menu/EditMenu.gql";
 import GetMenu from "../../graphql/menu/GetMenu.gql";
@@ -33,6 +34,7 @@ const paginationFilter = ref({ page: 0, limit: 6 });
 const paginationData = ref({});
 const item: { id?: string } = {};
 const menus: Ref<Menu[]> = ref([]);
+const { pagination } = toRefs(props);
 const form: Omit<Menu, "id"> = reactive({
   date: "",
   salad: "",
@@ -106,16 +108,6 @@ const opt = {
   edit: () => editMenu(),
   add: () => addMenu(),
 };
-const { pagination } = toRefs(props);
-const schema = yup.object({
-  date: makeRuleOfString(),
-  salad: makeRuleOfString(),
-  rice: makeRuleOfString(),
-  protein: makeRuleOfString(),
-  complement: makeRuleOfString(),
-  soup: makeRuleOfString(),
-  dessert: makeRuleOfString(),
-});
 
 function makeRuleOfString(message = "warning.requiredField") {
   return yup.string().required(t(message));
@@ -170,31 +162,62 @@ function validateForm() {
   return true;
 }
 
+async function editMenu(data) {
+  data.date = form.date;
+  try {
+    const isDuplicateDate = menus.value.some((menu) => menu.date === form.date);
+    if (isDuplicateDate) {
+      return;
+    }
+    const response = await runMutation(EditMenu, {
+      id: item.id,
+      data,
+    });
+    if (response && response.editMenu) {
+      positiveNotify(t("notifications.success.editMenu"));
+      await getMenu();
+      closeAddModal();
+      router.go(0);
+    }
+  } catch {
+    negativeNotify(t("notifications.fail.createMenu"));
+  }
+}
+
+async function addMenu(data) {
+  data.date = form.date;
+  try {
+    await runMutation(AddMenu, { data });
+    positiveNotify("notifications.success.createMenu");
+    closeAddModal();
+    router.go(0);
+  } catch {
+    negativeNotify(t("notifications.fail.createMenu"));
+  }
+}
+
 async function getMenu() {
   try {
-    const response = await runQuery(GetMenu, {
+    await runQuery(GetMenu, {
       pagination: { ...paginationFilter.value },
-    });
-
-    if (response && response.getMenu) {
-      const menuItems = response.getMenu.nodes.map((menu: Menu) => ({
+    }).then(({ getMenu }) => {
+      const menuItems = getMenu.nodes.map((menu: Menu) => ({
         ...menu,
         dayOfWeek: getDayOfWeek(menu.date),
       }));
-
       menus.value = menuItems;
-      paginationData.value = response.getMenu.pagination;
-
-      console.log(paginationData);
-    }
+      paginationData.value = getMenu.pagination;
+    });
   } catch (error) {
-    console.error("Error fetching menu data:", error);
+    console.error("Erro ao buscar dados do menu:", error);
   }
 }
+
 function applyPagination(pagination: any): void {
   paginationFilter.value = { ...pagination };
   getMenu();
 }
+
 function getDayOfWeek(timestamp: string) {
   if (timestamp) {
     const daysOfWeek = [
@@ -212,38 +235,6 @@ function getDayOfWeek(timestamp: string) {
   return "";
 }
 
-async function editMenu() {
-  try {
-    const isDuplicateDate = menus.value.some((menu) => menu.date === form.date);
-    if (isDuplicateDate) {
-      return;
-    }
-    const response = await runMutation(EditMenu, {
-      id: item.id,
-      data: form,
-    });
-    if (response && response.editMenu) {
-      positiveNotify(t("notifications.success.editMenu"));
-      await getMenu();
-      closeAddModal();
-      emit("reload");
-    }
-  } catch {
-    negativeNotify(t("notifications.fail.createMenu"));
-  }
-}
-
-async function addMenu() {
-  try {
-    await runMutation(AddMenu, { data: form });
-    positiveNotify("notifications.success.createMenu");
-    closeAddModal();
-    emit("reload");
-  } catch {
-    negativeNotify(t("notifications.fail.createMenu"));
-  }
-}
-
 function redirectToPrintRoute() {
   router.replace("/menu");
   emit("reload");
@@ -259,6 +250,20 @@ function closeAddModal() {
   showAddModal.value = false;
 
   action.value = null;
+}
+
+function triggerwarning() {
+  if (!form.date) {
+    negativeNotify(t("warning.emptyFields"));
+  }
+}
+
+async function chooseMutation(data) {
+  if (action.value !== null) {
+    if (menuSchema) {
+      opt[action.value](data);
+    }
+  }
 }
 
 watch(
@@ -350,106 +355,113 @@ watch(
   </div>
   <DynamicDialog
     v-model="showAddModal"
-    @confirm="changeMutation()"
     @cancel="showAddModal = false"
+    :title="$t('titles.Hr.Menu')"
+    class="q-ma-xl"
+    hide-controls
   >
-    <q-card class="q-card">
-      <q-card-section>
-        <Form :validation-schema="schema">
-          <Field name="date" v-slot="item">
-            <q-input
-              v-model="form.date"
-              :label="$t('text.day')"
-              filled
-              @click="showCalendar = true"
-            />
-            <div style="position: relative">
-              <q-date
-                v-model="form.date"
-                v-if="showCalendar"
-                :label="$t('text.day')"
-                bg-color="grey-3"
-                class="text-black calendar"
-                @click="showCalendar = false"
-              />
-            </div>
-            <span v-if="item.errorMessage" class="text-red q-mb-xl">
-              {{ parseErrorMessage(item.errorMessage) }}
-            </span>
-          </Field>
+    <Form
+      :validation-schema="menuSchema"
+      class="row q-gutter-sm"
+      @submit="chooseMutation"
+    >
+      <q-input
+        v-model="form.date"
+        :label="$t('text.date')"
+        filled
+        @click="showCalendar = true"
+        class="col-12"
+      />
+      <q-date
+        v-model="form.date"
+        v-if="showCalendar"
+        :label="$t('text.day')"
+        bg-color="grey-3"
+        class="text-black calendar"
+        @click="showCalendar = false"
+        mask="DD/MM/YYYY"
+      />
+      <StandardInput
+        field-name="salad"
+        field-color="white"
+        class="col-12"
+        :field-label="$t('text.menu.salad')"
+        borderless
+        icon-name="eco"
+        icon-class="fit q-px-xs"
+        icon-size="md"
+        icon-color="primary"
+      />
 
-          <Field name="salad" v-slot="item">
-            <q-input
-              v-model="form.salad"
-              v-bind="item.field"
-              :label="$t('text.menu.salad')"
-              filled
-            />
-            <span v-if="item.errorMessage" class="text-red q-mb-xl">
-              {{ parseErrorMessage(item.errorMessage) }}
-            </span>
-          </Field>
-          <Field name="rice" v-slot="item">
-            <q-input
-              v-model="form.rice"
-              v-bind="item.field"
-              :label="$t('text.menu.rice')"
-              filled
-            />
-            <span v-if="item.errorMessage" class="text-red q-mb-xl">
-              {{ parseErrorMessage(item.errorMessage) }}
-            </span>
-          </Field>
-          <Field name="protein" v-slot="item">
-            <q-input
-              v-model="form.protein"
-              v-bind="item.field"
-              :label="$t('text.menu.protein')"
-              filled
-            />
-            <span v-if="item.errorMessage" class="text-red q-mb-xl">
-              {{ parseErrorMessage(item.errorMessage) }}
-            </span>
-          </Field>
+      <StandardInput
+        field-name="rice"
+        field-color="white"
+        class="col-12"
+        :field-label="$t('text.menu.rice')"
+        borderless
+        icon-name="mdi-rice"
+        icon-class="fit q-px-xs"
+        icon-size="md"
+        icon-color="primary"
+      />
 
-          <Field name="complement" v-slot="item">
-            <q-input
-              v-model="form.complement"
-              v-bind="item.field"
-              :label="$t('text.menu.complement')"
-              filled
-            />
-            <span v-if="item.errorMessage" class="text-red q-mb-xl">
-              {{ parseErrorMessage(item.errorMessage) }}
-            </span>
-          </Field>
+      <StandardInput
+        field-name="protein"
+        field-color="white"
+        class="col-12"
+        :field-label="$t('text.menu.protein')"
+        borderless
+        icon-name="mdi-food-drumstick"
+        icon-class="fit q-px-xs"
+        icon-size="md"
+        icon-color="primary"
+      />
 
-          <Field name="soup" v-slot="item">
-            <q-input
-              v-model="form.soup"
-              v-bind="item.field"
-              :label="$t('text.menu.soup')"
-              filled
-            />
-            <span v-if="item.errorMessage" class="text-red q-mb-xl">
-              {{ parseErrorMessage(item.errorMessage) }}
-            </span>
-          </Field>
+      <StandardInput
+        field-name="complement"
+        field-color="white"
+        class="col-12"
+        :field-label="$t('text.menu.complement')"
+        borderless
+        icon-name="mdi-noodles"
+        icon-class="fit q-px-xs"
+        icon-size="md"
+        icon-color="primary"
+      />
 
-          <Field name="dessert" v-slot="item">
-            <q-input
-              v-model="form.dessert"
-              v-bind="item.field"
-              :label="$t('text.menu.dessert')"
-              filled
-            />
-            <span v-if="item.errorMessage" class="text-red q-mb-xl">
-              {{ parseErrorMessage(item.errorMessage) }}
-            </span>
-          </Field>
-        </Form>
-      </q-card-section>
-    </q-card>
+      <StandardInput
+        field-name="soup"
+        field-color="white"
+        class="col-12"
+        :field-label="$t('text.menu.soup')"
+        borderless
+        icon-name="soup_kitchen"
+        icon-class="fit q-px-xs"
+        icon-size="md"
+        icon-color="primary"
+      />
+
+      <StandardInput
+        field-name="dessert"
+        field-color="white"
+        class="col-12"
+        :field-label="$t('text.menu.dessert')"
+        borderless
+        icon-name="mdi-ice-cream"
+        icon-class="fit q-px-xs"
+        icon-size="md"
+        icon-color="primary"
+      />
+      <Button class="bg-transparent no-padding">
+        <q-btn
+          flat
+          class="text-h6"
+          :label="$t('action.confirm.index')"
+          color="primary"
+          @click="triggerwarning"
+        />
+      </Button>
+    </Form>
   </DynamicDialog>
 </template>
 
@@ -462,9 +474,14 @@ watch(
   border-radius: 10px;
 }
 .calendar {
+  justify-content: center;
+  display: flex;
   position: absolute;
-  top: 100%;
-  left: 0;
   z-index: 9999;
+  left: 0;
+  right: 0;
+  margin-left: auto;
+  margin-right: auto;
+  top: 60px;
 }
 </style>

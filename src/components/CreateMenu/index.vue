@@ -123,7 +123,6 @@ function refreshPagination(): void {
     max.value = props.pagination.limit || 0;
     total.value = props.pagination.total || 0;
     pages.value = calculatePages(total.value, max.value);
-    console.log({ currentPage });
   }
 }
 

@@ -10,6 +10,7 @@ export default {
     editRamal: "Branch edited successfully",
     createMenu: "Menu created successfully",
     editMenu: "Menu edited successfully",
+    showMenu: "Menu loaded successfully",
     createSystem: "System created successfully",
     deleteSystem: "System deleted successfully | Systems deleted successfully",
     emailSentSuccessfully: "Email sent successfully",
@@ -28,6 +29,7 @@ export default {
     editRamal: "Branch line edited successfully",
     createMenu: "There was an error creating the menu",
     editMenu: "There was an error editing the menu",
+    showMenu: "An error occurred loading the menu",
     createSystem: "An error occurred while creating the system",
     deleteSystem: {
       error:

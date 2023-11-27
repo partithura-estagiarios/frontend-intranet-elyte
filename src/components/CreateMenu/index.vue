@@ -207,8 +207,9 @@ async function getMenu() {
       menus.value = menuItems;
       paginationData.value = getMenu.pagination;
     });
-  } catch (error) {
-    console.error("Erro ao buscar dados do menu:", error);
+    positiveNotify(t("notifications.success.showMenu"));
+  } catch {
+    negativeNotify(t("notifications.fail.showMenu"));
   }
 }
 

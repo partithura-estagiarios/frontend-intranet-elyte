@@ -60,6 +60,9 @@ function parseDate(date: number) {
               color="white"
               size="sm"
             />
+            <q-tooltip class="bg-primary text-bold">
+              {{ $t("label.eventsTooltips.user") }}
+            </q-tooltip>
             <q-item-label class="q-pa-md">{{ item.userCreated }}</q-item-label>
           </div>
 
@@ -70,6 +73,9 @@ function parseDate(date: number) {
               color="white"
               size="sm"
             />
+            <q-tooltip class="bg-primary text-bold">
+              {{ $t("label.eventsTooltips.userRegistration") }}
+            </q-tooltip>
             <q-item-label class="q-pa-md">{{
               item.userRegistration
             }}</q-item-label>
@@ -82,6 +88,9 @@ function parseDate(date: number) {
               color="white"
               size="sm"
             />
+            <q-tooltip class="bg-primary text-bold">
+              {{ $t("label.eventsTooltips.ramalOrPhone") }}
+            </q-tooltip>
             <q-item-label class="q-pa-md">{{ item.ramalNumber }}</q-item-label>
           </div>
 
@@ -92,6 +101,9 @@ function parseDate(date: number) {
               color="white"
               size="sm"
             />
+            <q-tooltip class="bg-primary text-bold">
+              {{ $t("label.eventsTooltips.roomName") }}
+            </q-tooltip>
             <q-item-label class="q-pa-md">{{ item.room.name }}</q-item-label>
           </div>
 
@@ -102,6 +114,9 @@ function parseDate(date: number) {
               color="white"
               size="sm"
             />
+            <q-tooltip class="bg-primary text-bold">
+              {{ $t("label.eventsTooltips.numberOfPeople") }}
+            </q-tooltip>
             <q-item-label class="q-pa-md">{{ item.totalPeople }}</q-item-label>
           </div>
 
@@ -112,6 +127,9 @@ function parseDate(date: number) {
               color="white"
               size="sm"
             />
+            <q-tooltip class="bg-primary text-bold">
+              {{ $t("label.eventsTooltips.email") }}
+            </q-tooltip>
             <q-item-label class="q-pa-md">{{ item.email }}</q-item-label>
           </div>
 
@@ -122,6 +140,9 @@ function parseDate(date: number) {
               color="white"
               size="sm"
             />
+            <q-tooltip class="bg-primary text-bold">
+              {{ $t("label.eventsTooltips.initialTime") }}
+            </q-tooltip>
             <q-item-label class="q-pa-md">{{
               parseDate(item.initialTime)
             }}</q-item-label>
@@ -134,6 +155,9 @@ function parseDate(date: number) {
               color="white"
               size="sm"
             />
+            <q-tooltip class="bg-primary text-bold">
+              {{ $t("label.eventsTooltips.finalTime") }}
+            </q-tooltip>
             <q-item-label class="q-pa-md">{{
               parseDate(item.finalTime)
             }}</q-item-label>

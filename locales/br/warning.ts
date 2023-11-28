@@ -15,5 +15,8 @@ export default {
   noRegistrationMenu: "Não há registros de cardápio",
   dateFieldEmpty:
     "Os campos de seleção de data e horário não foram preenchidos",
+  dateFieldInvalid:
+    "Você não pode agendar um evento se a data final for antes da data inicial",
+  noEvents: "Não há eventos agendados neste dia",
   emptyFields: "Para confirmar você precisa preencher todos os campos",
 };

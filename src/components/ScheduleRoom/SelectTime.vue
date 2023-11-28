@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { DateTime } from "luxon";
 import { Field } from "vee-validate";
+import { QSelect } from "quasar";
 
 defineProps({
   fieldLabel: {
@@ -38,14 +39,17 @@ function generateTimeList(selectedHour: number): void {
   minutes.value = times;
   selectionStep.value = "minute";
 }
+
 function resetValues() {
   time.value = null;
   date.value = null;
 }
-function finishSelector(minute: number) {
+
+function finishSelector(minute: number, select: QSelect) {
   emits("setTime", minute);
   resetValues;
   selectionStep.value = null;
+  select.hidePopup();
 }
 
 function reopenSelect() {
@@ -58,11 +62,11 @@ function reopenSelect() {
   <div>
     <Field :name="fieldName" v-slot="item">
       <q-select
+        ref="selectDate"
         borderless
         map-options
         emit-value
         v-bind="item.field"
-        bg-color="white"
         :label="fieldLabel"
         class="col-5 row select"
         :model-value="timeValue"
@@ -78,9 +82,9 @@ function reopenSelect() {
         <template #prepend>
           <q-icon
             name="mdi-calendar-clock"
-            class="bg-primary fit q-px-xs"
+            class="fit q-px-xs"
             size="md"
-            color="white"
+            color="primary"
           />
         </template>
 
@@ -115,7 +119,7 @@ function reopenSelect() {
                   dense
                   clickable
                   class="item-size col-6"
-                  @click="finishSelector(minute)"
+                  @click="finishSelector(minute, $refs.selectDate)"
                   v-for="(minute, index) in minutes"
                   :key="index"
                 >

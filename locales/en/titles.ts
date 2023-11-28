@@ -7,6 +7,7 @@ export default {
   scheduler: "Schedule room",
   HrSystem: "Hr System",
   OtherSystems: "OTHERS",
+  addMenu: "Add menu",
   Management: {
     DataSul: "DataSul",
     DataSulPrototype: "DataSul Prototype",

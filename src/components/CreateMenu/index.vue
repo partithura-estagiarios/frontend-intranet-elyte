@@ -190,6 +190,8 @@ function triggerwarning() {
           icon="home"
           color="primary"
           size="1.2rem"
+          class="justify-start row q-ml-md"
+          @click="$router.replace('/home')"
           class="justify-start row q-ml-xl"
           @click="router.back"
         />

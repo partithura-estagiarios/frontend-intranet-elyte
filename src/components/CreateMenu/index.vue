@@ -244,6 +244,31 @@ function triggerwarning() {
     class="q-ma-xl"
     hide-controls
   >
+    <q-card class="q-card">
+      <q-card-section>
+        <Form :validation-schema="schema">
+          <Field name="date" v-slot="item">
+            <q-input
+              v-model="form.date"
+              :label="$t('text.day')"
+              filled
+              @click="showCalendar = true"
+            />
+            <div style="position: relative">
+              <q-date
+                v-model="form.date"
+                v-if="showCalendar"
+                :label="$t('text.day')"
+                bg-color="grey-3"
+                class="text-black calendar"
+                @click="showCalendar = false"
+                mask="DD/MM/YYYY"
+              />
+            </div>
+            <span v-if="item.errorMessage" class="text-red q-mb-xl">
+              {{ parseErrorMessage(item.errorMessage) }}
+            </span>
+          </Field>
     <Form
       :validation-schema="menuSchema"
       class="row q-gutter-sm"

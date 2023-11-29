@@ -247,6 +247,11 @@ watch(
   },
   { deep: true }
 );
+
+function handleDateUpdate(newDate) {
+  form.date = newDate;
+  showCalendar.value = false;
+}
 </script>
 
 <template>
@@ -285,6 +290,12 @@ watch(
           color="primary"
           size="1.2rem"
           @click="redirectToPrintRoute"
+          @update:model-value="
+            (date) => {
+              form.date = date;
+              showCalendar = false;
+            }
+          "
         />
       </div>
     </q-item-label>
@@ -346,13 +357,15 @@ watch(
         class="col-12"
       />
       <q-date
+        flat
+        minimal
         v-model="form.date"
         v-if="showCalendar"
-        :label="$t('text.date')"
+        :label="$t('text.day')"
         bg-color="grey-3"
         class="text-black calendar"
-        @click="showCalendar = false"
-        mask="DD/MM/YYYY"
+        format="DD/MM/YYYY"
+        @update:model-value="handleDateUpdate"
       />
       <StandardInput
         field-name="salad"

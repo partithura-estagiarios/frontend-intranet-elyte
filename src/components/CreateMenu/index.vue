@@ -50,7 +50,7 @@ const tableColumns: Ref<QTableColumn[]> = [
   {
     name: "date",
     required: true,
-    label: t("text.date"),
+    label: t("text.day"),
     field: "dayOfWeek",
     align: "left",
   },
@@ -104,10 +104,6 @@ const tableColumns: Ref<QTableColumn[]> = [
   },
 ];
 const action: Ref<"add" | "edit" | null> = ref(null);
-const opt = {
-  edit: () => editMenu(),
-  add: () => addMenu(),
-};
 
 function makeRuleOfString(message = "warning.requiredField") {
   return yup.string().required(t(message));
@@ -133,33 +129,18 @@ function updatePage(): void {
   });
 }
 
-async function changeMutation() {
+async function chooseMutation(data) {
   if (action.value !== null) {
-    if (validateForm()) {
-      opt[action.value]();
+    if (menuSchema) {
+      opt[action.value](data);
     }
   }
 }
 
-function validateForm() {
-  const requiredFields = [
-    "date",
-    "salad",
-    "rice",
-    "protein",
-    "complement",
-    "soup",
-    "dessert",
-  ];
-
-  for (const field of requiredFields) {
-    if (!form[field]) {
-      return false;
-    }
-  }
-
-  return true;
-}
+const opt = {
+  edit: (data) => editMenu(data),
+  add: (data) => addMenu(data),
+};
 
 async function editMenu(data) {
   data.date = form.date;
@@ -184,14 +165,19 @@ async function editMenu(data) {
 }
 
 async function addMenu(data) {
-  data.date = form.date;
-  try {
-    await runMutation(AddMenu, { data });
-    positiveNotify("notifications.success.createMenu");
-    closeAddModal();
-    router.go(0);
-  } catch {
-    negativeNotify(t("notifications.fail.createMenu"));
+  if (data) {
+    data.date = form.date;
+    try {
+      await runMutation(AddMenu, { data });
+      positiveNotify("notifications.success.createMenu");
+      closeAddModal();
+      router.go(0);
+    } catch (error) {
+      console.error("Error adding menu:", error);
+      negativeNotify(t("notifications.fail.createMenu"));
+    }
+  } else {
+    console.error("Data is undefined in addMenu");
   }
 }
 
@@ -255,14 +241,6 @@ function closeAddModal() {
 function triggerwarning() {
   if (!form.date) {
     negativeNotify(t("warning.emptyFields"));
-  }
-}
-
-async function chooseMutation(data) {
-  if (action.value !== null) {
-    if (menuSchema) {
-      opt[action.value](data);
-    }
   }
 }
 
@@ -375,7 +353,7 @@ watch(
       <q-date
         v-model="form.date"
         v-if="showCalendar"
-        :label="$t('text.day')"
+        :label="$t('text.date')"
         bg-color="grey-3"
         class="text-black calendar"
         @click="showCalendar = false"

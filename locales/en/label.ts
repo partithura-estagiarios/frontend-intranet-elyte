@@ -24,6 +24,7 @@ export default {
   label: "Title",
   submitButton: "Send",
   menu: "Menu",
+  menuCreate: "Add menu",
   name: {
     index: "Name",
     pronoun: "Your name",

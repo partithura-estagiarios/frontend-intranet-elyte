@@ -1,20 +1,39 @@
 <script setup lang="ts">
-import * as yup from "yup";
 import { Form } from "vee-validate";
+import { menuSchema } from "../../validation";
 import AddMenu from "../../graphql/menu/AddMenu.gql";
 import EditMenu from "../../graphql/menu/EditMenu.gql";
 import GetMenu from "../../graphql/menu/GetMenu.gql";
-import { menuSchema } from "../../validation";
 import { Menu } from "../../entities";
 import { Ref } from "vue";
 import { onMounted, defineEmits } from "vue";
+import { QTableColumn } from "quasar";
 
 onMounted(() => {
   getMenu();
+  refreshPagination();
 });
 
+const props = defineProps({
+  rowsPerPage: {
+    type: Number,
+    default: 0,
+  },
+  pagination: {
+    type: Object,
+    default: null,
+  },
+});
+const emit = defineEmits(["reload", "cancel", "confirm", "update:pagination"]);
+const currentPage = ref(0);
+const max = ref(0);
+const pages = ref(0);
+const total = ref(0);
+const paginationFilter = ref({ page: 0, limit: 6 });
+const paginationData = ref({});
 const item: { id?: string } = {};
 const menus: Ref<Menu[]> = ref([]);
+const { pagination } = toRefs(props);
 const form: Omit<Menu, "id"> = reactive({
   date: "",
   salad: "",
@@ -26,17 +45,15 @@ const form: Omit<Menu, "id"> = reactive({
 });
 const showCalendar = ref(false);
 const showAddModal = ref(false);
-const tableColumns = [
+const tableColumns: Ref<QTableColumn[]> = [
   {
     name: "date",
     required: true,
     label: t("text.day"),
-    field: (getMenu: { date: string | number | Date }) =>
-      new Date(getMenu.date).toLocaleDateString("pt-BR", {
-        weekday: "long",
-      }),
+    field: "dayOfWeek",
     align: "left",
   },
+
   {
     name: "salad",
     required: true,
@@ -87,6 +104,26 @@ const tableColumns = [
 ];
 const action: Ref<"add" | "edit" | null> = ref(null);
 
+function calculatePages(total: number, limit: number): number {
+  return Math.ceil(total / limit);
+}
+
+function refreshPagination(): void {
+  if (props.pagination && props.pagination.currentPage !== undefined) {
+    currentPage.value = props.pagination.currentPage + 1;
+    max.value = props.pagination.limit || 0;
+    total.value = props.pagination.total || 0;
+    pages.value = calculatePages(total.value, max.value);
+  }
+}
+
+function updatePage(): void {
+  emit("update:pagination", {
+    page: currentPage.value,
+    limit: max.value,
+  });
+}
+
 async function chooseMutation(data) {
   if (action.value !== null) {
     if (menuSchema) {
@@ -99,23 +136,6 @@ const opt = {
   edit: (data) => editMenu(data),
   add: (data) => addMenu(data),
 };
-
-async function getMenu() {
-  const { getMenu: rawData } = await runQuery(GetMenu);
-  if (Array.isArray(rawData)) {
-    rawData.sort((a, b) => a.date - b.date);
-    const last7Menus = rawData.slice(0, 7);
-
-    if (Array.isArray(menus.value)) {
-      const transformedMenus = [];
-      for (const item of last7Menus) {
-        const date = new Date(parseInt(item.date));
-        transformedMenus.push({ ...item, date });
-      }
-      menus.value = transformedMenus;
-    }
-  }
-}
 
 async function editMenu(data) {
   data.date = form.date;
@@ -140,23 +160,66 @@ async function editMenu(data) {
 }
 
 async function addMenu(data) {
-  data.date = form.date;
-  try {
-    await runMutation(AddMenu, { data });
-    positiveNotify("notifications.success.createMenu");
-    closeAddModal();
-    router.go(0);
-  } catch {
-    negativeNotify(t("notifications.fail.createMenu"));
+  if (data) {
+    data.date = form.date;
+    try {
+      await runMutation(AddMenu, { data });
+      positiveNotify("notifications.success.createMenu");
+      closeAddModal();
+      router.go(0);
+    } catch (error) {
+      console.error("Error adding menu:", error);
+      negativeNotify(t("notifications.fail.createMenu"));
+    }
+  } else {
+    console.error("Data is undefined in addMenu");
   }
+}
+
+async function getMenu() {
+  try {
+    await runQuery(GetMenu, {
+      pagination: { ...paginationFilter.value },
+    }).then(({ getMenu }) => {
+      const menuItems = getMenu.nodes.map((menu: Menu) => ({
+        ...menu,
+        dayOfWeek: getDayOfWeek(menu.date),
+      }));
+      menus.value = menuItems;
+      paginationData.value = getMenu.pagination;
+    });
+    positiveNotify(t("notifications.success.showMenu"));
+  } catch {
+    negativeNotify(t("notifications.fail.showMenu"));
+  }
+}
+
+function applyPagination(pagination: any): void {
+  paginationFilter.value = { ...pagination };
+  getMenu();
+}
+
+function getDayOfWeek(timestamp: string) {
+  if (timestamp) {
+    const daysOfWeek = [
+      t("text.days.monday"),
+      t("text.days.tuesday"),
+      t("text.days.wednesday"),
+      t("text.days.thursday"),
+      t("text.days.friday"),
+      t("text.days.saturday"),
+    ];
+    const date = new Date(parseInt(timestamp));
+    const dayOfWeek = date.getDay();
+    return daysOfWeek[dayOfWeek];
+  }
+  return "";
 }
 
 function redirectToPrintRoute() {
   router.replace("/menu");
-  emits("reload");
+  emit("reload");
 }
-
-const emits = defineEmits(["reload", "cancel", "confirm"]);
 
 function openModal(modal: "add" | "edit", id?: string) {
   action.value = modal;
@@ -166,6 +229,7 @@ function openModal(modal: "add" | "edit", id?: string) {
 
 function closeAddModal() {
   showAddModal.value = false;
+
   action.value = null;
 }
 
@@ -174,7 +238,22 @@ function triggerwarning() {
     negativeNotify(t("warning.emptyFields"));
   }
 }
+
+watch(
+  pagination,
+  (newVal, oldVal) => {
+    console.log("Pagination changed", newVal, oldVal);
+    refreshPagination();
+  },
+  { deep: true }
+);
+
+function handleDateUpdate(newDate) {
+  form.date = newDate;
+  showCalendar.value = false;
+}
 </script>
+
 <template>
   <div class="col-6 row justify-center">
     <span class="text-black font text-bold q-ml-xl">
@@ -191,13 +270,10 @@ function triggerwarning() {
           color="primary"
           size="1.2rem"
           class="justify-start row q-ml-md"
-          @click="$router.replace('/home')"
-          class="justify-start row q-ml-xl"
           @click="router.back"
         />
       </div>
     </q-item-section>
-
     <q-item-label class="q-item-label justify-end">
       <div>
         <q-btn
@@ -214,19 +290,25 @@ function triggerwarning() {
           color="primary"
           size="1.2rem"
           @click="redirectToPrintRoute"
+          @update:model-value="
+            (date) => {
+              form.date = date;
+              showCalendar = false;
+            }
+          "
         />
       </div>
     </q-item-label>
   </q-item>
   <div class="full-width">
     <div v-if="menus">
-      <table-dynamic
-        class="q-pt-md"
-        :rows-per-page-options="[10]"
-        :grid="$q.screen.xs"
+      <SimpleTable
         :rows="menus"
         :columns="tableColumns"
-        row-key="id"
+        is-flat
+        :pagination="paginationData"
+        dynamic-pagination
+        @update:pagination="applyPagination"
       >
         <template #configButtons="props">
           <q-btn
@@ -236,7 +318,23 @@ function triggerwarning() {
             @click="openModal('edit', props.item.id)"
           />
         </template>
-      </table-dynamic>
+        <template #bottom>
+          <div class="full-width row justify-end">
+            <q-pagination
+              color="grey"
+              v-model="currentPage"
+              :max="pages"
+              input
+              @update:model-value="updatePage"
+            />
+            <tr v-if="$slots['append']">
+              <td :colspan="columns.length" class="cell">
+                <slot name="append" />
+              </td>
+            </tr>
+          </div>
+        </template>
+      </SimpleTable>
     </div>
   </div>
   <DynamicDialog
@@ -246,31 +344,6 @@ function triggerwarning() {
     class="q-ma-xl"
     hide-controls
   >
-    <q-card class="q-card">
-      <q-card-section>
-        <Form :validation-schema="schema">
-          <Field name="date" v-slot="item">
-            <q-input
-              v-model="form.date"
-              :label="$t('text.day')"
-              filled
-              @click="showCalendar = true"
-            />
-            <div style="position: relative">
-              <q-date
-                v-model="form.date"
-                v-if="showCalendar"
-                :label="$t('text.day')"
-                bg-color="grey-3"
-                class="text-black calendar"
-                @click="showCalendar = false"
-                mask="DD/MM/YYYY"
-              />
-            </div>
-            <span v-if="item.errorMessage" class="text-red q-mb-xl">
-              {{ parseErrorMessage(item.errorMessage) }}
-            </span>
-          </Field>
     <Form
       :validation-schema="menuSchema"
       class="row q-gutter-sm"
@@ -292,7 +365,7 @@ function triggerwarning() {
         bg-color="grey-3"
         class="text-black calendar"
         format="DD/MM/YYYY"
-        @click="showCalendar = false"
+        @update:model-value="handleDateUpdate"
       />
       <StandardInput
         field-name="salad"
@@ -383,6 +456,9 @@ function triggerwarning() {
   font-size: 2rem;
 }
 
+.bar-style {
+  border-radius: 10px;
+}
 .calendar {
   justify-content: center;
   display: flex;

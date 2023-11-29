@@ -22,6 +22,7 @@ export default {
   dayEvents: "Eventos do Dia",
   enterSystem: "Digite um sistema",
   numberParticipants: "Número de participantes",
+  menuCreate: "Adicionar cardápio",
   date: {
     year: "Ano",
     month: "Mês",

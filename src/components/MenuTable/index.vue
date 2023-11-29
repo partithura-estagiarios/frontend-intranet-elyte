@@ -3,134 +3,112 @@ import GetMenu from "../../graphql/menu/GetMenu.gql";
 import { Menu } from "../../entities";
 import { ref, onMounted } from "vue";
 
+const menus = ref<Menu[]>([]);
+const paginationFilter = ref({ page: 0, limit: 6 });
+const paginationData = ref({});
+
+function getDayOfWeek(timestamp: string) {
+  if (timestamp) {
+    const daysOfWeek = [
+      t("text.days.monday"),
+      t("text.days.tuesday"),
+      t("text.days.wednesday"),
+      t("text.days.thursday"),
+      t("text.days.friday"),
+      t("text.days.saturday"),
+    ];
+    const date = new Date(parseInt(timestamp));
+    const dayOfWeek = date.getDay();
+    return daysOfWeek[dayOfWeek];
+  }
+  return "";
+}
+
+async function getMenu() {
+  try {
+    await runQuery(GetMenu, {
+      pagination: { ...paginationFilter.value },
+    }).then(({ getMenu }) => {
+      const menuItems = getMenu.nodes.map((menu: Menu) => ({
+        ...menu,
+        dayOfWeek: getDayOfWeek(menu.date),
+      }));
+      menus.value = menuItems;
+      paginationData.value = getMenu.pagination;
+    });
+    positiveNotify(t("notifications.success.showMenu"));
+  } catch {
+    negativeNotify(t("notifications.fail.showMenu"));
+  }
+}
+
 onMounted(() => {
   getMenu();
 });
-
-const menus = ref<Menu[]>([]);
-const weekday = [
-  t("text.days.monday"),
-  t("text.days.tuesday"),
-  t("text.days.wednesday"),
-  t("text.days.thursday"),
-  t("text.days.friday"),
-  t("text.days.saturday"),
-];
-const menuItems = [
-  { field: "rice" },
-  { field: "salad" },
-  { field: "soup" },
-  { field: "complement" },
-  { field: "protein" },
-  { field: "dessert" },
-];
-
-const TIME_SEPARATOR = "T";
-
-function isDateValid(date: Date | string | number) {
-  return (
-    date &&
-    typeof date === "object" &&
-    date instanceof Date &&
-    !isNaN(date as unknown as number)
-  );
-}
-
-const groupMenusByDate = () => {
-  const groupedMenus: Record<string, Menu[]> = {};
-  menus.value.forEach((menu) => {
-    if (isDateValid(menu.date)) {
-      const dateObject = new Date(menu.date);
-      const [date] = dateObject.toDateString().split(TIME_SEPARATOR);
-      const dayOfWeekIndex = dateObject.getDay();
-      const dayOfWeek = weekday[dayOfWeekIndex];
-      if (!groupedMenus[date]) {
-        groupedMenus[date] = [];
-      }
-      groupedMenus[date].push({ ...menu, dayOfWeek });
-    }
-  });
-  return groupedMenus;
-};
-
-const formatDate = (dateValue: number) => {
-  const date = new Date(dateValue);
-  return `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`;
-};
-
-async function getMenu() {
-  const { getMenu: rawData } = await runQuery(GetMenu);
-  if (Array.isArray(rawData)) {
-    rawData.sort((a, b) => a.date - b.date);
-    const last7Menus = rawData.slice(0, 7);
-
-    if (Array.isArray(menus.value)) {
-      const transformedMenus = [];
-      for (const item of last7Menus) {
-        const date = new Date(parseInt(item.date));
-        transformedMenus.push({ ...item, date });
-      }
-      menus.value = transformedMenus;
-    }
-  }
-}
 </script>
 
 <template>
-  <div>
-    <q-img src="/menu2jpg" class="absolute opacity fixed-full" />
-    <div class="row justify-center">
-      <span class="text-white font text-bold q-ml-lg relative">
-        {{ $t("titles.Hr.Menu") }}
-        <q-separator size="0.5rem" color="primary" class="bar-style" />
-      </span>
-    </div>
-    <div class="row justify-between">
-      <q-btn
-        round
-        icon="arrow_back"
-        class="row q-mt-md"
-        color="primary"
-        size="1.2rem"
-        @click="$router.replace('/menu/create')"
-      />
-      <PrintButton class="q-mr-md no-print" />
-    </div>
+  <q-img src="/menu2jpg" class="absolute opacity fixed-full" />
+  <div class="row justify-center">
+    <span class="text-white font text-bold q-ml-lg relative">
+      {{ $t("titles.Hr.Menu") }}
+      <q-separator size="0.5rem" color="primary" class="bar-style" />
+    </span>
+  </div>
+  <div class="row justify-between">
+    <q-btn
+      round
+      icon="arrow_back"
+      class="row q-mt-md"
+      color="primary"
+      size="1.2rem"
+      @click="$router.replace('/menu/create')"
+    />
+    <PrintButton class="q-mr-md no-print" />
+  </div>
 
-    <div class="row justify-center no-print">
-      <div class="col">
-        <div v-if="menus.length === 0" class="text-center relative text-h5">
-          <span>{{ $t("warning.noRegistrationMenu") }}</span>
-        </div>
-        <div v-else class="row">
-          <div class="col">
-            <div class="row">
-              <template v-for="dayMenus in groupMenusByDate()" :key="dayOfWeek">
-                <div class="col-4">
-                  <q-card
-                    class="text-uppercase col q-ma-md border smaller-card mx-auto text-white"
-                  >
-                    <q-card-section class="bg-primary">
-                      <div>
-                        {{ dayMenus[0].dayOfWeek }}
+  <div class="row justify-center no-print">
+    <div class="col">
+      <div v-if="menus.length === 0" class="text-center relative text-h5">
+        <span>{{ $t("warning.noRegistrationMenu") }}</span>
+      </div>
+      <div v-else class="row">
+        <div class="col">
+          <div class="row">
+            <template
+              v-for="(daysMenu, daysOfWeek) in menus"
+              :key="daysOfWeek"
+              class="col"
+            >
+              <div class="col-4 no-padding no-margin">
+                <q-card
+                  class="text-uppercase col q-ma-md border smaller-card mx-auto text-white"
+                >
+                  <q-card-section class="bg-primary">
+                    <div v-if="daysMenu">{{ daysMenu.dayOfWeek }}</div>
+                  </q-card-section>
+                  <q-card-section class="text-subtitle2 text-black">
+                    <div v-if="daysMenu">
+                      <div
+                        class="menu-item"
+                        v-for="property in [
+                          'rice',
+                          'salad',
+                          'soup',
+                          'complement',
+                          'protein',
+                          'dessert',
+                        ]"
+                        :key="property"
+                      >
+                        <q-icon name="restaurant" class="menu-icon" />
+                        <p class="menu-text">{{ daysMenu[property] }}</p>
                       </div>
-                    </q-card-section>
-                    <q-card-section class="text-subtitle2 text-black">
-                      <div v-for="menu in dayMenus" :key="menu.DATE">
-                        <div
-                          v-for="item in menuItems"
-                          :key="item.field"
-                          class="menu-item"
-                        >
-                          <q-icon name="restaurant" class="menu-icon" />
-                          <p class="menu-text">{{ menu[item.field] }}</p>
-                        </div>
-                      </div>
-                    </q-card-section>
-                  </q-card>
-                </div>
-              </template>
-            </div>
+                    </div>
+                  </q-card-section>
+                </q-card>
+              </div>
+            </template>
           </div>
         </div>
       </div>
@@ -182,7 +160,7 @@ async function getMenu() {
 }
 
 .smaller-card {
-  max-width: 300px;
+  max-width: 290px;
   margin: 10px auto;
 }
 </style>

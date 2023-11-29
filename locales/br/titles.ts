@@ -7,6 +7,7 @@ export default {
   IconPreview: "Visualização do ícone",
   HrSystem: "Sistema de RH",
   OtherSystems: "Outros",
+  addMenu: "Adicionar cardápio",
   Management: {
     DataSul: "DataSul",
     DataSulPrototype: "DataSul Protótipo",

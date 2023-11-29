@@ -1,23 +1,40 @@
 <script setup lang="ts">
+import { Ref } from "vue";
 import type { Event, Room } from "../../entities/Event";
-import { QCalendarMonth, today } from "@quasar/quasar-ui-qcalendar/";
 import { DateTime } from "luxon";
+import { QCalendarMonth, today } from "@quasar/quasar-ui-qcalendar/";
 
-import GetEvents from "../../graphql/events/GetEvents.gql";
 import GetRooms from "../../graphql/rooms/GetRooms.gql";
+import GetEvents from "../../graphql/events/GetEvents.gql";
 
 const calendar = ref();
 const roomList = ref();
-const selectedDate = ref(today());
-const activedModal = ref(false);
 const eventList = ref();
+const showEvents = ref(false);
 const selectedEvent = ref({});
-const currentDay = DateTime.fromISO(today()).toFormat("yyyy-MM-dd");
+const activedModal = ref(false);
+const selectedDate = ref(today());
+const currentDay = ref(DateTime.fromISO(today()).toFormat("yyyy-MM-dd"));
 
 onMounted(() => {
-  getEvents();
   getRooms();
+  getEvents();
 });
+
+const months = [
+  { label: t("label.months.january"), value: 1 },
+  { label: t("label.months.february"), value: 2 },
+  { label: t("label.months.march"), value: 3 },
+  { label: t("label.months.april"), value: 4 },
+  { label: t("label.months.may"), value: 5 },
+  { label: t("label.months.june"), value: 6 },
+  { label: t("label.months.july"), value: 7 },
+  { label: t("label.months.august"), value: 8 },
+  { label: t("label.months.september"), value: 9 },
+  { label: t("label.months.october"), value: 10 },
+  { label: t("label.months.november"), value: 11 },
+  { label: t("label.months.december"), value: 12 },
+];
 
 async function getRooms(): Promise<void> {
   roomList.value = await runQuery(GetRooms).then((data) => data.getRooms);
@@ -59,24 +76,78 @@ const joinedDates = computed(() => {
   }
 });
 
-function parsedScheduleDate(date: number) {
+function parseScheduleDate(date: number) {
   return DateTime.fromMillis(date).toFormat("HH:mm");
 }
 
-function onPrev() {
-  calendar.value.prev();
+const dateFormat = DateTime.now().setLocale("pt-br");
+
+const day = ref(dateFormat.day);
+const month = ref(dateFormat.monthLong);
+const weekDay = ref(dateFormat.weekdayLong);
+
+function parseWeekDay(weekday: number) {
+  return dateFormat.set({ weekday }).toFormat("cccc").toUpperCase();
 }
 
-function onNext() {
+function parseMonth(month: number) {
+  return dateFormat.set({ month }).toFormat("LLLL").toUpperCase();
+}
+
+const currentMonth: Ref<string | null> = ref(month.value);
+
+function updateMonth(month: number) {
+  selectedDate.value = dateFormat.set({ month }).toFormat("yyyy-MM-dd");
+  currentMonth.value = dateFormat.set({ month }).toFormat("LLLL");
+}
+
+function changeMonths(direction: number) {
+  const currentIndex = months.findIndex(
+    (month) => month.label.toLowerCase() === currentMonth.value.toLowerCase()
+  );
+  const index = (currentIndex + direction + months.length) % months.length;
+  currentMonth.value = months[index].label;
+}
+
+const onNext = () => {
   calendar.value.next();
-}
+  changeMonths(1);
+};
 
-function onReload() {
-  getEvents();
-}
+const onPrev = () => {
+  calendar.value.prev();
+  changeMonths(-1);
+};
 
 function cancel() {
   activedModal.value = false;
+}
+
+const eventsExist = computed(() => {
+  return showEvents.value && joinedDates.value[currentDay.value]?.length > 0;
+});
+
+function changeDayEvent(date: any) {
+  const accessScope = date.scope;
+  const accessTimestamp = accessScope.timestamp;
+
+  if (currentDay.value != accessScope.activeDate) {
+    currentDay.value = accessTimestamp.date;
+    const dayValue = (day.value = accessTimestamp.day);
+    const monthValue = (month.value = accessTimestamp.month);
+    const weekDayValue = (weekDay.value = accessTimestamp.weekday);
+
+    month.value = parseMonth(monthValue);
+    weekDay.value = parseWeekDay(weekDayValue);
+  }
+  showEvents.value = false;
+
+  setTimeout(() => {
+    if (!showEvents.value) {
+      showEvents.value = true;
+    }
+  }, 300);
+  showEvents.value = true;
 }
 </script>
 
@@ -92,9 +163,12 @@ function cancel() {
       <ScheduleNavigation
         :rooms="roomList"
         :date="selectedDate"
+        :dropdownLabel="currentMonth?.toLocaleUpperCase()"
+        @select-month="(month) => updateMonth(month)"
         @prev="onPrev"
         @next="onNext"
-        @reload="() => onReload"
+        @reload="getEvents"
+        :months="months"
       />
       <q-calendar-month
         animated
@@ -104,12 +178,15 @@ function cancel() {
         :focus-type="['day']"
         :day-min-height="100"
         v-model="selectedDate"
+        @click-date="changeDayEvent"
       >
         <template #day="{ scope: { timestamp } }">
-          <div class="full-height q-gutter-x-xs">
+          <div
+            class="full-height q-gutter-x-xs test"
+            v-if="joinedDates && joinedDates[timestamp.date]"
+          >
             <div
-              class="row items-end no-padding cursor-pointer"
-              v-if="joinedDates && joinedDates[timestamp.date]"
+              class="column no-padding cursor-pointer"
               v-for="(event, index) in joinedDates[timestamp.date]"
               :key="index"
               @click="
@@ -118,7 +195,7 @@ function cancel() {
               "
             >
               <q-icon name="circle" :color="getRoomByEvent(event)?.color" />
-              <q-tooltip class="bg-black text-bold">
+              <q-tooltip class="bg-primary text-bold">
                 {{ event.userCreated }}
               </q-tooltip>
             </div>
@@ -138,42 +215,60 @@ function cancel() {
       </div>
     </div>
     <div class="grow q-py-xl">
-      <q-card bordered class="text-black text-h6">
+      <q-card class="text-black text-h6">
         <q-card-section class="bg-primary">
           <div class="text-h4 text-white">{{ $t("label.dayEvents") }}</div>
         </q-card-section>
-        <q-card-section class="row q-gutter-x-lg justify-center items-center">
-          <div>
-            {{ DateTime.now().setLocale("pt-br").weekdayLong }}
-          </div>
-          <div class="text-h2">{{ DateTime.now().day }}</div>
-          <div>
-            {{ DateTime.now().setLocale("pt-br").monthLong }}
-          </div>
-        </q-card-section>
 
-        <div
-          class="row q-pa-md items-start q-gutter-x-sm"
-          v-for="(events, index) in joinedDates[currentDay]"
-          :key="index"
-          v-if="eventList"
-        >
-          <div class="row q-gutter-x-sm">
-            <q-icon
-              class="q-py-sm"
-              name="circle"
-              :color="getRoomByEvent(events)?.color"
-            />
-            <q-item class="column items-start no-padding">
-              <span> {{ events.userCreated }} - {{ events.description }} </span>
-              <span class="text-secondary">
-                {{ parsedScheduleDate(events.initialTime) }} -
-                {{ parsedScheduleDate(events.finalTime) }}
-              </span>
-            </q-item>
+        <q-card-section class="row q-gutter-x-lg justify-center items-center">
+          <span>
+            {{ weekDay?.toUpperCase() }}
+          </span>
+          <span class="text-h3">{{ day }}</span>
+          <span>
+            {{ month?.toUpperCase() }}
+          </span>
+        </q-card-section>
+        <!-- <div v-if="showEvents"> -->
+        <div v-if="eventsExist">
+          <div
+            class="row q-pa-md items-start q-gutter-x-sm"
+            v-for="(events, index) in joinedDates[currentDay]"
+            :key="index"
+          >
+            <div class="row q-gutter-x-sm">
+              <q-icon
+                class="q-py-sm"
+                name="circle"
+                :color="getRoomByEvent(events)?.color"
+              />
+              <q-item class="column items-start no-padding">
+                <span>
+                  {{ events.userCreated }} - {{ events.description }}
+                </span>
+                <span class="text-secondary">
+                  {{ parseScheduleDate(events.initialTime) }} -
+                  {{ parseScheduleDate(events.finalTime) }}
+                </span>
+              </q-item>
+            </div>
           </div>
         </div>
+        <span v-else> {{ $t("warning.noEvents") }} </span>
       </q-card>
     </div>
   </div>
 </template>
+
+<style>
+.q-calendar__button {
+  font-size: 30px;
+}
+.q-calendar__ellipsis {
+  font-size: larger;
+}
+.schedule-item-border {
+  border: 1px solid #b33636;
+  border-radius: 5px;
+}
+</style>

@@ -1,6 +1,5 @@
 <script setup lang="ts">
-import * as yup from "yup";
-import { Field, Form } from "vee-validate";
+import { Form } from "vee-validate";
 import { menuSchema } from "../../validation";
 import AddMenu from "../../graphql/menu/AddMenu.gql";
 import EditMenu from "../../graphql/menu/EditMenu.gql";
@@ -104,10 +103,6 @@ const tableColumns: Ref<QTableColumn[]> = [
   },
 ];
 const action: Ref<"add" | "edit" | null> = ref(null);
-
-function makeRuleOfString(message = "warning.requiredField") {
-  return yup.string().required(t(message));
-}
 
 function calculatePages(total: number, limit: number): number {
   return Math.ceil(total / limit);

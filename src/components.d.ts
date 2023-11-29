@@ -60,6 +60,7 @@ declare module '@vue/runtime-core' {
     MenuModal: typeof import("./components/CreateMenu/MenuModal.vue")["default"]
     MenuTable: typeof import('./components/MenuTable/index.vue')['default']
     Modal: typeof import("./components/Modais/Modal.vue")["default"]
+    NavigationButton: typeof import('./components/buttons/NavigationButton.vue')['default']
     OptionLocales: typeof import('./components/OptionLocales.vue')['default']
     PaymentButton: typeof import('./components/buttons/PaymentButton.vue')['default']
     PreviewSystemDialog: typeof import('./components/DynamicDialog/SystemModals/PreviewSystemDialog.vue')['default']

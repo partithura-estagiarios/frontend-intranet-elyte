@@ -1,3 +1,3 @@
 <template>
-  <MenuTable />
+  <MenuView />
 </template>

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import GetMenu from "../../graphql/menu/GetMenu.gql";
-import { Menu } from "../../entities";
+import { Menu } from "../entities";
 import { ref, onMounted } from "vue";
 
 const menus = ref<Menu[]>([]);

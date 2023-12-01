@@ -7,5 +7,5 @@ onMounted(() => {
 </script>
 
 <template>
-  <CreateMenu />
+  <CreateEditMenu />
 </template>

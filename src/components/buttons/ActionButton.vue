@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { Action } from "../../entities/Action";
 import { type Ref } from "vue";
-
+const userStore = userStorage();
 defineEmits(["reload", "attSystem"]);
 
 defineProps({
@@ -20,7 +20,7 @@ defineProps({
 });
 const activedModal: Ref<number | null> = ref(null);
 function activateModal(index: number) {
-  if (!userStorage.getLoggedUser) {
+  if (!userStore.user.token) {
     location.reload();
   }
   activedModal.value = index;

@@ -15,7 +15,8 @@ const backendHost =
     : getEnvironmentVariable("VITE_APP_ENDPOINT");
 
 function authPlugin({ opContext }: { opContext: FetchOptions }) {
-  opContext.headers.Authorization = userStorage.getToken;
+  const userStore = userStorage();
+  opContext.headers.Authorization = userStore.user.token;
 }
 const url = backendHost;
 export const villus = createClient({

@@ -7,7 +7,7 @@
         >
           {{ $t("titles.ManagementSystem") }}
         </span>
-        <div class="absolute-right q-pa-md" v-if="userStorage.getToken">
+        <div class="absolute-right q-pa-md" v-if="userStore.user.token">
           <ActionButton
             :buttons="actionButtons"
             :item="gestaoList"
@@ -16,7 +16,7 @@
             @attSystem="getGestaoList()"
           />
         </div>
-        <div class="absolute-left" v-if="userStorage.getToken">
+        <div class="absolute-left" v-if="userStore.user.token">
           <BarSearch
             :system="'gestao'"
             @some-system="(resultsSystem) => (gestaoList = resultsSystem)"
@@ -33,7 +33,7 @@ import GetSystem from "../../graphql/system/GetSystem.gql";
 import { System } from "../../entities";
 import { Ref } from "vue";
 import actionButtons from "./actionButtons";
-
+const userStore = userStorage();
 const gestaoList: Ref<System[]> = ref([]);
 
 onMounted(() => {

@@ -1,7 +1,8 @@
 <script setup lang="ts">
 const enableDrop = ref(false);
+const userStore = userStorage();
 watchPostEffect(() => {
-  if (userStorage.getToken) {
+  if (userStore.user.token) {
     enableDrop.value = !enableDrop.value;
     return;
   }
@@ -17,7 +18,7 @@ watchPostEffect(() => {
     </q-item>
 
     <q-tabs no-caps indicator-color="transparent">
-      <q-menu v-if="isLogged">
+      <q-menu v-if="userStore.user.token">
         <q-list>
           <q-item clickable v-close-popup to="/register">
             <q-item-section class="text-black">
@@ -36,13 +37,13 @@ watchPostEffect(() => {
         no-caps
         :label="$t('admin')"
         to="/login"
-        :disable="enableDrop"
+        :disable="!enableDrop"
       >
       </q-route-tab>
       <q-btn-dropdown
         flat
         color="white"
-        :disable="!enableDrop"
+        :disable="enableDrop"
         dropdown-icon="settings"
       >
         <q-list>
@@ -51,7 +52,7 @@ watchPostEffect(() => {
               $t("titles.Login.register")
             }}</q-item-section>
           </q-item>
-          <q-item @click="userStorage.logout()" v-close-popup to="/login">
+          <q-item @click="userStore.logout" v-close-popup to="/login">
             <q-item-section class="text-black">{{
               $t("titles.Login.logOutOfAccount")
             }}</q-item-section>

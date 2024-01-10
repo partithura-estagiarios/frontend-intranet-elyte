@@ -21,13 +21,6 @@ const showTabHeader = computed(() => {
     window.location.pathname.includes(route)
   );
 });
-async function userIsLogged() {
-  if (!(await userStorage.getLoggedUser)) {
-    negativeNotify(t("notifications.fail.timeExpired"));
-    userStorage.logout();
-  }
-}
-userIsLogged();
 </script>
 
 <template>

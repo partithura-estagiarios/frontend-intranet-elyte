@@ -2,14 +2,22 @@ export interface AuthQuery {
   auth: AuthenticateType;
 }
 
-interface AuthenticateType {
+export type AuthenticateType = {
   token: string;
-  user: User;
-}
+  user: {
+    id?: string | null | undefined;
+    email: string;
+    username: string;
+    token: string;
+  };
+};
 
-interface User {
-  token: string;
-  username: string;
-  id: string;
-  email: string;
+export function isAuthQuery(obj: any): obj is AuthQuery {
+  return (
+    typeof obj === "object" &&
+    obj !== null &&
+    "auth" in obj &&
+    "token" in obj.auth &&
+    "user" in obj.auth
+  );
 }

@@ -16,7 +16,7 @@
     :v-bind="$attrs"
     class="q-mt-lg"
   >
-    <template #top-left v-if="userStorage.getToken">
+    <template #top-left v-if="userStore.user.token">
       <q-btn
         class="bg-primary text-white text-bold"
         @click="activedModal = true"
@@ -30,7 +30,7 @@
       </q-btn>
     </template>
 
-    <template #configButtons="{ item }" v-if="userStorage.getToken">
+    <template #configButtons="{ item }" v-if="userStore.user.token">
       <ActionButton
         :buttons="actionButtons"
         :item="item"
@@ -46,6 +46,7 @@ import { Ramal } from "../../entities";
 import { Ref } from "vue";
 import actionButtons from "./actionButtons";
 
+const userStore = userStorage();
 const ramalList: Ref<Ramal[]> = ref([]);
 const activedModal = ref(false);
 onMounted(() => {

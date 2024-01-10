@@ -1,29 +1,23 @@
 <script lang="ts" setup>
-import { AuthQuery } from "../../entities";
+import { isAuthQuery } from "../../entities";
 import Auth from "../../graphql/auth/login.gql";
 import { Field, Form } from "vee-validate";
 import { loginSchema } from "../../validation";
-import { UserForm } from "../../entities/User";
-
 const marginBtn = computed(() =>
   useQuasar().screen.gt.md ? "q-mt-xl" : "q-mt-sm"
 );
 
 const isPwdvisible = ref(true);
 
-async function auth(data: UserForm) {
+async function auth(data: Object) {
   try {
-    const { auth } = (await runMutation(Auth, data)) as unknown as AuthQuery;
-    const { token, user } = auth;
-    if (token) {
-      userStorage.setUser({
-        email: user.email,
-        id: user.id,
-        token: user.token,
-        username: user.username,
-      });
-      userStorage.setToken(token);
-
+    const response = await runMutation(Auth, data);
+    if (isAuthQuery(response)) {
+      const userStore = userStorage();
+      response.auth.user.token = response.auth.token;
+      const newResp = response.auth.user;
+      userStore.user = newResp;
+      console.log(userStore.user);
       positiveNotify(t("notifications.success.login"));
       router.push("/");
     }

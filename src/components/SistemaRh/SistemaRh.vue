@@ -7,7 +7,7 @@
         >
           {{ $t("titles.HrSystem") }}
         </span>
-        <div class="absolute-right q-pa-md" v-if="userStorage.getToken">
+        <div class="absolute-right q-pa-md" v-if="userStore.user.token">
           <ActionButton
             :buttons="actionButtons"
             :item="rhList"
@@ -16,7 +16,7 @@
             @attSystem="getListRh()"
           />
         </div>
-        <div class="absolute-left" v-if="userStorage.getToken">
+        <div class="absolute-left" v-if="userStore.user.token">
           <BarSearch
             :system="'rh'"
             @some-system="(resultsSystem) => (rhList = resultsSystem)"
@@ -34,6 +34,7 @@ import { System } from "../../entities";
 import { Ref } from "vue";
 import actionButtons from "./actionButtons";
 
+const userStore = userStorage();
 const rhList: Ref<System[]> = ref([]);
 
 onMounted(() => {

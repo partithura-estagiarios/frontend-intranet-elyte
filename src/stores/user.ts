@@ -4,7 +4,6 @@ type UserState = {
   user: AuthenticateType["user"];
 };
 
-// Objeto vazio do tipo AuthenticateType
 const EMPTY_USER: AuthenticateType["user"] = {
   id: null,
   email: "",

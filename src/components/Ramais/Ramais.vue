@@ -45,6 +45,7 @@ import GetRamais from "../../graphql/ramais/getRamais.gql";
 import { Ramal } from "../../entities";
 import { Ref } from "vue";
 import actionButtons from "./actionButtons";
+
 const userStore = userStorage();
 const ramalList: Ref<Ramal[]> = ref([]);
 const activedModal = ref(false);

@@ -12,9 +12,12 @@ export type AuthenticateType = {
   };
 };
 
-interface User {
-  token: string;
-  username: string;
-  id: string;
-  email: string;
+export function isAuthQuery(obj: any): obj is AuthQuery {
+  return (
+    typeof obj === "object" &&
+    obj !== null &&
+    "auth" in obj &&
+    "token" in obj.auth &&
+    "user" in obj.auth
+  );
 }

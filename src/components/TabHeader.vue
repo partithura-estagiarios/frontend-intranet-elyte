@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const enableDrop = ref(true);
+const enableDrop = ref(false);
 const userStore = userStorage();
 watchPostEffect(() => {
   if (userStore.user.token) {
@@ -37,13 +37,13 @@ watchPostEffect(() => {
         no-caps
         :label="$t('admin')"
         to="/login"
-        :disable="enableDrop"
+        :disable="!enableDrop"
       >
       </q-route-tab>
       <q-btn-dropdown
         flat
         color="white"
-        :disable="!enableDrop"
+        :disable="enableDrop"
         dropdown-icon="settings"
       >
         <q-list>

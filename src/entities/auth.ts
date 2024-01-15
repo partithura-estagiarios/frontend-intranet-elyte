@@ -7,7 +7,7 @@ interface AuthenticateType {
   user: User;
 }
 
-interface User {
+export interface User {
   token: string;
   username: string;
   id: string;

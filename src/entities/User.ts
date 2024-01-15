@@ -3,6 +3,7 @@ export interface UserStorage {
   id: string;
   email: string;
   token: string;
+  route: () => string;
 }
 
 type Getters = {

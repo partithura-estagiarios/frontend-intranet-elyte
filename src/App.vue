@@ -22,10 +22,12 @@ const showTabHeader = computed(() => {
   );
 });
 async function userIsLogged() {
-  if (!(await userStorage.getLoggedUser)) {
-    negativeNotify(t("notifications.fail.timeExpired"));
-    userStorage.logout();
+  if (userStorage.getToken) {
+    if (!(await userStorage.getLoggedUser)) {
+      userStorage.logout(null);
+    }
   }
+  return router.push("/login");
 }
 userIsLogged();
 </script>

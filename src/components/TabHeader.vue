@@ -1,10 +1,11 @@
 <script setup lang="ts">
-const enableDrop = ref(false);
-watchPostEffect(() => {
+const enableDrop = ref(true);
+watchEffect(() => {
   if (userStorage.getToken) {
     enableDrop.value = !enableDrop.value;
     return;
   }
+
   enableDrop.value = !enableDrop.value;
 });
 </script>
@@ -17,15 +18,6 @@ watchPostEffect(() => {
     </q-item>
 
     <q-tabs no-caps indicator-color="transparent">
-      <q-menu v-if="isLogged">
-        <q-list>
-          <q-item clickable v-close-popup to="/register">
-            <q-item-section class="text-black">
-              {{ $t("titles.Login.register") }}
-            </q-item-section>
-          </q-item>
-        </q-list>
-      </q-menu>
       <q-route-tab :label="$t('home')" to="/home" />
       <q-route-tab :label="$t('titles.scheduler')" to="/schedule" />
       <q-route-tab :label="$t('label.menu')" to="/menu" />

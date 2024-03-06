@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { AuthQuery } from "../../entities";
+import { User } from "../../entities";
 import Auth from "../../graphql/auth/login.gql";
 import { Field, Form } from "vee-validate";
 import { loginSchema } from "../../validation";
@@ -13,19 +13,23 @@ const isPwdvisible = ref(true);
 
 async function auth(data: UserForm) {
   try {
-    const { auth } = (await runMutation(Auth, data)) as unknown as AuthQuery;
-    const { token, user } = auth;
+    const result = await runMutation(Auth, data);
+    const user = JSON.parse(JSON.stringify(result.auth.user)) as User;
+    const token = result.auth.token;
     if (token) {
       userStorage.setUser({
         email: user.email,
         id: user.id,
-        token: user.token,
         username: user.username,
+        token: token,
       });
       userStorage.setToken(token);
-
       positiveNotify(t("notifications.success.login"));
-      router.push("/");
+      const savedRoute = localStorage.getItem("route");
+      if (savedRoute) {
+        return router.push(savedRoute);
+      }
+      return router.push("/home");
     }
   } catch (err) {
     negativeNotify(t("notifications.fail.login"));

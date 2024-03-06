@@ -17,9 +17,8 @@ const exceptionRoutes = [
   "/register",
 ];
 const showTabHeader = computed(() => {
-  return !exceptionRoutes.some((route) =>
-    window.location.pathname.includes(route)
-  );
+  const currentRoute = useRoute();
+  return !exceptionRoutes.some((route) => currentRoute.path.includes(route));
 });
 async function userIsLogged() {
   if (!(await userStorage.getLoggedUser)) {
@@ -31,7 +30,7 @@ userIsLogged();
 </script>
 
 <template>
-  <TabHeader />
+  <TabHeader v-if="showTabHeader" />
 
   <RouterView />
 </template>

@@ -40,11 +40,12 @@ const props = defineProps({
     <q-table
       class="q-px-xl"
       :grid="$q.screen.xs"
-      :columns="columns"
-      :rows="rows"
+      :columns="columns as any[]"
+      :rows="rows as any[]"
       :pagination="{ rowsPerPage: rowsPerPage }"
       :hide-pagination="hidePagination"
     >
+      <!--
       <template #top-right>
         <q-input
           v-model="search"
@@ -57,7 +58,7 @@ const props = defineProps({
           </template>
         </q-input>
       </template>
-
+      -->
       <template #top-left>
         <slot name="top-left" />
       </template>

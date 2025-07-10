@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { DateTime } from "luxon";
-import { Field } from "vee-validate";
 import { QSelect } from "quasar";
+import { Field } from "vee-validate";
 
 defineProps({
   fieldLabel: {
@@ -119,7 +119,7 @@ function reopenSelect() {
                   dense
                   clickable
                   class="item-size col-6"
-                  @click="finishSelector(minute, $refs.selectDate)"
+                  @click="finishSelector(minute, $refs.selectDate as QSelect)"
                   v-for="(minute, index) in minutes"
                   :key="index"
                 >

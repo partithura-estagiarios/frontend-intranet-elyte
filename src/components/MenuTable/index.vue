@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import GetMenu from "../../graphql/menu/GetMenu.gql";
+import { onMounted, ref } from "vue";
 import { Menu } from "../../entities";
-import { ref, onMounted } from "vue";
+import GetMenu from "../../graphql/menu/GetMenu.gql";
 
 const menus = ref<Menu[]>([]);
 const paginationFilter = ref({ page: 0, limit: 6 });
@@ -26,7 +26,7 @@ function getDayOfWeek(timestamp: string) {
 
 async function getMenu() {
   try {
-    await runQuery(GetMenu, {
+    await runQuery<{ getMenu: { nodes: Menu[]; pagination: any } }>(GetMenu, {
       pagination: { ...paginationFilter.value },
     }).then(({ getMenu }) => {
       const menuItems = getMenu.nodes.map((menu: Menu) => ({

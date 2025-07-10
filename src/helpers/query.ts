@@ -1,16 +1,16 @@
 import { MaybeRef } from "@vueuse/core";
-import { useQuery, useMutation } from "villus";
+import { useMutation, useQuery } from "villus";
 
-export async function runQuery(
+export async function runQuery<T>(
   query: MaybeRef<Document>,
-  variables: Record<string, string> | null = null
-): Promise<Record<string, string | number | boolean>> {
+  variables?: any
+): Promise<T> {
   const { data } = (await useQuery({
     query,
     variables,
     cachePolicy: "network-only",
   }).execute()) as {
-    data: Record<string, string | number>;
+    data: T;
   };
   return data;
 }

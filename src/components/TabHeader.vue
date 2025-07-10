@@ -17,7 +17,7 @@ watchPostEffect(() => {
     </q-item>
 
     <q-tabs no-caps indicator-color="transparent">
-      <q-menu v-if="isLogged">
+      <q-menu v-if="userStorage.isLoggedIn">
         <q-list>
           <q-item clickable v-close-popup to="/register">
             <q-item-section class="text-black">

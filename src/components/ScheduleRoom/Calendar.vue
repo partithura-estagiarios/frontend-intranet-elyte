@@ -1,11 +1,10 @@
 <script setup lang="ts">
-import { Ref } from "vue";
-import type { Event, Room } from "../../entities/Event";
-import { DateTime } from "luxon";
 import { QCalendarMonth, today } from "@quasar/quasar-ui-qcalendar/";
+import { DateTime } from "luxon";
+import type { Event, Room } from "../../entities/Event";
 
-import GetRooms from "../../graphql/rooms/GetRooms.gql";
 import GetEvents from "../../graphql/events/GetEvents.gql";
+import GetRooms from "../../graphql/rooms/GetRooms.gql";
 
 const calendar = ref();
 const roomList = ref();
@@ -37,11 +36,15 @@ const months = [
 ];
 
 async function getRooms(): Promise<void> {
-  roomList.value = await runQuery(GetRooms).then((data) => data.getRooms);
+  roomList.value = await runQuery<{ getRooms: Room[] }>(GetRooms).then(
+    (data) => data.getRooms
+  );
 }
 
 async function getEvents(): Promise<void> {
-  eventList.value = await runQuery(GetEvents).then((data) => data.getEvents);
+  eventList.value = await runQuery<{ getEvents: Event[] }>(GetEvents).then(
+    (data) => data.getEvents
+  );
 }
 
 function getRoomByEvent(event: Event) {
@@ -94,7 +97,7 @@ function parseMonth(month: number) {
   return dateFormat.set({ month }).toFormat("LLLL").toUpperCase();
 }
 
-const currentMonth: Ref<string | null> = ref(month.value);
+const currentMonth = ref<string | null>(month.value);
 
 function updateMonth(month: number) {
   selectedDate.value = dateFormat.set({ month }).toFormat("yyyy-MM-dd");
@@ -103,7 +106,8 @@ function updateMonth(month: number) {
 
 function changeMonths(direction: number) {
   const currentIndex = months.findIndex(
-    (month) => month.label.toLowerCase() === currentMonth.value.toLowerCase()
+    (month) =>
+      month.label.toLowerCase() === (currentMonth.value as string).toLowerCase()
   );
   const index = (currentIndex + direction + months.length) % months.length;
   currentMonth.value = months[index].label;

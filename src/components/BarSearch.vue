@@ -15,6 +15,9 @@
   </div>
 </template>
 <script setup lang="ts">
+import type { System } from "../entities";
+import SearchSystem from "../graphql/system/SearchSystem.gql";
+
 const emit = defineEmits(["some-system"]);
 
 function getSearchSystem(resultsSystem: Array<System>) {
@@ -26,11 +29,10 @@ const props = defineProps({
     default: "",
   },
 });
-import { System } from "../entities";
-import SearchSystem from "../graphql/system/SearchSystem.gql";
 const search = ref("");
+
 async function searchSystem(search: string) {
-  const result = await runQuery(SearchSystem, {
+  const result = await runQuery<{ searchSystem: Array<System> }>(SearchSystem, {
     word: search,
     tableSystem: props.system,
   });

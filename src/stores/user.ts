@@ -1,6 +1,6 @@
-import { defineStore, acceptHMRUpdate } from "pinia";
+import { defineStore } from "pinia";
 
-import { UserStorage, UserStorageConstructor } from "../entities/User";
+import { UserStorage } from "../entities/User";
 
 import ValidateToken from "../graphql/verifyUser/ValidateToken.gql";
 
@@ -33,7 +33,7 @@ export const useUserStore = defineStore("useUserStore", {
       return Boolean(state.user.token);
     },
     async getLoggedUser(): Promise<boolean> {
-      const result = await runQuery(ValidateToken, {
+      const result = await runQuery<{ validateToken: boolean }>(ValidateToken, {
         token: userStorage.getToken,
       });
       return !!result.validateToken;

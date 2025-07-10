@@ -1,13 +1,11 @@
 <script setup lang="ts">
 import { Form } from "vee-validate";
-import { menuSchema } from "../../validation";
+import { defineEmits, onMounted, Ref } from "vue";
+import { Menu } from "../../entities";
 import AddMenu from "../../graphql/menu/AddMenu.gql";
 import EditMenu from "../../graphql/menu/EditMenu.gql";
 import GetMenu from "../../graphql/menu/GetMenu.gql";
-import { Menu } from "../../entities";
-import { Ref } from "vue";
-import { onMounted, defineEmits } from "vue";
-import { QTableColumn } from "quasar";
+import { menuSchema } from "../../validation";
 
 onMounted(() => {
   getMenu();
@@ -45,7 +43,7 @@ const form: Omit<Menu, "id"> = reactive({
 });
 const showCalendar = ref(false);
 const showAddModal = ref(false);
-const tableColumns: Ref<QTableColumn[]> = [
+const tableColumns = [
   {
     name: "date",
     required: true,
@@ -124,7 +122,7 @@ function updatePage(): void {
   });
 }
 
-async function chooseMutation(data) {
+async function chooseMutation(data: Omit<Menu, "id">) {
   if (action.value !== null) {
     if (menuSchema) {
       opt[action.value](data);
@@ -133,11 +131,11 @@ async function chooseMutation(data) {
 }
 
 const opt = {
-  edit: (data) => editMenu(data),
-  add: (data) => addMenu(data),
+  edit: (data: Omit<Menu, "id">) => editMenu(data),
+  add: (data: Omit<Menu, "id">) => addMenu(data),
 };
 
-async function editMenu(data) {
+async function editMenu(data: Omit<Menu, "id">) {
   data.date = form.date;
   try {
     const isDuplicateDate = menus.value.some((menu) => menu.date === form.date);
@@ -159,7 +157,7 @@ async function editMenu(data) {
   }
 }
 
-async function addMenu(data) {
+async function addMenu(data: Omit<Menu, "id">) {
   if (data) {
     data.date = form.date;
     try {
@@ -176,10 +174,19 @@ async function addMenu(data) {
   }
 }
 
+interface Oito {
+  nodes: Menu[];
+  pagination: {
+    currentPage: number;
+    limit: number;
+    total: number;
+  };
+}
+
 async function getMenu() {
   try {
-    await runQuery(GetMenu, {
-      pagination: { ...paginationFilter.value },
+    await runQuery<{ getMenu: Oito }>(GetMenu, {
+      pagination: paginationFilter.value,
     }).then(({ getMenu }) => {
       const menuItems = getMenu.nodes.map((menu: Menu) => ({
         ...menu,
@@ -248,7 +255,7 @@ watch(
   { deep: true }
 );
 
-function handleDateUpdate(newDate) {
+function handleDateUpdate(newDate: string) {
   form.date = newDate;
   showCalendar.value = false;
 }
@@ -291,7 +298,7 @@ function handleDateUpdate(newDate) {
           size="1.2rem"
           @click="redirectToPrintRoute"
           @update:model-value="
-            (date) => {
+            (date: string) => {
               form.date = date;
               showCalendar = false;
             }
@@ -328,7 +335,7 @@ function handleDateUpdate(newDate) {
               @update:model-value="updatePage"
             />
             <tr v-if="$slots['append']">
-              <td :colspan="columns.length" class="cell">
+              <td :colspan="tableColumns.length" class="cell">
                 <slot name="append" />
               </td>
             </tr>

@@ -22,7 +22,12 @@ const props = defineProps({
   },
 });
 
-const months = ref(props.months);
+const months = ref(
+  props.months as {
+    label: string;
+    value: number;
+  }[]
+);
 
 function selectMonth(month: number) {
   emits("select-month", month);

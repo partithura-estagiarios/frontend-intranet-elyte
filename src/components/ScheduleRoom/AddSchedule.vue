@@ -1,14 +1,15 @@
 <script setup lang="ts">
-import { Form, Field } from "vee-validate";
-import { scheduleSchema } from "../../validation";
+import { Field, Form } from "vee-validate";
 import type { Event, EventForm, Room } from "../../entities/Event";
+import { scheduleSchema } from "../../validation";
 
+import { Ref } from "vue";
 import AddEvent from "../../graphql/events/AddEvent.gql";
 import GetBusyRoom from "../../graphql/rooms/GetBusyRoom.gql";
 
 const emits = defineEmits(["reload", "cancel"]);
 
-defineProps({
+const props = defineProps({
   isActive: {
     type: Boolean,
     default: false,
@@ -39,9 +40,9 @@ const form: Event = reactive({
   },
 });
 
-const invalidRoom: unknown = ref([]);
+const invalidRoom = ref<Room[]>([]);
 watch(form, async () => {
-  const getInvalidRoom = await runQuery(GetBusyRoom, {
+  const getInvalidRoom = await runQuery<{ getBusyRoom: Room[] }>(GetBusyRoom, {
     initialTime: form.initialTime,
     finalTime: form.finalTime,
   });
@@ -49,32 +50,21 @@ watch(form, async () => {
 });
 const selectRoom = computed(() => !(form.initialTime && form.finalTime));
 
-function isRoomInvalid(idToCheck: number, invalidRooms: unknown) {
+function isRoomInvalid(idToCheck: number, invalidRooms: Ref<{ id: number }[]>) {
   return invalidRooms.value.some(
-    (element: unknown) => element.id === idToCheck
+    (element: { id: number }) => element.id === idToCheck
   );
 }
 
-const checkForInvalidRooms = computed(
-  (props) =>
-    (room = props.rooms): Record<number, Room> => {
-      const roomIdToCheck = room.id;
-      const isInvalid = isRoomInvalid(roomIdToCheck, invalidRoom);
-      return isInvalid;
-    }
-);
+const checkForInvalidRooms = computed(() => {
+  const roomIdToCheck = (props.rooms[0] as Room).id;
+  const isInvalid = isRoomInvalid(roomIdToCheck, invalidRoom);
+  return isInvalid;
+});
 
-const roomName = computed(
-  (props) =>
-    (room = props.rooms as Room) =>
-      room.name
-);
+const roomName = computed(() => (props.rooms[0] as Room).name);
 
-const roomId = computed(
-  (props) =>
-    (room = props.rooms as Room) =>
-      room.id
-);
+const roomId = computed(() => (props.rooms[0] as Room).id);
 
 const supportMaterials = ref([
   {
@@ -120,7 +110,11 @@ function triggerwarning() {
   if (selectRoom.value) {
     negativeNotify(t("warning.dateFieldEmpty"));
   }
-  if (form.initialTime > form.finalTime) {
+  if (
+    form?.initialTime &&
+    form?.finalTime &&
+    form?.initialTime > form?.finalTime
+  ) {
     negativeNotify(t("warning.dateFieldInvalid"));
   }
 }
@@ -225,7 +219,7 @@ async function addEvent(formData: EventForm) {
 
         <SelectTime
           type="initial"
-          :time-value="form.initialTime"
+          :time-value="form.initialTime as number"
           class="schedule-item-border col-5"
           :field-label="$t('label.date.initial')"
           @setTime="(args) => setDate('initialTime', args)"
@@ -233,7 +227,7 @@ async function addEvent(formData: EventForm) {
 
         <SelectTime
           type="final"
-          :time-value="form.finalTime"
+          :time-value="form.finalTime as number | undefined"
           class="schedule-item-border col-5"
           :field-label="$t('label.date.final')"
           @setTime="(args) => setDate('finalTime', args)"
@@ -252,7 +246,7 @@ async function addEvent(formData: EventForm) {
           icon-color="primary"
         />
 
-        <StandardSelect
+        <!-- <StandardSelect
           :option-label="roomName"
           :option-value="roomId"
           :options-to-disable="checkForInvalidRooms"
@@ -268,7 +262,7 @@ async function addEvent(formData: EventForm) {
           icon-color="primary"
           popup-content-class="text-black"
           @click="triggerwarning"
-        />
+        /> -->
 
         <Field name="description" v-slot="item">
           <q-input

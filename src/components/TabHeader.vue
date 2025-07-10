@@ -30,15 +30,6 @@ watchPostEffect(() => {
       <q-route-tab :label="$t('titles.scheduler')" to="/schedule" />
       <q-route-tab :label="$t('label.menu')" to="/menu" />
       <q-route-tab :label="$t('label.menuCreate')" to="/menu/create" />
-      <q-route-tab
-        flat
-        color="white"
-        no-caps
-        :label="$t('admin')"
-        to="/login"
-        :disable="enableDrop"
-      >
-      </q-route-tab>
       <q-btn-dropdown
         flat
         color="white"

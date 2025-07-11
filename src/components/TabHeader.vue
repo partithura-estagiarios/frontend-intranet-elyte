@@ -17,42 +17,18 @@ watchPostEffect(() => {
     </q-item>
 
     <q-tabs no-caps indicator-color="transparent">
-      <q-menu v-if="userStorage.isLoggedIn">
-        <q-list>
-          <q-item clickable v-close-popup to="/register">
-            <q-item-section class="text-black">
-              {{ $t("titles.Login.register") }}
-            </q-item-section>
-          </q-item>
-        </q-list>
-      </q-menu>
       <q-route-tab :label="$t('home')" to="/home" />
-      <q-route-tab :label="$t('titles.scheduler')" to="/schedule" />
-      <q-route-tab :label="$t('label.menu')" to="/menu" />
-      <q-route-tab :label="$t('label.menuCreate')" to="/menu/create" />
-      <q-route-tab
-        flat
-        color="white"
-        no-caps
-        :label="$t('admin')"
-        to="/login"
-        :disable="enableDrop"
-      >
-      </q-route-tab>
+      <q-route-tab :label="$t('titles.Login.register')" to="/register" />
       <q-btn-dropdown
         flat
         color="white"
         :disable="!enableDrop"
         dropdown-icon="settings"
+        content-style="min-width: 250px"
       >
         <q-list>
-          <q-item clickable v-close-popup to="/register">
-            <q-item-section class="text-black">{{
-              $t("titles.Login.register")
-            }}</q-item-section>
-          </q-item>
           <q-item @click="userStorage.logout()" v-close-popup to="/login">
-            <q-item-section class="text-black">{{
+            <q-item-section class="text-black no-wrap">{{
               $t("titles.Login.logOutOfAccount")
             }}</q-item-section>
           </q-item>
@@ -67,5 +43,8 @@ watchPostEffect(() => {
   min-width: 50px;
   max-width: 120px;
   width: 10vw;
+}
+.no-wrap {
+  white-space: nowrap;
 }
 </style>

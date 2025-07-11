@@ -28,7 +28,7 @@ watchPostEffect(() => {
       >
         <q-list>
           <q-item @click="userStorage.logout()" v-close-popup to="/login">
-            <q-item-section class="text-black no-wrap">{{
+            <q-item-section class="text-black text-no-wrap">{{
               $t("titles.Login.logOutOfAccount")
             }}</q-item-section>
           </q-item>
@@ -43,8 +43,5 @@ watchPostEffect(() => {
   min-width: 50px;
   max-width: 120px;
   width: 10vw;
-}
-.no-wrap {
-  white-space: nowrap;
 }
 </style>

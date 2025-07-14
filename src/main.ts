@@ -2,6 +2,9 @@ import { createApp } from "vue";
 import { Quasar, Notify } from "quasar";
 import "uno.css";
 
+// Tradução para o Quasar
+import ptBR from "quasar/lang/pt-BR";
+
 // Import icon libraries
 import "@quasar/extras/material-icons/material-icons.css";
 import "@quasar/extras/mdi-v3/mdi-v3.css";
@@ -23,6 +26,7 @@ import "./style.css";
 createApp(App)
   .use(Quasar, {
     plugins: { Notify }, // import Quasar plugins and add here
+    lang: ptBR,
   })
   .use(villus)
   .use(router)
